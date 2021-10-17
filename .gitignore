@@ -1,0 +1,21 @@
+# OSX
+.DS_Store
+
+# node.js
+node_modules/
+
+dist
+dist.zip
+
+# logs
+*.log
+npm-debug.log*
+
+# idea(s)
+.idea
+
+.cache
+
+.next
+
+.env.local
