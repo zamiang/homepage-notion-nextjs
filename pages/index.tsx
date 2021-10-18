@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Footer from '../components/homepage/footer';
+import Header from '../components/homepage/header';
 import { getDatabase } from '../lib/notion';
 import styles from './index.module.css';
 import { Text } from './writing/[id]';
@@ -118,6 +119,7 @@ export default function Home(props: IProps) {
         <meta property="og:description" content={description} key="ogdesc" />
       </Head>
       <main className={styles.container}>
+        <Header />
         <header className={styles.header}>
           <Image src="/about.jpg" height="171" width="256" />
           <h1>Hi, I’m Brennan.</h1>

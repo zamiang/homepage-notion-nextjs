@@ -7,19 +7,19 @@ const Footer = () => (
     <div className={styles.grid}>
       <div className={styles.gridItem}>
         <Link href="/writing">
-          <div className={styles.footerLink}>Writing</div>
+          <a className={styles.footerLink}>Writing</a>
         </Link>
       </div>
       <div className={styles.gridItem}>
         <Link href="/photos">
-          <div className={styles.footerLink}>Photos</div>
+          <a className={styles.footerLink}>Photos</a>
         </Link>
       </div>
     </div>
     <div className={styles.copyright}>
       {'Copyright © '}
       <Link href="/">
-        <a>Brennan Moore</a>
+        <a className={styles.footerLink}>Brennan Moore</a>
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

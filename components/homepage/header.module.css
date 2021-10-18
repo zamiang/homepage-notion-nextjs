@@ -1,15 +1,27 @@
-.footer {
-  padding-top: 80px;
-  padding-bottom: 30px;
-  text-align: center;
-  position: relative;
+.container {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  z-index: 1;
 }
 
-.footerLink {
+.headerLink {
   cursor: pointer;
   text-decoration: none;
+  font-size: 14px;
   padding-left: 12px;
   padding-right: 12px;
+}
+
+.headerLink:hover {
   text-decoration: underline,
 }
 
@@ -20,16 +32,11 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .gridItem {
   box-sizing: border-box;
   margin: 0;
   flex-direction: row;
-}
-
-.copyright {
-  text-align: center;
-  margin-top: 10px;
 }

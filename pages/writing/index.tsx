@@ -2,6 +2,7 @@ import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
 import Head from 'next/head';
 import React from 'react';
 import Footer from '../../components/homepage/footer';
+import Header from '../../components/homepage/header';
 import { getDatabase } from '../../lib/notion';
 import { PostsList, postsDatabaseId } from '../index';
 import styles from '../index.module.css';
@@ -30,6 +31,7 @@ export default function Home(props: IProps) {
         <meta property="og:description" content={description} key="ogdesc" />
       </Head>
       <main className={styles.container}>
+        <Header />
         <header className={styles.header}>
           <h1>Photos</h1>
         </header>
