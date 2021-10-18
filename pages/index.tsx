@@ -34,17 +34,17 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
         const src = (post.properties.Cover as any)?.files[0]?.file.url;
 
         return (
-          <div key={post.id} className={styles.photos}>
+          <div key={post.id} className={styles.gridItem}>
             {src && (
               <Link href={`/photos/${post.id}`}>
                 <a>
-                  <Image src={src} width="331" height="331" />
+                  <Image src={src} width="342" height="342" />
                 </a>
               </Link>
             )}
-            <h3 className={styles.postTitle}>
+            <h3>
               <Link href={`/photos/${post.id}`}>
-                <a>
+                <a className={styles.postTitle}>
                   <Text text={title} />
                 </a>
               </Link>

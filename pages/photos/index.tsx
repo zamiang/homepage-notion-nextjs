@@ -30,12 +30,14 @@ export default function Home(props: IProps) {
         <meta property="og:title" content={title} key="ogtitle" />
         <meta property="og:description" content={description} key="ogdesc" />
       </Head>
-      <main className={styles.container}>
+      <main>
         <Header />
-        <header className={styles.header}>
-          <h1>Photos</h1>
-        </header>
-        <PhotosGrid photos={props.photos} />
+        <article>
+          <header className={styles.header}>
+            <h1>Photos</h1>
+          </header>
+          <PhotosGrid photos={props.photos} />
+        </article>
         <Footer />
       </main>
     </div>

@@ -39,10 +39,12 @@ export default function Home(props: IProps) {
       </Head>
       <main className={styles.container}>
         <Header />
-        <header className={styles.header}>
-          <h1>Writing</h1>
-        </header>
-        <PostsList posts={posts} />
+        <article>
+          <header className={styles.header}>
+            <h1>Writing</h1>
+          </header>
+          <PostsList posts={posts} />
+        </article>
         <Footer />
       </main>
     </div>

@@ -38,3 +38,16 @@
 .section:last-child {
   border-bottom: 0px solid;
 }
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: flex-start;
+  gap: 46px;
+}
+
+.gridItem {
+  flex: 33% 1;
+}
