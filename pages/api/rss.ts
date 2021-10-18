@@ -4,7 +4,7 @@ import { postsDatabaseId } from '../index';
 
 const title = 'Articles by Brennan Moore';
 const description = 'todo';
-const baseUrl = 'https://www.zamaing.com/writing';
+const baseUrl = 'https://www.zamaing.com/';
 
 const getRssXml = async () => {
   const posts = await getDatabase(postsDatabaseId);
@@ -27,7 +27,7 @@ const getRssXml = async () => {
 
   orderedPosts.forEach((post) => {
     const postDate = Date.parse(post.last_edited_time);
-    const postHref = `${baseUrl}/${post.id}`;
+    const postHref = `${baseUrl}/writing/${post.id}`;
 
     if (!latestPostDate || postDate > Date.parse(latestPostDate)) {
       latestPostDate = new Date(post.last_edited_time).toUTCString();
@@ -58,11 +58,11 @@ const getRssXml = async () => {
       >
         <channel>
             <title><![CDATA[${title}]]></title>
-            <link>https://www.zamiang.com</link>
+            <link>${baseUrl}</link>
             <description>
               <![CDATA[${description}]]>
             </description>
-            <atom:link href="https://www.zamiang.com/rss.xml" rel="self" type="application/rss+xml" />
+            <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
             <language>en</language>
             <lastBuildDate>${latestPostDate}</lastBuildDate>
             ${rssItemsXml}
