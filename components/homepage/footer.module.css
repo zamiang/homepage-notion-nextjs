@@ -1,0 +1,38 @@
+.footer {
+  padding-top: 80px;
+  padding-bottom: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.footerLink {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 24px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.footerLink:hover {
+  text-decoration: underline,
+}
+
+.grid {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridItem {
+  box-sizing: border-box;
+  margin: 0;
+  flex-direction: row;
+}
+
+.copyright {
+  text-align: center;
+}
