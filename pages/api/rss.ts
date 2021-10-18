@@ -73,7 +73,7 @@ const getRssXml = async () => {
 export default async (_req: Request, res: Response) => {
   const processedXml = await getRssXml();
 
-  res.setHeader('Content-Type', 'text/xml');
+  res.setHeader('Content-Type', 'text/xml; charset=utf-8');
   res.write(processedXml);
   res.end();
 };
