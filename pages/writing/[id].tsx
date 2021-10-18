@@ -35,6 +35,9 @@ export const Text = (props: { text?: IText[] }) => {
           annotations: { bold, code, color, italic, strikethrough, underline },
           text,
         } = value;
+        if (!text) {
+          return null;
+        }
         return (
           <span
             key={index}
