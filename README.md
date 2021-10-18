@@ -1,61 +1,32 @@
-# Kelp: Your information filtration system
+This is a [Next.js](https://nextjs.org/) blog using [Notions Public API](https://developers.notion.com).
 
-Kelp brings your data together in one place. Pivot your meetings by what documents the attendees have edited recently. By associating person, a time slot and documents together, Kelp infers associations between information, making the information easier to find. Prepare for your next meeting in a flash!
+__Demo:__ [https://www.zamiang.com](https://www.zamiang.com)
 
-- https://chrome.google.com/webstore/devconsole/54522bcf-fc90-4948-a383-4e65c5514ba3/onkkkcfnlbkoialleldfbgodakajfpnl/edit?hl=en
-- https://dashboard.render.com/web/srv-bv8ngnrlc6ck61fvgl8g
+__Based on:__ [https://samuelkraft.com/blog/building-a-notion-blog-with-public-api](https://samuelkraft.com/blog/building-a-notion-blog-with-public-api)
 
-This aspires to do a few things with instant value:
+## Getting Started
 
-- help you find what you need when you need it
-- provide the ‘right information at the right time’
-- be easy to understand (no 'black box' recommendation)
+First, follow Notions [getting started guide](https://developers.notion.com/docs/getting-started) to get a `NOTION_TOKEN` and a `NOTION_DATABASE_ID`, then add them to a file called `.env.local`.
 
-In the future it will also do things that are more 'vitamin' like
+```
+NOTION_TOKEN=
+NOTION_DATABASE_ID=
+```
 
-- Stay accountable to what you want to be doing
-- Help separate from work
-- Show information about relationships over time
+Install dependencies
 
-## Open Source
+```bash
+npm install
+```
 
-I want this to be open source and free but with paid services on top. Simply put, a free version you can run in your browser that maintains no 'state' and a paid version that has secure database and is easily accessible across devices.
+Start the server with
 
-## Getting started
+```bash
+npm run dev
+```
 
-First create a [Google Oauth] app and enable the APIs you want to use. Currently, those are
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- [Google Drive API]
-- [GMail API]
-- [Google Calendar API]
+#### Deploy to vercel
 
-Then proceed with your node setup steps. Ensure you are using node 14 or greater
-
-    npm install
-
-Generate a signingKey
-
-    npx node-jose-tools newkey -s 256 -t oct -a HS512
-
-Generate an encryptionKey
-
-    npx node-jose-tools newkey -s 256 -t oct -a A256GCM
-
-Add these keys and your your google oauth app tokens to [.env.local]
-
-    NEXT_PUBLIC_GOOGLE_CLIENT_ID=foo-bar-baz.apps.googleusercontent.com
-    GOOGLE_CLIENT_SECRET=foo
-    JWT_SECRET=foo-bar-change-me
-    JWT_SIGNING_KEY=signingKeyHere
-    JWT_ENCRYPTION_KEY=encryptionKeyHere
-    DATABASE_URL=postgresql://{whoami}@localhost/kelp
-
-When starting the app in development mode
-
-    npm run dev
-
-[google oauth]: https://developers.google.com/identity/protocols/oauth2
-[google drive api]: https://developers.google.com/drive
-[gmail api]: https://developers.google.com/gmail/api
-[google calendar api]: https://developers.google.com/calendar
-[.env.local]: https://nextjs.org/docs/basic-features/environment-variables
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsamuelkraft%2Fnotion-blog-nextjs&env=NOTION_TOKEN,NOTION_DATABASE_ID&envDescription=Please%20add%20NOTION_TOKEN%20and%20NOTION_DATABASE_ID%20that%20is%20required%20to%20connect%20the%20blog%20to%20your%20notion%20account.&envLink=https%3A%2F%2Fdevelopers.notion.com%2Fdocs%2Fgetting-started&project-name=notion-blog-nextjs&repo-name=notion-blog-nextjs&demo-title=Notion%20Blog%20Next%20JS&demo-description=%20This%20is%20a%20Next.js%20blog%20using%20Notions%20Public%20API.&demo-url=notion-blog-nextjs-coral.vercel.app)
