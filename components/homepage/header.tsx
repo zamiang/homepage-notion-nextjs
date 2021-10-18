@@ -7,7 +7,7 @@ const Header = () => (
     <div className={styles.grid}>
       <div className={styles.gridItem}>
         <Link href="/">
-          <a>Brennan Moore</a>
+          <a className={styles.headerLink}>Brennan Moore</a>
         </Link>
       </div>
       <div className={styles.gridItem}>

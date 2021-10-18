@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './footer.module.css';
 
 const Footer = () => (
-  <React.Fragment>
+  <div className={styles.footer}>
     <div className={styles.grid}>
       <div className={styles.gridItem}>
         <Link href="/writing">
@@ -15,16 +15,28 @@ const Footer = () => (
           <a className={styles.footerLink}>Photos</a>
         </Link>
       </div>
+      <div className={styles.gridItem}>
+        <Link href="/api/rss">
+          <a className={styles.footerLink}>Rss</a>
+        </Link>
+      </div>
+      <div className={styles.gridItem}>
+        <Link href="https://github.com/zamiang/homepage-notion-nextjs">
+          <a className={styles.footerLink}>Source</a>
+        </Link>
+      </div>
     </div>
     <div className={styles.copyright}>
       {'Copyright © '}
       <Link href="/">
-        <a className={styles.footerLink}>Brennan Moore</a>
+        <a className={styles.footerLink} style={{ margin: 0 }}>
+          Brennan Moore
+        </a>
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </div>
-  </React.Fragment>
+  </div>
 );
 
 export default Footer;

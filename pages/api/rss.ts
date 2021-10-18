@@ -4,6 +4,7 @@ import { postsDatabaseId } from '../index';
 
 const title = 'Articles by Brennan Moore';
 const description = 'todo';
+const baseUrl = 'https://www.zamaing.com/writing';
 
 const getRssXml = async () => {
   const posts = await getDatabase(postsDatabaseId);
@@ -26,21 +27,14 @@ const getRssXml = async () => {
 
   orderedPosts.forEach((post) => {
     const postDate = Date.parse(post.last_edited_time);
-
-    // Remember to change this URL to your own!
-    const postHref = `https://www.zamaing.com/writing/${post.id}`;
+    const postHref = `${baseUrl}/${post.id}`;
 
     if (!latestPostDate || postDate > Date.parse(latestPostDate)) {
       latestPostDate = post.last_edited_time;
     }
 
-    const date = new Date((post.properties.Date as any).date.start).toLocaleString('en-US', {
-      month: 'short',
-      day: '2-digit',
-      year: 'numeric',
-    });
-
-    const title = (post.properties.Title as any).title;
+    const date = new Date((post.properties.Date as any).date.start).toUTCString();
+    const title = (post.properties.Title as any).title[0]?.plain_text;
     const excerpt = (post.properties.Excerpt as any).rich_text[0]?.plain_text;
 
     rssItemsXml += `
@@ -55,7 +49,6 @@ const getRssXml = async () => {
         </item>`;
   });
 
-  // Edit the '<link>' and '<description>' data here to reflect your own website details!
   return `<?xml version="1.0" ?>
       <rss
         xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -77,7 +70,7 @@ const getRssXml = async () => {
 };
 
 export default async (_req: Request, res: Response) => {
-  const processedXml = getRssXml();
+  const processedXml = await getRssXml();
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(processedXml);
