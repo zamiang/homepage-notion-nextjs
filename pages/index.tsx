@@ -108,6 +108,12 @@ export default function Home(props: IProps) {
         {/* Twitter */}
         <meta name="twitter:card" content="summary" key="twcard" />
         <meta name="twitter:creator" content="zamiang" key="twhandle" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS Feed for zamiang.com"
+          href="/blog.rss"
+        />
 
         {/* Open Graph */}
         <meta property="og:url" content="https://www.zamiang.com" key="ogurl" />

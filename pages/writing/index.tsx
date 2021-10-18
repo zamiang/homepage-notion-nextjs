@@ -24,9 +24,15 @@ export default function Home(props: IProps) {
         {/* Twitter */}
         <meta name="twitter:card" content="summary" key="twcard" />
         <meta name="twitter:creator" content="zamiang" key="twhandle" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS Feed for zamiang.com"
+          href="/blog.rss"
+        />
 
         {/* Open Graph */}
-        <meta property="og:url" content="https://www.zamiang.com/photos" key="ogurl" />
+        <meta property="og:url" content="https://www.zamiang.com/writing" key="ogurl" />
         <meta property="og:site_name" content="Zamiang" key="ogsitename" />
         <meta property="og:title" content={title} key="ogtitle" />
         <meta property="og:description" content={description} key="ogdesc" />
