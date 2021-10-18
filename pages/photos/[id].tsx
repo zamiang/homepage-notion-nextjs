@@ -1,61 +1,15 @@
 import Head from 'next/head';
-import Link from 'next/link';
+import Image from 'next/image';
 import React, { Fragment } from 'react';
+import Footer from '../../components/homepage/footer';
+import Header from '../../components/homepage/header';
 import { getBlocks, getDatabase, getPage } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
+import { Text } from '../writing/[id]';
 import styles from './photos.module.css';
 
-interface IText {
-  type: 'text';
-  text: {
-    content: string;
-    link?: string;
-  };
-  annotations: {
-    bold: boolean;
-    italic: boolean;
-    strikethrough: boolean;
-    underline: boolean;
-    code: boolean;
-    color: 'default';
-  };
-  plain_text: string;
-  href?: string;
-}
-
-export const Text = (props: { text?: IText[] }) => {
-  if (!props.text) {
-    return null;
-  }
-  return (
-    <React.Fragment>
-      {props.text.map((value: any, index: number) => {
-        const {
-          annotations: { bold, code, color, italic, strikethrough, underline },
-          text,
-        } = value;
-        return (
-          <span
-            key={index}
-            className={[
-              bold ? styles.bold : '',
-              code ? styles.code : '',
-              italic ? styles.italic : '',
-              strikethrough ? styles.strikethrough : '',
-              underline ? styles.underline : '',
-            ].join(' ')}
-            style={color !== 'default' ? { color } : {}}
-          >
-            {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
-          </span>
-        );
-      })}
-    </React.Fragment>
-  );
-};
-
-const renderBlock = (block: Block) => {
-  const { type, id } = block;
+const renderBlock = (block: any) => {
+  const { type } = block;
   const value = block[type];
 
   switch (type) {
@@ -83,33 +37,6 @@ const renderBlock = (block: Block) => {
           <Text text={value.text} />
         </h3>
       );
-    case 'bulleted_list_item':
-    case 'numbered_list_item':
-      return (
-        <li>
-          <Text text={value.text} />
-        </li>
-      );
-    case 'to_do':
-      return (
-        <div>
-          <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
-            <Text text={value.text} />
-          </label>
-        </div>
-      );
-    case 'toggle':
-      return (
-        <details>
-          <summary>
-            <Text text={value.text} />
-          </summary>
-          {value.children?.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
-        </details>
-      );
     case 'child_page':
       return <p>{value.title}</p>;
     case 'image':
@@ -117,7 +44,7 @@ const renderBlock = (block: Block) => {
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
       return (
         <figure>
-          <img src={src} alt={caption} />
+          <Image src={src} alt={caption} height="730" width="730" />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
@@ -140,7 +67,7 @@ export default function Post({ page, blocks }) {
         {src && <meta property="og:image" content={src} key="ogdesc" />}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Header />
       <article className={styles.container}>
         <h1 className={styles.name}>
           <Text text={page.properties.Title.title} />
@@ -149,11 +76,9 @@ export default function Post({ page, blocks }) {
           {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
-          <Link href="/">
-            <a className={styles.back}>← Go home</a>
-          </Link>
         </section>
       </article>
+      <Footer />
     </div>
   );
 }
@@ -167,7 +92,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: { params: { id: string } }) => {
   const { id } = context.params;
   const page = await getPage(id);
   const blocks = await getBlocks(id);
@@ -182,7 +107,7 @@ export const getStaticProps = async (context) => {
         children: await getBlocks(block.id),
       })),
   );
-  const blocksWithChildren = blocks.map((block) => {
+  const blocksWithChildren = blocks.map((block: any) => {
     // Add child blocks if the block should contain children but none exists
     if (block.has_children && !block[block.type].children) {
       block[block.type]['children'] = childBlocks.find((x) => x.id === block.id)?.children;

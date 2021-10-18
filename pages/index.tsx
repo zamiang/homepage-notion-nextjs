@@ -27,7 +27,7 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
   return (
     <div className={styles.grid}>
       {orderedPhotos.map((post) => {
-        const date = new Date(post.properties.Date.date.start).toLocaleString('en-US', {
+        const date = new Date(post.properties.Date.date?.start).toLocaleString('en-US', {
           month: 'short',
           day: '2-digit',
           year: 'numeric',
@@ -60,18 +60,12 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
 };
 
 export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) => {
-  const orderedPosts = props.posts
-    .filter(
-      (p) =>
-        (p.properties.Status as any).select?.name === 'Live' &&
-        (p.properties['Featured on homepage'] as any).select?.name === 'Featured',
-    )
-    .sort((a, b) =>
-      new Date((a.properties.Date as any).date?.start) >
-      new Date((b.properties.Date as any).date?.start)
-        ? -1
-        : 1,
-    );
+  const orderedPosts = props.posts.sort((a, b) =>
+    new Date((a.properties.Date as any).date?.start) >
+    new Date((b.properties.Date as any).date?.start)
+      ? -1
+      : 1,
+  );
 
   return (
     <ul className={styles.posts}>
@@ -103,6 +97,12 @@ export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) =>
 };
 
 export default function Home(props: IProps) {
+  const posts = props.posts.filter(
+    (p) =>
+      (p.properties.Status as any).select?.name === 'Live' &&
+      (p.properties['Featured on homepage'] as any).select?.name === 'Featured',
+  );
+
   return (
     <div>
       <Head>
@@ -120,68 +120,70 @@ export default function Home(props: IProps) {
       </Head>
       <main className={styles.container}>
         <Header />
-        <header className={styles.header}>
-          <Image src="/about.jpg" height="171" width="256" />
-          <h1>Hi, I’m Brennan.</h1>
-          <p>I build innovative digital products people love.</p>
-        </header>
-        <div className={styles.section}>
-          Over the past 12 years, I've built web-based tools for non-profits, art collectors, bike
-          shares, e-commerce companies. Some examples:
-          <ul>
-            <li>
-              <div className={styles.listHeading}>
-                <a href="https://kelp.nyc/">Kelp</a>
-              </div>
-              <div className={styles.listBody}>
-                Your information filtration system. Kelp serves you relevant documents and webpages
-                when you need them.
-              </div>
-            </li>
-            <li>
-              <div className={styles.listHeading}>
-                <a href="https://www.cityblock.com/">Cityblock Health</a>
-              </div>
-              <div className={styles.listBody}>
-                I was a founding team member helping build a scalable solution to address the root
-                causes of health for underserved urban populations. I ran the engineering team.
-              </div>
-            </li>
-            <li>
-              <div className={styles.listHeading}>
-                <a href="https://www.motivateco.com/">Motivate</a>
-              </div>
-              <div className={styles.listBody}>
-                I lead the engineering team through first successful PCI compliance for Citi Bike. I
-                also managed all in-house and contractor software development for the ~10 bike
-                shares Motivate ran around the world.
-              </div>
-            </li>
-            <li>
-              <div className={styles.listHeading}>
-                <a href="http://www.vislet.com/">Vislet</a>
-              </div>
-              <div className={styles.listBody}>
-                A set of small interactive visualizations to help us understand the cities we live
-                in.
-              </div>
-            </li>
-            <li>
-              <div className={styles.listHeading}>
-                <a href="https://artsy.net/">Artsy</a>
-              </div>
-              <div className={styles.listBody}>
-                I ran the team responsible for making sure Artsy’s public facing web presence is
-                fast and maintainable and that out custom tools for live events such as art fairs
-                and auction worked well.
-              </div>
-            </li>
-          </ul>
-        </div>
-        <h2 className={styles.heading}>All Posts</h2>
-        <PostsList posts={props.posts} />
-        <h2 className={styles.heading}>Photos</h2>
-        <PhotosGrid photos={props.photos} />
+        <article>
+          <header className={styles.header}>
+            <Image src="/about.jpg" height="171" width="256" />
+            <h1>Hi, I’m Brennan.</h1>
+            <p>I build innovative digital products people love.</p>
+          </header>
+          <div className={styles.section}>
+            Over the past 12 years, I've built web-based tools for non-profits, art collectors, bike
+            shares, e-commerce companies. Some examples:
+            <ul>
+              <li>
+                <div className={styles.listHeading}>
+                  <a href="https://kelp.nyc/">Kelp</a>
+                </div>
+                <div className={styles.listBody}>
+                  Your information filtration system. Kelp serves you relevant documents and
+                  webpages when you need them.
+                </div>
+              </li>
+              <li>
+                <div className={styles.listHeading}>
+                  <a href="https://www.cityblock.com/">Cityblock Health</a>
+                </div>
+                <div className={styles.listBody}>
+                  I was a founding team member helping build a scalable solution to address the root
+                  causes of health for underserved urban populations. I ran the engineering team.
+                </div>
+              </li>
+              <li>
+                <div className={styles.listHeading}>
+                  <a href="https://www.motivateco.com/">Motivate</a>
+                </div>
+                <div className={styles.listBody}>
+                  I lead the engineering team through first successful PCI compliance for Citi Bike.
+                  I also managed all in-house and contractor software development for the ~10 bike
+                  shares Motivate ran around the world.
+                </div>
+              </li>
+              <li>
+                <div className={styles.listHeading}>
+                  <a href="http://www.vislet.com/">Vislet</a>
+                </div>
+                <div className={styles.listBody}>
+                  A set of small interactive visualizations to help us understand the cities we live
+                  in.
+                </div>
+              </li>
+              <li>
+                <div className={styles.listHeading}>
+                  <a href="https://artsy.net/">Artsy</a>
+                </div>
+                <div className={styles.listBody}>
+                  I ran the team responsible for making sure Artsy’s public facing web presence is
+                  fast and maintainable and that out custom tools for live events such as art fairs
+                  and auction worked well.
+                </div>
+              </li>
+            </ul>
+          </div>
+          <h2 className={styles.heading}>All Posts</h2>
+          <PostsList posts={posts} />
+          <h2 className={styles.heading}>Photos</h2>
+          <PhotosGrid photos={props.photos} />
+        </article>
         <Footer />
       </main>
     </div>

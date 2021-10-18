@@ -15,7 +15,7 @@ const Header = () => (
           <a className={styles.headerLink}>Writing</a>
         </Link>
         <Link href="/photos">
-          <a className={styles.headerLink}>Updates</a>
+          <a className={styles.headerLink}>Photos</a>
         </Link>
       </div>
     </div>

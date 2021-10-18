@@ -35,7 +35,7 @@
 /* H1 */
 h1.notion-heading,
 .notion-page__properties .notion-property__text {
-  font-family: psfournier-std, "Nanum Myeongjo", serif;
+  font-family: psfournier-std, 'Nanum Myeongjo', serif;
   font-weight: 200;
   font-size: 1.875rem;
 }
@@ -52,7 +52,6 @@ h1.notion-heading .notion-semantic-string,
   text-align: center;
 }
 
-
 h1.notion-heading .notion-semantic-string,
 .notion-page__property:first-child .notion-property__text .notion-semantic-string {
   line-height: 1.27;
@@ -62,14 +61,14 @@ h1.notion-heading .notion-semantic-string,
 }
 @media screen and (min-width: 50em) {
   h1.notion-heading .notion-semantic-string,
-.notion-page__property:first-child .notion-property__text .notion-semantic-string {
+  .notion-page__property:first-child .notion-property__text .notion-semantic-string {
     font-size: 2.55rem;
   }
 }
 
 /* H2 */
 h2.notion-heading {
-  font-family: psfournier-std, "Nanum Myeongjo", serif;
+  font-family: psfournier-std, 'Nanum Myeongjo', serif;
   font-weight: 200;
   letter-spacing: -0.01em;
 }
@@ -238,7 +237,7 @@ h3.notion-heading {
 .notion-collection-card__property .notion-semantic-string {
   display: block;
   margin: 0.6em 0 0.4em;
-  font-family: psfournier-std, "Nanum Myeongjo", serif;
+  font-family: psfournier-std, 'Nanum Myeongjo', serif;
   font-weight: 200;
   font-size: 1.5rem;
   line-height: 1.3;
@@ -247,10 +246,7 @@ h3.notion-heading {
 }
 
 /* Add underline to title on hover of project card */
-.notion-collection-card.gallery
-  .notion-collection-card__property
-  .notion-semantic-string
-  span {
+.notion-collection-card.gallery .notion-collection-card__property .notion-semantic-string span {
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease-in;
 }
@@ -287,13 +283,13 @@ h3.notion-heading {
 
 /* Adds comma before each item */
 .notion-pill::before {
-  content: ", ";
+  content: ', ';
   white-space: pre;
 }
 
 /* Removes comma before first item */
 .notion-pill.first::before {
-  content: "";
+  content: '';
 }
 
 /* Make all but the default colour display as a lighter colour */
@@ -322,10 +318,7 @@ h3.notion-heading {
 .notion-header__content.no-icon.has-cover .notion-header__title-wrapper {
   margin-top: 0;
 }
-article[id*="photos-"]
-  .notion-page__property
-  > .property-49775679
-  .notion-pill {
+article[id*='photos-'] .notion-page__property > .property-49775679 .notion-pill {
   font-weight: 600;
   font-size: 0.75rem;
   line-height: 1.25;
@@ -401,7 +394,7 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 }
 
 /* Center aligns list on article listing page */
-[id*="writing"] .notion-collection-list {
+[id*='writing'] .notion-collection-list {
   margin: 0 auto;
 }
 
@@ -416,7 +409,7 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
   .notion-collection-list__item {
     margin: 2em 0 3em 0;
   }
-  [id*="writing"] .notion-collection-list__item {
+  [id*='writing'] .notion-collection-list__item {
     margin-bottom: 5em;
   }
 }
@@ -440,9 +433,7 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
   white-space: normal;
 }
 .notion-collection-list__item-content,
-[id*="writing"]
-  .notion-collection-list__item-property
-  .notion-property__select {
+[id*='writing'] .notion-collection-list__item-property .notion-property__select {
   display: block;
 }
 .notion-property__title {
@@ -460,9 +451,7 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 }
 
 /* Resets font size of date */
-.notion-collection-list__item-property
-  .notion-property__text
-  .notion-semantic-string {
+.notion-collection-list__item-property .notion-property__text .notion-semantic-string {
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -478,18 +467,13 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 }
 
 /* Resets spacing and padding on date */
-.notion-collection-list__item-property
-  .notion-property__date
-  .notion-semantic-string {
+.notion-collection-list__item-property .notion-property__date .notion-semantic-string {
   min-height: auto;
   padding: 0;
 }
 
 /* Set colour and size of date */
-.notion-collection-list__item-property
-  .notion-property__date
-  .notion-semantic-string
-  .date {
+.notion-collection-list__item-property .notion-property__date .notion-semantic-string .date {
   color: var(--color-text-gray);
   font-size: 0.875rem;
 }
@@ -498,10 +482,8 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 .notion-collection-list__item-property .property-6f547c5f {
   margin: 0.5em 0 1em;
 }
-.notion-collection-list__item-property
-  .property-6f547c5f
-  .notion-semantic-string {
-  font-family: psfournier-std, "Nanum Myeongjo", serif;
+.notion-collection-list__item-property .property-6f547c5f .notion-semantic-string {
+  font-family: psfournier-std, 'Nanum Myeongjo', serif;
   font-weight: 200;
   font-size: 1.875rem;
   letter-spacing: -0.01em;
@@ -510,9 +492,7 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
   transition: border-color 0.2s ease-in;
 }
 @media screen and (min-width: 32em) {
-  .notion-collection-list__item-property
-    .property-6f547c5f
-    .notion-semantic-string {
+  .notion-collection-list__item-property .property-6f547c5f .notion-semantic-string {
     font-size: 2.111rem;
     line-height: 1.15;
   }
@@ -538,22 +518,24 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 /* --- Article page --- */
 
 /* Set width of body and center it */
-#block-writing, #block-photos,
- [id*="writing-"] .notion-page__properties,
-[id*="writing-"] .notion-text,
-[id*="writing-"] .notion-heading,
-[id*="writing-"] .notion-quote,
-[id*="writing-"] .notion-divider,
-[id*="writing-"] .notion-collection,
-[id*="writing-"] .notion-caption,
-[id*="writing-"] .notion-bulleted-list,
-[id*="writing-"] .notion-numbered-list {
+#block-writing,
+#block-photos,
+[id*='writing-'] .notion-page__properties,
+[id*='writing-'] .notion-text,
+[id*='writing-'] .notion-heading,
+[id*='writing-'] .notion-quote,
+[id*='writing-'] .notion-divider,
+[id*='writing-'] .notion-collection,
+[id*='writing-'] .notion-caption,
+[id*='writing-'] .notion-bulleted-list,
+[id*='writing-'] .notion-numbered-list {
   width: 100%;
   max-width: 730px;
   margin-left: auto;
   margin-right: auto;
 }
-.notion-collection-table__cell.title, .notion-collection-table__head-cell.title {
+.notion-collection-table__cell.title,
+.notion-collection-table__head-cell.title {
   padding-left: 0px;
 }
 .notion-collection-table__head-cell {
@@ -562,62 +544,62 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 .notion-collection-table__head-cell.number {
   text-align: right;
 }
-[id*="writing-"] .notion-column-list {
+[id*='writing-'] .notion-column-list {
   width: 100%;
   max-width: 730px;
   margin-left: auto;
   margin-right: auto;
 }
-[id*="writing-"] .notion-page__properties {
+[id*='writing-'] .notion-page__properties {
   margin-bottom: 16px;
 }
 @media screen and (min-width: 680px) {
-  [id*="writing-"] .notion-page__properties {
+  [id*='writing-'] .notion-page__properties {
     margin-bottom: 40px;
   }
 }
 
 /* Style date */
-[id*="writing-"] .notion-property__date .notion-semantic-string .date {
+[id*='writing-'] .notion-property__date .notion-semantic-string .date {
   color: var(--color-text-gray);
   font-size: 1rem;
 }
 @media screen and (min-width: 32em) {
-  [id*="writing-"] .notion-property__date .notion-semantic-string .date {
+  [id*='writing-'] .notion-property__date .notion-semantic-string .date {
     font-size: 0.875rem;
   }
 }
 
 /* Style of page title can be found with heading styles */
 /* Style body titles */
-[id*="writing-"] h2.notion-heading {
-  font-family: reason-new, "Work Sans", sans-serif;
+[id*='writing-'] h2.notion-heading {
+  font-family: reason-new, 'Work Sans', sans-serif;
   font-weight: 500;
   letter-spacing: 0.015em;
   margin-top: 1.25em;
   margin-bottom: 0.25em;
   text-indent: -0.05em;
 }
-[id*="writing-"] h3.notion-heading {
+[id*='writing-'] h3.notion-heading {
   margin-top: 1.75rem;
 }
 
 /* Style images */
-[id*="writing-"] .notion-image {
+[id*='writing-'] .notion-image {
   margin-bottom: 1.25em;
 }
 @media screen and (min-width: 32em) {
-  [id*="writing-"] .notion-image {
+  [id*='writing-'] .notion-image {
     margin-bottom: 2em;
   }
 }
-[id*="writing-"] .notion-image.normal {
+[id*='writing-'] .notion-image.normal {
   width: 100%;
   max-width: 730px;
   margin-left: auto;
   margin-right: auto;
 }
-[id*="writing-"] .notion-image.normal img {
+[id*='writing-'] .notion-image.normal img {
   margin: 0 auto 0.5em;
 }
 
@@ -635,22 +617,22 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 }
 
 /* Control space between an image and heading */
-[id*="writing-"] .notion-image.page-width + h2.notion-heading {
+[id*='writing-'] .notion-image.page-width + h2.notion-heading {
   margin-top: 1em;
 }
 
 /* Control space between body text and image */
-[id*="writing-"] .notion-text + .notion-image {
+[id*='writing-'] .notion-text + .notion-image {
   margin-top: 1.25em;
 }
 @media screen and (min-width: 32em) {
-  [id*="writing-"] .notion-text + .notion-image {
+  [id*='writing-'] .notion-text + .notion-image {
     margin-top: 2em;
   }
 }
 
 /* Style quotes */
-[id*="writing-"] .notion-quote {
+[id*='writing-'] .notion-quote {
   margin-top: 1.25em;
   margin-bottom: 1.25em;
   padding-left: 1.5em;
@@ -665,14 +647,14 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 }
 
 /* Style dividers to display as centered ellipsis */
-[id*="writing-"] .notion-divider {
+[id*='writing-'] .notion-divider {
   border-bottom: none;
   margin: 0 auto;
   text-align: center;
   font-size: 1.25rem;
 }
-[id*="writing-"] .notion-divider::before {
-  content: "· · ·";
+[id*='writing-'] .notion-divider::before {
+  content: '· · ·';
 }
 
 /* --- MISC --- */
@@ -705,15 +687,15 @@ Article view: [id*="writing-"] becomes [id*="journal-"]
 }
 
 .notion-collection-table__wrapper {
- margin-top: 0px;
+  margin-top: 0px;
 }
 
-.notion-collection-table__cell.title>a .notion-semantic-string>span {
+.notion-collection-table__cell.title > a .notion-semantic-string > span {
   border-bottom: 0px solid;
   pointer-events: none;
 }
 
-.notion-collection-table__cell.title>a:hover .notion-semantic-string>span {
+.notion-collection-table__cell.title > a:hover .notion-semantic-string > span {
   border-bottom: 0px solid;
   pointer-events: none;
 }

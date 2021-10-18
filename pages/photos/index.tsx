@@ -35,7 +35,6 @@ export default function Home(props: IProps) {
         <header className={styles.header}>
           <h1>Photos</h1>
         </header>
-        <h2 className={styles.heading}>Photos</h2>
         <PhotosGrid photos={props.photos} />
         <Footer />
       </main>

@@ -19,8 +19,8 @@
     "dev": "next -p ${PORT:-3000}",
     "lint": "npx eslint './**/*.{js,ts,tsx}'",
     "lint:fix": "npx eslint --fix './**/*.{js,ts,tsx}'",
-    "prettier": "prettier --write \"{pages,components}/**/*.{ts,tsx,js}\"",
-    "prettier:check": "prettier --list-different \"{pages,components}/**/*.{ts,tsx,js}\"",
+    "prettier": "prettier --write \"{pages,components}/**/*.{ts,tsx,js,css}\"",
+    "prettier:check": "prettier --list-different \"{pages,components}/**/*.{ts,tsx,js,css}\"",
     "start": "next start -p ${PORT:-3000}",
     "typecheck": "node node_modules/.bin/tsc --project tsconfig.json --noEmit --pretty"
   },

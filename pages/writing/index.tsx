@@ -15,6 +15,7 @@ interface IProps {
 }
 
 export default function Home(props: IProps) {
+  const posts = props.posts.filter((p) => (p.properties.Status as any).select?.name === 'Live');
   return (
     <div>
       <Head>
@@ -33,10 +34,9 @@ export default function Home(props: IProps) {
       <main className={styles.container}>
         <Header />
         <header className={styles.header}>
-          <h1>Photos</h1>
+          <h1>Writing</h1>
         </header>
-        <h2 className={styles.heading}>All Posts</h2>
-        <PostsList posts={props.posts} />
+        <PostsList posts={posts} />
         <Footer />
       </main>
     </div>

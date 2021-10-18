@@ -11,8 +11,8 @@ body {
   padding: 0;
   margin: 0;
 
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
   /* Make the text nice and crisp */
   -webkit-font-smoothing: antialiased;
@@ -33,9 +33,56 @@ a {
 }
 
 h1 {
-  font-weight: 800;
+  line-height: 1.27;
+  letter-spacing: -0.01em;
+  font-size: 1.875rem;
+  margin: 0 auto 15px auto;
+}
+
+@media screen and (min-width: 50em) {
+  h1 {
+    font-size: 2.55rem;
+  }
+}
+
+h2 {
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  margin-bottom: 0.25em;
 }
 
 strong {
   font-weight: 500;
+}
+
+article {
+width: 100%;
+max-width: 730px;
+margin-left: auto ;
+margin-right: auto ;
+margin-top: 150px;
+margin-bottom: 150px;
+}
+
+figure {
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  margin: 0px;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+figcaption {
+  text-align: center;
+  padding: 6px 0 0;
+  color: var(--color-text-gray);
+}
+
+/* Fix border colour for captions that contain links */
+figcaption a {
+  opacity: 1;
+  border-color: var(--color-text-gray);
 }

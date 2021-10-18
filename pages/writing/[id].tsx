@@ -1,6 +1,7 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import React, { Fragment } from 'react';
+import Footer from '../../components/homepage/footer';
+import Header from '../../components/homepage/header';
 import { getBlocks, getDatabase, getPage } from '../../lib/notion';
 import { postsDatabaseId } from '../index';
 import styles from './writing.module.css';
@@ -144,7 +145,7 @@ export default function Post({ page, blocks }: any) {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Header />
       <article className={styles.container}>
         <h1 className={styles.name}>
           <Text text={page.properties.Title.title} />
@@ -153,11 +154,9 @@ export default function Post({ page, blocks }: any) {
           {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
-          <Link href="/">
-            <a className={styles.back}>← Go home</a>
-          </Link>
         </section>
       </article>
+      <Footer />
     </div>
   );
 }
