@@ -20,7 +20,7 @@ const nextConfig = {
         destination: '/api/sitemap',
       },
       {
-        source: '/blog.rss',
+        source: '/rss.xml',
         destination: '/api/rss',
       },
     ];

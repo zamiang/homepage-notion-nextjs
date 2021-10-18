@@ -30,7 +30,7 @@ const getRssXml = async () => {
     const postHref = `${baseUrl}/${post.id}`;
 
     if (!latestPostDate || postDate > Date.parse(latestPostDate)) {
-      latestPostDate = post.last_edited_time;
+      latestPostDate = new Date(post.last_edited_time).toUTCString();
     }
 
     const date = new Date((post.properties.Date as any).date.start).toUTCString();
@@ -62,6 +62,7 @@ const getRssXml = async () => {
             <description>
               <![CDATA[${description}]]>
             </description>
+            <atom:link href="https://www.zamiang.com/rss.xml" rel="self" type="application/rss+xml" />
             <language>en</language>
             <lastBuildDate>${latestPostDate}</lastBuildDate>
             ${rssItemsXml}

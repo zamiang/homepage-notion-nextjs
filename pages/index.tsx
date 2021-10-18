@@ -112,7 +112,7 @@ export default function Home(props: IProps) {
           rel="alternate"
           type="application/rss+xml"
           title="RSS Feed for zamiang.com"
-          href="/blog.rss"
+          href="/rss.xml"
         />
 
         {/* Open Graph */}

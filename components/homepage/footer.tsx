@@ -16,7 +16,7 @@ const Footer = () => (
         </Link>
       </div>
       <div className={styles.gridItem}>
-        <Link href="/api/rss">
+        <Link href="/rss.xml">
           <a className={styles.footerLink}>Rss</a>
         </Link>
       </div>
