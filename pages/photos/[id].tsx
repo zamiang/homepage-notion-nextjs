@@ -55,7 +55,7 @@ const renderBlock = (block: any) => {
   }
 };
 
-export default function Post({ page, blocks }) {
+export default function Post({ page, blocks }: any) {
   if (!page || !blocks) {
     return <div />;
   }
@@ -73,7 +73,7 @@ export default function Post({ page, blocks }) {
           <Text text={page.properties.Title.title} />
         </h1>
         <section>
-          {blocks.map((block) => (
+          {blocks.map((block: any) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
         </section>

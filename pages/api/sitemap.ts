@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { SitemapStream, streamToPromise } from 'sitemap';
+import { getDatabase } from '../../lib/notion';
+import { postsDatabaseId } from '../index';
 
 export default async (_req: Request, res: Response) => {
+  const posts = await getDatabase(postsDatabaseId);
+
   const smStream = new SitemapStream({
     hostname: 'https://www.kelp.nyc',
   });
@@ -10,19 +14,19 @@ export default async (_req: Request, res: Response) => {
     url: '/',
   });
   smStream.write({
-    url: '/about',
+    url: '/writing',
   });
   smStream.write({
-    url: '/privacy',
-  });
-  smStream.write({
-    url: '/terms',
-  });
-  smStream.write({
-    url: '/install',
+    url: '/photos',
   });
 
-  // tell sitemap that there is nothing more to add to the sitemap
+  posts.map((p) =>
+    smStream.write({
+      url: `/writing/${p.id}`,
+      lastmod: new Date(p.last_edited_time).toISOString(),
+    }),
+  );
+
   smStream.end();
 
   // generate a sitemap and add the XML feed to a url which will be used later on.

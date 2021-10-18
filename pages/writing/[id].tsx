@@ -55,7 +55,7 @@ export const Text = (props: { text?: IText[] }) => {
   );
 };
 
-const renderBlock = (block: Block) => {
+const renderBlock = (block: any) => {
   const { type, id } = block;
   const value = block[type];
 
@@ -106,7 +106,7 @@ const renderBlock = (block: Block) => {
           <summary>
             <Text text={value.text} />
           </summary>
-          {value.children?.map((block) => (
+          {value.children?.map((block: any) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
         </details>
@@ -151,7 +151,7 @@ export default function Post({ page, blocks }: any) {
           <Text text={page.properties.Title.title} />
         </h1>
         <section>
-          {blocks.map((block) => (
+          {blocks.map((block: any) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
         </section>
@@ -164,12 +164,12 @@ export default function Post({ page, blocks }: any) {
 export const getStaticPaths = async () => {
   const database = await getDatabase(postsDatabaseId);
   return {
-    paths: database.map((page: IPost) => ({ params: { id: page.id } })),
+    paths: database.map((page) => ({ params: { id: page.id } })),
     fallback: true,
   };
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: { params: { id: string } }) => {
   const { id } = context.params;
   const page = await getPage(id);
   const blocks = await getBlocks(id);
@@ -184,7 +184,7 @@ export const getStaticProps = async (context) => {
         children: await getBlocks(block.id),
       })),
   );
-  const blocksWithChildren = blocks.map((block) => {
+  const blocksWithChildren = blocks.map((block: any) => {
     // Add child blocks if the block should contain children but none exists
     if (block.has_children && !block[block.type].children) {
       block[block.type]['children'] = childBlocks.find((x) => x.id === block.id)?.children;

@@ -58,12 +58,12 @@ strong {
 }
 
 article {
-width: 100%;
-max-width: 730px;
-margin-left: auto ;
-margin-right: auto ;
-margin-top: 150px;
-margin-bottom: 150px;
+  width: 100%;
+  max-width: 730px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 figure {

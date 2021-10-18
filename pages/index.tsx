@@ -22,19 +22,16 @@ interface IProps {
 
 export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) => {
   const orderedPhotos = props.photos.sort((a, b) =>
-    new Date(a.properties.Date.date?.start) > new Date(b.properties.Date.date?.start) ? -1 : 1,
+    new Date((a.properties.Date as any).date?.start) >
+    new Date((b.properties.Date as any).date?.start)
+      ? -1
+      : 1,
   );
   return (
     <div className={styles.grid}>
       {orderedPhotos.map((post) => {
-        const date = new Date(post.properties.Date.date?.start).toLocaleString('en-US', {
-          month: 'short',
-          day: '2-digit',
-          year: 'numeric',
-        });
-
-        const title = post.properties.Title.title;
-        const src = post.properties.Cover?.files[0]?.file.url;
+        const title = (post.properties.Title as any).title;
+        const src = (post.properties.Cover as any)?.files[0]?.file.url;
 
         return (
           <div key={post.id} className={styles.photos}>
