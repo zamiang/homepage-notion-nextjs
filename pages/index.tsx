@@ -65,7 +65,7 @@ export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) =>
   );
 
   return (
-    <ul className={styles.posts}>
+    <div className={styles.posts}>
       {orderedPosts.map((post) => {
         const date = new Date((post.properties.Date as any).date.start).toLocaleString('en-US', {
           month: 'short',
@@ -76,20 +76,20 @@ export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) =>
         const title = (post.properties.Title as any).title;
         const excerpt = (post.properties.Excerpt as any).rich_text[0]?.plain_text;
         return (
-          <li key={post.id} className={styles.post}>
-            <h3 className={styles.postTitle}>
+          <div key={post.id} className={styles.post}>
+            <div className={styles.postDate}>{date}</div>
+            <h3>
               <Link href={`/writing/${post.id}`}>
-                <a>
+                <a className={styles.postTitle}>
                   <Text text={title} />
                 </a>
               </Link>
             </h3>
-            <p className={styles.postDescription}>{date}</p>
             <p className={styles.postExcerpt}>{excerpt}</p>
-          </li>
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 };
 

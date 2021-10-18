@@ -21,6 +21,7 @@ body {
 
   /* Improve kerning for good measure */
   text-rendering: optimizeLegibility;
+  color: var(--color-text-default);
 }
 
 a {
