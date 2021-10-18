@@ -28,3 +28,13 @@
 .posts {
   margin: 0 auto;
 }
+
+.header, .section {
+  border-bottom: 1px solid var(--color-text-gray);
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+}
+
+.section:last-child {
+  border-bottom: 0px solid;
+}

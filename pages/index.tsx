@@ -120,12 +120,16 @@ export default function Home(props: IProps) {
         <article>
           <header className={styles.header}>
             <Image src="/about.jpg" height="171" width="256" />
-            <h1>Hi, I’m Brennan.</h1>
-            <p>I build innovative digital products people love.</p>
+            <h1>
+              Hi, I’m Brennan.
+              <br />I build innovative digital products people love.
+            </h1>
           </header>
           <div className={styles.section}>
-            Over the past 12 years, I've built web-based tools for non-profits, art collectors, bike
-            shares, e-commerce companies. Some examples:
+            <p className={styles.homepageText}>
+              Over the past 12 years, I've built web-based tools for non-profits, art collectors,
+              bike shares, e-commerce companies. Some examples:
+            </p>
             <ul>
               <li>
                 <div className={styles.listHeading}>
@@ -176,10 +180,14 @@ export default function Home(props: IProps) {
               </li>
             </ul>
           </div>
-          <h2 className={styles.heading}>All Posts</h2>
-          <PostsList posts={posts} />
-          <h2 className={styles.heading}>Photos</h2>
-          <PhotosGrid photos={props.photos} />
+          <div className={styles.section}>
+            <h2 className={styles.heading}>Writing</h2>
+            <PostsList posts={posts} />
+          </div>
+          <div className={styles.section}>
+            <h2 className={styles.heading}>Photos</h2>
+            <PhotosGrid photos={props.photos} />
+          </div>
         </article>
         <Footer />
       </main>
