@@ -39,6 +39,7 @@ const nextConfig = {
                 'https://www.googletagmanager.com',
                 'https://s3.us-west-2.amazonaws.com',
                 'https://cdn-images-1.medium.com',
+                'https://vitals.vercel-insights.com',
               ],
               fontSrc: ["'self'"],
               scriptSrc: [
@@ -47,12 +48,14 @@ const nextConfig = {
                 "'unsafe-inline'",
                 'https://www.googletagmanager.com',
                 'https://platform.twitter.com',
+                'https://vitals.vercel-insights.com',
               ],
-              frameSrc: ['https://platform.twitter.com/'],
+              frameSrc: ['https://platform.twitter.com/', 'https://vitals.vercel-insights.com'],
               connectSrc: [
                 "'self'",
                 'https://www.googleapis.com',
                 'https://www.google-analytics.com',
+                'https://vitals.vercel-insights.com',
               ],
             },
           },
