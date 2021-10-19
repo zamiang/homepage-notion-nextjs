@@ -26,8 +26,9 @@ const getRssXml = async () => {
   let rssItemsXml = '';
 
   orderedPosts.forEach((post) => {
+    const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
     const postDate = Date.parse(post.last_edited_time);
-    const postHref = `${baseUrl}/writing/${post.id}`;
+    const postHref = `${baseUrl}/writing/${slug}`;
 
     if (!latestPostDate || postDate > Date.parse(latestPostDate)) {
       latestPostDate = new Date(post.last_edited_time).toUTCString();

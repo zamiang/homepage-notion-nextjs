@@ -7,7 +7,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['s3.us-west-2.amazonaws.com'],
+    domains: ['s3.us-west-2.amazonaws.com', 'cdn-images-1.medium.com'],
   },
   webpack5: true,
 
@@ -38,6 +38,7 @@ const nextConfig = {
                 'data:',
                 'https://www.googletagmanager.com',
                 'https://s3.us-west-2.amazonaws.com',
+                'https://cdn-images-1.medium.com',
               ],
               fontSrc: ["'self'"],
               scriptSrc: [

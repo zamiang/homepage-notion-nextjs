@@ -16,6 +16,21 @@ export const getPage = async (pageId: string) => {
   return response;
 };
 
+export const getPageBySlug = async (slug: string, databaseId: string) => {
+  const response = await notion.databases.query({
+    database_id: databaseId,
+    page_size: 10,
+    filter: {
+      property: 'Slug',
+      text: {
+        equals: slug,
+      },
+    },
+    sorts: [{ timestamp: 'last_edited_time', direction: 'ascending' }],
+  });
+  return response.results[0];
+};
+
 export const getBlocks = async (blockId: string) => {
   const response = await notion.blocks.children.list({
     block_id: blockId,

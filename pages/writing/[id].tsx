@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React, { Fragment } from 'react';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
-import { getBlocks, getDatabase, getPage } from '../../lib/notion';
+import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
 import { postsDatabaseId } from '../index';
 import styles from './writing.module.css';
 
@@ -58,9 +58,9 @@ export const Text = (props: { text?: IText[] }) => {
   );
 };
 
-const renderBlock = (block: any) => {
+const renderBlock = (block: Block) => {
   const { type, id } = block;
-  const value = block[type];
+  const value = (block as any)[type];
 
   switch (type) {
     case 'paragraph':
@@ -88,14 +88,37 @@ const renderBlock = (block: any) => {
         </h3>
       );
     case 'bulleted_list_item':
+      return (
+        <ol>
+          <li>
+            <Text text={value.text} />
+          </li>
+        </ol>
+      );
+
     case 'numbered_list_item':
       return (
-        <li>
-          <Text text={value.text} />
-        </li>
+        <ul>
+          <li>
+            <Text text={value.text} />
+          </li>
+        </ul>
       );
     case 'divider':
       return <div className={styles.divider}>· · ·</div>;
+    case 'quote':
+      return (
+        <blockquote>
+          <Text text={value.text} />
+        </blockquote>
+      );
+
+    case 'code':
+      return (
+        <pre>
+          <Text text={value.text} />
+        </pre>
+      );
 
     case 'to_do':
       return (
@@ -135,12 +158,16 @@ const renderBlock = (block: any) => {
   }
 };
 
-export default function Post({ page, blocks }: any) {
+type UnPromisify<T> = T extends Promise<infer U> ? U : T;
+type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
+type Block = Params['blocks'][0];
+
+export default function Post({ page, blocks }: Params) {
   if (!page || !blocks) {
     return <div />;
   }
-  const excerpt = page.properties.Excerpt.rich_text[0]?.plain_text;
-  const title = page.properties.Title.title[0].plain_text;
+  const excerpt = (page.properties.Excerpt as any).rich_text[0]?.plain_text;
+  const title = (page.properties.Title as any).title[0].plain_text;
 
   return (
     <div>
@@ -154,10 +181,10 @@ export default function Post({ page, blocks }: any) {
       <Header />
       <article className={styles.container}>
         <h1 className={styles.name}>
-          <Text text={page.properties.Title.title} />
+          <Text text={(page.properties.Title as any).title} />
         </h1>
         <section>
-          {blocks.map((block: any) => (
+          {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
         </section>
@@ -177,8 +204,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context: { params: { id: string } }) => {
   const { id } = context.params;
-  const page = await getPage(id);
-  const blocks = await getBlocks(id);
+
+  const page = await getPageBySlug(id, postsDatabaseId);
+  const blocks = await getBlocks(page.id);
 
   return {
     props: {

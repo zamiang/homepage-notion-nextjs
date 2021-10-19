@@ -32,18 +32,19 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
       {orderedPhotos.map((post) => {
         const title = (post.properties.Title as any).title;
         const src = (post.properties.Cover as any)?.files[0]?.file.url;
+        const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
 
         return (
           <div key={post.id} className={styles.gridItem}>
             {src && (
-              <Link href={`/photos/${post.id}`}>
+              <Link href={`/photos/${slug}`}>
                 <a>
                   <Image src={src} width="342" height="342" />
                 </a>
               </Link>
             )}
             <h3>
-              <Link href={`/photos/${post.id}`}>
+              <Link href={`/photos/${slug}`}>
                 <a className={styles.postTitle}>
                   <Text text={title} />
                 </a>
@@ -78,11 +79,12 @@ export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) =>
 
         const title = (post.properties.Title as any).title;
         const excerpt = (post.properties.Excerpt as any).rich_text[0]?.plain_text;
+        const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
         return (
           <div key={post.id} className={styles.post}>
             <div className={styles.postDate}>{date}</div>
             <h3>
-              <Link href={`/writing/${post.id}`}>
+              <Link href={`/writing/${slug}`}>
                 <a className={styles.postTitle}>
                   <Text text={title} />
                 </a>
