@@ -166,7 +166,6 @@ END  RESET
 
 html,
 body {
-  padding: 0;
   margin: 0;
 
   font-family: Ivar Text, Georgia;
@@ -247,6 +246,7 @@ article {
   margin-right: auto;
   margin-top: 150px;
   margin-bottom: 150px;
+  padding: 20px;
 }
 
 figure {

@@ -44,7 +44,7 @@ const renderBlock = (block: any) => {
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
       return (
         <figure>
-          <Image src={src} alt={caption} height="680" width="680" />
+          <Image src={src} alt={caption} height="640" width="640" />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
