@@ -1,10 +1,15 @@
 .postTitle {
-  font-size: 1.875rem;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease-in;
   color: var(--color-text-default);
+
+  line-height: 1.27;
+  margin-block-start: 24px;
+  font-size: calc(19px + 0.75vw);
+  line-height: 1.4;
+  font-weight: 700;
+  opacity: 1;
+  margin: 0.5em 0 1em;
 }
 
 .postTitle:hover {
@@ -13,12 +18,11 @@
 
 .postDate {
   color: var(--color-text-gray);
-  font-size: 0.875rem;
+  margin: 0.5em 0 0.5em;
 }
 
 .postExcerpt {
-  font-size: 1rem;
-  line-height: 1.7;
+  margin: 0.5em 0 1em;
 }
 
 .post {
@@ -31,13 +35,19 @@
 
 .header,
 .section {
-  border-bottom: 1px solid var(--color-text-gray);
   padding-bottom: 32px;
   margin-bottom: 32px;
 }
 
 .section:last-child {
   border-bottom: 0px solid;
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  border-top: 1px solid black;
+  margin: 20px 0 0
 }
 
 .grid {

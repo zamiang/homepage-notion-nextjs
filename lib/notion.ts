@@ -19,7 +19,7 @@ export const getPage = async (pageId: string) => {
 export const getPageBySlug = async (slug: string, databaseId: string) => {
   const response = await notion.databases.query({
     database_id: databaseId,
-    page_size: 10,
+    page_size: 1,
     filter: {
       property: 'Slug',
       text: {
@@ -34,7 +34,7 @@ export const getPageBySlug = async (slug: string, databaseId: string) => {
 export const getBlocks = async (blockId: string) => {
   const response = await notion.blocks.children.list({
     block_id: blockId,
-    page_size: 50,
+    page_size: 150,
   });
   return response.results;
 };

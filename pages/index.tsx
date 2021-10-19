@@ -83,14 +83,14 @@ export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) =>
         return (
           <div key={post.id} className={styles.post}>
             <div className={styles.postDate}>{date}</div>
-            <h3>
+            <div className={styles.postHeading}>
               <Link href={`/writing/${slug}`}>
                 <a className={styles.postTitle}>
                   <Text text={title} />
                 </a>
               </Link>
-            </h3>
-            <p className={styles.postExcerpt}>{excerpt}</p>
+            </div>
+            <div className={styles.postExcerpt}>{excerpt}</div>
           </div>
         );
       })}

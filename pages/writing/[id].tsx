@@ -61,7 +61,6 @@ export const Text = (props: { text?: IText[] }) => {
 const renderBlock = (block: Block) => {
   const { type, id } = block;
   const value = (block as any)[type];
-
   switch (type) {
     case 'paragraph':
       return (
@@ -168,21 +167,32 @@ export default function Post({ page, blocks }: Params) {
   }
   const excerpt = (page.properties.Excerpt as any).rich_text[0]?.plain_text;
   const title = (page.properties.Title as any).title[0].plain_text;
-
+  const date = new Date((page.properties.Date as any).date.start as string).toLocaleString(
+    'en-US',
+    {
+      month: 'long',
+      day: '2-digit',
+      year: 'numeric',
+    },
+  );
   return (
     <div>
       <Head>
         <title>{title}</title>
         <meta name="description" content={excerpt} />
         <meta property="og:description" content={excerpt} key="ogdesc" />
-
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
       <article className={styles.container}>
-        <h1 className={styles.name}>
-          <Text text={(page.properties.Title as any).title} />
-        </h1>
+        <div className={styles.top}>
+          <h1 className={styles.name}>
+            <Text text={(page.properties.Title as any).title} />
+          </h1>
+          <div className={styles.excerpt}>{excerpt}</div>
+          <div className={styles.date}>{date}</div>
+          <div className={styles.divider}></div>
+        </div>
         <section>
           {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>

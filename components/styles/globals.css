@@ -169,8 +169,7 @@ body {
   padding: 0;
   margin: 0;
 
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Ivar Text,Georgia;
 
   /* Make the text nice and crisp */
   -webkit-font-smoothing: antialiased;
@@ -180,8 +179,9 @@ body {
   /* Improve kerning for good measure */
   text-rendering: optimizeLegibility;
   color: var(--color-text-default);
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 500;
 }
 
 a {
@@ -206,27 +206,20 @@ p {
 
 h1 {
   line-height: 1.27;
-  letter-spacing: -0.01em;
-  font-size: 1.875rem;
   margin: 0;
   margin-block-start: 24px;
-}
-
-@media screen and (min-width: 50em) {
-  h1 {
-    font-size: 2.55rem;
-  }
+  font-size: calc(19px + 0.75vw);
+  line-height: 1.4;
+  font-weight: 700;
 }
 
 h2 {
   display: block;
-  font-size: 1.5em;
   margin-block-start: 0.83em;
   margin-block-end: 0.83em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
-  letter-spacing: 0.015em;
   margin-top: 1.5em;
   margin-bottom: 0.25em;
   text-indent: -0.05em;
@@ -245,7 +238,7 @@ strong {
 
 article {
   width: 100%;
-  max-width: 730px;
+  max-width: 680px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 150px;
@@ -284,7 +277,7 @@ blockquote {
   border-left: 4px solid #c7cad2;
 }
 
-ul {
+ol, ul {
   margin: 2px 0;
   padding-inline-start: calc(1.5em + 4px);
   line-height: 1.5;
@@ -313,7 +306,6 @@ li a:hover {
 
 P {
   line-height: 1.7;
-  letter-spacing: -0.01em;
 }
 
 pre {
@@ -321,7 +313,6 @@ pre {
   background: #f5f2f0;
   text-shadow: 0 1px white;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: 1em;
   text-align: left;
   white-space: pre;
   word-spacing: normal;

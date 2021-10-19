@@ -6,7 +6,7 @@ import Header from '../../components/homepage/header';
 import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
 import { Text } from '../writing/[id]';
-import styles from './photos.module.css';
+import styles from '../writing/writing.module.css';
 
 const renderBlock = (block: any) => {
   const { type } = block;
@@ -44,7 +44,7 @@ const renderBlock = (block: any) => {
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
       return (
         <figure>
-          <Image src={src} alt={caption} height="730" width="730" />
+          <Image src={src} alt={caption} height="680" width="680" />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
@@ -60,6 +60,11 @@ export default function Post({ page, blocks }: any) {
     return <div />;
   }
   const src = page.properties.Cover?.files[0]?.file.url;
+  const date = new Date(page.properties.Date.date.start as string).toLocaleString('en-US', {
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+  });
   return (
     <div>
       <Head>
@@ -69,9 +74,13 @@ export default function Post({ page, blocks }: any) {
       </Head>
       <Header />
       <article className={styles.container}>
-        <h1 className={styles.name}>
-          <Text text={page.properties.Title.title} />
-        </h1>
+        <div className={styles.top}>
+          <h1 className={styles.name}>
+            <Text text={page.properties.Title.title} />
+          </h1>
+          <div className={styles.date}>{date}</div>
+          <div className={styles.divider}></div>
+        </div>
         <section>
           {blocks.map((block: any) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
