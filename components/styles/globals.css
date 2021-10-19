@@ -295,7 +295,7 @@ ul {
   padding-inline-start: calc(1.5em + 4px);
   line-height: 1.5;
   padding-left: 1.25em;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   list-style-type: disc;
 }
 

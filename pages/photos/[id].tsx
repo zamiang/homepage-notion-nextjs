@@ -68,7 +68,7 @@ export default function Post({ page, blocks }: any) {
   return (
     <div>
       <Head>
-        <title>{page.properties.Title.title[0].plain_text}</title>
+        <title>{`${page.properties.Title.title[0].plain_text} by Brennan Moore`}</title>
         {src && <meta property="og:image" content={src} key="ogdesc" />}
         <link rel="icon" href="/favicon.ico" />
       </Head>

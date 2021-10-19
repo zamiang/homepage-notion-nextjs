@@ -12,8 +12,8 @@ import { Text } from './writing/[id]';
 export const postsDatabaseId = process.env.NOTION_POSTS_DATABASE_ID!;
 export const photosDatabaseId = process.env.NOTION_PHOTOS_DATABASE_ID!;
 
-const title = 'hello';
-const description = 'hello';
+const title = 'Brennan Moore';
+const description = 'Hi, I’m Brennan. I build innovative digital products people love.';
 
 interface IProps {
   photos: QueryDatabaseResponse['results'];
@@ -38,14 +38,14 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
           <div key={post.id} className={styles.gridItem}>
             {src && (
               <Link href={`/photos/${slug}`}>
-                <a>
+                <a className={styles.photoLinkImage}>
                   <Image src={src} width="342" height="342" />
                 </a>
               </Link>
             )}
-            <h3>
+            <h3 className={styles.photoTitle}>
               <Link href={`/photos/${slug}`}>
-                <a className={styles.postTitle}>
+                <a className={styles.photoLink}>
                   <Text text={title} />
                 </a>
               </Link>
@@ -193,10 +193,12 @@ export default function Home(props: IProps) {
           </div>
           <div className={styles.section}>
             <h2 className={styles.heading}>Writing</h2>
+            <div className={styles.divider}></div>
             <PostsList posts={posts} />
           </div>
           <div className={styles.section}>
             <h2 className={styles.heading}>Photos</h2>
+            <div className={styles.divider}></div>
             <PhotosGrid photos={props.photos} />
           </div>
         </article>

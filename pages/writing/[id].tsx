@@ -186,7 +186,7 @@ export default function Post({ page, blocks }: Params) {
   return (
     <div>
       <Head>
-        <title>{title}</title>
+        <title>{`${title} by Brennan Moore`}</title>
         <meta name="description" content={excerpt} />
         <meta property="og:description" content={excerpt} key="ogdesc" />
         <link rel="icon" href="/favicon.ico" />

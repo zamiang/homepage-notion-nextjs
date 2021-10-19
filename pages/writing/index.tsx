@@ -7,8 +7,8 @@ import { getDatabase } from '../../lib/notion';
 import { PostsList, postsDatabaseId } from '../index';
 import styles from '../index.module.css';
 
-const title = 'hello';
-const description = 'hello';
+const title = 'Writing - Brennan Moore';
+const description = 'List of writing';
 
 interface IProps {
   posts: QueryDatabaseResponse['results'];

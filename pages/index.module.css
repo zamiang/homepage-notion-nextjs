@@ -57,8 +57,40 @@
   justify-content: space-between;
   align-content: flex-start;
   gap: 46px;
+  margin-top: 2rem;
 }
 
 .gridItem {
   flex: 33% 1;
 }
+
+.photoTitle {
+margin: 3px 0;
+min-height: 24px;
+margin: 0.6em 0 0.4em;
+font-weight: 200;
+font-size: 1.5rem;
+line-height: 1.3;
+white-space: normal;
+}
+
+.photoLink {
+  opacity: 1;
+  border-bottom: 1px solid transparent;
+}
+.photoLink:hover {
+  border-color: var(--color-text-default);
+}
+
+
+
+
+.photoLinkImage {
+  opacity: 1;
+  border-bottom: 1px solid transparent;
+}
+
+.photoLinkImage:hover {
+  opacity: 0.7;
+}
+
