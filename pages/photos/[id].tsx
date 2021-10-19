@@ -70,7 +70,6 @@ export default function Post({ page, blocks }: any) {
       <Head>
         <title>{`${page.properties.Title.title[0].plain_text} by Brennan Moore`}</title>
         {src && <meta property="og:image" content={src} key="ogdesc" />}
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
       <article className={styles.container}>
