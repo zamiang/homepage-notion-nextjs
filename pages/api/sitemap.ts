@@ -20,12 +20,13 @@ export default async (_req: Request, res: Response) => {
     url: '/photos',
   });
 
-  posts.map((p) =>
-    smStream.write({
-      url: `/writing/${p.id}`,
+  posts.map((p) => {
+    const slug = (p.properties.Slug as any).rich_text[0]?.plain_text;
+    return smStream.write({
+      url: `/writing/${slug}`,
       lastmod: new Date(p.last_edited_time).toISOString(),
-    }),
-  );
+    });
+  });
 
   smStream.end();
 

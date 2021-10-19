@@ -196,8 +196,16 @@ export default function Post({ page, blocks }: Params) {
 
 export const getStaticPaths = async () => {
   const database = await getDatabase(postsDatabaseId);
+  const paths = database
+    .map((post) => {
+      const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
+      if (slug) {
+        return { params: { id: slug } };
+      }
+    })
+    .filter(Boolean);
   return {
-    paths: database.map((page) => ({ params: { id: page.id } })),
+    paths,
     fallback: true,
   };
 };

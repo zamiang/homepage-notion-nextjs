@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { Fragment } from 'react';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
-import { getBlocks, getDatabase, getPage } from '../../lib/notion';
+import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
 import { Text } from '../writing/[id]';
 import styles from './photos.module.css';
@@ -85,7 +85,14 @@ export default function Post({ page, blocks }: any) {
 
 export const getStaticPaths = async () => {
   const database = await getDatabase(photosDatabaseId);
-  const paths = database.map((page) => ({ params: { id: page.id } }));
+  const paths = database
+    .map((post) => {
+      const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
+      if (slug) {
+        return { params: { id: slug } };
+      }
+    })
+    .filter(Boolean);
   return {
     paths,
     fallback: true,
@@ -94,8 +101,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context: { params: { id: string } }) => {
   const { id } = context.params;
-  const page = await getPage(id);
-  const blocks = await getBlocks(id);
+  const page = await getPageBySlug(id, photosDatabaseId);
+  const blocks = await getBlocks(page.id);
 
   // Retrieve block children for nested blocks (one level deep), for example toggle blocks
   // https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
