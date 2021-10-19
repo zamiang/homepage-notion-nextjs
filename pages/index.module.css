@@ -33,7 +33,10 @@
   margin: 0 auto;
 }
 
-.header,
+.header {
+  text-align: center;
+}
+
 .section {
   padding-bottom: 32px;
   margin-bottom: 32px;
@@ -48,6 +51,13 @@
   height: 1px;
   border-top: 1px solid black;
   margin: 20px 0 0;
+}
+
+.centerDivider {
+  width: 60px;
+  height: 1px;
+  border-top: 1px solid black;
+  margin: 40px auto;
 }
 
 .grid {
@@ -89,4 +99,14 @@
 
 .photoLinkImage:hover {
   opacity: 0.7;
+}
+
+.profilePhoto {
+  background-image: url('/about.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin: 0px auto;
 }

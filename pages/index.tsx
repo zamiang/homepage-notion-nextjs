@@ -130,11 +130,10 @@ export default function Home(props: IProps) {
         <Header />
         <article>
           <header className={styles.header}>
-            <Image src="/about.jpg" height="171" width="256" />
-            <h1>
-              Hi, I’m Brennan.
-              <br />I build innovative digital products people love.
-            </h1>
+            <div className={styles.profilePhoto}></div>
+            <h1>Hi, I’m Brennan.</h1>
+            <h2>I build innovative digital products people love.</h2>
+            <div className={styles.centerDivider}></div>
           </header>
           <div className={styles.section}>
             <p className={styles.homepageText}>
