@@ -29,7 +29,8 @@
   margin: 0 auto;
 }
 
-.header, .section {
+.header,
+.section {
   border-bottom: 1px solid var(--color-text-gray);
   padding-bottom: 32px;
   margin-bottom: 32px;

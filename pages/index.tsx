@@ -133,8 +133,8 @@ export default function Home(props: IProps) {
           </header>
           <div className={styles.section}>
             <p className={styles.homepageText}>
-              Over the past 12 years, I've built web-based tools for non-profits, art collectors,
-              bike shares, e-commerce companies. Some examples:
+              Over the past 12 years, I&lsquo;ve built web-based tools for non-profits, art
+              collectors, bike shares, e-commerce companies. Some examples:
             </p>
             <ul>
               <li>

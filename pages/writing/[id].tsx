@@ -50,7 +50,7 @@ export const Text = (props: { text?: IText[] }) => {
             ].join(' ')}
             style={color !== 'default' ? { color } : {}}
           >
-            {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
+            {text.link ? <a href={`/writing/${text.link.url}`}>{text.content}</a> : text.content}
           </span>
         );
       })}
@@ -94,6 +94,9 @@ const renderBlock = (block: any) => {
           <Text text={value.text} />
         </li>
       );
+    case 'divider':
+      return <div className={styles.divider}>· · ·</div>;
+
     case 'to_do':
       return (
         <div>
@@ -177,28 +180,10 @@ export const getStaticProps = async (context: { params: { id: string } }) => {
   const page = await getPage(id);
   const blocks = await getBlocks(id);
 
-  // Retrieve block children for nested blocks (one level deep), for example toggle blocks
-  // https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
-  const childBlocks = await Promise.all(
-    blocks
-      .filter((block) => block.has_children)
-      .map(async (block) => ({
-        id: block.id,
-        children: await getBlocks(block.id),
-      })),
-  );
-  const blocksWithChildren = blocks.map((block: any) => {
-    // Add child blocks if the block should contain children but none exists
-    if (block.has_children && !block[block.type].children) {
-      block[block.type]['children'] = childBlocks.find((x) => x.id === block.id)?.children;
-    }
-    return block;
-  });
-
   return {
     props: {
       page,
-      blocks: blocksWithChildren,
+      blocks,
     },
     revalidate: 1,
   };
