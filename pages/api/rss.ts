@@ -16,8 +16,8 @@ const getRssXml = async () => {
         (p.properties['Featured on homepage'] as any).select?.name === 'Featured',
     )
     .sort((a, b) =>
-      new Date((a.properties.Date as any).date?.start) >
-      new Date((b.properties.Date as any).date?.start)
+      new Date((a.properties.Date as any).date?.start as string) >
+      new Date((b.properties.Date as any).date?.start as string)
         ? -1
         : 1,
     );
@@ -33,7 +33,7 @@ const getRssXml = async () => {
       latestPostDate = new Date(post.last_edited_time).toUTCString();
     }
 
-    const date = new Date((post.properties.Date as any).date.start).toUTCString();
+    const date = new Date((post.properties.Date as any).date.start as string).toUTCString();
     const title = (post.properties.Title as any).title[0]?.plain_text;
     const excerpt = (post.properties.Excerpt as any).rich_text[0]?.plain_text;
 

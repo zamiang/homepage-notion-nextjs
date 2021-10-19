@@ -22,8 +22,8 @@ interface IProps {
 
 export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) => {
   const orderedPhotos = props.photos.sort((a, b) =>
-    new Date((a.properties.Date as any).date?.start) >
-    new Date((b.properties.Date as any).date?.start)
+    new Date((a.properties.Date as any).date?.start as string) >
+    new Date((b.properties.Date as any).date?.start as string)
       ? -1
       : 1,
   );
@@ -58,8 +58,8 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
 
 export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) => {
   const orderedPosts = props.posts.sort((a, b) =>
-    new Date((a.properties.Date as any).date?.start) >
-    new Date((b.properties.Date as any).date?.start)
+    new Date((a.properties.Date as any).date?.start as string) >
+    new Date((b.properties.Date as any).date?.start as string)
       ? -1
       : 1,
   );
@@ -67,11 +67,14 @@ export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) =>
   return (
     <div className={styles.posts}>
       {orderedPosts.map((post) => {
-        const date = new Date((post.properties.Date as any).date.start).toLocaleString('en-US', {
-          month: 'short',
-          day: '2-digit',
-          year: 'numeric',
-        });
+        const date = new Date((post.properties.Date as any).date.start as string).toLocaleString(
+          'en-US',
+          {
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+          },
+        );
 
         const title = (post.properties.Title as any).title;
         const excerpt = (post.properties.Excerpt as any).rich_text[0]?.plain_text;
