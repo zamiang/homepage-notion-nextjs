@@ -15,16 +15,14 @@
 }
 
 .code {
-
 }
 
 .italic {
-  font-style: italic
+  font-style: italic;
 }
 
-.strikethrough{
+.strikethrough {
   text-decoration: line-through;
-
 }
 
 .underline {

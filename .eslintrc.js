@@ -47,6 +47,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-call': 0,
     '@typescript-eslint/restrict-template-expressions': 0,
     '@typescript-eslint/no-unsafe-return': 0,
+    '@typescript-eslint/no-unsafe-argument': 0,
     'arrow-body-style': ['error', 'as-needed'],
     'import/first': 'error',
     'import/no-duplicates': 'error',
