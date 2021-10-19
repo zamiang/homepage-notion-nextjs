@@ -46,8 +46,9 @@ const nextConfig = {
                 "'unsafe-eval'",
                 "'unsafe-inline'",
                 'https://www.googletagmanager.com',
+                'https://platform.twitter.com',
               ],
-              frameSrc: [],
+              frameSrc: ['https://platform.twitter.com/'],
               connectSrc: [
                 "'self'",
                 'https://www.googleapis.com',

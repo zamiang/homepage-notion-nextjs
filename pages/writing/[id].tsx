@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React, { Fragment } from 'react';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
 import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
@@ -94,6 +95,13 @@ const renderBlock = (block: Block) => {
           </li>
         </ol>
       );
+
+    case 'embed':
+      const tweetId = value.url.split('/status/')[1]?.split('?')[0];
+      if (!tweetId) {
+        return `❌ Unsupported block (currently only supports twitter embeds)`;
+      }
+      return <TwitterTweetEmbed tweetId={tweetId} />;
 
     case 'numbered_list_item':
       return (

@@ -1,7 +1,7 @@
 /* --- Change default colors --- */
 :root {
   --color-bg-default: #f9f6f0;
-  --color-text-default: #4b5673;
+  --color-text-default: rgb(75, 86, 115);
   --color-text-default-light: #4b5673;
   --color-text-gray: #959ba9;
 }
@@ -211,6 +211,7 @@ h1 {
   font-size: calc(19px + 0.75vw);
   line-height: 1.4;
   font-weight: 700;
+  display: block;
 }
 
 h2 {
@@ -229,6 +230,9 @@ h2 {
 }
 
 h3 {
+  margin-top: 1.75rem;
+  font-size: 1.25rem;
+  font-weight: 500;
   margin-bottom: 0.25em;
 }
 
@@ -256,12 +260,14 @@ figure {
 
 figure img {
   max-width: 100%;
+  margin: 0 auto;
 }
 
 figcaption {
   text-align: center;
   padding: 6px 0 0;
   color: var(--color-text-gray);
+  line-height: 1.7;
 }
 
 /* Fix border colour for captions that contain links */
@@ -271,10 +277,16 @@ figcaption a {
 }
 
 blockquote {
+  display: block;
   margin-top: 1.25em;
   margin-bottom: 1.25em;
   padding-left: 1.5em;
   border-left: 4px solid #c7cad2;
+  line-height: 1.7;
+}
+
+p {
+  min-height: 20px;
 }
 
 ol,
@@ -291,6 +303,7 @@ li {
   margin: 2px 0;
   padding-top: 3px;
   padding-bottom: 3px;
+  white-space: pre-line;
 }
 
 li a {
@@ -325,4 +338,9 @@ pre {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
+}
+
+.twitter-tweet {
+  margin-left: auto;
+  margin-right: auto;
 }
