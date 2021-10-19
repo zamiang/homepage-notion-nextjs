@@ -1,8 +1,6 @@
 const withPlugins = require('next-compose-plugins');
 const { createSecureHeaders } = require('next-secure-headers');
 const withFonts = require('next-fonts');
-const withReactSvg = require('next-react-svg');
-const path = require('path');
 
 const nextConfig = {
   eslint: {
@@ -72,12 +70,6 @@ module.exports = withPlugins(
       {
         reactStrictMode: true,
         poweredByHeader: false,
-      },
-    ],
-    [
-      withReactSvg,
-      {
-        include: path.resolve(__dirname, 'public'),
       },
     ],
   ],
