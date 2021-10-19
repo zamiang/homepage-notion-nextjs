@@ -28,7 +28,6 @@ module.exports = {
     'react',
     'security',
     'react-hooks',
-    'material-ui',
   ],
   rules: {
     '@typescript-eslint/camelcase': 0, // Triggers on external APIs
