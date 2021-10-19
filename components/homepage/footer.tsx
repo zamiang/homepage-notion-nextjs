@@ -16,8 +16,13 @@ const Footer = () => (
         </Link>
       </div>
       <div className={styles.gridItem}>
+        <Link href="https://www.instagram.com/zamiang">
+          <a className={styles.footerLink}>Instagram</a>
+        </Link>
+      </div>
+      <div className={styles.gridItem}>
         <Link href="/rss.xml">
-          <a className={styles.footerLink}>Rss</a>
+          <a className={styles.footerLink}>RSS</a>
         </Link>
       </div>
       <div className={styles.gridItem}>
