@@ -32,9 +32,22 @@ export const getPageBySlug = async (slug: string, databaseId: string) => {
 };
 
 export const getBlocks = async (blockId: string) => {
-  const response = await notion.blocks.children.list({
+  let blockResponse = await notion.blocks.children.list({
     block_id: blockId,
-    page_size: 150,
+    page_size: 50,
   });
-  return response.results;
+  let blocks = blockResponse.results;
+
+  while (blockResponse.has_more && blockResponse.next_cursor) {
+    blockResponse = await notion.blocks.children.list({
+      block_id: blockId,
+      page_size: 50,
+      start_cursor: blockResponse.next_cursor,
+    });
+
+    const results = blockResponse.results;
+    blocks = blocks.concat(results);
+  }
+
+  return blocks;
 };
