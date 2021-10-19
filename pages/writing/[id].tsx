@@ -199,7 +199,7 @@ export default function Post({ page, blocks }: Params) {
           </h1>
           <div className={styles.excerpt}>{excerpt}</div>
           <div className={styles.date}>{date}</div>
-          <div className={styles.divider}></div>
+          <div className={styles.shortLine}></div>
         </div>
         <section>
           {blocks.map((block) => (

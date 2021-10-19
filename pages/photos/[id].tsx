@@ -79,7 +79,7 @@ export default function Post({ page, blocks }: any) {
             <Text text={page.properties.Title.title} />
           </h1>
           <div className={styles.date}>{date}</div>
-          <div className={styles.divider}></div>
+          <div className={styles.shortLine}></div>
         </div>
         <section>
           {blocks.map((block: any) => (

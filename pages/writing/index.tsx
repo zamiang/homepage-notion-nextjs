@@ -42,7 +42,7 @@ export default function Home(props: IProps) {
         <article>
           <header className={styles.header}>
             <h1>Writing</h1>
-            <div className={styles.divider}></div>
+            <div className={styles.shortLine}></div>
           </header>
           <PostsList posts={posts} />
         </article>
