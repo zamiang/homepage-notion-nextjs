@@ -12,7 +12,7 @@ import { Text } from './writing/[id]';
 export const postsDatabaseId = process.env.NOTION_POSTS_DATABASE_ID!;
 export const photosDatabaseId = process.env.NOTION_PHOTOS_DATABASE_ID!;
 
-const title = 'Brennan Moore';
+const title = 'Home - Brennan Moore';
 const description = 'Hi, I’m Brennan. I build innovative digital products people love.';
 
 interface IProps {

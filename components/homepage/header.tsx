@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
-import Headroom from 'react-headroom';
 import styles from './header.module.css';
 
 const Header = () => (
-  <Headroom>
+  <div className={styles.fixedHeader}>
     <div className={styles.container}>
       <div className={styles.grid}>
         <div className={styles.gridItem}>
@@ -22,7 +21,7 @@ const Header = () => (
         </div>
       </div>
     </div>
-  </Headroom>
+  </div>
 );
 
 export default Header;

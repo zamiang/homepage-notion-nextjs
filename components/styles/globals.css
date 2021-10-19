@@ -249,6 +249,15 @@ article {
   padding: 20px;
 }
 
+@media only screen and (max-width: 600px) {
+  article {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+}
+
+
+
 figure {
   overflow: hidden;
   position: relative;
