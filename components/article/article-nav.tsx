@@ -42,7 +42,7 @@ const ArticleNavItem = (props: {
 );
 
 export const ArticleNav = (props: { blocks: Block[]; title: string }) => {
-  const [isBackgroundVisible, setBackgroundVisible] = useState(true);
+  const [isBackgroundVisible, setBackgroundVisible] = useState(false);
 
   const headerTypes = ['heading_1', 'heading_2', 'heading_3'];
   const navBlocks = props.blocks.filter((b) => headerTypes.includes(b.type));
