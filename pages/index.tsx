@@ -3,11 +3,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { Text } from '../components/article/text';
 import Footer from '../components/homepage/footer';
 import Header from '../components/homepage/header';
 import { getDatabase } from '../lib/notion';
 import styles from './index.module.css';
-import { Text } from './writing/[id]';
 
 export const postsDatabaseId = process.env.NOTION_POSTS_DATABASE_ID!;
 export const photosDatabaseId = process.env.NOTION_PHOTOS_DATABASE_ID!;

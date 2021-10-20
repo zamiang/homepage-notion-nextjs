@@ -1,173 +1,17 @@
 import Head from 'next/head';
 import React, { Fragment } from 'react';
-import { TwitterTweetEmbed } from 'react-twitter-embed';
+import { ArticleNav } from '../../components/article/article-nav';
+import { renderBlock } from '../../components/article/render-article-block';
+import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
 import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
 import { PostsList, postsDatabaseId } from '../index';
 import styles from './writing.module.css';
 
-interface IText {
-  type: 'text';
-  text: {
-    content: string;
-    link?: string;
-  };
-  annotations: {
-    bold: boolean;
-    italic: boolean;
-    strikethrough: boolean;
-    underline: boolean;
-    code: boolean;
-    color: 'default';
-  };
-  plain_text: string;
-  href?: string;
-}
-
-export const Text = (props: { text?: IText[] }) => {
-  if (!props.text) {
-    return null;
-  }
-  return (
-    <React.Fragment>
-      {props.text.map((value: any, index: number) => {
-        const {
-          annotations: { bold, code, color, italic, strikethrough, underline },
-          text,
-        } = value;
-        if (!text) {
-          return null;
-        }
-        return (
-          <span
-            key={index}
-            className={[
-              bold ? styles.bold : '',
-              code ? styles.code : '',
-              italic ? styles.italic : '',
-              strikethrough ? styles.strikethrough : '',
-              underline ? styles.underline : '',
-            ].join(' ')}
-            style={color !== 'default' ? { color } : {}}
-          >
-            {text.link ? <a href={`/writing/${text.link.url}`}>{text.content}</a> : text.content}
-          </span>
-        );
-      })}
-    </React.Fragment>
-  );
-};
-
-const renderBlock = (block: Block) => {
-  const { type, id } = block;
-  const value = (block as any)[type];
-  switch (type) {
-    case 'paragraph':
-      return (
-        <p>
-          <Text text={value.text} />
-        </p>
-      );
-    case 'heading_1':
-      return (
-        <h1>
-          <Text text={value.text} />
-        </h1>
-      );
-    case 'heading_2':
-      return (
-        <h2>
-          <Text text={value.text} />
-        </h2>
-      );
-    case 'heading_3':
-      return (
-        <h3>
-          <Text text={value.text} />
-        </h3>
-      );
-    case 'bulleted_list_item':
-      return (
-        <ol>
-          <li>
-            <Text text={value.text} />
-          </li>
-        </ol>
-      );
-
-    case 'embed':
-      const tweetId = value.url.split('/status/')[1]?.split('?')[0];
-      if (!tweetId) {
-        return `❌ Unsupported block (currently only supports twitter embeds)`;
-      }
-      return <TwitterTweetEmbed tweetId={tweetId} />;
-
-    case 'numbered_list_item':
-      return (
-        <ul>
-          <li>
-            <Text text={value.text} />
-          </li>
-        </ul>
-      );
-    case 'divider':
-      return <div className={styles.divider}>· · ·</div>;
-    case 'quote':
-      return (
-        <blockquote>
-          <Text text={value.text} />
-        </blockquote>
-      );
-
-    case 'code':
-      return (
-        <pre>
-          <Text text={value.text} />
-        </pre>
-      );
-
-    case 'to_do':
-      return (
-        <div>
-          <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
-            <Text text={value.text} />
-          </label>
-        </div>
-      );
-    case 'toggle':
-      return (
-        <details>
-          <summary>
-            <Text text={value.text} />
-          </summary>
-          {value.children?.map((block: any) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
-        </details>
-      );
-    case 'child_page':
-      return <p>{value.title}</p>;
-    case 'image':
-      const src = value.type === 'external' ? value.external.url : value.file.url;
-      const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
-      return (
-        <figure>
-          <img src={src} alt={caption} />
-          {caption && <figcaption>{caption}</figcaption>}
-        </figure>
-      );
-    default:
-      return `❌ Unsupported block (${
-        type === 'unsupported' ? 'unsupported by Notion API' : type
-      })`;
-  }
-};
-
 type UnPromisify<T> = T extends Promise<infer U> ? U : T;
 type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
-type Block = Params['blocks'][0];
+export type Block = Params['blocks'][0];
 
 export default function Post({ page, blocks, posts }: Params) {
   if (!page || !blocks) {
@@ -191,6 +35,7 @@ export default function Post({ page, blocks, posts }: Params) {
         <meta property="og:description" content={excerpt} key="ogdesc" />
       </Head>
       <Header />
+      <ArticleNav blocks={blocks} title={title} />
       <article className={styles.container}>
         <div className={styles.top}>
           <h1 className={styles.name}>

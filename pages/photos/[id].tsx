@@ -1,16 +1,20 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import React, { Fragment } from 'react';
+import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
 import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
-import { Text } from '../writing/[id]';
 import styles from '../writing/writing.module.css';
 
-const renderBlock = (block: any) => {
+type UnPromisify<T> = T extends Promise<infer U> ? U : T;
+type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
+type Block = Params['blocks'][0];
+
+const renderBlock = (block: Block) => {
   const { type } = block;
-  const value = block[type];
+  const value = (block as any)[type];
 
   switch (type) {
     case 'paragraph':
@@ -55,33 +59,37 @@ const renderBlock = (block: any) => {
   }
 };
 
-export default function Post({ page, blocks }: any) {
+export default function Post({ page, blocks }: Params) {
   if (!page || !blocks) {
     return <div />;
   }
-  const src = page.properties.Cover?.files[0]?.file.url;
-  const date = new Date(page.properties.Date.date.start as string).toLocaleString('en-US', {
-    month: 'long',
-    day: '2-digit',
-    year: 'numeric',
-  });
+  const title = (page.properties.Title as any).title[0].plain_text;
+  const src = (page.properties.Cover as any)?.files[0]?.file.url;
+  const date = new Date((page.properties.Date as any).date.start as string).toLocaleString(
+    'en-US',
+    {
+      month: 'long',
+      day: '2-digit',
+      year: 'numeric',
+    },
+  );
   return (
     <div>
       <Head>
-        <title>{`${page.properties.Title.title[0].plain_text} by Brennan Moore`}</title>
+        <title>{`${title} by Brennan Moore`}</title>
         {src && <meta property="og:image" content={src} key="ogdesc" />}
       </Head>
       <Header />
       <article className={styles.container}>
         <div className={styles.top}>
           <h1 className={styles.name}>
-            <Text text={page.properties.Title.title} />
+            <Text text={(page.properties.Title as any).title} />
           </h1>
           <div className={styles.date}>{date}</div>
           <div className={styles.shortLine}></div>
         </div>
         <section>
-          {blocks.map((block: any) => (
+          {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
         </section>
@@ -112,28 +120,10 @@ export const getStaticProps = async (context: { params: { id: string } }) => {
   const page = await getPageBySlug(id, photosDatabaseId);
   const blocks = await getBlocks(page.id);
 
-  // Retrieve block children for nested blocks (one level deep), for example toggle blocks
-  // https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
-  const childBlocks = await Promise.all(
-    blocks
-      .filter((block) => block.has_children)
-      .map(async (block) => ({
-        id: block.id,
-        children: await getBlocks(block.id),
-      })),
-  );
-  const blocksWithChildren = blocks.map((block: any) => {
-    // Add child blocks if the block should contain children but none exists
-    if (block.has_children && !block[block.type].children) {
-      block[block.type]['children'] = childBlocks.find((x) => x.id === block.id)?.children;
-    }
-    return block;
-  });
-
   return {
     props: {
       page,
-      blocks: blocksWithChildren,
+      blocks,
     },
     revalidate: 1,
   };
