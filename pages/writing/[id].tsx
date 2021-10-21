@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { ArticleNav } from '../../components/article/article-nav';
 import { renderBlock } from '../../components/article/render-article-block';
 import { Text } from '../../components/article/text';
@@ -38,7 +38,7 @@ export default function Post({ page, blocks, posts }: Params) {
       <ArticleNav blocks={blocks} title={title} />
       <article className={styles.container}>
         <div className={styles.top}>
-          <h1 className={styles.name}>
+          <h1 className={styles.title}>
             <Text text={(page.properties.Title as any).title} />
           </h1>
           <div className={styles.excerpt}>{excerpt}</div>
@@ -47,7 +47,7 @@ export default function Post({ page, blocks, posts }: Params) {
         </div>
         <section>
           {blocks.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
+            <React.Fragment key={block.id}>{renderBlock(block)}</React.Fragment>
           ))}
         </section>
         <div className={styles.shortLine}></div>

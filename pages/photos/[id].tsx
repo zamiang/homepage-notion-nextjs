@@ -82,10 +82,10 @@ export default function Post({ page, blocks }: Params) {
       <Header />
       <article className={styles.container}>
         <div className={styles.top}>
-          <h1 className={styles.name}>
+          <div className={styles.date}>{date}</div>
+          <h1 className={styles.title}>
             <Text text={(page.properties.Title as any).title} />
           </h1>
-          <div className={styles.date}>{date}</div>
           <div className={styles.shortLine}></div>
         </div>
         <section>

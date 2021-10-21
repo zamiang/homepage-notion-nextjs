@@ -17,18 +17,21 @@ export const renderBlock = (block: Block) => {
     case 'heading_1':
       return (
         <h1>
+          <div className={styles[`${type}-line`]}></div>
           <Text text={value.text} shouldLinkId={true} />
         </h1>
       );
     case 'heading_2':
       return (
         <h2>
+          <div className={styles[`${type}-line`]}></div>
           <Text text={value.text} shouldLinkId={true} />
         </h2>
       );
     case 'heading_3':
       return (
         <h3>
+          <div className={styles[`${type}-line`]}></div>
           <Text text={value.text} shouldLinkId={true} />
         </h3>
       );

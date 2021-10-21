@@ -4,6 +4,7 @@
   --color-text-default: rgb(75, 86, 115);
   --color-text-default-light: #4b5673;
   --color-text-gray: #959ba9;
+  --font-size: 15px;
 }
 
 /*******************
@@ -178,7 +179,7 @@ body {
   /* Improve kerning for good measure */
   text-rendering: optimizeLegibility;
   color: var(--color-text-default);
-  font-size: 17px;
+  font-size: var(--font-size);
   line-height: 1.5;
   font-weight: 500;
 }
@@ -207,7 +208,7 @@ h1 {
   line-height: 1.27;
   margin: 0;
   margin-block-start: 24px;
-  font-size: calc(19px + 0.75vw);
+  font-size: calc(var(--font-size) + 0.75vw);
   line-height: 1.4;
   font-weight: 700;
   display: block;
@@ -225,12 +226,12 @@ h2 {
   text-indent: -0.05em;
   white-space: pre-wrap;
   word-break: break-word;
-  font-size: 18px;
+  font-size: calc(var(--font-size) + 0.5vw);
 }
 
 h3 {
   margin-top: 1.75rem;
-  font-size: 1.25rem;
+  font-size: calc(var(--font-size) + 0.25vw);
   font-weight: 500;
   margin-bottom: 0.25em;
 }
@@ -330,7 +331,7 @@ P {
 }
 
 pre {
-  color: black;
+  color: var(--color-text-default);
   background: #f5f2f0;
   text-shadow: 0 1px white;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;

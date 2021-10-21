@@ -4,3 +4,30 @@
   text-align: center;
   font-size: 1.25rem;
 }
+
+.heading_1-line{
+  height: 1px;
+  width:66px;
+  background: var(--color-text-default);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 9px
+}
+
+.heading_2-line{
+  height: 1px;
+  width: 35px;
+  background: var(--color-text-default);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 9px
+}
+
+.heading_3-line{
+  height: 1px;
+  width: 20px;
+  background: var(--color-text-default);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 9px
+}
