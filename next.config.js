@@ -7,7 +7,13 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['s3.us-west-2.amazonaws.com', 'cdn-images-1.medium.com'],
+    domains: [
+      's3.us-east-1.amazonaws.com',
+      's3.us-east-2.amazonaws.com',
+      's3.us-west-1.amazonaws.com',
+      's3.us-west-2.amazonaws.com',
+      'cdn-images-1.medium.com',
+    ],
   },
   webpack5: true,
 
