@@ -22,6 +22,7 @@ First, follow Notions [getting started guide](https://developers.notion.com/docs
 NOTION_TOKEN=
 NOTION_POSTS_DATABASE_ID=
 NOTION_PHOTOS_DATABASE_ID=
+GOOGLE_ANALYTICS_ID=
 ```
 
 Install dependencies
