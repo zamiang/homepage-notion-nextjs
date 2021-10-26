@@ -35,6 +35,10 @@ export const Text = (props: { text?: IText[]; shouldLinkId?: boolean }) => {
           return null;
         }
         const id = props.shouldLinkId ? slugify(text.content, { lower: true }) : undefined;
+        let link;
+        if (text.link) {
+          link = text.link.url.includes('http') ? text.link.url : `/writing/${text.link.url}`;
+        }
         return (
           <span
             key={index}
@@ -48,7 +52,7 @@ export const Text = (props: { text?: IText[]; shouldLinkId?: boolean }) => {
             ].join(' ')}
             style={color !== 'default' ? { color } : {}}
           >
-            {text.link ? <a href={`/writing/${text.link.url}`}>{text.content}</a> : text.content}
+            {link ? <a href={link}>{text.content}</a> : text.content}
           </span>
         );
       })}
