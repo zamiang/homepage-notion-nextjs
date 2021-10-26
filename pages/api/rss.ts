@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getDatabase } from '../../lib/notion';
+import { getItemsFromDatabase } from '../../lib/notion';
 import { postsDatabaseId } from '../index';
 
 const title = 'Articles by Brennan Moore';
@@ -7,7 +7,7 @@ const description = 'todo';
 const baseUrl = 'https://www.zamaing.com/';
 
 const getRssXml = async () => {
-  const posts = await getDatabase(postsDatabaseId);
+  const posts = await getItemsFromDatabase(postsDatabaseId);
 
   const orderedPosts = posts
     .filter(

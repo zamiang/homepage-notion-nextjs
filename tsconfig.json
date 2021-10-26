@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "module": "ESNext",
     "moduleResolution": "node",
     "target": "ESNext",
@@ -16,7 +20,8 @@
     "removeComments": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "incremental": true
   },
   "include": [
     "./components/**/*.ts",
@@ -26,5 +31,7 @@
     "./pages/**/*.tsx",
     "@types/**.*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

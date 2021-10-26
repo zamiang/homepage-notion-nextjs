@@ -5,7 +5,8 @@ import { renderBlock } from '../../components/article/render-article-block';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
-import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
+import { getBlocks, getItemsFromDatabase, getPageBySlug } from '../../lib/notion';
+import Custom404 from '../404';
 import { PostsList, postsDatabaseId } from '../index';
 import styles from './writing.module.css';
 
@@ -15,7 +16,7 @@ export type Block = Params['blocks'][0];
 
 export default function Post({ page, blocks, posts }: Params) {
   if (!page || !blocks) {
-    return <div />;
+    return <Custom404 />;
   }
   const excerpt = (page.properties.Excerpt as any).rich_text[0]?.plain_text;
   const title = (page.properties.Title as any).title[0].plain_text;
@@ -60,7 +61,7 @@ export default function Post({ page, blocks, posts }: Params) {
 }
 
 export const getStaticPaths = async () => {
-  const database = await getDatabase(postsDatabaseId);
+  const database = await getItemsFromDatabase(postsDatabaseId);
   const paths = database
     .map((post) => {
       const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
@@ -77,7 +78,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context: { params: { id: string } }) => {
   const { id } = context.params;
-  const posts = await getDatabase(postsDatabaseId);
+  const posts = await getItemsFromDatabase(postsDatabaseId);
   const page = await getPageBySlug(id, postsDatabaseId);
   const blocks = await getBlocks(page.id);
 

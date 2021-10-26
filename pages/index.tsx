@@ -6,7 +6,7 @@ import React from 'react';
 import { Text } from '../components/article/text';
 import Footer from '../components/homepage/footer';
 import Header from '../components/homepage/header';
-import { getDatabase } from '../lib/notion';
+import { getItemsFromDatabase } from '../lib/notion';
 import styles from './index.module.css';
 
 export const postsDatabaseId = process.env.NOTION_POSTS_DATABASE_ID!;
@@ -208,8 +208,8 @@ export default function Home(props: IProps) {
 }
 
 export const getStaticProps = async () => {
-  const posts = await getDatabase(postsDatabaseId);
-  const photos = await getDatabase(photosDatabaseId);
+  const posts = await getItemsFromDatabase(postsDatabaseId);
+  const photos = await getItemsFromDatabase(photosDatabaseId);
 
   return {
     props: {

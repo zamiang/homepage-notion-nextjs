@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { getDatabase } from '../../lib/notion';
+import { getItemsFromDatabase } from '../../lib/notion';
 import { postsDatabaseId } from '../index';
 
 export default async (_req: Request, res: Response) => {
-  const posts = await getDatabase(postsDatabaseId);
+  const posts = await getItemsFromDatabase(postsDatabaseId);
 
   const smStream = new SitemapStream({
     hostname: 'https://www.kelp.nyc',

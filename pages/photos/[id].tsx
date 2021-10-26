@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
-import { getBlocks, getDatabase, getPageBySlug } from '../../lib/notion';
+import { getBlocks, getItemsFromDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
 import styles from '../writing/writing.module.css';
 
@@ -100,7 +100,7 @@ export default function Post({ page, blocks }: Params) {
 }
 
 export const getStaticPaths = async () => {
-  const database = await getDatabase(photosDatabaseId);
+  const database = await getItemsFromDatabase(photosDatabaseId);
   const paths = database
     .map((post) => {
       const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
