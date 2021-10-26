@@ -1,0 +1,68 @@
+{
+  "name": "brennan-nextjs-notion",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Homepage that uses the new notion API for a nextjs homepage",
+  "homepage": "https://www.kelp.nyc",
+  "repository": "https://github.com/zamiang/kelp",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": {
+    "name": "Brennan Moore",
+    "email": "brennanmoore@gmail.com",
+    "url": "https://www.zamiang.com"
+  },
+  "main": "pages/_index.tsx",
+  "scripts": {
+    "analyze": "ANALYZE=true next build",
+    "audit-dependencies": "npm audit --audit-level=high --production",
+    "build": "next build",
+    "dev": "next -p ${PORT:-3000}",
+    "lint": "npx eslint './**/*.{js,ts,tsx}'",
+    "lint:fix": "npx eslint --fix './**/*.{js,ts,tsx}'",
+    "prettier": "prettier --write \"{pages,components}/**/*.{ts,tsx,js,css}\"",
+    "prettier:check": "prettier --list-different \"{pages,components}/**/*.{ts,tsx,js,css}\"",
+    "start": "next start -p ${PORT:-3000}",
+    "typecheck": "node node_modules/.bin/tsc --project tsconfig.json --noEmit --pretty"
+  },
+  "dependencies": {
+    "@notionhq/client": "0.4.4",
+    "@types/express": "4.17.13",
+    "@types/react-headroom": "2.2.2",
+    "@types/react-linkify": "1.0.1",
+    "@types/react-router-dom": "5.3.2",
+    "clsx": "1.1.1",
+    "express": "4.17.1",
+    "next": "11.1.2",
+    "next-compose-plugins": "2.2.1",
+    "next-fonts": "1.5.1",
+    "next-secure-headers": "2.2.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-twitter-embed": "3.0.3",
+    "sitemap": "7.0.0",
+    "slugify": "1.6.1",
+    "typescript": "4.4.4"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.6",
+    "@types/react-dom": "17.0.10",
+    "@typescript-eslint/eslint-plugin": "5.2.0",
+    "@typescript-eslint/eslint-plugin-tslint": "5.2.0",
+    "@typescript-eslint/parser": "5.2.0",
+    "eslint": "8.1.0",
+    "eslint-config-next": "11.1.2",
+    "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-react": "7.26.1",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-plugin-security": "1.4.0",
+    "prettier": "2.4.1",
+    "tslint": "6.1.3"
+  },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
+  },
+  "cacheDirectories": [
+    ".next/cache"
+  ]
+}

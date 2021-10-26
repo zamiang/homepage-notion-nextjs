@@ -1,0 +1,109 @@
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  width: calc((100vw - 680px) / 2);
+}
+
+.fixedBackground {
+  position: fixed;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.88);
+  pointer-events: none;
+}
+
+.fixedBackgroundVisible {
+  display: block;
+  opacity: 1;
+}
+
+.articleNav {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 1;
+  position: relative;
+  margin-left: 20px;
+  height: 100vh;
+  justify-content: center;
+}
+
+.content {
+}
+
+.articleNavItem {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-text-default);
+  border: 0px solid;
+  display: flex;
+  height: 15px;
+  opacity: 1;
+}
+
+.articleNavLeftLineHover {
+  width: 20px;
+}
+
+.articleNavLeft {
+  margin-top: 11px;
+  width: 80px;
+}
+
+.articleNavLeftLine {
+  height: 1px;
+  background: var(--color-text-default);
+  transition: width 0.5s ease-out;
+}
+
+.articleNavText {
+  display: none;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: var(--font-size);
+  white-space: nowrap;
+  height: 21px;
+  overflow: hidden;
+}
+
+.articleTextVisible {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.articleNavItem:hover .articleTextVisible {
+  opacity: 1;
+}
+
+.articleNavItem:hover .articleNavLeftLine,
+.articleNavItem:hover .articleNavLeft {
+  width: 80px !important;
+}
+
+@media only screen and (max-width: 1000px) {
+  .fixed {
+    display: none;
+  }
+}
+
+.heading_1 {
+  width: 25px;
+}
+
+.heading_2 {
+  width: 15px;
+}
+
+.heading_3 {
+  width: 5px;
+}
