@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) blog using [Notions Public API](https://developers.notion.com) written in typescript.
+This is a [Next.js](https://nextjs.org/) blog using [Notions Public API](https://developers.notion.com) written in Typescript.
 
 **Demo:** [https://www.zamiang.com](https://www.zamiang.com)
 
