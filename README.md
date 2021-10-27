@@ -16,7 +16,7 @@ This is a [Next.js](https://nextjs.org/) blog using [Notions Public API](https:/
 
 ## Getting Started
 
-First, follow Notions [getting started guide](https://developers.notion.com/docs/getting-started) to get a `NOTION_TOKEN`, `NOTION_POSTS_ID` and `NOTION_PHOTOS_ID, then add them to a file called `.env.local`.
+First, follow Notions [getting started guide](https://developers.notion.com/docs/getting-started) to get a `NOTION_TOKEN`, `NOTION_POSTS_DATABASE_ID` and `NOTION_PHOTOS_DATABASE_ID, then add them to a file called `.env.local`.
 
 ```
 NOTION_TOKEN=
