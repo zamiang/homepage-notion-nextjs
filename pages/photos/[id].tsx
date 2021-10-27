@@ -64,7 +64,7 @@ export default function Post({ page, blocks }: Params) {
     return <div />;
   }
   const title = (page.properties.Title as any).title[0].plain_text;
-  const src = (page.properties.Cover as any)?.files[0]?.file.url;
+  const ogImageUrl = (page.properties.Cover as any)?.files[0]?.file.url;
   const date = new Date((page.properties.Date as any).date.start as string).toLocaleString(
     'en-US',
     {
@@ -77,7 +77,7 @@ export default function Post({ page, blocks }: Params) {
     <div>
       <Head>
         <title>{`${title} by Brennan Moore`}</title>
-        {src && <meta property="og:image" content={src} key="ogdesc" />}
+        {ogImageUrl && <meta property="og:image" content={ogImageUrl} key="ogdesc" />}
       </Head>
       <Header />
       <article className={styles.container}>

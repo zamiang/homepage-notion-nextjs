@@ -20,6 +20,7 @@ export default function Post({ page, blocks, posts }: Params) {
   }
   const excerpt = (page.properties.Excerpt as any).rich_text[0]?.plain_text;
   const title = (page.properties.Title as any).title[0].plain_text;
+  const ogImageUrl = (page.properties.Cover as any)?.files[0]?.file.url;
   const date = new Date((page.properties.Date as any).date.start as string).toLocaleString(
     'en-US',
     {
@@ -34,6 +35,7 @@ export default function Post({ page, blocks, posts }: Params) {
         <title>{`${title} by Brennan Moore`}</title>
         <meta name="description" content={excerpt} />
         <meta property="og:description" content={excerpt} key="ogdesc" />
+        {ogImageUrl && <meta property="og:image" content={ogImageUrl} key="ogdesc" />}
       </Head>
       <Header />
       <ArticleNav blocks={blocks} title={title} />
