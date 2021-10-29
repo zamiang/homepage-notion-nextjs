@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import { getItemsFromDatabase } from '../../lib/notion';
-import { postsDatabaseId } from '../index';
+import { baseUrl, postsDatabaseId } from '../index';
 
 const title = 'Articles by Brennan Moore';
 const description = 'todo';
-const baseUrl = 'https://www.zamaing.com/';
 
 const getRssXml = async () => {
   const posts = await getItemsFromDatabase(postsDatabaseId);

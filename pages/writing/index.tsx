@@ -4,7 +4,7 @@ import React from 'react';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
 import { getItemsFromDatabase } from '../../lib/notion';
-import { PostsList, postsDatabaseId } from '../index';
+import { PostsList, baseUrl, postsDatabaseId } from '../index';
 import styles from '../index.module.css';
 
 const title = 'Writing - Brennan Moore';
@@ -32,8 +32,7 @@ export default function Home(props: IProps) {
         />
 
         {/* Open Graph */}
-        <meta property="og:url" content="https://www.zamiang.com/writing" key="ogurl" />
-        <meta property="og:site_name" content="Zamiang" key="ogsitename" />
+        <meta property="og:url" content={`${baseUrl}/writing`} key="ogurl" />
         <meta property="og:title" content={title} key="ogtitle" />
         <meta property="og:description" content={description} key="ogdesc" />
       </Head>

@@ -12,6 +12,7 @@ import styles from './index.module.css';
 export const postsDatabaseId = process.env.NOTION_POSTS_DATABASE_ID!;
 export const photosDatabaseId = process.env.NOTION_PHOTOS_DATABASE_ID!;
 
+export const baseUrl = 'https://www.zamiang.com';
 const title = 'Home - Brennan Moore';
 const description = 'Hi, I’m Brennan. I build innovative digital products people love.';
 
@@ -121,8 +122,7 @@ export default function Home(props: IProps) {
         />
 
         {/* Open Graph */}
-        <meta property="og:url" content="https://www.zamiang.com" key="ogurl" />
-        <meta property="og:site_name" content="Kelp" key="ogsitename" />
+        <meta property="og:url" content={baseUrl} key="ogurl" />
         <meta property="og:title" content={title} key="ogtitle" />
         <meta property="og:description" content={description} key="ogdesc" />
       </Head>
