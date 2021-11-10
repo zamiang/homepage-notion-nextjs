@@ -59,17 +59,19 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
 };
 
 export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) => {
-  const orderedPosts = props.posts.sort((a, b) =>
-    new Date((a.properties.Date as any).date?.start as string) >
-    new Date((b.properties.Date as any).date?.start as string)
-      ? -1
-      : 1,
-  );
+  const orderedPosts = props.posts
+    .filter((a) => (a.properties.Date as any).date?.start)
+    .sort((a, b) =>
+      new Date((a.properties.Date as any).date?.start as string) >
+      new Date((b.properties.Date as any).date?.start as string)
+        ? -1
+        : 1,
+    );
 
   return (
     <div className={styles.posts}>
       {orderedPosts.map((post) => {
-        const date = new Date((post.properties.Date as any).date.start as string).toLocaleString(
+        const date = new Date((post.properties.Date as any).date?.start as string).toLocaleString(
           'en-US',
           {
             month: 'short',

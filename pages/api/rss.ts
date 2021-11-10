@@ -33,7 +33,7 @@ const getRssXml = async () => {
       latestPostDate = new Date(post.last_edited_time).toUTCString();
     }
 
-    const date = new Date((post.properties.Date as any).date.start as string).toUTCString();
+    const date = new Date((post.properties.Date as any).date?.start as string).toUTCString();
     const title = (post.properties.Title as any).title[0]?.plain_text;
     const excerpt = (post.properties.Excerpt as any).rich_text[0]?.plain_text;
 

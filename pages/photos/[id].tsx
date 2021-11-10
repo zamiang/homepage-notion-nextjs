@@ -65,7 +65,7 @@ export default function Post({ page, blocks }: Params) {
   }
   const title = (page.properties.Title as any).title[0].plain_text;
   const ogImageUrl = (page.properties.Cover as any)?.files[0]?.file.url;
-  const date = new Date((page.properties.Date as any).date.start as string).toLocaleString(
+  const date = new Date((page.properties.Date as any).date?.start as string).toLocaleString(
     'en-US',
     {
       month: 'long',
