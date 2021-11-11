@@ -202,6 +202,55 @@ export default function Home(props: IProps) {
             <div className={styles.divider}></div>
             <PhotosGrid photos={props.photos} />
           </div>
+          <div className={styles.section}>
+            <h2 className={styles.heading}>Publications</h2>
+            <div className={styles.divider}></div>
+            <br />
+            <ul>
+              <li>
+                <div className={styles.listHeading}>
+                  <a href="https://chi2010.personalinformatics.org/publications/515">
+                    Assisted Self Reflection: Combining Lifetracking, Sensemaking, & Personal
+                    Information Management
+                  </a>
+                </div>
+                <div className={styles.listBody}>
+                  <p>
+                    <i>Brennan Moore, Max Van Kleek, David R. Karger, mc schraefel</i>
+                  </p>
+                  <p>
+                    In this paper, we present an ongoing project designed to make self-reflection an
+                    integral part of daily personal information management activity, and to provide
+                    facilities for fostering greater self-understanding through exploration of
+                    captured personal activity logs.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div className={styles.listHeading}>
+                  <a href="https://dl.acm.org/doi/10.1145/1772690.1772787">
+                    Atomate it! end-user context-sensitive automation using heterogeneous
+                    information sources on the web
+                  </a>
+                </div>
+                <div className={styles.listBody}>
+                  <p>
+                    <i>Max Van Kleek, Brennan Moore, David R Karger, Paul André, M C Schraefe</i>
+                  </p>
+                  <p>
+                    Our system, Atomate, treats RSS/ATOM feeds from social networking and
+                    life-tracking sites as sensor streams, integrating information from such feeds
+                    into a simple unified RDF world model representing people, places and things and
+                    their timevarying states and activities. Combined with other information sources
+                    on the web, including the user's online calendar, web-based e-mail client, news
+                    feeds and messaging services, Atomate can be made to automatically carry out a
+                    variety of simple tasks for the user, ranging from context-aware filtering and
+                    messaging, to sharing and social coordination actions.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </article>
         <Footer />
       </main>

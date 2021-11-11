@@ -75,6 +75,13 @@ export const renderBlock = (block: Block) => {
         </pre>
       );
 
+    case 'bookmark':
+      return (
+        <div>
+          <a href={value.url}>{value.url}</a>
+        </div>
+      );
+
     case 'to_do':
       return (
         <div>
