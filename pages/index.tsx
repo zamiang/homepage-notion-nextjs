@@ -242,10 +242,10 @@ export default function Home(props: IProps) {
                     life-tracking sites as sensor streams, integrating information from such feeds
                     into a simple unified RDF world model representing people, places and things and
                     their timevarying states and activities. Combined with other information sources
-                    on the web, including the user's online calendar, web-based e-mail client, news
-                    feeds and messaging services, Atomate can be made to automatically carry out a
-                    variety of simple tasks for the user, ranging from context-aware filtering and
-                    messaging, to sharing and social coordination actions.
+                    on the web, including the user&rsquo;s online calendar, web-based e-mail client,
+                    news feeds and messaging services, Atomate can be made to automatically carry
+                    out a variety of simple tasks for the user, ranging from context-aware filtering
+                    and messaging, to sharing and social coordination actions.
                   </p>
                 </div>
               </li>
