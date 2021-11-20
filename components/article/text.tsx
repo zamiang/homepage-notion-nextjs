@@ -37,7 +37,13 @@ export const Text = (props: { text?: IText[]; shouldLinkId?: boolean }) => {
         const id = props.shouldLinkId ? slugify(text.content, { lower: true }) : undefined;
         let link;
         if (text.link) {
-          link = text.link.url.includes('http') ? text.link.url : `/writing/${text.link.url}`;
+          if (text.link.url.includes('http')) {
+            link = text.link.url;
+          } else if (text.link.url[0] === '/') {
+            link = text.link.url.replace('/', '#');
+          } else {
+            link = `/writing/${text.link.url}`;
+          }
         }
         return (
           <span

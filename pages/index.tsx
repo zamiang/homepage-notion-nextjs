@@ -139,8 +139,12 @@ export default function Home(props: IProps) {
           </header>
           <div className={styles.section}>
             <p className={styles.homepageText}>
-              Over the past 12 years, I&lsquo;ve built web-based tools for non-profits, art
-              collectors, bike shares, e-commerce companies. Some examples:
+              I build beauty through engineering across healthcare, art and e-commerce. I specialize
+              in delivering quality products quickly with small teams. I love to engage with the
+              business to find high impact levers to chip away at intractable problems. My impact is
+              business growth, engaged teams, and right-sized approach through trust, reflection and
+              iterative improvement. <br />
+              Some examples:
             </p>
             <ul>
               <li>
@@ -157,8 +161,10 @@ export default function Home(props: IProps) {
                   <a href="https://www.cityblock.com/">Cityblock Health</a>
                 </div>
                 <div className={styles.listBody}>
-                  I was a founding team member helping build a scalable solution to address the root
-                  causes of health for underserved urban populations. I ran the engineering team.
+                  I helped incubate and found Cityblock Health inside Alphabet&rsquo;s Sidewalk
+                  Labs. I led Cityblock through standing up deep data partnerships with payers,
+                  custom data analytics infrastructure and building Cityblock’s best-in-class care
+                  management software.
                 </div>
               </li>
               <li>
@@ -166,9 +172,9 @@ export default function Home(props: IProps) {
                   <a href="https://www.motivateco.com/">Motivate</a>
                 </div>
                 <div className={styles.listBody}>
-                  I lead the engineering team through first successful PCI compliance for Citi Bike.
-                  I also managed all in-house and contractor software development for the ~10 bike
-                  shares Motivate ran around the world.
+                  I lead the engineering team through first successful PCI compliance audit for Citi
+                  Bike. I also managed all in-house and contractor software development for the ~10
+                  bike shares Motivate ran around the world.
                 </div>
               </li>
               <li>
