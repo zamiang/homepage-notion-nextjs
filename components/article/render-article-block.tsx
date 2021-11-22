@@ -7,37 +7,38 @@ import styles from './block.module.css';
 export const renderBlock = (block: Block) => {
   const { type, id } = block;
   const value = (block as any)[type];
+  const formattedId = id.replaceAll('-', '');
   switch (type) {
     case 'paragraph':
       return (
-        <p>
+        <p id={formattedId}>
           <Text text={value.text} />
         </p>
       );
     case 'heading_1':
       return (
-        <h1 className={styles[`${type}`]}>
+        <h1 className={styles[`${type}`]} id={formattedId}>
           <div className={styles[`${type}-line`]}></div>
           <Text text={value.text} shouldLinkId={true} />
         </h1>
       );
     case 'heading_2':
       return (
-        <h2 className={styles[`${type}`]}>
+        <h2 className={styles[`${type}`]} id={formattedId}>
           <div className={styles[`${type}-line`]}></div>
           <Text text={value.text} shouldLinkId={true} />
         </h2>
       );
     case 'heading_3':
       return (
-        <h3 className={styles[`${type}`]}>
+        <h3 className={styles[`${type}`]} id={formattedId}>
           <div className={styles[`${type}-line`]}></div>
           <Text text={value.text} shouldLinkId={true} />
         </h3>
       );
     case 'bulleted_list_item':
       return (
-        <ol>
+        <ol id={formattedId}>
           <li>
             <Text text={value.text} />
           </li>
@@ -53,7 +54,7 @@ export const renderBlock = (block: Block) => {
 
     case 'numbered_list_item':
       return (
-        <ul>
+        <ul id={formattedId}>
           <li>
             <Text text={value.text} />
           </li>
@@ -70,23 +71,23 @@ export const renderBlock = (block: Block) => {
 
     case 'code':
       return (
-        <pre>
+        <pre id={formattedId}>
           <Text text={value.text} />
         </pre>
       );
 
     case 'bookmark':
       return (
-        <div>
+        <div id={formattedId}>
           <a href={value.url}>{value.url}</a>
         </div>
       );
 
     case 'to_do':
       return (
-        <div>
+        <div id={formattedId}>
           <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
+            <input type="checkbox" id={formattedId} defaultChecked={value.checked} />{' '}
             <Text text={value.text} />
           </label>
         </div>
@@ -102,8 +103,10 @@ export const renderBlock = (block: Block) => {
           ))}
         </details>
       );
+
     case 'child_page':
       return <p>{value.title}</p>;
+
     case 'image':
       const src = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
@@ -113,6 +116,7 @@ export const renderBlock = (block: Block) => {
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
+
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type

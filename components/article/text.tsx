@@ -40,7 +40,7 @@ export const Text = (props: { text?: IText[]; shouldLinkId?: boolean }) => {
           if (text.link.url.includes('http')) {
             link = text.link.url;
           } else if (text.link.url[0] === '/') {
-            link = text.link.url.replace('/', '#');
+            link = `#${text.link.url.split('#')[1]}`;
           } else {
             link = `/writing/${text.link.url}`;
           }
