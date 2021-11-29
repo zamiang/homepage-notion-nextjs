@@ -1,11 +1,11 @@
 import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { Text } from '../components/article/text';
 import Footer from '../components/homepage/footer';
 import Header from '../components/homepage/header';
+import { Image, signImageUrl } from '../components/image/imgix';
 import { getItemsFromDatabase } from '../lib/notion';
 import styles from './index.module.css';
 
@@ -21,6 +21,10 @@ interface IProps {
   posts: QueryDatabaseResponse['results'];
 }
 
+export const config = {
+  unstable_runtimeJS: false,
+};
+
 export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) => {
   const orderedPhotos = props.photos.sort((a, b) =>
     new Date((a.properties.Date as any).date?.start as string) >
@@ -32,15 +36,16 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
     <div className={styles.grid}>
       {orderedPhotos.map((post) => {
         const title = (post.properties.Title as any).title;
-        const src = (post.properties.Cover as any)?.files[0]?.file.url;
+        const url = (post.properties.Cover as any)?.files[0]?.file.url;
         const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
-
+        const width = 297;
+        const { src, srcSet } = signImageUrl(url, width, width);
         return (
           <div key={post.id} className={styles.gridItem}>
             {src && (
               <Link href={`/photos/${slug}`}>
                 <a className={styles.photoLinkImage}>
-                  <Image src={src} width="342" height="342" />
+                  <Image src={src} srcSet={srcSet} width={width} height={width} alt={title} />
                 </a>
               </Link>
             )}

@@ -72,6 +72,12 @@
   flex: 33% 1;
 }
 
+@media only screen and (max-width: 600px) {
+  .gridItem {
+    flex: 100% 1;
+  }
+}
+
 .photoTitle {
   margin: 3px 0;
   min-height: 24px;

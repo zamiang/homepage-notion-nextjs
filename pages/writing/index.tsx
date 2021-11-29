@@ -14,6 +14,10 @@ interface IProps {
   posts: QueryDatabaseResponse['results'];
 }
 
+export const config = {
+  unstable_runtimeJS: false,
+};
+
 export default function Home(props: IProps) {
   const posts = props.posts.filter((p) => (p.properties.Status as any).select?.name === 'Live');
   return (

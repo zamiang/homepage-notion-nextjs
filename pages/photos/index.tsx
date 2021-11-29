@@ -14,6 +14,10 @@ interface IProps {
   photos: QueryDatabaseResponse['results'];
 }
 
+export const config = {
+  unstable_runtimeJS: false,
+};
+
 export default function Home(props: IProps) {
   return (
     <div>

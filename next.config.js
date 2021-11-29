@@ -6,15 +6,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: {
-    domains: [
-      's3.us-east-1.amazonaws.com',
-      's3.us-east-2.amazonaws.com',
-      's3.us-west-1.amazonaws.com',
-      's3.us-west-2.amazonaws.com',
-      'cdn-images-1.medium.com',
-    ],
-  },
   webpack5: true,
 
   async rewrites() {
@@ -42,6 +33,7 @@ const nextConfig = {
               imgSrc: [
                 "'self'",
                 'data:',
+                'https://zamiang.imgix.net',
                 'https://www.googletagmanager.com',
                 'https://s3.us-west-2.amazonaws.com',
                 'https://cdn-images-1.medium.com',

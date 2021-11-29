@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import React, { Fragment } from 'react';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
+import { Image, signImageUrl } from '../../components/image/imgix';
 import { getBlocks, getItemsFromDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
 import styles from '../writing/writing.module.css';
@@ -11,6 +11,10 @@ import styles from '../writing/writing.module.css';
 type UnPromisify<T> = T extends Promise<infer U> ? U : T;
 type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
 type Block = Params['blocks'][0];
+
+export const config = {
+  unstable_runtimeJS: false,
+};
 
 const renderBlock = (block: Block) => {
   const { type } = block;
@@ -44,11 +48,12 @@ const renderBlock = (block: Block) => {
     case 'child_page':
       return <p>{value.title}</p>;
     case 'image':
-      const src = value.type === 'external' ? value.external.url : value.file.url;
+      const url = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
+      const { src, srcSet } = signImageUrl(url, 640, 640);
       return (
         <figure>
-          <Image src={src} alt={caption} height="640" width="640" />
+          <Image src={src} srcSet={srcSet} alt={caption} />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { TwitterTweetEmbed } from 'react-twitter-embed';
 import { Text } from '../../components/article/text';
+import { Image, signImageUrl } from '../../components/image/imgix';
 import { Block } from '../../pages/writing/[id]';
 import styles from './block.module.css';
 
@@ -108,11 +109,12 @@ export const renderBlock = (block: Block) => {
       return <p>{value.title}</p>;
 
     case 'image':
-      const src = value.type === 'external' ? value.external.url : value.file.url;
+      const url = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
+      const { src, srcSet } = signImageUrl(url, 640);
       return (
         <figure>
-          <img src={src} alt={caption} />
+          <Image src={src} srcSet={srcSet} alt={caption} width={640} />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
