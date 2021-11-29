@@ -13,6 +13,7 @@ This is a [Next.js](https://nextjs.org/) blog written in Typescript that uses [N
 - Robust eslint and prettier config
 - Supports all Notion blocks current supported by the API
 - Pages for photos and writing
+- imgix cdn for images (to reduce Vercel hosting cost and improve speed)
 
 ## Getting Started
 
@@ -23,6 +24,7 @@ NOTION_TOKEN=
 NOTION_POSTS_DATABASE_ID=
 NOTION_PHOTOS_DATABASE_ID=
 GOOGLE_ANALYTICS_ID=
+IMGIX_TOKEN=
 ```
 
 Install dependencies
