@@ -8,7 +8,7 @@ import styles from './block.module.css';
 export const renderBlock = (block: Block) => {
   const { type, id } = block;
   const value = (block as any)[type];
-  const formattedId = id?.replaceAll('-', '');
+  const formattedId = id && id.replaceAll ? id.replaceAll('-', '') : String(id);
   switch (type) {
     case 'paragraph':
       return (
