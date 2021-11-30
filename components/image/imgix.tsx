@@ -3,7 +3,7 @@ import React from 'react';
 
 const client = new ImgixClient({
   domain: 'zamiang.imgix.net',
-  secureURLToken: process.env.IMGIX_TOKEN,
+  secureURLToken: process.env.NEXT_PUBLIC_IMGIX_TOKEN,
 });
 
 export const signImageUrl = (imagePath: string, width = 640, height?: number) => {
