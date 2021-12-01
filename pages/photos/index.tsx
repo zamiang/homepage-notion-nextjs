@@ -7,7 +7,7 @@ import { getItemsFromDatabase } from '../../lib/notion';
 import { PhotosGrid, baseUrl, photosDatabaseId } from '../index';
 import styles from '../index.module.css';
 
-const title = 'Photos - Brennan MOore';
+const title = 'Photos - Brennan Moore';
 const description = 'List of photos';
 
 interface IProps {
