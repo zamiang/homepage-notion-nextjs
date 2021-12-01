@@ -5,7 +5,7 @@ import { Image, signImageUrl } from '../../components/image/imgix';
 import { Block } from '../../pages/writing/[id]';
 import styles from './block.module.css';
 
-export const renderBlock = (block: Block) => {
+export const renderBlock = (block: Block, width = 640) => {
   const { type, id } = block;
   const value = (block as any)[type];
   const formattedId = id.split('-').join('');
@@ -100,7 +100,7 @@ export const renderBlock = (block: Block) => {
             <Text text={value.text} />
           </summary>
           {value.children?.map((block: any) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
+            <Fragment key={block.id}>{renderBlock(block, width)}</Fragment>
           ))}
         </details>
       );
@@ -111,10 +111,10 @@ export const renderBlock = (block: Block) => {
     case 'image':
       const url = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
-      const { src, srcSet } = signImageUrl(url, 640);
+      const { src, srcSet } = signImageUrl(url, width);
       return (
         <figure>
-          <Image src={src} srcSet={srcSet} alt={caption} width={640} />
+          <Image src={src} srcSet={srcSet} alt={caption} width={width} />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );

@@ -30,7 +30,16 @@ interface iProps {
   src: string;
   width?: number;
   height?: number;
+  style?: any;
 }
-export const Image = ({ width, height, src, srcSet, alt }: iProps) => (
-  <img width={width || 640} height={height} srcSet={srcSet} alt={alt} src={src} />
+export const Image = ({ width, height, src, srcSet, alt, style }: iProps) => (
+  <img
+    width={width || 640}
+    height={height}
+    srcSet={srcSet}
+    alt={alt}
+    src={src}
+    style={style}
+    loading="lazy"
+  />
 );

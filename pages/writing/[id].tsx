@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
+import { useMeasure } from 'react-use';
 import { ArticleNav } from '../../components/article/article-nav';
 import { renderBlock } from '../../components/article/render-article-block';
 import { Text } from '../../components/article/text';
@@ -16,6 +17,20 @@ export type Block = Params['blocks'][0];
 
 export const config = {
   unstable_runtimeJS: false,
+};
+
+const Blocks = (props: { blocks: Params['blocks'] }) => {
+  const [ref, { width }] = useMeasure<HTMLDivElement>();
+
+  return (
+    <div ref={ref}>
+      {props.blocks.map((block) => (
+        <React.Fragment key={block.id}>
+          {renderBlock(block, width < 300 ? undefined : width)}
+        </React.Fragment>
+      ))}
+    </div>
+  );
 };
 
 export default function Post({ page, blocks, posts }: Params) {
@@ -53,6 +68,7 @@ export default function Post({ page, blocks, posts }: Params) {
           <div className={styles.shortLine}></div>
         </div>
         <section>
+          <Blocks blocks={blocks} />
           {blocks.map((block) => (
             <React.Fragment key={block.id}>{renderBlock(block)}</React.Fragment>
           ))}

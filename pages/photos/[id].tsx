@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import React, { Fragment } from 'react';
+import React from 'react';
+import { useMeasure } from 'react-use';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
@@ -16,7 +17,7 @@ export const config = {
   unstable_runtimeJS: false,
 };
 
-const renderBlock = (block: Block) => {
+const renderBlock = (block: Block, width = 720) => {
   const { type } = block;
   const value = (block as any)[type];
 
@@ -50,10 +51,17 @@ const renderBlock = (block: Block) => {
     case 'image':
       const url = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
-      const { src, srcSet } = signImageUrl(url, 640, 640);
+      const { src, srcSet } = signImageUrl(url, width, width);
       return (
         <figure>
-          <Image src={src} srcSet={srcSet} alt={caption} />
+          <Image
+            width={width}
+            height={width}
+            src={src}
+            srcSet={srcSet}
+            alt={caption}
+            style={{ minHeight: 300 }}
+          />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
@@ -62,6 +70,19 @@ const renderBlock = (block: Block) => {
         type === 'unsupported' ? 'unsupported by Notion API' : type
       })`;
   }
+};
+
+const Blocks = (props: { blocks: Params['blocks'] }) => {
+  const [ref, { width }] = useMeasure<HTMLDivElement>();
+  return (
+    <div ref={ref}>
+      {props.blocks.map((block) => (
+        <React.Fragment key={block.id}>
+          {renderBlock(block, width < 300 ? undefined : width)}
+        </React.Fragment>
+      ))}
+    </div>
+  );
 };
 
 export default function Post({ page, blocks }: Params) {
@@ -85,7 +106,7 @@ export default function Post({ page, blocks }: Params) {
         {ogImageUrl && <meta property="og:image" content={ogImageUrl} key="ogdesc" />}
       </Head>
       <Header />
-      <article className={styles.container}>
+      <article className={styles.container} style={{ maxWidth: 720 }}>
         <div className={styles.top}>
           <div className={styles.date}>{date}</div>
           <h1 className={styles.title}>
@@ -94,9 +115,7 @@ export default function Post({ page, blocks }: Params) {
           <div className={styles.shortLine}></div>
         </div>
         <section>
-          {blocks.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
+          <Blocks blocks={blocks} />
         </section>
       </article>
       <Footer />

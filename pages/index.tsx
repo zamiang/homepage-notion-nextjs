@@ -2,6 +2,7 @@ import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
+import { useMeasure } from 'react-use';
 import { Text } from '../components/article/text';
 import Footer from '../components/homepage/footer';
 import Header from '../components/homepage/header';
@@ -25,6 +26,39 @@ export const config = {
   unstable_runtimeJS: false,
 };
 
+const Photo = (props: { post: IProps['photos'][0] }) => {
+  const [ref, { width }] = useMeasure<HTMLDivElement>();
+  const title = (props.post.properties.Title as any).title;
+  const url = (props.post.properties.Cover as any)?.files[0]?.file.url;
+  const slug = (props.post.properties.Slug as any).rich_text[0]?.plain_text;
+  const normalizedWidth = width < 297 ? 297 : width;
+  const { src, srcSet } = signImageUrl(url, normalizedWidth, normalizedWidth);
+  return (
+    <div className={styles.gridItem} ref={ref}>
+      {src && (
+        <Link href={`/photos/${slug}`}>
+          <a className={styles.photoLinkImage}>
+            <Image
+              src={src}
+              srcSet={srcSet}
+              width={normalizedWidth}
+              height={normalizedWidth}
+              alt={title}
+            />
+          </a>
+        </Link>
+      )}
+      <h3 className={styles.photoTitle}>
+        <Link href={`/photos/${slug}`}>
+          <a className={styles.photoLink}>
+            <Text text={title} />
+          </a>
+        </Link>
+      </h3>
+    </div>
+  );
+};
+
 export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) => {
   const orderedPhotos = props.photos.sort((a, b) =>
     new Date((a.properties.Date as any).date?.start as string) >
@@ -34,31 +68,9 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
   );
   return (
     <div className={styles.grid}>
-      {orderedPhotos.map((post) => {
-        const title = (post.properties.Title as any).title;
-        const url = (post.properties.Cover as any)?.files[0]?.file.url;
-        const slug = (post.properties.Slug as any).rich_text[0]?.plain_text;
-        const width = 297;
-        const { src, srcSet } = signImageUrl(url, width, width);
-        return (
-          <div key={post.id} className={styles.gridItem}>
-            {src && (
-              <Link href={`/photos/${slug}`}>
-                <a className={styles.photoLinkImage}>
-                  <Image src={src} srcSet={srcSet} width={width} height={width} alt={title} />
-                </a>
-              </Link>
-            )}
-            <h3 className={styles.photoTitle}>
-              <Link href={`/photos/${slug}`}>
-                <a className={styles.photoLink}>
-                  <Text text={title} />
-                </a>
-              </Link>
-            </h3>
-          </div>
-        );
-      })}
+      {orderedPhotos.map((post) => (
+        <Photo key={post.id} post={post} />
+      ))}
     </div>
   );
 };
