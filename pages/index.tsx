@@ -22,10 +22,6 @@ interface IProps {
   posts: QueryDatabaseResponse['results'];
 }
 
-export const config = {
-  unstable_runtimeJS: false,
-};
-
 const Photo = (props: { post: IProps['photos'][0] }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
   const title = (props.post.properties.Title as any).title;

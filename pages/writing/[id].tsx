@@ -15,10 +15,6 @@ type UnPromisify<T> = T extends Promise<infer U> ? U : T;
 type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
 export type Block = Params['blocks'][0];
 
-export const config = {
-  unstable_runtimeJS: false,
-};
-
 const Blocks = (props: { blocks: Params['blocks'] }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
 
