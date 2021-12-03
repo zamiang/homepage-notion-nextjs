@@ -65,9 +65,6 @@ export default function Post({ page, blocks, posts }: Params) {
         </div>
         <section>
           <Blocks blocks={blocks} />
-          {blocks.map((block) => (
-            <React.Fragment key={block.id}>{renderBlock(block)}</React.Fragment>
-          ))}
         </section>
         <div className={styles.shortLine}></div>
         <h2 className={styles.name}>Other Writing</h2>
