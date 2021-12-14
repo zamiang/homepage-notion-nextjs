@@ -135,7 +135,6 @@ export default function Home(props: IProps) {
           title="RSS Feed for zamiang.com"
           href="/rss.xml"
         />
-
         {/* Open Graph */}
         <meta property="og:url" content={baseUrl} key="ogurl" />
         <meta property="og:title" content={title} key="ogtitle" />
