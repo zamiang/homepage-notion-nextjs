@@ -25,13 +25,13 @@ GOOGLE_ANALYTICS_ID=
 NEXT_PUBLIC_IMGIX_TOKEN=
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start the server with
+Start the server with:
 
 ```bash
 npm run dev
