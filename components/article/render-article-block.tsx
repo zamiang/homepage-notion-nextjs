@@ -112,8 +112,8 @@ export const renderBlock = (block: Block, width = 640) => {
       const url = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
       return (
-        <figure>
-          <Image src={url} alt={caption} width={width} />
+        <figure style={{ width: '100%' }}>
+          <img src={url} alt={caption} />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
