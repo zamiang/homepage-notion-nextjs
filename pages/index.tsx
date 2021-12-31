@@ -1,12 +1,12 @@
 import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useMeasure } from 'react-use';
 import { Text } from '../components/article/text';
 import Footer from '../components/homepage/footer';
 import Header from '../components/homepage/header';
-import { Image, signImageUrl } from '../components/image/imgix';
 import { getItemsFromDatabase } from '../lib/notion';
 import styles from './index.module.css';
 
@@ -28,19 +28,12 @@ const Photo = (props: { post: IProps['photos'][0] }) => {
   const url = (props.post.properties.Cover as any)?.files[0]?.file.url;
   const slug = (props.post.properties.Slug as any).rich_text[0]?.plain_text;
   const normalizedWidth = width < 297 ? 297 : width;
-  const { src, srcSet } = signImageUrl(url, normalizedWidth, normalizedWidth);
   return (
     <div className={styles.gridItem} ref={ref}>
-      {src && (
+      {url && (
         <Link href={`/photos/${slug}`}>
           <a className={styles.photoLinkImage}>
-            <Image
-              src={src}
-              srcSet={srcSet}
-              width={normalizedWidth}
-              height={normalizedWidth}
-              alt={title}
-            />
+            <Image src={url} width={normalizedWidth} height={normalizedWidth} alt={title} />
           </a>
         </Link>
       )}

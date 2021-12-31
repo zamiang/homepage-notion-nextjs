@@ -1,10 +1,10 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import React from 'react';
 import { useMeasure } from 'react-use';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
-import { Image, signImageUrl } from '../../components/image/imgix';
 import { getBlocks, getItemsFromDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
 import styles from '../writing/writing.module.css';
@@ -47,17 +47,9 @@ const renderBlock = (block: Block, width = 720) => {
     case 'image':
       const url = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
-      const { src, srcSet } = signImageUrl(url, width, width);
       return (
         <figure>
-          <Image
-            width={width}
-            height={width}
-            src={src}
-            srcSet={srcSet}
-            alt={caption}
-            style={{ minHeight: 300 }}
-          />
+          <Image width={width} height={width} src={url} alt={caption} />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );
