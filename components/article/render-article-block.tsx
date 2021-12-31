@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React, { Fragment } from 'react';
 import { TwitterTweetEmbed } from 'react-twitter-embed';
 import { Text } from '../../components/article/text';
