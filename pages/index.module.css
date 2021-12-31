@@ -69,7 +69,8 @@
 }
 
 .gridItem {
-  flex: 33% 1;
+  flex: 46.4% 0;
+  flex-grow: 0;
 }
 
 @media only screen and (max-width: 600px) {
