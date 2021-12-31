@@ -11,7 +11,6 @@ This is a [Next.js](https://nextjs.org/) blog written in Typescript that uses [N
 - Google Analytics
 - Content Security Policy (CSP)
 - Robust eslint and prettier config
-- Supports all Notion blocks current supported by the API
 - Pages for photos and writing
 
 ## Getting Started
