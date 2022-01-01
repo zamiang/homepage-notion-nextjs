@@ -107,7 +107,7 @@ export default function Post({ page, blocks }: Params) {
     },
   );
 
-  const isGrid = (page.properties.Grid as any).select.name === 'two-column';
+  const isGrid = (page.properties.Grid as any)?.select?.name === 'two-column';
   return (
     <div>
       <Head>
