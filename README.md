@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) blog written in Typescript that uses [Notion's Public API](https://developers.notion.com).
 
-**Demo:** [https://www.zamiang.com](https://www.zamiang.com)
+Production: [https://www.zamiang.com](https://www.zamiang.com)
 
 **Based on:** [https://samuelkraft.com/blog/building-a-notion-blog-with-public-api](https://samuelkraft.com/blog/building-a-notion-blog-with-public-api)
 
