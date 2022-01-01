@@ -47,10 +47,16 @@ const renderBlock = (block: Block, width = 720) => {
     case 'image':
       const url = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
+      const captionHref = value.caption && value.caption[0]?.href;
       return (
         <figure>
           <Image width={width} height={width} src={url} alt={caption} />
-          {caption && <figcaption>{caption}</figcaption>}
+          {caption && captionHref && (
+            <figcaption>
+              <a href={captionHref}>{caption}</a>
+            </figcaption>
+          )}
+          {caption && !captionHref && <figcaption>{caption}</figcaption>}
         </figure>
       );
     default:
@@ -60,8 +66,21 @@ const renderBlock = (block: Block, width = 720) => {
   }
 };
 
-const Blocks = (props: { blocks: Params['blocks'] }) => {
+const Blocks = (props: { blocks: Params['blocks']; isGrid: boolean }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
+
+  if (props.isGrid) {
+    return (
+      <div className={styles.grid}>
+        {props.blocks.map((block) => (
+          <div className={styles.gridItem} key={block.id}>
+            {renderBlock(block, width < 300 ? undefined : width)}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div ref={ref}>
       {props.blocks.map((block) => (
@@ -87,6 +106,8 @@ export default function Post({ page, blocks }: Params) {
       year: 'numeric',
     },
   );
+
+  const isGrid = (page.properties.Grid as any).select.name === 'two-column';
   return (
     <div>
       <Head>
@@ -94,7 +115,7 @@ export default function Post({ page, blocks }: Params) {
         {ogImageUrl && <meta property="og:image" content={ogImageUrl} key="ogdesc" />}
       </Head>
       <Header />
-      <article className={styles.container} style={{ maxWidth: 720 }}>
+      <article className={styles.container} style={{ maxWidth: isGrid ? 1280 : 720 }}>
         <div className={styles.top}>
           <div className={styles.date}>{date}</div>
           <h1 className={styles.title}>
@@ -103,7 +124,7 @@ export default function Post({ page, blocks }: Params) {
           <div className={styles.shortLine}></div>
         </div>
         <section>
-          <Blocks blocks={blocks} />
+          <Blocks blocks={blocks} isGrid={isGrid} />
         </section>
       </article>
       <Footer />
