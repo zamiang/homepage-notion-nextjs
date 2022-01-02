@@ -132,6 +132,10 @@ export default function Post({ page, blocks }: Params) {
   );
 }
 
+export const config = {
+  unstable_runtimeJS: false,
+};
+
 export const getStaticPaths = async () => {
   const database = await getItemsFromDatabase(photosDatabaseId);
   const paths = database
