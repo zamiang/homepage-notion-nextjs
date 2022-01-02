@@ -10,6 +10,7 @@ Production: [https://www.zamiang.com](https://www.zamiang.com)
 - Content Security Policy (CSP)
 - Robust eslint and prettier config
 - Pages for photos and writing
+- Two column setup for images
 
 ## Getting Started
 
