@@ -46,11 +46,15 @@ const renderBlock = (block: Block, width = 720) => {
       return <p>{value.title}</p>;
     case 'image':
       const url = value.type === 'external' ? value.external.url : value.file.url;
-      const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
+      const caption =
+        value.caption && value.caption[0] && value.caption[0].plain_text
+          ? value.caption[0].plain_text
+          : '';
       const captionHref = value.caption && value.caption[0]?.href;
+
       return (
-        <figure>
-          <Image width={width} height={width} src={url} alt={caption} />
+        <figure style={{ width }}>
+          <Image width={width} height={width} src={url} alt={caption} layout="fixed" />
           {caption && captionHref && (
             <figcaption>
               <a href={captionHref}>{caption}</a>
@@ -72,8 +76,8 @@ const Blocks = (props: { blocks: Params['blocks']; isGrid: boolean }) => {
   if (props.isGrid) {
     return (
       <div className={styles.grid}>
-        {props.blocks.map((block) => (
-          <div className={styles.gridItem} key={block.id}>
+        {props.blocks.map((block, index) => (
+          <div className={styles.gridItem} key={block.id} ref={index === 0 ? ref : undefined}>
             {renderBlock(block, width < 300 ? undefined : width)}
           </div>
         ))}
@@ -131,10 +135,6 @@ export default function Post({ page, blocks }: Params) {
     </div>
   );
 }
-
-export const config = {
-  unstable_runtimeJS: false,
-};
 
 export const getStaticPaths = async () => {
   const database = await getItemsFromDatabase(photosDatabaseId);

@@ -24,24 +24,29 @@ interface IProps {
 
 const Photo = (props: { post: IProps['photos'][0] }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
-  const title = (props.post.properties.Title as any).title;
+  const title = (props.post.properties.Title as any).title[0]?.plain_text;
   const url = (props.post.properties.Cover as any)?.files[0]?.file.url;
   const slug = (props.post.properties.Slug as any).rich_text[0]?.plain_text;
   const normalizedWidth = width < 297 ? 297 : width;
+
   return (
     <div className={styles.gridItem} ref={ref}>
       {url && (
         <Link href={`/photos/${slug}`}>
           <a className={styles.photoLinkImage}>
-            <Image src={url} width={normalizedWidth} height={normalizedWidth} alt={title} />
+            <Image
+              src={url}
+              width={normalizedWidth}
+              height={normalizedWidth}
+              alt={title}
+              layout="fixed"
+            />
           </a>
         </Link>
       )}
       <h3 className={styles.photoTitle}>
         <Link href={`/photos/${slug}`}>
-          <a className={styles.photoLink}>
-            <Text text={title} />
-          </a>
+          <a className={styles.photoLink}>{title}</a>
         </Link>
       </h3>
     </div>
@@ -105,10 +110,6 @@ export const PostsList = (props: { posts: QueryDatabaseResponse['results'] }) =>
       })}
     </div>
   );
-};
-
-export const config = {
-  unstable_runtimeJS: false,
 };
 
 export default function Home(props: IProps) {
