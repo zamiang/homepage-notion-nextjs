@@ -3,10 +3,10 @@ const { createSecureHeaders } = require('next-secure-headers');
 const withFonts = require('next-fonts');
 
 const nextConfig = {
+  webpack5: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
-  webpack5: true,
 
   async rewrites() {
     return [
