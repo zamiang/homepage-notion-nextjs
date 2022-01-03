@@ -30,45 +30,50 @@ const nextConfig = {
     return [
       {
         source: '/(.*)',
-        headers: createSecureHeaders({
-          minimumCacheTTL: 31536000,
-          contentSecurityPolicy: {
-            directives: {
-              defaultSrc: "'self'",
-              styleSrc: ["'self'", "'unsafe-inline'"],
-              imgSrc: [
-                "'self'",
-                'data:',
-                'https://zamiang.imgix.net',
-                'https://www.googletagmanager.com',
-                'http://www.googletagmanager.com',
-                'https://s3.us-west-2.amazonaws.com',
-                'https://cdn-images-1.medium.com',
-                'https://vitals.vercel-insights.com',
-              ],
-              fontSrc: ["'self'"],
-              scriptSrc: [
-                "'self'",
-                "'unsafe-eval'",
-                "'unsafe-inline'",
-                'https://www.googletagmanager.com',
-                'http://www.googletagmanager.com',
-                'https://platform.twitter.com',
-                'https://vitals.vercel-insights.com',
-              ],
-              frameSrc: ['https://platform.twitter.com/', 'https://vitals.vercel-insights.com'],
-              connectSrc: [
-                "'self'",
-                'https://www.googleapis.com',
-                'https://www.google-analytics.com',
-                'https://vitals.vercel-insights.com',
-              ],
+        headers: [
+          ...createSecureHeaders({
+            contentSecurityPolicy: {
+              directives: {
+                defaultSrc: "'self'",
+                styleSrc: ["'self'", "'unsafe-inline'"],
+                imgSrc: [
+                  "'self'",
+                  'data:',
+                  'https://zamiang.imgix.net',
+                  'https://www.googletagmanager.com',
+                  'http://www.googletagmanager.com',
+                  'https://s3.us-west-2.amazonaws.com',
+                  'https://cdn-images-1.medium.com',
+                  'https://vitals.vercel-insights.com',
+                ],
+                fontSrc: ["'self'"],
+                scriptSrc: [
+                  "'self'",
+                  "'unsafe-eval'",
+                  "'unsafe-inline'",
+                  'https://www.googletagmanager.com',
+                  'http://www.googletagmanager.com',
+                  'https://platform.twitter.com',
+                  'https://vitals.vercel-insights.com',
+                ],
+                frameSrc: ['https://platform.twitter.com/', 'https://vitals.vercel-insights.com'],
+                connectSrc: [
+                  "'self'",
+                  'https://www.googleapis.com',
+                  'https://www.google-analytics.com',
+                  'https://vitals.vercel-insights.com',
+                ],
+              },
             },
+            forceHTTPSRedirect: true,
+            referrerPolicy: 'same-origin',
+            xssProtection: 'block-rendering',
+          }),
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, must-revalidate',
           },
-          forceHTTPSRedirect: true,
-          referrerPolicy: 'same-origin',
-          xssProtection: 'block-rendering',
-        }),
+        ],
       },
     ];
   },
