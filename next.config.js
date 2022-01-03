@@ -2,6 +2,14 @@ const withPlugins = require('next-compose-plugins');
 const { createSecureHeaders } = require('next-secure-headers');
 const withFonts = require('next-fonts');
 
+/**
+ * @type {Pick<
+ *   import("next").NextConfig,
+ *   | "images"
+ *   | "headers"
+ *   | "rewrites"
+ * >}
+ */
 const nextConfig = {
   webpack5: true,
   eslint: {
@@ -24,7 +32,6 @@ const nextConfig = {
   images: {
     domains: ['s3.us-west-2.amazonaws.com'],
     minimumCacheTTL: 31536000,
-    maxAge: 31536000,
   },
 
   async headers() {
