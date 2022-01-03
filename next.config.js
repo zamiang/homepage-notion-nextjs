@@ -24,6 +24,7 @@ const nextConfig = {
   images: {
     domains: ['s3.us-west-2.amazonaws.com'],
     minimumCacheTTL: 31536000,
+    maxAge: 31536000,
   },
 
   async headers() {
@@ -71,7 +72,7 @@ const nextConfig = {
           }),
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, must-revalidate',
+            value: 'public, max-age=604800, stale-while-revalidate=86400, stale-if-error=259200',
           },
         ],
       },
