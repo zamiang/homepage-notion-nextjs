@@ -31,6 +31,7 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: createSecureHeaders({
+          minimumCacheTTL: 31536000,
           contentSecurityPolicy: {
             directives: {
               defaultSrc: "'self'",
