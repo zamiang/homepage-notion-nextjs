@@ -54,7 +54,7 @@ const renderBlock = (block: Block, width = 720) => {
 
       return (
         <figure style={{ width }}>
-          <Image width={width} height={width} src={url} alt={caption} />
+          <Image width={width} src={url} alt={caption} />
           {caption && captionHref && (
             <figcaption>
               <a href={captionHref}>{caption}</a>

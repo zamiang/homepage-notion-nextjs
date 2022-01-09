@@ -264,6 +264,7 @@ figure {
   margin: 0px;
   margin-bottom: 2em;
   margin-top: 2em;
+  max-width: 100%;
 }
 
 figure img {

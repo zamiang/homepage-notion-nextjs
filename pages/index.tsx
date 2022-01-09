@@ -34,7 +34,7 @@ const Photo = (props: { post: IProps['photos'][0] }) => {
       {url && (
         <Link href={`/photos/${slug}`}>
           <a className={styles.photoLinkImage}>
-            <Image alt={title} src={url} width={normalizedWidth} height={normalizedWidth} />
+            <Image alt={title} src={url} width={normalizedWidth} />
           </a>
         </Link>
       )}
