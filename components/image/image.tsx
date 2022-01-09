@@ -6,7 +6,7 @@ interface IProps {
   width: number;
 }
 
-const baseURL = 'https://zamiang-image-proxy.herokuapp.com/';
+const baseURL = 'https://zamiang-image-proxy.herokuapp.com';
 
 export const Image = (props: IProps) => {
   const src = `${baseURL}/${props.width}/${props.src}`;
