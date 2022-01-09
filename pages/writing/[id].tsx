@@ -93,6 +93,7 @@ export const getStaticPaths = async () => {
 
 export const config = {
   unstable_runtimeJS: false,
+  unstable_JsPreload: false,
 };
 
 export const getStaticProps = async (context: { params: { id: string } }) => {
