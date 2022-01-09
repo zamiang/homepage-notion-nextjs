@@ -37,6 +37,7 @@ const nextConfig = {
                   'https://www.googletagmanager.com',
                   'http://www.googletagmanager.com',
                   'https://zamiang-image-proxy.herokuapp.com',
+                  'https://d33a5xufxp4p1r.cloudfront.net',
                   'https://cdn-images-1.medium.com',
                   'https://vitals.vercel-insights.com',
                 ],
