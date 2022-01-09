@@ -44,6 +44,10 @@ export default function Home(props: IProps) {
   );
 }
 
+export const config = {
+  unstable_runtimeJS: false,
+};
+
 export const getStaticProps = async () => {
   const photos = await getItemsFromDatabase(photosDatabaseId);
 

@@ -91,6 +91,10 @@ export const getStaticPaths = async () => {
   };
 };
 
+export const config = {
+  unstable_runtimeJS: false,
+};
+
 export const getStaticProps = async (context: { params: { id: string } }) => {
   const { id } = context.params;
   const posts = await getItemsFromDatabase(postsDatabaseId);

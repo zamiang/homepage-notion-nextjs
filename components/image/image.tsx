@@ -10,15 +10,16 @@ interface IProps {
 const baseURL = 'https://d33a5xufxp4p1r.cloudfront.net';
 
 export const Image = (props: IProps) => {
-  const src = `${baseURL}/${props.width}x,q60/${props.src}`;
+  const width = props.width || 640;
+  const src = `${baseURL}/${width}x,q60/${props.src}`;
 
-  const srcSet = `${src} 1x, ${baseURL}/${props.width * 2}x,q60/${props.src} 2x, ${baseURL}/${
-    props.width * 3
+  const srcSet = `${src} 1x, ${baseURL}/${width * 2}x,q60/${props.src} 2x, ${baseURL}/${
+    width * 3
   }x,q60/${props.src} 3x`;
 
   return (
     <img
-      width={props.width || 640}
+      width={width}
       height={props.height}
       srcSet={srcSet}
       alt={props.alt}
