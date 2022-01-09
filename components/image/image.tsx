@@ -6,7 +6,7 @@ interface IProps {
   width: number;
 }
 
-const baseURL = 'https://d33a5xufxp4p1r.cloudfront.net';
+const baseURL = 'https://image.zamiang.com';
 
 export const Image = (props: IProps) => {
   const width = props.width || 640;
