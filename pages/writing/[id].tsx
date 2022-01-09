@@ -87,7 +87,7 @@ export const getStaticPaths = async () => {
     .filter(Boolean);
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 };
 
