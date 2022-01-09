@@ -29,11 +29,6 @@ const nextConfig = {
     ];
   },
 
-  images: {
-    domains: ['s3.us-west-2.amazonaws.com'],
-    minimumCacheTTL: 31536000,
-  },
-
   async headers() {
     return [
       {
@@ -50,6 +45,7 @@ const nextConfig = {
                   'https://zamiang.imgix.net',
                   'https://www.googletagmanager.com',
                   'http://www.googletagmanager.com',
+                  'https://immense-fortress-70948.herokuapp.com',
                   'https://s3.us-west-2.amazonaws.com',
                   'https://cdn-images-1.medium.com',
                   'https://vitals.vercel-insights.com',

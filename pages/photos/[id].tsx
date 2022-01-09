@@ -1,10 +1,10 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import React from 'react';
 import { useMeasure } from 'react-use';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
+import { Image } from '../../components/image/image';
 import { getBlocks, getItemsFromDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
 import styles from '../writing/writing.module.css';
@@ -54,7 +54,7 @@ const renderBlock = (block: Block, width = 720) => {
 
       return (
         <figure style={{ width }}>
-          <Image width={width} height={width} src={url} alt={caption} layout="fixed" />
+          <Image width={width} src={url} alt={caption} />
           {caption && captionHref && (
             <figcaption>
               <a href={captionHref}>{caption}</a>

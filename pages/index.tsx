@@ -1,12 +1,12 @@
 import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useMeasure } from 'react-use';
 import { Text } from '../components/article/text';
 import Footer from '../components/homepage/footer';
 import Header from '../components/homepage/header';
+import { Image } from '../components/image/image';
 import { getItemsFromDatabase } from '../lib/notion';
 import styles from './index.module.css';
 
@@ -34,13 +34,7 @@ const Photo = (props: { post: IProps['photos'][0] }) => {
       {url && (
         <Link href={`/photos/${slug}`}>
           <a className={styles.photoLinkImage}>
-            <Image
-              src={url}
-              width={normalizedWidth}
-              height={normalizedWidth}
-              alt={title}
-              layout="fixed"
-            />
+            <Image alt={title} src={url} width={normalizedWidth} />
           </a>
         </Link>
       )}
