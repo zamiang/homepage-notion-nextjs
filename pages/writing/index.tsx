@@ -58,7 +58,6 @@ export const config = {
 
 export const getStaticProps = async () => {
   const posts = await getItemsFromDatabase(postsDatabaseId);
-
   return {
     props: {
       posts,
