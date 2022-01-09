@@ -2,14 +2,6 @@ const withPlugins = require('next-compose-plugins');
 const { createSecureHeaders } = require('next-secure-headers');
 const withFonts = require('next-fonts');
 
-/**
- * @type {Pick<
- *   import("next").NextConfig,
- *   | "images"
- *   | "headers"
- *   | "rewrites"
- * >}
- */
 const nextConfig = {
   webpack5: true,
   eslint: {
@@ -42,11 +34,9 @@ const nextConfig = {
                 imgSrc: [
                   "'self'",
                   'data:',
-                  'https://zamiang.imgix.net',
                   'https://www.googletagmanager.com',
                   'http://www.googletagmanager.com',
                   'https://zamiang-image-proxy.herokuapp.com',
-                  'https://s3.us-west-2.amazonaws.com',
                   'https://cdn-images-1.medium.com',
                   'https://vitals.vercel-insights.com',
                 ],
