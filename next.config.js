@@ -1,7 +1,6 @@
 const withPlugins = require('next-compose-plugins');
 const { createSecureHeaders } = require('next-secure-headers');
 const withFonts = require('next-fonts');
-const withImages = require('next-images');
 
 const nextConfig = {
   webpack5: true,
@@ -78,7 +77,6 @@ const nextConfig = {
 
 module.exports = withPlugins(
   [
-    [withImages, { inlineImageLimit: 1000000 }],
     [
       withFonts,
       {

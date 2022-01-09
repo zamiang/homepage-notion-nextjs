@@ -167,6 +167,6 @@ export const getStaticProps = async (context: { params: { id: string } }) => {
       page,
       blocks,
     },
-    revalidate: 1,
+    revalidate: false,
   };
 };

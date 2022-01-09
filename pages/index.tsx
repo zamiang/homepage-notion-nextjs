@@ -282,6 +282,6 @@ export const getStaticProps = async () => {
       posts,
       photos,
     },
-    revalidate: 1,
+    revalidate: false,
   };
 };
