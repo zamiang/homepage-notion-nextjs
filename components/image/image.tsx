@@ -13,9 +13,9 @@ export const Image = (props: IProps) => {
   const width = props.width || 640;
   const src = `${baseURL}/${width}x,q60/${props.src}`;
 
-  const srcSet = `${src} 1x, ${baseURL}/${width * 2}x,q60/${props.src} 2x, ${baseURL}/${
-    width * 3
-  }x,q60/${props.src} 3x`;
+  const srcSet = `${src} ${props.width}w, ${baseURL}/${width * 2}x,q60/${props.src} ${
+    props.width * 2
+  }w, ${baseURL}/${width * 3}x,q60/${props.src} ${width * 3}w`;
 
   return (
     <img
