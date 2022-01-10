@@ -11,6 +11,7 @@ Production: [https://www.zamiang.com](https://www.zamiang.com)
 - Robust eslint and prettier config
 - Pages for photos and writing
 - Two column setup for images
+- CDN backed images
 
 ## Getting Started
 
@@ -21,7 +22,6 @@ NOTION_TOKEN=
 NOTION_POSTS_DATABASE_ID=
 NOTION_PHOTOS_DATABASE_ID=
 GOOGLE_ANALYTICS_ID=
-NEXT_PUBLIC_IMGIX_TOKEN=
 ```
 
 Install dependencies:
