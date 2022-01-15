@@ -6,6 +6,7 @@ import { renderBlock } from '../../components/article/render-article-block';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
+import { saveImagesForBlocks } from '../../components/image/download-image';
 import { getBlocks, getItemsFromDatabase, getPageBySlug } from '../../lib/notion';
 import Custom404 from '../404';
 import { PostsList, postsDatabaseId } from '../index';
@@ -15,21 +16,21 @@ type UnPromisify<T> = T extends Promise<infer U> ? U : T;
 type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
 export type Block = Params['blocks'][0];
 
-const Blocks = (props: { blocks: Params['blocks'] }) => {
+const Blocks = (props: { blocks: Params['blocks']; pageId: string }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
 
   return (
     <div ref={ref}>
       {props.blocks.map((block) => (
         <React.Fragment key={block.id}>
-          {renderBlock(block, width < 300 ? undefined : width)}
+          {renderBlock(block, props.pageId, width < 300 ? undefined : width)}
         </React.Fragment>
       ))}
     </div>
   );
 };
 
-export default function Post({ page, blocks, posts }: Params) {
+export default function Post({ page, blocks, posts, id }: Params) {
   if (!page || !blocks) {
     return <Custom404 />;
   }
@@ -64,7 +65,7 @@ export default function Post({ page, blocks, posts }: Params) {
           <div className={styles.shortLine}></div>
         </div>
         <section>
-          <Blocks blocks={blocks} />
+          <Blocks blocks={blocks} pageId={id} />
         </section>
         <div className={styles.shortLine}></div>
         <h2 className={styles.name}>Other Writing</h2>
@@ -101,6 +102,7 @@ export const getStaticProps = async (context: { params: { id: string } }) => {
   const posts = await getItemsFromDatabase(postsDatabaseId);
   const page = await getPageBySlug(id, postsDatabaseId);
   const blocks = await getBlocks(page.id);
+  await saveImagesForBlocks(blocks, id);
 
   const filteredPosts = posts
     .filter(
@@ -122,6 +124,7 @@ export const getStaticProps = async (context: { params: { id: string } }) => {
       posts: filteredPosts,
       page,
       blocks,
+      id,
     },
     revalidate: false,
   };

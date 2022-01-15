@@ -4,16 +4,17 @@ import { useMeasure } from 'react-use';
 import { Text } from '../../components/article/text';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
+import { saveImagesForBlocks } from '../../components/image/download-image';
 import { Image } from '../../components/image/image';
 import { getBlocks, getItemsFromDatabase, getPageBySlug } from '../../lib/notion';
 import { photosDatabaseId } from '../index';
 import styles from '../writing/writing.module.css';
 
 type UnPromisify<T> = T extends Promise<infer U> ? U : T;
-type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
+export type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
 type Block = Params['blocks'][0];
 
-const renderBlock = (block: Block, width = 720) => {
+const renderBlock = (block: Block, pageId: string, width = 720) => {
   const { type } = block;
   const value = (block as any)[type];
 
@@ -54,7 +55,7 @@ const renderBlock = (block: Block, width = 720) => {
 
       return (
         <figure style={{ width }}>
-          <Image width={width} src={url} alt={caption} />
+          <Image width={width} src={url} alt={caption} pageId={pageId} />
           {caption && captionHref && (
             <figcaption>
               <a href={captionHref}>{caption}</a>
@@ -70,7 +71,7 @@ const renderBlock = (block: Block, width = 720) => {
   }
 };
 
-const Blocks = (props: { blocks: Params['blocks']; isGrid: boolean }) => {
+const Blocks = (props: { blocks: Params['blocks']; pageId: string; isGrid: boolean }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
 
   if (props.isGrid) {
@@ -78,7 +79,7 @@ const Blocks = (props: { blocks: Params['blocks']; isGrid: boolean }) => {
       <div className={styles.grid}>
         {props.blocks.map((block, index) => (
           <div className={styles.gridItem} key={block.id} ref={index === 0 ? ref : undefined}>
-            {renderBlock(block, width < 300 ? undefined : width)}
+            {renderBlock(block, props.pageId, width < 300 ? undefined : width)}
           </div>
         ))}
       </div>
@@ -89,14 +90,14 @@ const Blocks = (props: { blocks: Params['blocks']; isGrid: boolean }) => {
     <div ref={ref}>
       {props.blocks.map((block) => (
         <React.Fragment key={block.id}>
-          {renderBlock(block, width < 300 ? undefined : width)}
+          {renderBlock(block, props.pageId, width < 300 ? undefined : width)}
         </React.Fragment>
       ))}
     </div>
   );
 };
 
-export default function Post({ page, blocks }: Params) {
+export default function Post({ page, blocks, id }: Params) {
   if (!page || !blocks) {
     return <div />;
   }
@@ -128,7 +129,7 @@ export default function Post({ page, blocks }: Params) {
           <div className={styles.shortLine}></div>
         </div>
         <section>
-          <Blocks blocks={blocks} isGrid={isGrid} />
+          <Blocks blocks={blocks} isGrid={isGrid} pageId={id} />
         </section>
       </article>
       <Footer />
@@ -161,11 +162,13 @@ export const getStaticProps = async (context: { params: { id: string } }) => {
   const { id } = context.params;
   const page = await getPageBySlug(id, photosDatabaseId);
   const blocks = await getBlocks(page.id);
+  await saveImagesForBlocks(blocks, id);
 
   return {
     props: {
       page,
       blocks,
+      id,
     },
     revalidate: false,
   };

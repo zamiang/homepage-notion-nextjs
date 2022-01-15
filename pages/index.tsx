@@ -22,7 +22,7 @@ interface IProps {
   posts: QueryDatabaseResponse['results'];
 }
 
-const Photo = (props: { post: IProps['photos'][0] }) => {
+const Photo = (props: { post: IProps['photos'][0]; pageId: string }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
   const title = (props.post.properties.Title as any).title[0]?.plain_text;
   const url = (props.post.properties.Cover as any)?.files[0]?.file.url;
@@ -34,7 +34,7 @@ const Photo = (props: { post: IProps['photos'][0] }) => {
       {url && (
         <Link href={`/photos/${slug}`}>
           <a className={styles.photoLinkImage}>
-            <Image alt={title} src={url} width={normalizedWidth} />
+            <Image alt={title} src={url} width={normalizedWidth} pageId={props.pageId} />
           </a>
         </Link>
       )}
@@ -47,7 +47,7 @@ const Photo = (props: { post: IProps['photos'][0] }) => {
   );
 };
 
-export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) => {
+export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results']; pageId: string }) => {
   const orderedPhotos = props.photos.sort((a, b) =>
     new Date((a.properties.Date as any).date?.start as string) >
     new Date((b.properties.Date as any).date?.start as string)
@@ -57,7 +57,7 @@ export const PhotosGrid = (props: { photos: QueryDatabaseResponse['results'] }) 
   return (
     <div className={styles.grid}>
       {orderedPhotos.map((post) => (
-        <Photo key={post.id} post={post} />
+        <Photo key={post.id} post={post} pageId={props.pageId} />
       ))}
     </div>
   );
@@ -210,7 +210,7 @@ export default function Home(props: IProps) {
           <div className={styles.section}>
             <h2 className={styles.heading}>Photos</h2>
             <div className={styles.divider}></div>
-            <PhotosGrid photos={props.photos} />
+            <PhotosGrid photos={props.photos} pageId="homepage" />
           </div>
           <div className={styles.section}>
             <h2 className={styles.heading}>Publications</h2>

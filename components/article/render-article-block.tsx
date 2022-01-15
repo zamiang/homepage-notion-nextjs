@@ -5,7 +5,7 @@ import { Block } from '../../pages/writing/[id]';
 import { Image } from '../image/image';
 import styles from './block.module.css';
 
-export const renderBlock = (block: Block, width = 640) => {
+export const renderBlock = (block: Block, pageId: string, width = 640) => {
   const { type, id } = block;
   const value = (block as any)[type];
   const formattedId = id.split('-').join('');
@@ -100,7 +100,7 @@ export const renderBlock = (block: Block, width = 640) => {
             <Text text={value.text} />
           </summary>
           {value.children?.map((block: any) => (
-            <Fragment key={block.id}>{renderBlock(block, width)}</Fragment>
+            <Fragment key={block.id}>{renderBlock(block, pageId, width)}</Fragment>
           ))}
         </details>
       );
@@ -113,7 +113,7 @@ export const renderBlock = (block: Block, width = 640) => {
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
       return (
         <figure style={{ width: '100%' }}>
-          <Image src={src} alt={caption} width={width} />
+          <Image src={src} alt={caption} width={width} pageId={pageId} />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       );

@@ -3,12 +3,14 @@ import Head from 'next/head';
 import React from 'react';
 import Footer from '../../components/homepage/footer';
 import Header from '../../components/homepage/header';
+import { saveImagesForDatabase } from '../../components/image/download-image';
 import { getItemsFromDatabase } from '../../lib/notion';
 import { PhotosGrid, baseUrl, photosDatabaseId } from '../index';
 import styles from '../index.module.css';
 
 const title = 'Photos - Brennan Moore';
 const description = 'List of photos';
+const pageId = 'photos';
 
 interface IProps {
   photos: QueryDatabaseResponse['results'];
@@ -36,7 +38,7 @@ export default function Home(props: IProps) {
             <h1>Photos</h1>
             <div className={styles.shortLine}></div>
           </header>
-          <PhotosGrid photos={props.photos} />
+          <PhotosGrid photos={props.photos} pageId={pageId} />
         </article>
         <Footer />
       </main>
@@ -51,7 +53,7 @@ export const config = {
 
 export const getStaticProps = async () => {
   const photos = await getItemsFromDatabase(photosDatabaseId);
-
+  await saveImagesForDatabase(photos, pageId);
   return {
     props: {
       photos,

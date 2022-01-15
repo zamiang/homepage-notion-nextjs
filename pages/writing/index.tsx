@@ -9,9 +9,10 @@ import styles from '../index.module.css';
 
 const title = 'Writing - Brennan Moore';
 const description = 'List of writing';
+export type IDatabase = QueryDatabaseResponse['results'];
 
 interface IProps {
-  posts: QueryDatabaseResponse['results'];
+  posts: IDatabase;
 }
 
 export default function Home(props: IProps) {

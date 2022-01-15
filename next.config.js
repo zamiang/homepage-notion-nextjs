@@ -9,6 +9,19 @@ const nextConfig = {
   },
   target: 'server',
 
+  webpack: (config) => {
+    config.resolve = {
+      ...config.resolve,
+      fallback: {
+        fs: false,
+        path: false,
+        os: false,
+        https: false,
+      },
+    };
+    return config;
+  },
+
   async rewrites() {
     return [
       {
@@ -40,6 +53,7 @@ const nextConfig = {
                   'https://image.zamiang.com',
                   'https://cdn-images-1.medium.com',
                   'https://vitals.vercel-insights.com',
+                  'https://s3.us-west-2.amazonaws.com',
                 ],
                 fontSrc: ["'self'"],
                 scriptSrc: [
