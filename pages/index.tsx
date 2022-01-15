@@ -6,6 +6,7 @@ import { useMeasure } from 'react-use';
 import { Text } from '../components/article/text';
 import Footer from '../components/homepage/footer';
 import Header from '../components/homepage/header';
+import { saveImagesForDatabase } from '../components/image/download-image';
 import { Image } from '../components/image/image';
 import { getItemsFromDatabase } from '../lib/notion';
 import styles from './index.module.css';
@@ -16,6 +17,7 @@ export const photosDatabaseId = process.env.NOTION_PHOTOS_DATABASE_ID!;
 export const baseUrl = 'https://www.zamiang.com';
 const title = 'Home - Brennan Moore';
 const description = 'Hi, I’m Brennan. I build innovative digital products people love.';
+const pageId = 'homepage';
 
 interface IProps {
   photos: QueryDatabaseResponse['results'];
@@ -210,7 +212,7 @@ export default function Home(props: IProps) {
           <div className={styles.section}>
             <h2 className={styles.heading}>Photos</h2>
             <div className={styles.divider}></div>
-            <PhotosGrid photos={props.photos} pageId="homepage" />
+            <PhotosGrid photos={props.photos} pageId={pageId} />
           </div>
           <div className={styles.section}>
             <h2 className={styles.heading}>Publications</h2>
@@ -276,6 +278,7 @@ export const config = {
 export const getStaticProps = async () => {
   const posts = await getItemsFromDatabase(postsDatabaseId);
   const photos = await getItemsFromDatabase(photosDatabaseId);
+  await saveImagesForDatabase(photos, pageId);
 
   return {
     props: {

@@ -20,6 +20,14 @@ const directoryExists = (path: string) => {
   }
 };
 
+const fileExists = (path: string) => {
+  try {
+    return fs.existsSync(path);
+  } catch {
+    return false;
+  }
+};
+
 const getFile = (url: string) => {
   try {
     return axios({
@@ -38,9 +46,11 @@ export const downloadImage = async (url: string, pageId: string) => {
 
   try {
     const dirname = path.dirname(dest);
-    const doesExist = directoryExists(dirname);
-    if (!doesExist) {
+    if (!directoryExists(dirname)) {
       fs.mkdirSync(dirname);
+    }
+    if (fileExists(dest)) {
+      return;
     }
 
     const file = await getFile(url);
