@@ -50,7 +50,7 @@ const nextConfig = {
           ...createSecureHeaders({
             contentSecurityPolicy: {
               directives: {
-                defaultSrc: "'self'",
+                defaultSrc: ["'self'", 'https://image.zamiang.com'],
                 styleSrc: ["'self'", "'unsafe-inline'", 'https://image.zamiang.com'],
                 imgSrc: [
                   "'self'",
