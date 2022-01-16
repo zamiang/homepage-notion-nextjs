@@ -2,6 +2,8 @@ const withPlugins = require('next-compose-plugins');
 const { createSecureHeaders } = require('next-secure-headers');
 const withFonts = require('next-fonts');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   webpack5: true,
   eslint: {
@@ -12,6 +14,7 @@ const nextConfig = {
   images: {
     minimumCacheTTL: 31536000,
   },
+  assetPrefix: isProd ? 'https://image.zamiang.com' : '',
 
   webpack: (config) => {
     config.resolve = {
