@@ -9,23 +9,20 @@ interface IProps {
   pageId: string;
 }
 
-//const baseURL = 'https://image.zamiang.com';
+const baseURL = 'https://image.zamiang.com';
 
 export const Image = (props: IProps) => {
   const width = props.width || 640;
 
   const filename = new URL(props.src).pathname.split('/').pop();
   const imageUrl = `/images/${props.pageId}/${filename}`;
-  // const src = `${baseURL}/${width}x/${imageUrl}`;
+
+  if (!props.height) {
+    const src = `${baseURL}${imageUrl}`;
+    return <img src={src} alt={props.alt} loading="lazy" />;
+  }
 
   return (
-    <NextImage
-      width={width}
-      height={props.height}
-      alt={props.alt}
-      src={imageUrl}
-      loading="lazy"
-      layout={props.height ? 'intrinsic' : 'fill'}
-    />
+    <NextImage width={width} height={props.height} alt={props.alt} src={imageUrl} loading="lazy" />
   );
 };
