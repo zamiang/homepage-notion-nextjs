@@ -51,7 +51,7 @@ const nextConfig = {
             contentSecurityPolicy: {
               directives: {
                 defaultSrc: "'self'",
-                styleSrc: ["'self'", "'unsafe-inline'"],
+                styleSrc: ["'self'", "'unsafe-inline'", 'https://image.zamiang.com'],
                 imgSrc: [
                   "'self'",
                   'data:',
