@@ -36,7 +36,13 @@ const Photo = (props: { post: IProps['photos'][0]; pageId: string }) => {
       {url && (
         <Link href={`/photos/${slug}`}>
           <a className={styles.photoLinkImage}>
-            <Image alt={title} src={url} width={normalizedWidth} pageId={props.pageId} />
+            <Image
+              alt={title}
+              src={url}
+              height={normalizedWidth}
+              width={normalizedWidth}
+              pageId={props.pageId}
+            />
           </a>
         </Link>
       )}
@@ -269,11 +275,6 @@ export default function Home(props: IProps) {
     </div>
   );
 }
-
-export const config = {
-  unstable_runtimeJS: false,
-  unstable_JsPreload: false,
-};
 
 export const getStaticProps = async () => {
   const posts = await getItemsFromDatabase(postsDatabaseId);

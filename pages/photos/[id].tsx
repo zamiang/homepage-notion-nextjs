@@ -55,7 +55,7 @@ const renderBlock = (block: Block, pageId: string, width = 720) => {
 
       return (
         <figure style={{ width }}>
-          <Image width={width} src={url} alt={caption} pageId={pageId} />
+          <Image width={width} height={width} src={url} alt={caption} pageId={pageId} />
           {caption && captionHref && (
             <figcaption>
               <a href={captionHref}>{caption}</a>
@@ -151,11 +151,6 @@ export const getStaticPaths = async () => {
     paths,
     fallback: false,
   };
-};
-
-export const config = {
-  unstable_runtimeJS: false,
-  unstable_JsPreload: false,
 };
 
 export const getStaticProps = async (context: { params: { id: string } }) => {

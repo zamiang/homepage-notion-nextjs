@@ -9,6 +9,10 @@ const nextConfig = {
   },
   target: 'server',
 
+  images: {
+    minimumCacheTTL: 31536000,
+  },
+
   webpack: (config) => {
     config.resolve = {
       ...config.resolve,
@@ -53,7 +57,6 @@ const nextConfig = {
                   'https://image.zamiang.com',
                   'https://cdn-images-1.medium.com',
                   'https://vitals.vercel-insights.com',
-                  'https://s3.us-west-2.amazonaws.com',
                 ],
                 fontSrc: ["'self'"],
                 scriptSrc: [

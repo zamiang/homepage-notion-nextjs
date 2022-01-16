@@ -52,11 +52,6 @@ export default function Home(props: IProps) {
   );
 }
 
-export const config = {
-  unstable_runtimeJS: false,
-  unstable_JsPreload: false,
-};
-
 export const getStaticProps = async () => {
   const posts = await getItemsFromDatabase(postsDatabaseId);
   return {
