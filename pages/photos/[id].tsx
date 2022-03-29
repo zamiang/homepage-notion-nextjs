@@ -14,7 +14,7 @@ type UnPromisify<T> = T extends Promise<infer U> ? U : T;
 export type Params = UnPromisify<ReturnType<typeof getStaticProps>>['props'];
 type Block = Params['blocks'][0];
 
-const renderBlock = (block: Block, pageId: string, width = 720) => {
+const renderBlock = (block: Block, pageId: string, width = 720, heightMultipleOfWidth: number) => {
   const { type } = block;
   const value = (block as any)[type];
 
@@ -55,7 +55,13 @@ const renderBlock = (block: Block, pageId: string, width = 720) => {
 
       return (
         <figure style={{ width }}>
-          <Image width={width} height={width} src={url} alt={caption} pageId={pageId} />
+          <Image
+            width={width}
+            height={width * heightMultipleOfWidth}
+            src={url}
+            alt={caption}
+            pageId={pageId}
+          />
           {caption && captionHref && (
             <figcaption>
               <a href={captionHref}>{caption}</a>
@@ -71,7 +77,12 @@ const renderBlock = (block: Block, pageId: string, width = 720) => {
   }
 };
 
-const Blocks = (props: { blocks: Params['blocks']; pageId: string; isGrid: boolean }) => {
+const Blocks = (props: {
+  blocks: Params['blocks'];
+  pageId: string;
+  isGrid: boolean;
+  heightMultipleOfWidth: number;
+}) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
 
   if (props.isGrid) {
@@ -79,7 +90,12 @@ const Blocks = (props: { blocks: Params['blocks']; pageId: string; isGrid: boole
       <div className={styles.grid}>
         {props.blocks.map((block, index) => (
           <div className={styles.gridItem} key={block.id} ref={index === 0 ? ref : undefined}>
-            {renderBlock(block, props.pageId, width < 300 ? undefined : width)}
+            {renderBlock(
+              block,
+              props.pageId,
+              width < 300 ? undefined : width,
+              props.heightMultipleOfWidth,
+            )}
           </div>
         ))}
       </div>
@@ -90,7 +106,12 @@ const Blocks = (props: { blocks: Params['blocks']; pageId: string; isGrid: boole
     <div ref={ref}>
       {props.blocks.map((block) => (
         <React.Fragment key={block.id}>
-          {renderBlock(block, props.pageId, width < 300 ? undefined : width)}
+          {renderBlock(
+            block,
+            props.pageId,
+            width < 300 ? undefined : width,
+            props.heightMultipleOfWidth,
+          )}
         </React.Fragment>
       ))}
     </div>
@@ -111,8 +132,9 @@ export default function Post({ page, blocks, id }: Params) {
       year: 'numeric',
     },
   );
+  const name = (page.properties.Grid as any)?.select?.name;
 
-  const isGrid = (page.properties.Grid as any)?.select?.name === 'two-column';
+  const isGrid = name === 'two-column' || name === 'two-column-wide';
   return (
     <div>
       <Head>
@@ -129,7 +151,12 @@ export default function Post({ page, blocks, id }: Params) {
           <div className={styles.shortLine}></div>
         </div>
         <section>
-          <Blocks blocks={blocks} isGrid={isGrid} pageId={id} />
+          <Blocks
+            blocks={blocks}
+            isGrid={isGrid}
+            pageId={id}
+            heightMultipleOfWidth={name === 'two-column-wide' ? 2 / 3 : 1}
+          />
         </section>
       </article>
       <Footer />
