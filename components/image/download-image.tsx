@@ -47,7 +47,7 @@ export const downloadImage = async (url: string, pageId: string) => {
   try {
     const dirname = path.dirname(dest);
     if (!directoryExists(dirname)) {
-      fs.mkdirSync(dirname);
+      fs.mkdirSync(dirname, { recursive: true });
     }
     if (fileExists(dest)) {
       return;
