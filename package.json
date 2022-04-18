@@ -34,7 +34,7 @@
     "clsx": "1.1.1",
     "express": "4.17.3",
     "imgix-core-js": "2.3.2",
-    "next": "12.1.4",
+    "next": "12.1.5",
     "next-compose-plugins": "2.2.1",
     "next-fonts": "1.5.1",
     "next-secure-headers": "2.2.0",
