@@ -54,7 +54,6 @@ export const renderBlock = (block: Block, pageId: string, width = 640) => {
           </div>
         </div>
       );
-      4;
     case 'embed':
       const tweetId = value.url.split('/status/')[1]?.split('?')[0];
       if (!tweetId) {
