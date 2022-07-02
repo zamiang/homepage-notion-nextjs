@@ -32,6 +32,22 @@
   margin-right: 9px;
 }
 
+.callout {
+  background: rgb(235, 235, 232);
+  padding: 12px;
+}
+
+.callout-emoji {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.callout-text {
+  display: inline-block;
+  max-width: calc(100% - 50px);
+  margin-left: 10px;
+}
+
 .heading_1 {
   font-weight: normal;
 }

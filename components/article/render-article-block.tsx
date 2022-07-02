@@ -45,7 +45,16 @@ export const renderBlock = (block: Block, pageId: string, width = 640) => {
           </li>
         </ol>
       );
-
+    case 'callout':
+      return (
+        <div className={styles[`${type}`]}>
+          <div className={styles[`${type}-emoji`]}>💡</div>
+          <div className={styles[`${type}-text`]}>
+            <Text text={value.text} shouldLinkId={true} />
+          </div>
+        </div>
+      );
+      4;
     case 'embed':
       const tweetId = value.url.split('/status/')[1]?.split('?')[0];
       if (!tweetId) {
