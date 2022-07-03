@@ -60,7 +60,6 @@ export const renderBlock = (block: Block, pageId: string, width = 640) => {
         return `❌ Unsupported block (currently only supports twitter embeds)`;
       }
       return <TwitterTweetEmbed tweetId={tweetId} />;
-
     case 'numbered_list_item':
       return (
         <ul id={formattedId}>
@@ -122,7 +121,11 @@ export const renderBlock = (block: Block, pageId: string, width = 640) => {
       return (
         <figure style={{ width: '100%' }}>
           <Image src={src} alt={caption} width={width} pageId={pageId} />
-          {caption && <figcaption>{caption}</figcaption>}
+          {caption && (
+            <figcaption>
+              <Text text={value.caption}></Text>
+            </figcaption>
+          )}
         </figure>
       );
 
