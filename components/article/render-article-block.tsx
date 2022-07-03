@@ -76,21 +76,18 @@ export const renderBlock = (block: Block, pageId: string, width = 640) => {
           <Text text={value.text} />
         </blockquote>
       );
-
     case 'code':
       return (
         <pre id={formattedId}>
           <Text text={value.text} />
         </pre>
       );
-
     case 'bookmark':
       return (
         <div id={formattedId}>
           <a href={value.url}>{value.url}</a>
         </div>
       );
-
     case 'to_do':
       return (
         <div id={formattedId}>
@@ -111,10 +108,8 @@ export const renderBlock = (block: Block, pageId: string, width = 640) => {
           ))}
         </details>
       );
-
     case 'child_page':
       return <p>{value.title}</p>;
-
     case 'image':
       const src = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption && value.caption[0] ? value.caption[0].plain_text : '';
