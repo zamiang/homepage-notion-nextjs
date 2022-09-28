@@ -44,7 +44,7 @@
     "react-use": "17.4.0",
     "sitemap": "7.1.1",
     "slugify": "1.6.5",
-    "typescript": "4.7.4"
+    "typescript": "4.8.4"
   },
   "devDependencies": {
     "@types/node": "18.0.6",
