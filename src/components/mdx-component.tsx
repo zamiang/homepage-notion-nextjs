@@ -14,7 +14,6 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { Badge } from './ui/badge';
 
 const components = {
-  h1: ({ children }: { children?: React.ReactNode }) => <h1>{children}</h1>,
   p: ({ children }: { children?: React.ReactNode }) => <p>{children}</p>,
   a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
     <a href={href}>{children}</a>
@@ -56,9 +55,10 @@ const components = {
       />
     );
   },
-  h2: ({ children }: { children?: React.ReactNode }) => <h2>{children}</h2>,
-  h3: ({ children }: { children?: React.ReactNode }) => <h3>{children}</h3>,
-  h4: ({ children }: { children?: React.ReactNode }) => <h4>{children}</h4>,
+  h1: ({ children }: { children?: React.ReactNode }) => <h2>{children}</h2>,
+  h2: ({ children }: { children?: React.ReactNode }) => <h3>{children}</h3>,
+  h3: ({ children }: { children?: React.ReactNode }) => <h4>{children}</h4>,
+  h4: ({ children }: { children?: React.ReactNode }) => <h5>{children}</h5>,
   h5: ({ children }: { children?: React.ReactNode }) => <h5>{children}</h5>,
   h6: ({ children }: { children?: React.ReactNode }) => <h6>{children}</h6>,
   table: ({ children }: { children?: React.ReactNode }) => <Table>{children}</Table>,
