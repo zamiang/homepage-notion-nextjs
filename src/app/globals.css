@@ -1,0 +1,311 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-size: var(--font-size);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-serif: 'EB Garamond', 'EB Garamond Fallback';
+  --font-sans: 'Lato', 'EB Garamond Fallback';
+  --font-mono: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+}
+
+:root {
+  --font-size: 19px;
+  --background: #f9f6f0;
+  --foreground: #4b5673;
+  --primary: #5a6b8a;
+  --primary-foreground: #f9f6f0;
+  --secondary: #e8e2d5;
+  --secondary-foreground: #3a4555;
+  --muted: #f2eee6;
+  --muted-foreground: #6b7588;
+  --accent: #b8956a;
+  --accent-foreground: #f9f6f0;
+  --border: #ddd6c8;
+  --input: #f2eee6;
+  --card: #ffffff;
+  --card-foreground: #4b5673;
+  --destructive: #c14242;
+  --destructive-foreground: #f9f6f0;
+  --success: #5a8a5f;
+  --success-foreground: #f9f6f0;
+}
+
+.dark {
+  --background: #1a1c20;
+  --foreground: #c5c9d1;
+  --primary: #cad0db;
+  --primary-foreground: #1a1c20;
+  --secondary: #2a2d33;
+  --secondary-foreground: #b8bcc4;
+  --muted: #222529;
+  --muted-foreground: #8a8e96;
+  --accent: #d4b584;
+  --accent-foreground: #1a1c20;
+  --border: #363940;
+  --input: #2a2d33;
+  --card: #242731;
+  --card-foreground: #c5c9d1;
+  --destructive: #e85a5a;
+  --destructive-foreground: #1a1c20;
+  --success: #7bb584;
+  --success-foreground: #1a1c20;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html,
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    /* Make the text nice and crisp */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
+
+    /* Improve kerning for good measure */
+    text-rendering: optimizeLegibility;
+    color: var(--color-primary);
+    font-size: var(--font-size);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  a:hover {
+    opacity: 1;
+  }
+
+  p {
+    padding: 8px 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    line-height: 1.27;
+    font-size: 2.986rem;
+    font-weight: 700;
+    display: block;
+    font-family: var(--font-serif);
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    display: block;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    margin-top: 1.5em;
+    margin-bottom: 0.25em;
+    text-indent: -0.05em;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 2.488rem;
+  }
+
+  h3 {
+    font-family: var(--font-serif);
+    margin-top: 1.75rem;
+    font-size: 2.074rem;
+    font-weight: 500;
+    margin-bottom: 0.25em;
+  }
+
+  h4 {
+    font-family: var(--font-serif);
+    margin-top: 1.1rem;
+    font-size: 1.728rem;
+    font-weight: 500;
+    margin-bottom: 0.25em;
+  }
+
+  article {
+    width: 100%;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 20px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    article {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+  }
+
+  figure {
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0px;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    max-width: 100%;
+  }
+
+  figure img {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    text-align: center;
+    padding: 6px 0 0;
+    color: var(--color-secondary);
+    line-height: 1.7;
+  }
+
+  /* Fix border colour for captions that contain links */
+  figcaption a {
+    opacity: 1;
+    border-color: var(--color-border);
+  }
+
+  blockquote {
+    display: block;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.5em;
+    border-left: 4px solid var(--color-border);
+    line-height: 1.7;
+  }
+
+  p {
+    min-height: 0px;
+  }
+
+  ol,
+  ul {
+    margin: 2px 0;
+    padding-inline-start: calc(1.5em + 4px);
+    line-height: 1.5;
+    padding-left: 1.25em;
+    margin-bottom: 0.5em;
+    list-style-type: disc;
+  }
+
+  li {
+    margin: 2px 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    white-space: pre-line;
+  }
+
+  li a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+    opacity: 0.7;
+    transition:
+      border-color 0.1s ease-in,
+      opacity 0.1s ease-in;
+  }
+
+  li a:hover {
+    opacity: 1;
+  }
+
+  P {
+    line-height: 1.7;
+  }
+
+  pre {
+    color: var(--color-text-default);
+    background: #f5f2f0;
+    text-shadow: 0 1px white;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    tab-size: 4;
+    hyphens: none;
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+  }
+
+  .post {
+    margin: 2em 0 3em;
+  }
+
+  .posts {
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+  }
+
+  .section {
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+  }
+
+  .section:last-child {
+    border-bottom: 0px solid;
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    border-top: 1px solid var(--color-border);
+    margin: 20px 0 0;
+  }
+
+  .centerDivider {
+    width: 60px;
+    height: 1px;
+    border-top: 1px solid var(--color-border);
+    margin: 40px auto;
+  }
+
+  a img {
+    opacity: 1;
+    border-bottom: 1px solid transparent;
+  }
+
+  a img:hover {
+    opacity: 0.7;
+  }
+
+  .profilePhoto {
+    background-image: url('/about.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 0px auto;
+  }
+}
