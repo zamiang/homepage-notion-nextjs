@@ -113,12 +113,12 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
 
     const imageName = properties['Image Name'];
     const title = properties['Title'];
-    const slug = properties['slug'];
+    const slug = properties['Slug'];
     const excerpt = properties['Excerpt'];
     const date = properties['Published Date'];
 
     const coverImage =
-      imageName.type === 'rich_text' && imageName.rich_text && imageName.rich_text[0]
+      imageName?.type === 'rich_text' && imageName.rich_text && imageName.rich_text[0]
         ? imageName.rich_text[0].plain_text
         : undefined;
 

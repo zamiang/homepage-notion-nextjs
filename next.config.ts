@@ -10,6 +10,7 @@ const nextConfig = {
   },
   //  target: 'server',
 
+  /*
   images: {
     minimumCacheTTL: 31536000,
     remotePatterns: [
@@ -20,6 +21,7 @@ const nextConfig = {
     ],
   },
   assetPrefix: isProd ? 'https://image.zamiang.com' : '',
+  */
 
   async headers() {
     return [
