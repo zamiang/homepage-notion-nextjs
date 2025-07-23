@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { EB_Garamond, Lato } from 'next/font/google';
 import './globals.css';
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_ID!} />
+      <Analytics />
     </html>
   );
 }

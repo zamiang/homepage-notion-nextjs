@@ -2,6 +2,9 @@
   "name": "brennanmoore-nextjs-notion-blog",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "audit-dependencies": "npm audit --audit-level=high --production",
@@ -39,12 +42,12 @@
     "react-dom": "19.0.0",
     "react-markdown": "10.1.0",
     "react-syntax-highlighter": "15.6.1",
-    "tailwindcss": "4",
     "rehype-raw": "7.0.0",
     "remark-gfm": "4.0.1",
     "sitemap": "8.0.0",
     "slugify": "1.6.6",
-    "tailwind-merge": "3.3.0"
+    "tailwind-merge": "3.3.0",
+    "tailwindcss": "4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4",
