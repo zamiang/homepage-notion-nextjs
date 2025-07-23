@@ -8,7 +8,7 @@ interface PostCardProps {
 }
 
 export default function PhotoCard({ post }: PostCardProps) {
-  const imageUrl = process.env.NODE_ENV === 'production' ? 'https://image.zamiang.com' : '/images';
+  const imageUrl = '/images';
   return (
     <div className="gridItem">
       <div className="relative aspect-[1/1] w-full">
