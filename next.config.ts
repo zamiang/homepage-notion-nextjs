@@ -23,6 +23,27 @@ const nextConfig = {
   assetPrefix: isProd ? 'https://image.zamiang.com' : '',
   */
 
+  /*
+URL	Last crawled
+https://www.zamiang.com/posts/post/2015/04/13/the-case-for-the-codeless-internet-startup/
+
+*/
+
+  async redirects() {
+    return [
+      {
+        source: '/post/why-i-don-t-do-live-coding-interviews',
+        destination: '/', // todo
+        permanent: true,
+      },
+      {
+        source: '/post/debugging-a-live-saturn-v',
+        destination: '/writing/debugging-a-live-saturn-v',
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

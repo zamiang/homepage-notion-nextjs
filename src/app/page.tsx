@@ -121,7 +121,7 @@ export default function Home() {
         <ul>
           <li>
             <h4>
-              <a href="https://chi2010.personalinformatics.org/publications/515">
+              <a href="https://v1.personalinformatics.org/docs/chi2010/moore_assisted_self_reflection.pdf">
                 Assisted Self Reflection: Combining Lifetracking, Sensemaking, & Personal
                 Information Management
               </a>
