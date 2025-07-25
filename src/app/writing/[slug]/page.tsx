@@ -39,8 +39,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       url: `${siteUrl}/writing/${post.slug}`,
       siteName: "Brennan's Blog",
       publishedTime: new Date(post.date).toISOString(),
-      authors: post.author ? [post.author] : [],
-      tags: post.tags,
+      authors: [post.author],
       images: [
         {
           url: `/images/${post.coverImage}`,
@@ -87,23 +86,23 @@ export default async function PostPage({ params }: PostPageProps) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    image: post.coverImage || `${siteUrl}/opengraph-image.png`,
+    image: `/images/photos/${post.coverImage}`,
     datePublished: new Date(post.date).toISOString(),
     author: {
       '@type': 'Person',
-      name: post.author || 'Guest Author',
+      name: post.author,
     },
     publisher: {
-      '@type': 'Organization',
+      '@type': 'Person',
       name: 'Brennan Moore',
       logo: {
         '@type': 'ImageObject',
-        url: `${siteUrl}/logo.png`,
+        url: `${siteUrl}/favicon.png`,
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${siteUrl}/posts/${post.slug}`,
+      '@id': `${siteUrl}/writing/${post.slug}`,
     },
   };
 

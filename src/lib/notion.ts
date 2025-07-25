@@ -31,7 +31,7 @@ export interface Post {
   date: string;
   excerpt?: string;
   content: string;
-  author?: string;
+  author: string;
   tags?: string[];
   category?: string;
 }
@@ -165,6 +165,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       coverImage,
       date: dateText,
       content: contentString,
+      author: 'Brennan Moore',
     };
 
     return post;

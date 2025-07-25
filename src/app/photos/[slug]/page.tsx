@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       type: 'article',
       url: `${siteUrl}/photos/${post.slug}`,
       publishedTime: new Date(post.date).toISOString(),
-      authors: post.author ? [post.author] : [],
+      authors: [post.author],
       images: [
         {
           url: `/images/photos/${post.coverImage}`,
@@ -88,14 +88,14 @@ export default async function PhotoPage({ params }: PostPageProps) {
     datePublished: new Date(post.date).toISOString(),
     author: {
       '@type': 'Person',
-      name: post.author || 'Guest Author',
+      name: post.author,
     },
     publisher: {
-      '@type': 'Organization',
+      '@type': 'Person',
       name: 'Brennan Moore',
       logo: {
         '@type': 'ImageObject',
-        url: `${siteUrl}/logo.png`,
+        url: `${siteUrl}/favicon.png`,
       },
     },
     mainEntityOfPage: {
