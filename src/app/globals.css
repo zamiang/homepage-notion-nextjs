@@ -275,6 +275,10 @@
     border-bottom: 0px solid;
   }
 
+  .excerpt {
+    line-height: 1.7;
+  }
+
   .divider {
     width: 60px;
     height: 1px;
