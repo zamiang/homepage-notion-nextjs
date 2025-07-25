@@ -1,21 +1,23 @@
+import { NextConfig } from 'next';
+
 const { createSecureHeaders } = require('next-secure-headers');
 
-const isProd = process.env.NODE_ENV === 'production';
-
-const nextConfig = {
+const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  images: {
+    minimumCacheTTL: 2678400, // Cache for 30 days
+  },
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en',
   },
   reactStrictMode: true,
   poweredByHeader: false,
 
   async redirects() {
     return [
-      {
-        source: '/post/why-i-don-t-do-live-coding-interviews',
-        destination: '/', // todo
-        permanent: true,
-      },
       {
         source: '/post/debugging-a-live-saturn-v',
         destination: '/writing/debugging-a-live-saturn-v',
@@ -63,7 +65,7 @@ const nextConfig = {
           }),
           {
             key: 'Cache-Control',
-            value: 'public, max-age=604800, stale-while-revalidate=86400, stale-if-error=259200',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
           },
         ],
       },
