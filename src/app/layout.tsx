@@ -5,6 +5,7 @@ import './globals.css';
 import Layout from '@/components/layout';
 import { ThemeProvider } from '@/components/theme-provider';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const serifFont = EB_Garamond({ subsets: ['latin'] });
 const sansFont = Lato({ subsets: ['latin'], weight: '400' });
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           <Layout>{children}</Layout>
         </ThemeProvider>
+        <SpeedInsights />
       </body>
       <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_ID!} />
       <Analytics />
