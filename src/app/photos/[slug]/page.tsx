@@ -116,6 +116,8 @@ export default async function PhotoPage({ params }: PostPageProps) {
             <time>{format(new Date(post.date), 'MMMM d, yyyy')}</time>
           </div>
           <h1 className="text-4xl font-bold mb-4 text-foreground">{post.title}</h1>
+          <div className="excerpt text-muted-foreground">{post.excerpt}</div>
+          <div className="divider"></div>
         </header>
         <div className="max-w-none">
           <ReactMarkdown

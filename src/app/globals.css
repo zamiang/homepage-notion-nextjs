@@ -293,6 +293,14 @@
     margin: 40px auto;
   }
 
+  .truncated-text {
+    overflow: hidden;
+    display: -webkit-box;
+    line-height: 1.8;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
   a img {
     opacity: 1;
     border-bottom: 1px solid transparent;

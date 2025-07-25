@@ -27,7 +27,7 @@ export interface Post {
   id: string;
   title: string;
   slug: string;
-  coverImage?: string;
+  coverImage: string;
   date: string;
   excerpt?: string;
   content: string;
@@ -117,27 +117,53 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     const excerpt = properties['Excerpt'];
     const date = properties['Published Date'];
 
+    const titleText =
+      title.type === 'title' && title.title[0]?.plain_text ? title.title[0].plain_text : undefined;
+
+    if (!titleText) {
+      throw new Error(`Add a title for ${pageId}`);
+    }
+
+    const slugText =
+      slug.type === 'rich_text' && slug.rich_text[0]?.plain_text
+        ? slug.rich_text[0]?.plain_text
+        : 'no-slug';
+
+    if (!slugText) {
+      throw new Error(`Add a slug for ${titleText}`);
+    }
+
     const coverImage =
       imageName?.type === 'rich_text' && imageName.rich_text && imageName.rich_text[0]
         ? imageName.rich_text[0].plain_text
         : undefined;
 
+    if (!coverImage) {
+      throw new Error(`Add a cover image for ${titleText}`);
+    }
+
+    const excerptText =
+      excerpt.type === 'rich_text' && excerpt.rich_text[0]?.plain_text
+        ? excerpt.rich_text[0]?.plain_text
+        : undefined;
+
+    if (!excerptText) {
+      throw new Error(`Add excerpt text for ${titleText}`);
+    }
+
+    const dateText = date.type === 'date' && date.date?.start ? date.date?.start : undefined;
+
+    if (!dateText) {
+      throw new Error(`Add a date for ${titleText}`);
+    }
+
     const post: Post = {
       id: page.id,
-      title:
-        title.type === 'title' && title.title[0]?.plain_text
-          ? title.title[0].plain_text
-          : 'Untitled',
-      slug:
-        slug.type === 'rich_text' && slug.rich_text[0]?.plain_text
-          ? slug.rich_text[0]?.plain_text
-          : 'no-slug',
-      excerpt:
-        excerpt.type === 'rich_text' && excerpt.rich_text[0]?.plain_text
-          ? excerpt.rich_text[0]?.plain_text
-          : undefined,
+      title: titleText,
+      slug: slugText,
+      excerpt: excerptText,
       coverImage,
-      date: date.type === 'date' && date.date?.start ? date.date?.start : new Date().toISOString(),
+      date: dateText,
       content: contentString,
     };
 

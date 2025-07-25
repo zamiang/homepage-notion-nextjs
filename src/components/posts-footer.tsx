@@ -7,7 +7,7 @@ export default function PostsFooter(params: { slug: string }) {
   const photos = getPhotosFromCache();
 
   const filteredPosts = posts.filter((p) => p.slug !== params.slug).slice(0, 4);
-  const filteredPhotos = photos.filter((p) => p.slug !== params.slug).slice(0, 4);
+  const filteredPhotos = photos.filter((p) => p.slug !== params.slug).slice(0, 6);
 
   return (
     <div>

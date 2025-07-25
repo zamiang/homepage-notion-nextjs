@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       tags: post.tags,
       images: [
         {
-          url: post.coverImage || `${siteUrl}/opengraph-image.png`,
+          url: `/images/${post.coverImage}`,
           alt: post.title,
         },
       ],
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       description: post.excerpt,
       images: [
         {
-          url: post.coverImage || `${siteUrl}/opengraph-image.png`,
+          url: `/images/${post.coverImage}`,
           alt: post.title,
         },
       ],

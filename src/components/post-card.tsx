@@ -29,7 +29,7 @@ export default function PostCard({ post }: PostCardProps) {
           {post.title}
         </Link>
       </h4>
-      <p>{post.excerpt}</p>
+      <p className="truncated-text">{post.excerpt}</p>
     </div>
   );
 }
