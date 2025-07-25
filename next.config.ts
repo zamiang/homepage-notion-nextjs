@@ -32,15 +32,12 @@ const nextConfig = {
           ...createSecureHeaders({
             contentSecurityPolicy: {
               directives: {
-                defaultSrc: ["'self'", 'https://image.zamiang.com'],
-                styleSrc: ["'self'", "'unsafe-inline'", 'https://image.zamiang.com'],
+                defaultSrc: ["'self'"],
+                styleSrc: ["'self'", "'unsafe-inline'"],
                 imgSrc: [
                   "'self'",
                   'data:',
                   'https://www.googletagmanager.com',
-                  'http://www.googletagmanager.com',
-                  'https://image.zamiang.com',
-                  'https://cdn-images-1.medium.com',
                   'https://vitals.vercel-insights.com',
                 ],
                 fontSrc: ["'self'"],
@@ -49,15 +46,11 @@ const nextConfig = {
                   "'unsafe-eval'",
                   "'unsafe-inline'",
                   'https://www.googletagmanager.com',
-                  'http://www.googletagmanager.com',
-                  'https://image.zamiang.com',
-                  'https://platform.twitter.com',
                   'https://vitals.vercel-insights.com',
                 ],
-                frameSrc: ['https://platform.twitter.com/', 'https://vitals.vercel-insights.com'],
+                frameSrc: ['https://vitals.vercel-insights.com'],
                 connectSrc: [
                   "'self'",
-                  'https://image.zamiang.com',
                   'https://www.googleapis.com',
                   'https://www.google-analytics.com',
                   'https://vitals.vercel-insights.com',
