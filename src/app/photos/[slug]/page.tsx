@@ -29,19 +29,18 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     title: post.title,
     description: post.excerpt,
     alternates: {
-      canonical: `${siteUrl}/writing/${post.slug}`,
+      canonical: `${siteUrl}/photos/${post.slug}`,
     },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
-      url: `${siteUrl}/writing/${post.slug}`,
+      url: `${siteUrl}/photos/${post.slug}`,
       publishedTime: new Date(post.date).toISOString(),
       authors: post.author ? [post.author] : [],
-      tags: post.tags,
       images: [
         {
-          url: post.coverImage || `${siteUrl}/opengraph-image.png`,
+          url: `/images/photos/${post.coverImage}`,
           alt: post.title,
         },
       ],
@@ -52,7 +51,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       description: post.excerpt,
       images: [
         {
-          url: post.coverImage || `${siteUrl}/opengraph-image.png`,
+          url: `/images/photos/${post.coverImage}`,
           alt: post.title,
         },
       ],
@@ -84,7 +83,7 @@ export default async function PhotoPage({ params }: PostPageProps) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    image: post.coverImage || `${siteUrl}/opengraph-image.png`,
+    image: `/images/photos/${post.coverImage}`,
     datePublished: new Date(post.date).toISOString(),
     author: {
       '@type': 'Person',

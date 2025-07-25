@@ -13,7 +13,7 @@ export default function PhotoCard({ post }: PostCardProps) {
     <div className="gridItem">
       <div className="relative aspect-[1/1] w-full">
         <Link href={`/photos/${post.slug}`} aria-label={post.title}>
-          <Image src={`${imageUrl}/photos/${post.coverImage}`} alt={post.title} fill />
+          <Image src={`/images/photos/${post.coverImage}`} alt={post.title} fill />
         </Link>
       </div>
       <p style={{ marginTop: 0, paddingBottom: 0 }}>
