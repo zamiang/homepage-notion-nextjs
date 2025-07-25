@@ -1,6 +1,4 @@
-const withPlugins = require('next-compose-plugins');
 const { createSecureHeaders } = require('next-secure-headers');
-const withFonts = require('next-fonts');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -80,4 +78,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPlugins([[withFonts]], nextConfig);
+module.exports = nextConfig;
