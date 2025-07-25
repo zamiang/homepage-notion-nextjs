@@ -17,10 +17,10 @@ export default function Home() {
       <div className="section" id="companies">
         <p>
           I see engineering as a creative craft. Whether my canvas is healthcare, art, or
-          e-commerce, I build beauty by transforming complex problems into elegant solutions. I work
-          best with a small crew, digging in with the business to find the one lever that can move a
-          mountain. For me, success isn&apos;t just shipping a quality product—it&apos;s fostering
-          an energized team and watching the business grow.
+          e-commerce, I build beauty by creating elegant solutions for complex problems. I work best
+          with a small crew, digging in with the business to find the one lever that can move a
+          mountain. For me, success isn&apos;t just shipping a quality product—it&apos;s creating
+          small empowered teams that grow the business.
         </p>
         <div className="centerDivider"></div>
         <time className="text-muted-foreground">2022-2025</time>
