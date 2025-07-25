@@ -8,26 +8,8 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  //  target: 'server',
-
-  /*
-  images: {
-    minimumCacheTTL: 31536000,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'image.zamiang.com',
-      },
-    ],
-  },
-  assetPrefix: isProd ? 'https://image.zamiang.com' : '',
-  */
-
-  /*
-URL	Last crawled
-https://www.zamiang.com/posts/post/2015/04/13/the-case-for-the-codeless-internet-startup/
-
-*/
+  reactStrictMode: true,
+  poweredByHeader: false,
 
   async redirects() {
     return [
@@ -98,15 +80,4 @@ https://www.zamiang.com/posts/post/2015/04/13/the-case-for-the-codeless-internet
   },
 };
 
-module.exports = withPlugins(
-  [
-    [
-      withFonts,
-      {
-        reactStrictMode: true,
-        poweredByHeader: false,
-      },
-    ],
-  ],
-  nextConfig,
-);
+module.exports = withPlugins([[withFonts]], nextConfig);
