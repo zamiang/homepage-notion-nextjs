@@ -30,13 +30,14 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     title: post.title,
     description: post.excerpt,
     alternates: {
-      canonical: `${siteUrl}/photos/${post.slug}`,
+      canonical: `${siteUrl}/writing/${post.slug}`,
     },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
-      url: `${siteUrl}/photos/${post.slug}`,
+      url: `${siteUrl}/writing/${post.slug}`,
+      siteName: "Brennan's Blog",
       publishedTime: new Date(post.date).toISOString(),
       authors: post.author ? [post.author] : [],
       tags: post.tags,

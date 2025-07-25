@@ -29,11 +29,23 @@ export const metadata: Metadata = {
     siteName: 'Brennan Moore',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: `/about.jpg`,
+        alt: 'Brennan Moore portrait',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
+    images: [
+      {
+        url: `/about.jpg`,
+        alt: 'Brennan Moore portrait',
+      },
+    ],
   },
   robots: {
     index: true,
