@@ -9,10 +9,6 @@ const nextConfig: NextConfig = {
   images: {
     minimumCacheTTL: 2678400, // Cache for 30 days
   },
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
   reactStrictMode: true,
   poweredByHeader: false,
 
