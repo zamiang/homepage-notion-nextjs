@@ -5,10 +5,12 @@ import {
 } from '@/lib/notion';
 import PostCard from '@/components/post-card';
 import PhotoCard from '@/components/photo-card';
+import SeriesPostCard from '@/components/series-post-card';
 
 export default function Home() {
   const posts = getAllSectionPostsFromCache();
   const photos = getPhotosFromCache();
+  const vbcPosts = getVBCSectionPostsPostsFromCache().sort((a, b) => (a.title > b.title ? 1 : -1));
 
   return (
     <article>
@@ -106,6 +108,21 @@ export default function Home() {
         <div className="divider"></div>
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />
+        ))}
+      </div>
+      <div className="" id="vbc">
+        <h2 className="heading">Why is Value-based care so difficult?</h2>
+        <p>
+          This series argues that healthcare is &quot;harder than rocket science&quot; because it
+          deals with people, not just science. Improvements are challenging due to the need to
+          integrate human behavioral changes and business collaboration with scientific
+          advancements. The main thesis is that the current value-based care model, built on
+          insurance claims, is outdated and a new strategy is needed, especially with the rise of AI
+          and consolidated healthcare markets.
+        </p>
+        <div className="divider"></div>
+        {vbcPosts.map((post) => (
+          <SeriesPostCard key={post.id} post={post} />
         ))}
       </div>
       <div className="" id="photography">

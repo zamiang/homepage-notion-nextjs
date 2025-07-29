@@ -1,4 +1,4 @@
-import { getPostsFromCache, getAllSectionPostsFromCache, getWordCount } from '@/lib/notion';
+import { getPostsFromCache, getWordCount } from '@/lib/notion';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -8,6 +8,7 @@ import { components } from '@/components/mdx-component';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import PostsFooter from '@/components/posts-footer';
+import VBCFooter from '@/components/vbc-footer';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -132,6 +133,7 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.content}
           </ReactMarkdown>
         </div>
+        {post.section === 'VBC' && <VBCFooter slug={slug} />}
         <PostsFooter slug={post.slug} />
       </article>
     </>
