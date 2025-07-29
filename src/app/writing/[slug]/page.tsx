@@ -1,4 +1,4 @@
-import { getPostsFromCache, getWordCount } from '@/lib/notion';
+import { getPostsFromCache, getAllSectionPostsFromCache, getWordCount } from '@/lib/notion';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';

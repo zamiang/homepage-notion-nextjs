@@ -1,9 +1,13 @@
-import { getPhotosFromCache, getPostsFromCache } from '@/lib/notion';
+import {
+  getPhotosFromCache,
+  getAllSectionPostsFromCache,
+  getVBCSectionPostsPostsFromCache,
+} from '@/lib/notion';
 import PostCard from '@/components/post-card';
 import PhotoCard from '@/components/photo-card';
 
 export default function Home() {
-  const posts = getPostsFromCache();
+  const posts = getAllSectionPostsFromCache();
   const photos = getPhotosFromCache();
 
   return (

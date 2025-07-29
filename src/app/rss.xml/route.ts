@@ -1,4 +1,4 @@
-import { getPostsFromCache } from '@/lib/notion';
+import { getAllSectionPostsFromCache } from '@/lib/notion';
 
 const title = 'Articles by Brennan Moore';
 const description =
@@ -6,7 +6,7 @@ const description =
 const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.zamiang.com';
 
 const getRssXml = () => {
-  const posts = getPostsFromCache();
+  const posts = getAllSectionPostsFromCache();
 
   let latestPostDate = '';
   let rssItemsXml = '';

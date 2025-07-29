@@ -45,7 +45,7 @@ async function cachePhotoPosts() {
 
     console.log(`Successfully cached ${allPosts.length} photos.`);
   } catch (error) {
-    console.error('Error caching posts:', error);
+    console.error('Error caching photos:', error);
     process.exit(1);
   }
 }

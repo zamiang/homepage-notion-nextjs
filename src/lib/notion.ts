@@ -32,6 +32,7 @@ export interface Post {
   excerpt?: string;
   content: string;
   author: string;
+  section?: string; // 'All' | 'VBC';
   tags?: string[];
   category?: string;
 }
@@ -56,6 +57,24 @@ export function getPostsFromCache(): Post[] {
   if (fs.existsSync(cachePath)) {
     const cache = fs.readFileSync(cachePath, 'utf-8');
     return JSON.parse(cache);
+  }
+  return [];
+}
+
+export function getAllSectionPostsFromCache(): Post[] {
+  const cachePath = path.join(process.cwd(), 'posts-cache.json');
+  if (fs.existsSync(cachePath)) {
+    const cache = fs.readFileSync(cachePath, 'utf-8');
+    return JSON.parse(cache).filter((post: Post) => post.section === 'All');
+  }
+  return [];
+}
+
+export function getVBCSectionPostsPostsFromCache(): Post[] {
+  const cachePath = path.join(process.cwd(), 'posts-cache.json');
+  if (fs.existsSync(cachePath)) {
+    const cache = fs.readFileSync(cachePath, 'utf-8');
+    return JSON.parse(cache).filter((post: Post) => post.section === 'VBC');
   }
   return [];
 }
@@ -95,7 +114,7 @@ export async function fetchPublishedPosts(databaseID: string) {
 }
 
 export async function getPost(slug: string): Promise<Post | null> {
-  const posts = getPostsFromCache();
+  const posts = getAllSectionPostsFromCache();
   const post = posts.find((p) => p.slug === slug);
   return post || null;
 }
@@ -116,6 +135,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     const slug = properties['Slug'];
     const excerpt = properties['Excerpt'];
     const date = properties['Published Date'];
+    const section = properties['Section'];
 
     const titleText =
       title.type === 'title' && title.title[0]?.plain_text ? title.title[0].plain_text : undefined;
@@ -142,6 +162,9 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       throw new Error(`Add a cover image for ${titleText}`);
     }
 
+    const sectionText =
+      section?.type === 'select' && section.select ? section.select.name : undefined;
+
     const excerptText =
       excerpt.type === 'rich_text' && excerpt.rich_text[0]?.plain_text
         ? excerpt.rich_text[0]?.plain_text
@@ -165,6 +188,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       coverImage,
       date: dateText,
       content: contentString,
+      section: sectionText,
       author: 'Brennan Moore',
     };
 

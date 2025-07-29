@@ -8,7 +8,6 @@ interface PostCardProps {
 }
 
 export default function PhotoCard({ post }: PostCardProps) {
-  const imageUrl = '/images';
   return (
     <div className="gridItem">
       <div className="relative aspect-[1/1] w-full">
