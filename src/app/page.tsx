@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <article>
       <header className="header">
-        <div className="profilePhoto"></div>
+        <div className="profile-photo"></div>
         <h2>Hi, I&apos;m Brennan.</h2>
         <h3>I build innovative digital products people love.</h3>
         <div className="center-divider"></div>
