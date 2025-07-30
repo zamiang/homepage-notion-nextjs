@@ -117,7 +117,6 @@ export default async function PostPage({ params }: PostPageProps) {
         <header className="mb-8">
           <div className="flex items-center gap-4 text-muted-foreground mb-4">
             <time>{format(new Date(post.date), 'MMMM d, yyyy')}</time>
-            {post.author && <span>By {post.author}</span>}
             <span>{calculateReadingTime(wordCount)}</span>
           </div>
           <h1 className="mb-4">{post.title}</h1>

@@ -6,6 +6,7 @@ import {
 import PostCard from '@/components/post-card';
 import PhotoCard from '@/components/photo-card';
 import SeriesPostCard from '@/components/series-post-card';
+import { VBC_DESCRIPTION, VBC_TITLE } from '@/components/consts';
 
 export default function Home() {
   const posts = getAllSectionPostsFromCache();
@@ -18,7 +19,7 @@ export default function Home() {
         <div className="profilePhoto"></div>
         <h2>Hi, I&apos;m Brennan.</h2>
         <h3>I build innovative digital products people love.</h3>
-        <div className="centerDivider"></div>
+        <div className="center-divider"></div>
       </header>
       <div className="section" id="companies">
         <p>
@@ -28,7 +29,7 @@ export default function Home() {
           mountain. For me, success isn&apos;t just shipping a quality product—it&apos;s creating
           small empowered teams that grow the business.
         </p>
-        <div className="centerDivider"></div>
+        <div className="center-divider"></div>
         <time className="text-muted-foreground">2022-2025</time>
         <h4 style={{ marginTop: 0 }}>
           <a href="https://www.firsthandcares.com">firsthand cares</a>
@@ -47,7 +48,7 @@ export default function Home() {
           teams focused on business verticals, fostering a culture of ownership that directly
           accelerated our ability to deliver value.
         </p>
-        <div className="centerDivider"></div>
+        <div className="center-divider"></div>
         <p>2022</p>
         <h4 style={{ marginTop: 0 }}>
           <a href="https://kelp.nyc/">Kelp</a>
@@ -62,7 +63,7 @@ export default function Home() {
           open-sourcing the codebase and publishing my findings on the future of contextual
           computing.
         </p>
-        <div className="centerDivider"></div>
+        <div className="center-divider"></div>
         <time className="text-muted-foreground">2017-2021</time>
         <h4 style={{ marginTop: 0 }}>
           <a href="https://www.cityblock.com/">Cityblock Health</a>
@@ -75,7 +76,7 @@ export default function Home() {
           and spearheading the development of Commons—Cityblock&apos;s proprietary care management
           platform that became essential for our care teams.
         </p>
-        <div className="centerDivider"></div>
+        <div className="center-divider"></div>
         <time className="text-muted-foreground">2015</time>
         <h4 style={{ marginTop: 0 }}>
           <a href="https://www.motivateco.com/">Motivate</a>
@@ -88,7 +89,7 @@ export default function Home() {
           projects that directly impacted the bottom line, from strategic billing optimizations that
           increased revenue to new digital tools supporting our multi-city marketing efforts.
         </p>
-        <div className="centerDivider"></div>
+        <div className="center-divider"></div>
         <time className="text-muted-foreground">2011-2014</time>
         <h4 style={{ marginTop: 0 }}>
           <a href="https://artsy.net/">Artsy</a>
@@ -111,18 +112,17 @@ export default function Home() {
         ))}
       </div>
       <div className="" id="vbc">
-        <h2 className="heading">Why is Value-based care so difficult?</h2>
-        <p>
-          This series argues that healthcare is &quot;harder than rocket science&quot; because it
-          deals with people, not just science. Improvements are challenging due to the need to
-          integrate human behavioral changes and business collaboration with scientific
-          advancements. The main thesis is that the current value-based care model, built on
-          insurance claims, is outdated and a new strategy is needed, especially with the rise of AI
-          and consolidated healthcare markets.
-        </p>
+        <h2 className="heading">{VBC_TITLE}</h2>
+        <p>{VBC_DESCRIPTION}</p>
         <div className="divider"></div>
         {vbcPosts.map((post) => (
-          <SeriesPostCard key={post.id} post={post} />
+          <SeriesPostCard
+            key={post.id}
+            post={post}
+            isPast={false}
+            isCurrent={false}
+            isNext={false}
+          />
         ))}
       </div>
       <div className="" id="photography">

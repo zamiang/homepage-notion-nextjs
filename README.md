@@ -6,7 +6,6 @@ Production: [https://www.zamiang.com](https://www.zamiang.com)
 
 - Sitemap
 - RSS feed
-- Google Analytics
 - Content Security Policy (CSP)
 - Robust eslint and prettier config
 - Pages for photos and writing
@@ -15,13 +14,12 @@ Production: [https://www.zamiang.com](https://www.zamiang.com)
 
 ## Getting Started
 
-First, follow the Notion API [getting started guide](https://developers.notion.com/docs/getting-started) to get a `NOTION_TOKEN`, `NOTION_POSTS_DATABASE_ID` and `NOTION_PHOTOS_DATABASE_ID`. Optionally, include `GOOGLE_ANALYTICS_ID`. Add them all to a file called `.env.local`.
+First, follow the Notion API [getting started guide](https://developers.notion.com/docs/getting-started) to get a `NOTION_TOKEN`, `NOTION_POSTS_DATABASE_ID` and `NOTION_PHOTOS_DATABASE_ID`. Add them all to a file called `.env.local`.
 
 ```
 NOTION_TOKEN=
 NOTION_POSTS_DATABASE_ID=
 NOTION_PHOTOS_DATABASE_ID=
-GOOGLE_ANALYTICS_ID=
 ```
 
 Install dependencies:
