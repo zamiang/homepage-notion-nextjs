@@ -18,7 +18,7 @@
     "cache:posts": "tsx scripts/cache-posts.ts"
   },
   "dependencies": {
-    "@next/third-parties": "15.4.4",
+    "@next/third-parties": "15.4.5",
     "@notionhq/client": "4.0.1",
     "@radix-ui/react-label": "2.1.7",
     "@radix-ui/react-slot": "1.2.3",
