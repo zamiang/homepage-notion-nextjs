@@ -1,4 +1,4 @@
-import { getPostsFromCache, getAllSectionPostsFromCache, getWordCount } from '@/lib/notion';
+import { getPostsFromCache, getWordCount } from '@/lib/notion';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -8,6 +8,8 @@ import { components } from '@/components/mdx-component';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import PostsFooter from '@/components/posts-footer';
+import VBCFooter from '@/components/vbc-footer';
+import { VBC_TITLE } from '@/components/consts';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -105,7 +107,6 @@ export default async function PostPage({ params }: PostPageProps) {
       '@id': `${siteUrl}/writing/${post.slug}`,
     },
   };
-
   return (
     <>
       <script
@@ -116,9 +117,13 @@ export default async function PostPage({ params }: PostPageProps) {
         <header className="mb-8">
           <div className="flex items-center gap-4 text-muted-foreground mb-4">
             <time>{format(new Date(post.date), 'MMMM d, yyyy')}</time>
-            {post.author && <span>By {post.author}</span>}
             <span>{calculateReadingTime(wordCount)}</span>
           </div>
+          {post.section === 'VBC' && (
+            <p className="underline">
+              <b>{VBC_TITLE}</b>
+            </p>
+          )}
           <h1 className="mb-4">{post.title}</h1>
           <div className="excerpt text-muted-foreground">{post.excerpt}</div>
           <div className="divider"></div>
@@ -132,6 +137,7 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.content}
           </ReactMarkdown>
         </div>
+        {post.section === 'VBC' && <VBCFooter slug={slug} />}
         <PostsFooter slug={post.slug} />
       </article>
     </>

@@ -4,7 +4,6 @@ import { EB_Garamond, Lato } from 'next/font/google';
 import './globals.css';
 import Layout from '@/components/layout';
 import { ThemeProvider } from '@/components/theme-provider';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const serifFont = EB_Garamond({ subsets: ['latin'] });
@@ -87,7 +86,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </ThemeProvider>
         <SpeedInsights />
       </body>
-      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_ID!} />
       <Analytics />
     </html>
   );

@@ -40,7 +40,7 @@ const getFile = (url: string) => {
 
 export const downloadImage = async (url: string) => {
   const fileName = getFilename(url);
-  const dest = `/Users/brennanmoore/notion-blogs/public/images/${fileName}`;
+  const dest = path.join(process.cwd(), 'public', 'images', fileName || '');
 
   try {
     const dirname = path.dirname(dest);

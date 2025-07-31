@@ -1,19 +1,28 @@
 import { getVBCSectionPostsPostsFromCache } from '@/lib/notion';
-import PostCard from '@/components/post-card';
+import SeriesPostCard from './series-post-card';
+import { VBC_DESCRIPTION, VBC_TITLE } from './consts';
 
-export default function PostsFooter(params: { slug: string }) {
+export default function VBCFooter(params: { slug: string }) {
   const vbcPosts = getVBCSectionPostsPostsFromCache();
 
-  const filteredVbcPosts = vbcPosts.filter((p) => p.slug !== params.slug).slice(0, 6);
+  const filteredVbcPosts = vbcPosts.sort((a, b) => (a.title > b.title ? 1 : -1));
+  const indexOfSlug = filteredVbcPosts.map((p) => p.slug).indexOf(params.slug);
 
   return (
     <div>
-      <div className="centerDivider"></div>
+      <div className="center-divider"></div>
       <div className="">
-        <h2 className="heading">VBC Series</h2>
+        <h3 className="heading">{VBC_TITLE}</h3>
+        <p>{VBC_DESCRIPTION}</p>
         <div className="divider"></div>
-        {filteredVbcPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
+        {filteredVbcPosts.map((post, index) => (
+          <SeriesPostCard
+            key={post.id}
+            post={post}
+            isPast={index < indexOfSlug}
+            isCurrent={index === indexOfSlug}
+            isNext={index === indexOfSlug + 1}
+          />
         ))}
       </div>
     </div>

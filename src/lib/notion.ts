@@ -23,6 +23,18 @@ n2m.setCustomTransformer('image', async (block) => {
   return `<figure><img src="/images/${filename}" /></figure>`;
 });
 
+n2m.setCustomTransformer('column_list', async (block) => {
+  const mdBlocks = await n2m.pageToMarkdown(block.id);
+
+  const strings = mdBlocks.map((block) => {
+    const { parent: contentString } = n2m.toMarkdownString(block.children);
+    return `<div>
+    ${contentString}</div>`;
+  });
+
+  return `<div className="column">${strings.join('')}</div>`;
+});
+
 export interface Post {
   id: string;
   title: string;
@@ -33,8 +45,6 @@ export interface Post {
   content: string;
   author: string;
   section?: string; // 'All' | 'VBC';
-  tags?: string[];
-  category?: string;
 }
 
 export async function getDatabaseStructure(databaseID: string) {

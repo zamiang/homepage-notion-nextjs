@@ -11,7 +11,7 @@ export default function PostsFooter(params: { slug: string }) {
 
   return (
     <div>
-      <div className="centerDivider"></div>
+      <div className="center-divider"></div>
       <div className="">
         <h2 className="heading">Recommended Writing</h2>
         <div className="divider"></div>
