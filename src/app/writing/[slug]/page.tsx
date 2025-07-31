@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getPostsFromCache, getWordCount } from '@/lib/notion';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
@@ -120,9 +121,9 @@ export default async function PostPage({ params }: PostPageProps) {
             <span>{calculateReadingTime(wordCount)}</span>
           </div>
           {post.section === 'VBC' && (
-            <p className="underline">
+            <Link href="/#vbc" className="footerLink">
               <b>{VBC_TITLE}</b>
-            </p>
+            </Link>
           )}
           <h1 className="mb-4">{post.title}</h1>
           <div className="excerpt text-muted-foreground">{post.excerpt}</div>
