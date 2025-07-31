@@ -45,8 +45,6 @@ export interface Post {
   content: string;
   author: string;
   section?: string; // 'All' | 'VBC';
-  tags?: string[];
-  category?: string;
 }
 
 export async function getDatabaseStructure(databaseID: string) {
