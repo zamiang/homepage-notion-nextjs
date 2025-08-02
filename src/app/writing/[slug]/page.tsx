@@ -121,9 +121,11 @@ export default async function PostPage({ params }: PostPageProps) {
             <span>{calculateReadingTime(wordCount)}</span>
           </div>
           {post.section === 'VBC' && (
-            <Link href="/#vbc" className="footerLink">
-              <b>{VBC_TITLE}</b>
-            </Link>
+            <div className="mb-2 ">
+              <Link href="/#vbc">
+                <b>{VBC_TITLE}</b>
+              </Link>
+            </div>
           )}
           <h1 className="mb-4">{post.title}</h1>
           <div className="excerpt text-muted-foreground">{post.excerpt}</div>

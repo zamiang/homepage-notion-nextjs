@@ -35,18 +35,17 @@ export default function Home() {
           <a href="https://www.firsthandcares.com">firsthand cares</a>
         </h4>
         <p>
-          As CTO at firsthand, I led the technology organization through a period of critical
-          transformation and growth. I scaled the team from 3 to 25 professionals across all tech
-          functions, creating the capacity to meet our ambitious goals. A cornerstone of my tenure
-          was achieving the rigorous HITRUST r2 Certification, which fortified our security program
-          and became a key enabler for major business partnerships.
+          As CTO at firsthand, I grew the tech team from 3 to 25 people so we could handlel larger
+          projects and more payer integrations. I led the effort to get our HITRUST r2
+          Certification. This improved our security and helped us land major business partners.
         </p>
         <p>
-          On the product front, I initiated and oversaw the creation of helpinghand, our
-          proprietary, AI-powered care management tool now essential to our care teams&apos;
-          success. To drive these results, I restructured our organization into small, empowered
-          teams focused on business verticals, fostering a culture of ownership that directly
-          accelerated our ability to deliver value.
+          I also led the creation of helpinghand. It's our own AI-enabled care management tool that
+          our care teams now use every day. I led partnerships and development efforts that deeply
+          integrated that tool with multiple EHRs, claims data sources and common healthcare data
+          feeds. To drive these results, I restructured our organization into small, empowered teams
+          focused on business verticals, fostering a culture of ownership that accelerated our
+          ability to deliver value.
         </p>
         <div className="center-divider"></div>
         <p>2022</p>
@@ -69,12 +68,11 @@ export default function Home() {
           <a href="https://www.cityblock.com/">Cityblock Health</a>
         </h4>
         <p>
-          As a founding member of the Cityblock Health team, I was instrumental in its incubation
-          and launch from within Alphabet&apos;s Sidewalk Labs. My leadership focused on building
-          the core data and software technology foundation. This included implementing pivotal
-          data-sharing partnerships with payers, architecting our custom analytics infrastructure,
-          and spearheading the development of Commons—Cityblock&apos;s proprietary care management
-          platform that became essential for our care teams.
+          I was a founding team member at Cityblock Health, which started at Alphabet's Sidewalk
+          Labs. I focused on building the company's main software systems. This included setting up
+          data sharing agreements with payers and deep EHR integrations including custom Chrome
+          extensions. I also led the development of Commons, our own care management software and
+          our tooling to integrate our data insights into that care management tool.
         </p>
         <div className="center-divider"></div>
         <time className="text-muted-foreground">2015</time>
@@ -82,12 +80,11 @@ export default function Home() {
           <a href="https://www.motivateco.com/">Motivate</a>
         </h4>
         <p>
-          As the engineering lead at Motivate, I was responsible for the software powering bike
-          share systems in 10 cities, including New York&apos;s Citi Bike. I spearheaded the
-          critical, company-first initiative to achieve PCI compliance for our payment platform. My
-          role also involved directing both in-house and contractor development teams to deliver
-          projects that directly impacted the bottom line, from strategic billing optimizations that
-          increased revenue to new digital tools supporting our multi-city marketing efforts.
+          At Motivate, I was the engineering lead for the software that ran bike share systems in 10
+          cities, including New York&apos;s Citi Bike. I led the company&apos;s first project to
+          make our payment platform PCI compliant. I managed our developers and contractors to
+          complete projects that helped the business. We worked on things like improving the billing
+          system to increase revenue and building new marketing tools.
         </p>
         <div className="center-divider"></div>
         <time className="text-muted-foreground">2011-2014</time>
@@ -95,13 +92,11 @@ export default function Home() {
           <a href="https://artsy.net/">Artsy</a>
         </h4>
         <p>
-          As the tech-lead manager for Artsy&apos;s web engineering team, I led the group
-          responsible for our public website&apos;s performance and architecture. During my tenure,
-          I directed several transformative technical projects, including the initial open-sourcing
-          of our well-regarded frontend and a strategic migration to an in-house isomorphic
-          application that dramatically improved our SEO. Perhaps most impactfully, my team
-          developed the custom software for live auctions and art fairs—products that are now
-          cornerstones of Artsy&apos;s business.
+          I was the tech lead manager for the web engineering team at Artsy. My team handled the
+          public website's architecture and performance. I led several major technical projects. We
+          open sourced our frontend code and moved to an in-house isomorphic framework that improved
+          our SEO. My team also built the software for live auctions and art fairs, which became
+          important products for Artsy's business.
         </p>
       </div>
       <div className="" id="writing">
