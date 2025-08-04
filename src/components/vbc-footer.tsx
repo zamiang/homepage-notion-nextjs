@@ -24,6 +24,18 @@ export default function VBCFooter(params: { slug: string }) {
             isNext={index === indexOfSlug + 1}
           />
         ))}
+        <div className={['post', 'future-post'].join(' ')}>
+          <div className="next-button">August 2025</div>
+          <h4 style={{ marginTop: 0 }}>
+            What could value based contracting look like in an AI world?
+          </h4>
+        </div>
+        <div className={['post', 'future-post'].join(' ')}>
+          <div className="next-button">September 2025</div>
+          <h4 style={{ marginTop: 0 }}>
+            The wide business: VBC through the lens of operations research
+          </h4>
+        </div>
       </div>
     </div>
   );
