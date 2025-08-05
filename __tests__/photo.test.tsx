@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import PhotoPage from '../src/app/photos/[slug]/page';
-import WritingPage from '../src/app/writing/[slug]/page';
 
 // Mock the notFound function from next/navigation
 const notFound = vi.fn();
@@ -13,18 +12,6 @@ vi.mock('next/navigation', () => ({
     throw new Error('NEXT_NOT_FOUND'); // Simulate Next.js throwing an error
   },
 }));
-
-// Mock the page components to avoid actual rendering issues
-vi.mock('../src/app/photos/[slug]/page', async (importOriginal) => {
-  const actual = await importOriginal<typeof notion>();
-  return {
-    ...(actual as any),
-    default: vi.fn((props) => {
-      // Call the original component logic, which might call notFound()
-      return (actual as any).default(props);
-    }),
-  };
-});
 
 // Top-level mock for @/lib/notion
 vi.mock('@/lib/notion', async (importOriginal) => {
@@ -41,9 +28,8 @@ describe('Photo Page', () => {
     vi.clearAllMocks();
   });
 
-  it('renders without crashing', async () => {
+  it('renders without crashing when slug matches a photo', async () => {
     // Mock getPhotosFromCache to return a valid post
-    vi.mocked(notion).getPostsFromCache.mockReturnValue([]);
     vi.mocked(notion).getPhotosFromCache.mockReturnValue([
       {
         id: 'foo',
@@ -56,15 +42,17 @@ describe('Photo Page', () => {
         coverImage: 'test',
       },
     ]);
-    const params = { slug: 'spring-birds' } as any;
+
+    const params = Promise.resolve({ slug: 'spring-birds' });
     render(await PhotoPage({ params }));
     expect(notFound).not.toHaveBeenCalled();
   });
 
-  it('renders 404 if slug does not match', async () => {
+  it('renders 404 when slug does not match any photo', async () => {
     // Mock getPhotosFromCache to return an empty array
     vi.mocked(notion).getPhotosFromCache.mockReturnValue([]);
-    const params = { slug: 'not-real-slug' } as any;
+
+    const params = Promise.resolve({ slug: 'not-real-slug' });
     await expect(PhotoPage({ params })).rejects.toThrow('NEXT_NOT_FOUND');
     expect(notFound).toHaveBeenCalled();
   });
