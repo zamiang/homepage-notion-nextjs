@@ -16,9 +16,9 @@ vi.mock('next/navigation', () => ({
 
 // Mock the page components to avoid actual rendering issues
 vi.mock('../src/app/photos/[slug]/page', async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof notion>();
   return {
-    ...actual,
+    ...(actual as any),
     default: vi.fn((props) => {
       // Call the original component logic, which might call notFound()
       return (actual as any).default(props);

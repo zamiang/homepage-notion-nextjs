@@ -14,7 +14,7 @@ vi.mock('next/navigation', () => ({
 }));
 
 vi.mock('../src/app/writing/[slug]/page', async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof notion>();
   return {
     ...actual,
     default: vi.fn((props) => {
