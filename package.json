@@ -9,7 +9,7 @@
     "analyze": "ANALYZE=true next build",
     "audit-dependencies": "npm audit --audit-level=high --production",
     "dev": "next dev",
-    "build": "npm run cache:posts && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "lint-fix": "next lint --fix",

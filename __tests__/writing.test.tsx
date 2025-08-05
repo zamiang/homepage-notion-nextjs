@@ -13,17 +13,6 @@ vi.mock('next/navigation', () => ({
   },
 }));
 
-vi.mock('../src/app/writing/[slug]/page', async (importOriginal) => {
-  const actual = await importOriginal<typeof notion>();
-  return {
-    ...actual,
-    default: vi.fn((props) => {
-      // Call the original component logic, which might call notFound()
-      return (actual as any).default(props);
-    }),
-  };
-});
-
 // Top-level mock for @/lib/notion
 vi.mock('@/lib/notion', async (importOriginal) => {
   const actual = await importOriginal<typeof notion>();
@@ -54,7 +43,7 @@ describe('Writing Page', () => {
         coverImage: 'test',
       },
     ]);
-    const params = { slug: 'hiring-awesome-engineers' } as any;
+    const params = Promise.resolve({ slug: 'hiring-awesome-engineers' });
     render(await WritingPage({ params }));
     expect(notFound).not.toHaveBeenCalled();
   });
@@ -62,7 +51,7 @@ describe('Writing Page', () => {
   it('renders 404 if slug does not match', async () => {
     // Mock getPostsFromCache to return an empty array
     vi.mocked(notion).getPostsFromCache.mockReturnValue([]);
-    const params = { slug: 'not-real-slug' } as any;
+    const params = Promise.resolve({ slug: 'not-real-slug' });
     await expect(WritingPage({ params })).rejects.toThrow('NEXT_NOT_FOUND');
     expect(notFound).toHaveBeenCalled();
   });
