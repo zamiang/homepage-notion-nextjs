@@ -1,6 +1,6 @@
+import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
-import axios from 'axios';
 
 export const getFilename = (url: string) => {
   try {

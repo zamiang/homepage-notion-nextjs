@@ -1,6 +1,7 @@
+import { ModeToggle } from '@/components/mode-toggle';
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { ModeToggle } from '@/components/mode-toggle';
+
 import Footer from './footer';
 
 interface LayoutProps {

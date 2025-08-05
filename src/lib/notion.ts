@@ -1,39 +1,14 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import { Client } from '@notionhq/client';
-import { NotionToMarkdown } from 'notion-to-md';
 import { PageObjectResponse } from '@notionhq/client/';
-import fs from 'fs';
-import path from 'path';
 import { ImageBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import dotenv from 'dotenv';
+import fs from 'fs';
+import { NotionToMarkdown } from 'notion-to-md';
+import path from 'path';
+
 import { downloadImage, getFilename } from './download-image';
 
-export const notion = new Client({ auth: process.env.NOTION_TOKEN });
-export const n2m = new NotionToMarkdown({ notionClient: notion });
-
-n2m.setCustomTransformer('image', async (block) => {
-  const { image } = block as ImageBlockObjectResponse;
-  const src = image.type === 'external' ? image.external.url : image.file.url;
-  const filename = getFilename(src);
-
-  if (true) {
-    downloadImage(src);
-  }
-
-  return `<figure><img src="/images/${filename}" /></figure>`;
-});
-
-n2m.setCustomTransformer('column_list', async (block) => {
-  const mdBlocks = await n2m.pageToMarkdown(block.id);
-
-  const strings = mdBlocks.map((block) => {
-    const { parent: contentString } = n2m.toMarkdownString(block.children);
-    return `<div>
-    ${contentString}</div>`;
-  });
-
-  return `<div className="column">${strings.join('')}</div>`;
-});
+dotenv.config();
 
 export interface Post {
   id: string;
@@ -45,13 +20,6 @@ export interface Post {
   content: string;
   author: string;
   section?: string; // 'All' | 'VBC';
-}
-
-export async function getDatabaseStructure(databaseID: string) {
-  const database = await notion.databases.retrieve({
-    database_id: databaseID,
-  });
-  return database;
 }
 
 export function getWordCount(content: string): number {
@@ -98,7 +66,7 @@ export function getPhotosFromCache(): Post[] {
   return [];
 }
 
-export async function fetchPublishedPosts(databaseID: string) {
+export const fetchPublishedPosts = async (notion: Client, databaseID: string) => {
   // This function is now intended to be used only by the caching script.
   const posts = await notion.databases.query({
     database_id: databaseID!,
@@ -121,7 +89,7 @@ export async function fetchPublishedPosts(databaseID: string) {
   });
 
   return posts.results as PageObjectResponse[];
-}
+};
 
 export async function getPost(slug: string): Promise<Post | null> {
   const posts = getAllSectionPostsFromCache();
@@ -131,6 +99,33 @@ export async function getPost(slug: string): Promise<Post | null> {
 
 export async function getPostFromNotion(pageId: string): Promise<Post | null> {
   try {
+    const notion = new Client({ auth: process.env.NOTION_TOKEN });
+    const n2m = new NotionToMarkdown({ notionClient: notion });
+
+    n2m.setCustomTransformer('image', async (block) => {
+      const { image } = block as ImageBlockObjectResponse;
+      const src = image.type === 'external' ? image.external.url : image.file.url;
+      const filename = getFilename(src);
+
+      if (true) {
+        downloadImage(src);
+      }
+
+      return `<figure><img src="/images/${filename}" /></figure>`;
+    });
+
+    n2m.setCustomTransformer('column_list', async (block) => {
+      const mdBlocks = await n2m.pageToMarkdown(block.id);
+
+      const strings = mdBlocks.map((block) => {
+        const { parent: contentString } = n2m.toMarkdownString(block.children);
+        return `<div>
+    ${contentString}</div>`;
+      });
+
+      return `<div className="column">${strings.join('')}</div>`;
+    });
+
     const page = (await notion.pages.retrieve({
       page_id: pageId,
     })) as PageObjectResponse;

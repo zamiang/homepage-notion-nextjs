@@ -1,6 +1,6 @@
-import { getPhotosFromCache, getAllSectionPostsFromCache } from '@/lib/notion';
-import PostCard from '@/components/post-card';
 import PhotoCard from '@/components/photo-card';
+import PostCard from '@/components/post-card';
+import { getAllSectionPostsFromCache, getPhotosFromCache } from '@/lib/notion';
 
 export default function PostsFooter(params: { slug: string }) {
   const posts = getAllSectionPostsFromCache();

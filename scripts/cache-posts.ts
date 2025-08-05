@@ -1,11 +1,13 @@
-import { fetchPublishedPosts, getPostFromNotion } from '../src/lib/notion';
+import { Client } from '@notionhq/client';
 import fs from 'fs';
 import path from 'path';
 
-async function cachePosts() {
+import { fetchPublishedPosts, getPostFromNotion } from '../src/lib/notion';
+
+const cachePosts = async (notion: Client) => {
   try {
     console.log('Fetching posts from Notion...');
-    const posts = await fetchPublishedPosts(process.env.NOTION_DATABASE_ID!);
+    const posts = await fetchPublishedPosts(notion, process.env.NOTION_DATABASE_ID!);
 
     const allPosts = [];
 
@@ -24,12 +26,12 @@ async function cachePosts() {
     console.error('Error caching posts:', error);
     process.exit(1);
   }
-}
+};
 
-async function cachePhotoPosts() {
+const cachePhotoPosts = async (notion: Client) => {
   try {
     console.log('Fetching photos from Notion...');
-    const posts = await fetchPublishedPosts(process.env.NOTION_PHOTOS_DATABASE_ID!);
+    const posts = await fetchPublishedPosts(notion, process.env.NOTION_PHOTOS_DATABASE_ID!);
 
     const allPosts = [];
 
@@ -48,7 +50,8 @@ async function cachePhotoPosts() {
     console.error('Error caching photos:', error);
     process.exit(1);
   }
-}
+};
 
-cachePhotoPosts();
-cachePosts();
+const notion = new Client({ auth: process.env.NOTION_TOKEN });
+cachePhotoPosts(notion);
+cachePosts(notion);

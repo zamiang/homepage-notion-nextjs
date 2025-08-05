@@ -2,5 +2,9 @@
   "printWidth": 100,
   "trailingComma": "all",
   "singleQuote": true,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

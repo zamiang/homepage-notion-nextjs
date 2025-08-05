@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { format } from 'date-fns';
 import { Post, getWordCount } from '@/lib/notion';
 import { calculateReadingTime } from '@/lib/utils';
+import { format } from 'date-fns';
+import Link from 'next/link';
 
 interface PostCardProps {
   post: Post;

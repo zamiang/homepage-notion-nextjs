@@ -15,6 +15,8 @@
     "lint-fix": "next lint --fix",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,js,css}\"",
     "prettier:check": "prettier --list-different \"src/**/*.{ts,tsx,js,css}\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "cache:posts": "tsx scripts/cache-posts.ts"
   },
   "dependencies": {
@@ -48,7 +50,12 @@
   "devDependencies": {
     "@tailwindcss/postcss": "4",
     "@tailwindcss/typography": "0.5.16",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "6.6.4",
+    "@testing-library/react": "16.3.0",
+    "@trivago/prettier-plugin-sort-imports": "5.2.2",
     "@types/express": "5.0.3",
+    "@types/jest": "30.0.0",
     "@types/node": "24.2.0",
     "@types/react": "19.1.9",
     "@types/react-dom": "19.1.7",
@@ -58,6 +65,8 @@
     "eslint-config-next": "15.4.5",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-prettier": "5.5.3",
+    "jest": "30.0.5",
+    "jest-environment-jsdom": "30.0.5",
     "prettier": "3.6.2",
     "ts-node": "10.9.2",
     "tsx": "4.20.3",

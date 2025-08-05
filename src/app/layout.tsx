@@ -1,10 +1,11 @@
-import { Analytics } from '@vercel/analytics/next';
-import type { Metadata, Viewport } from 'next';
-import { EB_Garamond, Lato } from 'next/font/google';
-import './globals.css';
 import Layout from '@/components/layout';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import type { Metadata, Viewport } from 'next';
+import { EB_Garamond, Lato } from 'next/font/google';
+
+import './globals.css';
 
 const serifFont = EB_Garamond({ subsets: ['latin'] });
 const sansFont = Lato({ subsets: ['latin'], weight: '400' });
