@@ -75,6 +75,7 @@ export async function generateStaticParams() {
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
   const posts = getPostsFromCache();
+  console.log(slug, posts);
   const post = posts.find((p) => p.slug === slug);
   const wordCount = post?.content ? getWordCount(post.content) : 0;
 
