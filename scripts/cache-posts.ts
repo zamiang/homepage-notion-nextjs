@@ -37,15 +37,17 @@ const cacheItems = async (notion: Client, config: CacheConfig) => {
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 
 // Cache posts and photos using the generic function
-await Promise.all([
-  cacheItems(notion, {
-    databaseId: process.env.NOTION_DATABASE_ID!,
-    cacheFileName: 'posts-cache.json',
-    itemName: 'posts',
-  }),
-  cacheItems(notion, {
-    databaseId: process.env.NOTION_PHOTOS_DATABASE_ID!,
-    cacheFileName: 'photos-cache.json',
-    itemName: 'photos',
-  }),
-]);
+(async () => {
+  await Promise.all([
+    cacheItems(notion, {
+      databaseId: process.env.NOTION_DATABASE_ID!,
+      cacheFileName: 'posts-cache.json',
+      itemName: 'posts',
+    }),
+    cacheItems(notion, {
+      databaseId: process.env.NOTION_PHOTOS_DATABASE_ID!,
+      cacheFileName: 'photos-cache.json',
+      itemName: 'photos',
+    }),
+  ]);
+})();
