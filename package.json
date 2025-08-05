@@ -17,7 +17,8 @@
     "prettier:check": "prettier --list-different \"src/**/*.{ts,tsx,js,css}\"",
     "test": "jest",
     "test:watch": "jest --watch",
-    "cache:posts": "tsx scripts/cache-posts.ts"
+    "cache:posts": "tsx scripts/cache-posts.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@notionhq/client": "4.0.1",
