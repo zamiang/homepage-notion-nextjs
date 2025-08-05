@@ -1,12 +1,12 @@
+import { components } from '@/components/mdx-component';
+import PostsFooter from '@/components/posts-footer';
 import { getPhotosFromCache } from '@/lib/notion';
 import { format } from 'date-fns';
-import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
-import { components } from '@/components/mdx-component';
-import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import PostsFooter from '@/components/posts-footer';
+import remarkGfm from 'remark-gfm';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;

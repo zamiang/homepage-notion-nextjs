@@ -1,4 +1,4 @@
-import { getPhotosFromCache, Post, getPostsFromCache } from '@/lib/notion';
+import { Post, getPhotosFromCache, getPostsFromCache } from '@/lib/notion';
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -1,16 +1,16 @@
-import Link from 'next/link';
-import { getPostsFromCache, getWordCount } from '@/lib/notion';
-import { format } from 'date-fns';
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-import ReactMarkdown from 'react-markdown';
-import { calculateReadingTime } from '@/lib/utils';
+import { VBC_TITLE } from '@/components/consts';
 import { components } from '@/components/mdx-component';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import PostsFooter from '@/components/posts-footer';
 import VBCFooter from '@/components/vbc-footer';
-import { VBC_TITLE } from '@/components/consts';
+import { getPostsFromCache, getWordCount } from '@/lib/notion';
+import { calculateReadingTime } from '@/lib/utils';
+import { format } from 'date-fns';
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;

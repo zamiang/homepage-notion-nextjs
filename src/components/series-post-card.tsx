@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { Post } from '@/lib/notion';
+import Link from 'next/link';
 
 interface PostCardProps {
   post: Post;

@@ -1,12 +1,12 @@
+import { VBC_DESCRIPTION, VBC_TITLE } from '@/components/consts';
+import PhotoCard from '@/components/photo-card';
+import PostCard from '@/components/post-card';
+import SeriesPostCard from '@/components/series-post-card';
 import {
-  getPhotosFromCache,
   getAllSectionPostsFromCache,
+  getPhotosFromCache,
   getVBCSectionPostsPostsFromCache,
 } from '@/lib/notion';
-import PostCard from '@/components/post-card';
-import PhotoCard from '@/components/photo-card';
-import SeriesPostCard from '@/components/series-post-card';
-import { VBC_DESCRIPTION, VBC_TITLE } from '@/components/consts';
 
 export default function Home() {
   const posts = getAllSectionPostsFromCache();
@@ -40,11 +40,11 @@ export default function Home() {
           Certification. This improved our security and helped us land major business partners.
         </p>
         <p>
-          I also led the creation of helpinghand. It's our own AI-enabled care management tool that
-          our care teams now use every day. I led partnerships and development efforts that deeply
-          integrated that tool with multiple EHRs, claims data sources and common healthcare data
-          feeds. To drive these results, I restructured our organization into small, empowered teams
-          focused on business verticals, fostering a culture of ownership that accelerated our
+          I also led the creation of helpinghand. It&apos;s our own AI-enabled care management tool
+          that our care teams now use every day. I led partnerships and development efforts that
+          deeply integrated that tool with multiple EHRs, claims data sources and common healthcare
+          data feeds. To drive these results, I restructured our organization into small, empowered
+          teams focused on business verticals, fostering a culture of ownership that accelerated our
           ability to deliver value.
         </p>
         <div className="center-divider"></div>
@@ -68,11 +68,12 @@ export default function Home() {
           <a href="https://www.cityblock.com/">Cityblock Health</a>
         </h4>
         <p>
-          I was a founding team member at Cityblock Health, which started at Alphabet's Sidewalk
-          Labs. I focused on building the company's main software systems. This included setting up
-          data sharing agreements with payers and deep EHR integrations including custom Chrome
-          extensions. I also led the development of Commons, our own care management software and
-          our tooling to integrate our data insights into that care management tool.
+          I was a founding team member at Cityblock Health, which started at Alphabet&apos;s
+          Sidewalk Labs. I focused on building the company&apos;s main software systems. This
+          included setting up data sharing agreements with payers and deep EHR integrations
+          including custom Chrome extensions. I also led the development of Commons, our own care
+          management software and our tooling to integrate our data insights into that care
+          management tool.
         </p>
         <div className="center-divider"></div>
         <time className="text-muted-foreground">2015</time>
@@ -93,10 +94,10 @@ export default function Home() {
         </h4>
         <p>
           I was the tech lead manager for the web engineering team at Artsy. My team handled the
-          public website's architecture and performance. I led several major technical projects. We
-          open sourced our frontend code and moved to an in-house isomorphic framework that improved
-          our SEO. My team also built the software for live auctions and art fairs, which became
-          important products for Artsy's business.
+          public website&apos;s architecture and performance. I led several major technical
+          projects. We open sourced our frontend code and moved to an in-house isomorphic framework
+          that improved our SEO. My team also built the software for live auctions and art fairs,
+          which became important products for Artsy&apos;s business.
         </p>
       </div>
       <div className="" id="writing">

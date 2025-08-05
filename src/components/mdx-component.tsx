@@ -1,6 +1,3 @@
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
-import type React from 'react';
 import {
   Table,
   TableBody,
@@ -9,8 +6,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import type React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+
 import { Badge } from './ui/badge';
 
 const components = {

@@ -1,6 +1,7 @@
 import { getVBCSectionPostsPostsFromCache } from '@/lib/notion';
-import SeriesPostCard from './series-post-card';
+
 import { VBC_DESCRIPTION, VBC_TITLE } from './consts';
+import SeriesPostCard from './series-post-card';
 
 export default function VBCFooter(params: { slug: string }) {
   const vbcPosts = getVBCSectionPostsPostsFromCache();

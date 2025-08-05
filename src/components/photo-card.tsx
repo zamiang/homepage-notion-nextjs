@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { format } from 'date-fns';
 import { Post } from '@/lib/notion';
+import { format } from 'date-fns';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface PostCardProps {
   post: Post;
