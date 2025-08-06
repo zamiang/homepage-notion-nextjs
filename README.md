@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) blog written in Typescript that uses [N
 
 Production: [https://www.zamiang.com](https://www.zamiang.com)
 
+Orignally based on (Notion Blog)[https://github.com/thegesturs/notion-blogs]
+
 ## Features
 
 - Sitemap
