@@ -1,9 +1,11 @@
+# Project Guidelines
+
 ## 🛠️ Development Environment
 
 - **Language**: TypeScript (`^5.9.0`)
 - **Framework**: Next.js (App Router)
 - **Styling**: CSS + tailwind (`^4`)
-- **Component Library**: [todo]
+- **Component Library**: `radix-ui`
 - **Testing**: vitest + React Testing Library
 - **Linting**: ESLint with `@typescript-eslint`
 - **Formatting**: Prettier
@@ -61,6 +63,9 @@
 - Use `radix-/ui` components by default for form elements, cards, dialogs, etc.
 - Style components with Tailwind utility classes
 - Co-locate CSS modules or component-specific styling in the same directory
+- Use environment variables for configuration
+- Use server components by default
+- Implement client components only when necessary
 
 ## 📝 Code Style Standards
 
@@ -68,6 +73,12 @@
 - Annotate return types
 - Always destructure props
 - Avoid `any` type, use `unknown` or strict generics
+- Use TypeScript for type safety
+- Implement proper metadata for SEO
+- Utilize Next.js Image component for optimized images
+- Use CSS Modules or Tailwind CSS for styling
+- Implement proper error boundaries
+- Follow Next.js naming conventions for special files
 
 ## 🔍 Documentation & Onboarding
 
@@ -80,11 +91,3 @@
 - Validate all server-side inputs (API routes)
 - Use HTTPS-only cookies and CSRF tokens when applicable
 - Protect sensitive routes with middleware or session logic
-
-## 🧩 Custom Slash Commands
-
-Stored in `.claude/commands/`:
-
-- `/generate-hook`: Scaffold a React hook with proper types and test
-- `/wrap-client-component`: Convert server to client-side with hydration-safe boundary
-- `/update-tailwind-theme`: Modify Tailwind config and regenerate tokens
