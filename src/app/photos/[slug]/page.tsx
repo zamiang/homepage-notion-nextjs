@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   if (!post) {
     return {
-      title: 'Post Not Found',
+      title: 'Photo Not Found',
     };
   }
 
@@ -70,8 +70,8 @@ export async function generateStaticParams() {
 
 export default async function PhotoPage({ params }: PostPageProps) {
   const { slug } = await params;
-  const posts = getPhotosFromCache();
-  const post = posts.find((p) => p.slug === slug);
+  const photos = getPhotosFromCache();
+  const post = photos.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();
