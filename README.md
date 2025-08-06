@@ -11,8 +11,7 @@ Orignally based on (Notion Blog)[https://github.com/thegesturs/notion-blogs]
 - Content Security Policy (CSP)
 - Robust eslint and prettier config
 - Pages for photos and writing
-- Two column setup for images
-- CDN backed images
+- CDN backed images using vercel
 
 ## Getting Started
 
