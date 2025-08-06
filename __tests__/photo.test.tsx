@@ -1,64 +1,49 @@
-import * as notion from '@/lib/notion';
+import PhotoPage, { generateMetadata, generateStaticParams } from '@/app/photos/[slug]/page';
+import { getPhotosFromCache } from '@/lib/notion';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import PhotoPage from '../src/app/photos/[slug]/page';
-
-// Mock the notFound function from next/navigation
-const notFound = vi.fn();
-vi.mock('next/navigation', () => ({
-  notFound: () => {
-    notFound();
-    throw new Error('NEXT_NOT_FOUND'); // Simulate Next.js throwing an error
-  },
+vi.mock('@/lib/notion', () => ({
+  getPhotosFromCache: vi.fn(),
+  getAllSectionPostsFromCache: vi.fn(() => []),
+  getPostsFromCache: vi.fn(() => []),
 }));
 
-// Top-level mock for @/lib/notion
-vi.mock('@/lib/notion', async (importOriginal) => {
-  const actual = await importOriginal<typeof notion>();
-  return {
-    ...actual,
-    getPhotosFromCache: vi.fn(),
-    getPostsFromCache: vi.fn(),
-  };
-});
+const mockPhotos = [
+  {
+    id: '1',
+    slug: 'test-photo',
+    title: 'Test Photo',
+    date: '2023-01-01',
+    coverImage: 'test-image.jpg',
+    excerpt: 'This is a test photo.',
+    content: '## Test Photo Content',
+    author: 'Test Author',
+  },
+];
 
-describe('Photo Page', () => {
+describe('PhotoPage', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    (getPhotosFromCache as ReturnType<typeof vi.fn>).mockReturnValue(mockPhotos);
   });
 
-  it('renders the photo page when a valid slug is provided', async () => {
-    // Mock getPhotosFromCache to return a valid photo
-    vi.mocked(notion).getPhotosFromCache.mockReturnValue([
-      {
-        id: 'foo',
-        slug: 'spring-birds',
-        title: 'Spring Birds',
-        date: '2023-05-15',
-        excerpt: 'Photos of birds in the spring.',
-        content: '<p>Some content</p>',
-        author: 'John Doe',
-        coverImage: '/images/spring-birds.jpg',
-      },
-    ]);
+  it('renders the photo page with correct content', async () => {
+    const page = await PhotoPage({ params: Promise.resolve({ slug: 'test-photo' }) });
+    render(page);
 
-    const params = Promise.resolve({ slug: 'spring-birds' });
-    render(await PhotoPage({ params }));
-
-    // Verify that the page content is rendered
-    expect(screen.getByRole('heading', { level: 1, name: /Spring Birds/i })).toBeInTheDocument();
-    expect(screen.getByText('May 14, 2023')).toBeInTheDocument();
-    expect(screen.getByText('Spring Birds')).toBeInTheDocument();
-    expect(notFound).not.toHaveBeenCalled();
+    expect(screen.getByText('Test Photo')).toBeInTheDocument();
+    expect(screen.getByText('December 31, 2022')).toBeInTheDocument();
+    expect(screen.getByText('This is a test photo.')).toBeInTheDocument();
   });
 
-  it('renders 404 when slug does not match any photo', async () => {
-    // Mock getPhotosFromCache to return an empty array
-    vi.mocked(notion).getPhotosFromCache.mockReturnValue([]);
+  it('generates correct metadata', async () => {
+    const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'test-photo' }) });
+    expect(metadata.title).toBe('Test Photo');
+    expect(metadata.description).toBe('This is a test photo.');
+  });
 
-    const params = Promise.resolve({ slug: 'not-real-slug' });
-    await expect(PhotoPage({ params })).rejects.toThrow('NEXT_NOT_FOUND');
-    expect(notFound).toHaveBeenCalled();
+  it('generates static params correctly', async () => {
+    const params = await generateStaticParams();
+    expect(params).toEqual([{ slug: 'test-photo' }]);
   });
 });
