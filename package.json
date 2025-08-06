@@ -2,22 +2,19 @@
   "name": "brennanmoore-nextjs-notion-blog",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "audit-dependencies": "npm audit --audit-level=high --production",
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "cache:posts": "tsx scripts/cache-posts.ts",
+    "dev": "next dev",
+    "format": "prettier --write \"{src,__tests__,scripts}/**/*.{ts,tsx,js,css}\"",
+    "format:check": "prettier --list-different \"{src,__tests__,scripts}/**/*.{ts,tsx,js,css}\"",
     "lint": "next lint",
     "lint-fix": "next lint --fix",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx,js,css}\"",
-    "prettier:check": "prettier --list-different \"src/**/*.{ts,tsx,js,css}\"",
-    "test": "vitest",
+    "start": "next start",
+    "test": "vitest run",
     "test:watch": "vitest --watch",
-    "cache:posts": "tsx scripts/cache-posts.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -52,6 +49,7 @@
     "@tailwindcss/postcss": "4",
     "@tailwindcss/typography": "0.5.16",
     "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "6.6.4",
     "@testing-library/react": "16.3.0",
     "@trivago/prettier-plugin-sort-imports": "5.2.2",
     "@types/express": "5.0.3",
@@ -73,5 +71,8 @@
     "typescript-eslint": "8.39.0",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.2.4"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
