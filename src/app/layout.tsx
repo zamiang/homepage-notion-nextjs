@@ -1,4 +1,3 @@
-import Layout from '@/components/layout';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -83,11 +82,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <Layout>{children}</Layout>
+          {children}
         </ThemeProvider>
         <SpeedInsights />
+        <Analytics />
       </body>
-      <Analytics />
     </html>
   );
 }
