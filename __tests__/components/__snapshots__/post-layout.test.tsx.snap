@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PostLayout > should match snapshot 1`] = `
+<div>
+  <article
+    class="max-w-2xl mx-auto"
+  >
+    <header
+      class="mb-8"
+    >
+      <div
+        class="flex items-center gap-4 text-muted-foreground mb-4"
+      >
+        <time>
+          December 31, 2022
+        </time>
+      </div>
+      <h1
+        class="text-4xl font-bold mb-4 text-foreground"
+      >
+        Test Post
+      </h1>
+      <div
+        class="excerpt text-muted-foreground"
+      >
+        This is a test post.
+      </div>
+      <div
+        class="divider"
+      />
+    </header>
+    <div
+      class="max-w-none"
+    >
+      <p>
+        This is the content of the test post.
+      </p>
+    </div>
+  </article>
+</div>
+`;

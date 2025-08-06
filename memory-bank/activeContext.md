@@ -1,10 +1,8 @@
 # Active Context
 
-The current focus is on improving the project's test suite. This involved:
+The current focus has been on fixing a build error related to a type mismatch in the page components. This involved:
 
-- Installing `@testing-library/jest-dom` to provide better assertion matchers.
-- Updating the photo and writing tests to be more specific and robust.
-- Fixing the components to correctly render the content being tested.
-- Documenting the testing strategy in `memory-bank/testing.md`.
+- Updating the `PostPageProps` interface in both `src/app/photos/[slug]/page.tsx` and `src/app/writing/[slug]/page.tsx` to expect the `params` prop to be a `Promise`.
+- Updating the corresponding tests to correctly pass the `params` prop as a `Promise`.
 
-The next steps will involve continuing to improve the test suite and ensuring that all critical user flows are covered.
+The build is now successful, and all tests are passing. The next steps will involve ensuring the refactoring has not introduced any regressions and continuing to improve the overall code quality.

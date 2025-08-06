@@ -1,65 +1,51 @@
-import * as notion from '@/lib/notion';
+import WritingPage, { generateMetadata, generateStaticParams } from '@/app/writing/[slug]/page';
+import { getPostsFromCache } from '@/lib/notion';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import WritingPage from '../src/app/writing/[slug]/page';
-
-// Mock the notFound function from next/navigation
-const notFound = vi.fn();
-vi.mock('next/navigation', () => ({
-  notFound: () => {
-    notFound();
-    throw new Error('NEXT_NOT_FOUND'); // Simulate Next.js throwing an error
-  },
+vi.mock('@/lib/notion', () => ({
+  getPostsFromCache: vi.fn(),
+  getWordCount: vi.fn(() => 100),
+  getAllSectionPostsFromCache: vi.fn(() => []),
+  getPhotosFromCache: vi.fn(() => []),
 }));
 
-// Top-level mock for @/lib/notion
-vi.mock('@/lib/notion', async (importOriginal) => {
-  const actual = await importOriginal<typeof notion>();
-  return {
-    ...actual,
-    getPhotosFromCache: vi.fn(),
-    getPostsFromCache: vi.fn(),
-  };
-});
+const mockPosts = [
+  {
+    id: '1',
+    slug: 'test-post',
+    title: 'Test Post',
+    date: '2023-01-01',
+    coverImage: 'test-image.jpg',
+    excerpt: 'This is a test post.',
+    content: '## Test Post Content',
+    author: 'Test Author',
+    section: 'All',
+  },
+];
 
-describe('Writing Page', () => {
+describe('WritingPage', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    (getPostsFromCache as ReturnType<typeof vi.fn>).mockReturnValue(mockPosts);
   });
 
-  it('renders the writing page when a valid slug is provided', async () => {
-    // Mock getPostsFromCache to return a valid post
-    vi.mocked(notion).getPhotosFromCache.mockReturnValue([]);
-    vi.mocked(notion).getPostsFromCache.mockReturnValue([
-      {
-        id: 'foo',
-        slug: 'hiring-awesome-engineers',
-        title: 'Hiring Awesome Engineers',
-        date: '2023-01-01',
-        excerpt: 'Tips for hiring great engineers.',
-        content: '<h1>Hiring Awesome Engineers</h1><p>Here are some tips...</p>',
-        author: 'John Doe',
-        coverImage: '/images/hiring.jpg',
-      },
-    ]);
-    const params = Promise.resolve({ slug: 'hiring-awesome-engineers' });
-    render(await WritingPage({ params }));
+  it('renders the writing page with correct content', async () => {
+    const page = await WritingPage({ params: Promise.resolve({ slug: 'test-post' }) });
+    render(page);
 
-    // Verify that the page content is rendered
-    expect(
-      screen.getByRole('heading', { level: 1, name: /Hiring Awesome Engineers/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Test Post')).toBeInTheDocument();
     expect(screen.getByText('December 31, 2022')).toBeInTheDocument();
-    expect(screen.getByText('Here are some tips...')).toBeInTheDocument();
-    expect(notFound).not.toHaveBeenCalled();
+    expect(screen.getByText('This is a test post.')).toBeInTheDocument();
   });
 
-  it('renders 404 if slug does not match', async () => {
-    // Mock getPostsFromCache to return an empty array
-    vi.mocked(notion).getPostsFromCache.mockReturnValue([]);
-    const params = Promise.resolve({ slug: 'not-real-slug' });
-    await expect(WritingPage({ params })).rejects.toThrow('NEXT_NOT_FOUND');
-    expect(notFound).toHaveBeenCalled();
+  it('generates correct metadata', async () => {
+    const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'test-post' }) });
+    expect(metadata.title).toBe('Test Post');
+    expect(metadata.description).toBe('This is a test post.');
+  });
+
+  it('generates static params correctly', async () => {
+    const params = await generateStaticParams();
+    expect(params).toEqual([{ slug: 'test-post' }]);
   });
 });

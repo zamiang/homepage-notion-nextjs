@@ -1,18 +1,21 @@
 # Progress
 
-The project is currently in a state where the basic documentation and understanding have been established in the memory bank.
+The project has undergone a significant refactoring to improve code quality and reduce duplication.
 
 **What Works:**
 
 - The project is functional and deployed at [https://www.zamiang.com](https://www.zamiang.com).
 - The core features listed in the `README.md` are implemented.
 - The test suite has been improved to provide better coverage for the photo and writing pages.
+- The photo and writing pages have been refactored to use a shared `PostLayout` component and utility functions, reducing code duplication.
+- The build error related to the `params` prop has been resolved.
 
 **What's Left to Build:**
 
-- No new features are planned at this moment. The immediate goal is to continue improving the test suite and ensuring that all critical user flows are covered.
+- No new features are planned at this moment. The immediate goal is to verify that the recent refactoring has not introduced any regressions.
 
 **Current Status:**
 
-- The memory bank has been updated to reflect the recent testing improvements.
-- The test suite is passing.
+- The memory bank has been updated to reflect the recent refactoring and bug fixes.
+- The codebase is now more maintainable and easier to extend.
+- All tests are passing and the project builds successfully.
