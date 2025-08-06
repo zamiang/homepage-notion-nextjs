@@ -1,5 +1,5 @@
 import * as notion from '@/lib/notion';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import PhotoPage from '../src/app/photos/[slug]/page';
@@ -28,23 +28,28 @@ describe('Photo Page', () => {
     vi.clearAllMocks();
   });
 
-  it('renders without crashing when slug matches a photo', async () => {
-    // Mock getPhotosFromCache to return a valid post
+  it('renders the photo page when a valid slug is provided', async () => {
+    // Mock getPhotosFromCache to return a valid photo
     vi.mocked(notion).getPhotosFromCache.mockReturnValue([
       {
         id: 'foo',
         slug: 'spring-birds',
-        title: 'Flowers',
-        date: '2023-01-01',
-        excerpt: 'test',
-        content: 'test',
-        author: 'test',
-        coverImage: 'test',
+        title: 'Spring Birds',
+        date: '2023-05-15',
+        excerpt: 'Photos of birds in the spring.',
+        content: '<p>Some content</p>',
+        author: 'John Doe',
+        coverImage: '/images/spring-birds.jpg',
       },
     ]);
 
     const params = Promise.resolve({ slug: 'spring-birds' });
     render(await PhotoPage({ params }));
+
+    // Verify that the page content is rendered
+    expect(screen.getByRole('heading', { level: 1, name: /Spring Birds/i })).toBeInTheDocument();
+    expect(screen.getByText('May 14, 2023')).toBeInTheDocument();
+    expect(screen.getByText('Spring Birds')).toBeInTheDocument();
     expect(notFound).not.toHaveBeenCalled();
   });
 
