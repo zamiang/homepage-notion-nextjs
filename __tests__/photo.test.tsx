@@ -43,7 +43,7 @@ describe('Photo Page', () => {
       },
     ]);
 
-    const params = { slug: 'spring-birds' };
+    const params = Promise.resolve({ slug: 'spring-birds' });
     render(await PhotoPage({ params }));
 
     // Verify that the page content is rendered
@@ -57,7 +57,7 @@ describe('Photo Page', () => {
     // Mock getPhotosFromCache to return an empty array
     vi.mocked(notion).getPhotosFromCache.mockReturnValue([]);
 
-    const params = { slug: 'not-real-slug' };
+    const params = Promise.resolve({ slug: 'not-real-slug' });
     await expect(PhotoPage({ params })).rejects.toThrow('NEXT_NOT_FOUND');
     expect(notFound).toHaveBeenCalled();
   });

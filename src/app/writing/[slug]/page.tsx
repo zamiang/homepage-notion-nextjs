@@ -10,11 +10,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 interface PostPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
-  return generatePostMetadata(getPostsFromCache, 'writing', params.slug);
+  const { slug } = await params;
+  return generatePostMetadata(getPostsFromCache, 'writing', slug);
 }
 
 export async function generateStaticParams() {
@@ -22,7 +23,7 @@ export async function generateStaticParams() {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const posts = getPostsFromCache();
   const post = posts.find((p) => p.slug === slug);
 

@@ -43,7 +43,7 @@ describe('Writing Page', () => {
         coverImage: '/images/hiring.jpg',
       },
     ]);
-    const params = { slug: 'hiring-awesome-engineers' };
+    const params = Promise.resolve({ slug: 'hiring-awesome-engineers' });
     render(await WritingPage({ params }));
 
     // Verify that the page content is rendered
@@ -58,7 +58,7 @@ describe('Writing Page', () => {
   it('renders 404 if slug does not match', async () => {
     // Mock getPostsFromCache to return an empty array
     vi.mocked(notion).getPostsFromCache.mockReturnValue([]);
-    const params = { slug: 'not-real-slug' };
+    const params = Promise.resolve({ slug: 'not-real-slug' });
     await expect(WritingPage({ params })).rejects.toThrow('NEXT_NOT_FOUND');
     expect(notFound).toHaveBeenCalled();
   });

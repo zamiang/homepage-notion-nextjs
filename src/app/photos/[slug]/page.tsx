@@ -6,11 +6,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 interface PostPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
-  return generatePostMetadata(getPhotosFromCache, 'photos', params.slug);
+  const { slug } = await params;
+  return generatePostMetadata(getPhotosFromCache, 'photos', slug);
 }
 
 export async function generateStaticParams() {
@@ -18,7 +19,7 @@ export async function generateStaticParams() {
 }
 
 export default async function PhotoPage({ params }: PostPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const photos = getPhotosFromCache();
   const post = photos.find((p) => p.slug === slug);
 
