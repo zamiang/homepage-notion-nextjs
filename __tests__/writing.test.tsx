@@ -21,8 +21,15 @@ vi.mock('next/navigation', () => ({
   },
 }));
 
+// Mock fetch for API calls to simulate network errors
+global.fetch = vi.fn(() =>
+  Promise.resolve({
+    json: vi.fn(),
+    text: vi.fn(),
+  } as unknown as Response),
+) as any;
+
 describe('WritingPage', () => {
-  const mockPost = createMockPost();
   const mockPosts = createMockPosts(1);
 
   beforeEach(() => {

@@ -26,7 +26,6 @@ vi.mock('next/navigation', () => ({
 }));
 
 describe('PhotoPage', () => {
-  const mockPhoto = createMockPhoto();
   const mockPhotos = createMockPhotos(1);
 
   beforeEach(() => {
@@ -63,6 +62,58 @@ describe('PhotoPage', () => {
       ).rejects.toThrow('NEXT_NOT_FOUND');
 
       expect(notFound).toHaveBeenCalled();
+    });
+
+    it('handles empty content properties', async () => {
+      const emptyPhoto = createMockPhoto({
+        title: '',
+        excerpt: '',
+        content: '',
+      });
+
+      (getPhotosFromCache as ReturnType<typeof vi.fn>).mockReturnValue([emptyPhoto]);
+
+      const page = await PhotoPage({ params: Promise.resolve({ slug: 'test-photo' }) });
+
+      // Should still render the component even with empty content
+      expect(() => render(page)).not.toThrow();
+    });
+
+    it('handles invalid date formats', async () => {
+      const photoWithInvalidDate = createMockPhoto({
+        date: 'invalid-date-format',
+      });
+
+      (getPhotosFromCache as ReturnType<typeof vi.fn>).mockReturnValue([photoWithInvalidDate]);
+
+      await expect(PhotoPage({ params: Promise.resolve({ slug: 'test-photo' }) })).rejects.toThrow(
+        `Invalid date format for post: ${photoWithInvalidDate.id}`,
+      );
+    });
+
+    it('handles malformed Notion data', async () => {
+      const malformedPhoto = createMockPhoto({
+        title: null as any,
+        excerpt: undefined as any,
+      });
+
+      (getPhotosFromCache as ReturnType<typeof vi.fn>).mockReturnValue([malformedPhoto]);
+
+      const page = await PhotoPage({ params: Promise.resolve({ slug: 'test-photo' }) });
+      render(page);
+
+      expect(screen.getByText('Test Photo Content')).toBeInTheDocument();
+    });
+
+    it('handles network errors gracefully', async () => {
+      // Mock fetch to simulate network errors
+      global.fetch = vi.fn(() => Promise.reject(new Error('Network error'))) as any;
+
+      const page = await PhotoPage({ params: Promise.resolve({ slug: 'test-photo' }) });
+      render(page);
+
+      // The component should still render, but with error handling
+      expect(screen.getByText('Test Photo Content')).toBeInTheDocument();
     });
   });
 });
