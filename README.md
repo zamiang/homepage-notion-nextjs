@@ -145,7 +145,7 @@ For major changes, please open an issue first to discuss what you'd like to add.
 
 ## 📌 Roadmap
 
-- [ ] Implement comment section via external API
+- [ ] Implement a table of contents / maybe a UI revision to better handle posts in series
 
 ---
 
