@@ -63,10 +63,16 @@ export function generatePostStaticParams(getPosts: () => Post[]) {
   }));
 }
 
+const isDateValid = (val: string) => !isNaN(new Date(val).getTime());
+
 export function generateJsonLd(post: Post, type: PostType) {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.zamiang.com';
   const imageUrl =
     type === 'photos' ? `/images/photos/${post.coverImage}` : `/images/${post.coverImage}`;
+
+  if (!isDateValid(post.date)) {
+    throw new Error(`Invalid date format for post: ${post.id}`);
+  }
 
   return {
     '@context': 'https://schema.org',
