@@ -27,7 +27,7 @@ export function getWordCount(content: string): number {
     .replace(/[^\w\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
-  return cleanText.split(' ').length;
+  return cleanText.length === 0 ? 0 : cleanText.split(' ').length;
 }
 
 export function getPostsFromCache(): Post[] {

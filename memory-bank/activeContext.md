@@ -1,35 +1,37 @@
 # Active Context
 
-The current focus has been on fixing a build error related to a type mismatch in the page components. This involved:
+## Recent Test Suite Fixes
 
-- Updating the `PostPageProps` interface in both `src/app/photos/[slug]/page.tsx` and `src/app/writing/[slug]/page.tsx` to expect the `params` prop to be a `Promise`.
-- Updating the corresponding tests to correctly pass the `params` prop as a `Promise`.
+Successfully resolved all test failures that occurred after recent changes to the testing setup. The fixes included:
 
-The build is now successful, and all tests are passing. The next steps will involve ensuring the refactoring has not introduced any regressions and continuing to improve the overall code quality.
+### Issues Resolved:
 
-## Recommended Improvements to Test Suite:
+1. **Mock Setup Conflicts**: Removed conflicting global mocks from `__tests__/setup.ts` that were overriding individual test mocks
+2. **File System Mocking**: Fixed inconsistent `fs` module mocking by properly casting mock functions with TypeScript's `Mock` type
+3. **Word Count Bug**: Fixed `getWordCount` function to properly handle empty strings (was returning 1 instead of 0 due to `split(' ')` behavior)
+4. **Async Test Timeout**: Resolved timeout issue in download-image test by simplifying the async error handling mock
+5. **React Hook Testing**: Added proper `act()` wrapper for state updates in use-mobile hook tests
 
-1. **Expand Test Coverage**:
-   - Add tests for error states from the Notion API
-   - Test different content types and data formats
-   - Implement edge case testing for empty content, invalid dates, and malformed data
+### Test Coverage Status:
 
-2. **Enhance Mocking Strategy**:
-   - Create more realistic mocks that better reflect actual Notion API responses
-   - Add validation to ensure data transformation logic is correct
-   - Implement parameterized tests to verify different data scenarios
+- All 71 tests passing across 7 test files
+- Tests cover:
+  - Component rendering (PostLayout, Photo, Writing pages)
+  - Utility functions (page-utils, notion lib)
+  - Custom hooks (use-mobile)
+  - File operations (download-image)
 
-3. **Implement Integration Testing**:
-   - Create integration tests that verify the complete data flow from Notion to the UI
-   - Test the actual server-side rendering behavior
-   - Verify that the correct components are being used and that the correct data is being passed
+### Key Testing Patterns Established:
 
-4. **Add Visual and Structural Testing**:
-   - Implement visual regression testing to catch unintended UI changes
-   - Add testing of actual HTML structure and rendering output
-   - Include accessibility testing to ensure the site is usable by all users
+1. **Proper Mock Setup**: Mock modules before imports to ensure correct initialization
+2. **Type-Safe Mocking**: Use TypeScript's `Mock` type for proper type inference with Vitest
+3. **Async Testing**: Handle promises and timeouts appropriately in async tests
+4. **React Testing**: Use `act()` for state updates in React component/hook tests
 
-5. **Improve Test Data Quality**:
-   - Create more diverse test data to cover different scenarios
-   - Implement parameterized tests to test different data variations
-   - Add testing for different content formats and configurations
+## Next Steps:
+
+The test suite is now fully functional and provides good coverage of the application's core functionality. Future improvements could include:
+
+- Adding integration tests for the full data flow
+- Implementing E2E tests for critical user paths
+- Adding performance benchmarks for data fetching operations

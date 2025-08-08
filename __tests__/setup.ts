@@ -1,36 +1,35 @@
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 
-// Mock all external dependencies
-vi.mock('@/lib/notion', async () => {
-  const actual = await vi.importActual('@/lib/notion');
-  return {
-    ...actual,
-    getPostsFromCache: vi.fn(),
-    getPhotosFromCache: vi.fn(),
-    getAllSectionPostsFromCache: vi.fn(),
-    getWordCount: vi.fn(),
-  };
-});
-
 // Mock Next.js modules
 vi.mock('next/headers', () => ({
-  headers: vi.fn(() => new Map()),
+  headers: vi.fn(() => ({
+    get: vi.fn(),
+  })),
 }));
 
-// Mock image components
-vi.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => {
-    const { src, alt, width, height } = props;
-    return `<img src="${src}" alt="${alt}" width="${width}" height="${height}" />`;
-  },
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    refresh: vi.fn(),
+  })),
+  usePathname: vi.fn(() => '/'),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
+  notFound: vi.fn(),
 }));
 
-// Mock fetch for API calls
-global.fetch = vi.fn(() =>
-  Promise.resolve({
-    json: vi.fn(),
-    text: vi.fn(),
-  } as unknown as Response),
-) as any;
+// Mock environment variables
+process.env.NOTION_TOKEN = 'test-notion-token';
+process.env.NOTION_DATABASE_ID = 'test-database-id';
+process.env.NOTION_PHOTOS_DATABASE_ID = 'test-photos-database-id';
+
+// Suppress console errors in tests
+global.console = {
+  ...console,
+  error: vi.fn(),
+  warn: vi.fn(),
+};
