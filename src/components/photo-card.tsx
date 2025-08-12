@@ -5,9 +5,10 @@ import Link from 'next/link';
 
 interface PostCardProps {
   post: Post;
+  shouldHideText?: boolean;
 }
 
-export default function PhotoCard({ post }: PostCardProps) {
+export default function PhotoCard({ post, shouldHideText }: PostCardProps) {
   return (
     <div className="gridItem">
       <div className="relative aspect-[1/1] w-full">
@@ -15,14 +16,18 @@ export default function PhotoCard({ post }: PostCardProps) {
           <Image src={`/images/photos/${post.coverImage}`} alt={post.title} fill />
         </Link>
       </div>
-      <p style={{ marginTop: 0, paddingBottom: 0 }}>
+      {!shouldHideText && (
+        <p style={{ marginTop: 0, paddingBottom: 0 }}>
+          <Link href={`/photos/${post.slug}`} aria-label={post.title}>
+            {format(new Date(post.date), 'MMM d, yyyy')}
+          </Link>
+        </p>
+      )}
+      {!shouldHideText && (
         <Link href={`/photos/${post.slug}`} aria-label={post.title}>
-          {format(new Date(post.date), 'MMM d, yyyy')}
+          <h4 style={{ marginTop: 0 }}>{post.title}</h4>
         </Link>
-      </p>
-      <Link href={`/photos/${post.slug}`} aria-label={post.title}>
-        <h4 style={{ marginTop: 0 }}>{post.title}</h4>
-      </Link>
+      )}
     </div>
   );
 }

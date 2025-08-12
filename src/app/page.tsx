@@ -21,7 +21,7 @@ export default function Home() {
         <h3>I build innovative digital products people love.</h3>
         <div className="center-divider"></div>
       </header>
-      <div className="section" id="companies">
+      <div className="section">
         <p>
           I see engineering as a creative craft. Whether my canvas is healthcare, art, or
           e-commerce, I build beauty by creating elegant solutions for complex problems. I work best
@@ -30,12 +30,27 @@ export default function Home() {
           small empowered teams that grow the business.
         </p>
         <div className="center-divider"></div>
+        <h4 style={{ marginTop: 0 }}>Currently: Consulting</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <i>Latest photos</i>
+            <PhotoCard post={photos[0]} shouldHideText />
+          </div>
+          <div>
+            <i>Latest writing</i>
+            <PostCard post={vbcPosts[0]} />
+          </div>
+        </div>
+        <div className="center-divider" id="work"></div>
+        <h2 className="heading">Work</h2>
+        <div className="divider"></div>
+        <br />
         <time className="text-muted-foreground">2022-2025</time>
         <h4 style={{ marginTop: 0 }}>
           <a href="https://www.firsthandcares.com">firsthand cares</a>
         </h4>
         <p>
-          As CTO at firsthand, I grew the tech team from 3 to 25 people so we could handlel larger
+          As CTO at firsthand, I grew the tech team from 3 to 25 people so we could handle larger
           projects and more payer integrations. I led the effort to get our HITRUST r2
           Certification. This improved our security and helped us land major business partners.
         </p>

@@ -25,6 +25,11 @@ export default function Layout({ children }: LayoutProps) {
             </div>
             <div className="flex items-center gap-2">
               <div className="flex invisible md:visible">
+                <Link href="/#work" className="flex items-center text-md text-foreground text-sm ">
+                  Work
+                </Link>
+              </div>
+              <div className="flex invisible md:visible">
                 <Link
                   href="/#writing"
                   className="flex items-center text-md text-foreground text-sm "
