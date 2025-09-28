@@ -17,8 +17,13 @@ Successfully migrated from @notion/client v4.0.2 to v5.1.0 without breaking func
 1. **API Method Change**: `notion.databases.query()` → `notion.dataSources.query()`
 2. **Parameter Change**: `database_id` → `data_source_id`
 3. **Import Path Fix**: `ImageBlockObjectResponse` now imported from main module
-4. **API Version**: Added `notionVersion: '2022-06-28'` for backward compatibility
+4. **API Version**: Using default API version (2025-09-03) - older versions had compatibility issues
 5. **Test Updates**: Updated mocks to use `dataSources` instead of `databases`
+
+**Important Notes**:
+- Initially tried to use `notionVersion: '2022-06-28'` for backward compatibility, but this caused "Invalid request URL" errors
+- The fix was to use the default API version (2025-09-03) with `data_source_id` parameter
+- Database IDs remain the same, but the API treats them as data source IDs in the new version
 
 **Files Modified**:
 - `src/lib/notion.ts` - Core Notion API interactions

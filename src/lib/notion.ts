@@ -101,7 +101,6 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
   try {
     const notion = new Client({
       auth: process.env.NOTION_TOKEN,
-      notionVersion: '2022-06-28',
     });
     const n2m = new NotionToMarkdown({ notionClient: notion });
 

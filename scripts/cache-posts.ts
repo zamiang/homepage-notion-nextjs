@@ -36,7 +36,6 @@ const cacheItems = async (notion: Client, config: CacheConfig) => {
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
-  notionVersion: '2022-06-28',
 });
 
 // Cache posts and photos using the generic function
