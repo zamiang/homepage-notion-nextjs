@@ -243,7 +243,7 @@ describe('notion.ts - Unit Tests', () => {
   describe('fetchPublishedPosts', () => {
     it('should fetch published posts from Notion', async () => {
       const mockNotionClient = {
-        databases: {
+        dataSources: {
           query: vi.fn().mockResolvedValue({
             results: [{ id: '1' }, { id: '2' }],
           }),
@@ -253,8 +253,8 @@ describe('notion.ts - Unit Tests', () => {
       const databaseId = 'test-database-id';
       const posts = await fetchPublishedPosts(mockNotionClient as unknown as Client, databaseId);
 
-      expect(mockNotionClient.databases.query).toHaveBeenCalledWith({
-        database_id: databaseId,
+      expect(mockNotionClient.dataSources.query).toHaveBeenCalledWith({
+        data_source_id: databaseId,
         filter: {
           and: [
             {
@@ -278,7 +278,7 @@ describe('notion.ts - Unit Tests', () => {
 
     it('should handle Notion API errors', async () => {
       const mockNotionClient = {
-        databases: {
+        dataSources: {
           query: vi.fn().mockRejectedValue(new Error('Notion API error')),
         },
       };

@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client';
+import { ImageBlockObjectResponse } from '@notionhq/client';
 import { PageObjectResponse } from '@notionhq/client/';
-import { ImageBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import { NotionToMarkdown } from 'notion-to-md';
@@ -68,8 +68,8 @@ export function getPhotosFromCache(): Post[] {
 
 export const fetchPublishedPosts = async (notion: Client, databaseID: string) => {
   // This function is now intended to be used only by the caching script.
-  const posts = await notion.databases.query({
-    database_id: databaseID!,
+  const posts = await notion.dataSources.query({
+    data_source_id: databaseID!,
     filter: {
       and: [
         {
@@ -99,7 +99,10 @@ export async function getPost(slug: string): Promise<Post | null> {
 
 export async function getPostFromNotion(pageId: string): Promise<Post | null> {
   try {
-    const notion = new Client({ auth: process.env.NOTION_TOKEN });
+    const notion = new Client({
+      auth: process.env.NOTION_TOKEN,
+      notionVersion: '2022-06-28',
+    });
     const n2m = new NotionToMarkdown({ notionClient: notion });
 
     n2m.setCustomTransformer('image', async (block) => {
