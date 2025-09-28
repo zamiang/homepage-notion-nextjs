@@ -20,7 +20,14 @@
       "Bash(npm ls:*)",
       "Bash(npm install)",
       "Bash(git add package.json)",
-      "Bash(git add package-lock.json)"
+      "Bash(git add package-lock.json)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(npm test)",
+      "Bash(npm run typecheck:*)",
+      "WebFetch(domain:developers.notion.com)",
+      "Bash(node:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

@@ -56,15 +56,15 @@ This is a [Next.js](https://nextjs.org/) blog written in [TypeScript](https://ww
 Follow the [Notion API Getting Started Guide](https://developers.notion.com/docs/getting-started) to obtain:
 
 - `NOTION_TOKEN`: Your Notion integration token.
-- `NOTION_POSTS_DATABASE_ID`: The database ID for your blog posts.
-- `NOTION_PHOTOS_DATABASE_ID`: The database ID for your photo gallery.
+- `NOTION_POSTS_DATA_SOURCE_ID`: The data source ID for your blog posts.
+- `NOTION_PHOTOS_DATA_SOURCE_ID`: The data source ID for your photo gallery.
 
 Save these in a `.env.local` file:
 
 ```env
 NOTION_TOKEN=your-notion-token
-NOTION_POSTS_DATABASE_ID=your-posts-database-id
-NOTION_PHOTOS_DATABASE_ID=your-photos-database-id
+NOTION_POSTS_DATA_SOURCE_ID=your-posts-data-source-id
+NOTION_PHOTOS_DATA_SOURCE_ID=your-photos-data-source-id
 ```
 
 ### 2. **Install Dependencies**
