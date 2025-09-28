@@ -250,11 +250,11 @@ describe('notion.ts - Unit Tests', () => {
         },
       };
 
-      const databaseId = 'test-database-id';
-      const posts = await fetchPublishedPosts(mockNotionClient as unknown as Client, databaseId);
+      const dataSourceID = 'test-database-id';
+      const posts = await fetchPublishedPosts(mockNotionClient as unknown as Client, dataSourceID);
 
       expect(mockNotionClient.dataSources.query).toHaveBeenCalledWith({
-        data_source_id: databaseId,
+        data_source_id: dataSourceID,
         filter: {
           and: [
             {

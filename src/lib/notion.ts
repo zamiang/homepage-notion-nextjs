@@ -66,10 +66,10 @@ export function getPhotosFromCache(): Post[] {
   return [];
 }
 
-export const fetchPublishedPosts = async (notion: Client, databaseID: string) => {
+export const fetchPublishedPosts = async (notion: Client, dataSourceID: string) => {
   // This function is now intended to be used only by the caching script.
   const posts = await notion.dataSources.query({
-    data_source_id: databaseID!,
+    data_source_id: dataSourceID!,
     filter: {
       and: [
         {

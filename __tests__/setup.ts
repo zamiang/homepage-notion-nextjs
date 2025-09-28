@@ -24,8 +24,8 @@ vi.mock('next/navigation', () => ({
 
 // Mock environment variables
 process.env.NOTION_TOKEN = 'test-notion-token';
-process.env.NOTION_DATABASE_ID = 'test-database-id';
-process.env.NOTION_PHOTOS_DATABASE_ID = 'test-photos-database-id';
+process.env.NOTION_DATA_SOURCE_ID = 'test-database-id';
+process.env.NOTION_PHOTOS_DATA_SOURCE_ID = 'test-photos-database-id';
 
 // Suppress console errors in tests
 global.console = {

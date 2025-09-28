@@ -5,7 +5,7 @@ import path from 'path';
 import { fetchPublishedPosts, getPostFromNotion } from '../src/lib/notion';
 
 interface CacheConfig {
-  databaseId: string;
+  dataSourceID: string;
   cacheFileName: string;
   itemName: string;
 }
@@ -13,7 +13,7 @@ interface CacheConfig {
 const cacheItems = async (notion: Client, config: CacheConfig) => {
   try {
     console.log(`Fetching ${config.itemName} from Notion...`);
-    const posts = await fetchPublishedPosts(notion, config.databaseId);
+    const posts = await fetchPublishedPosts(notion, config.dataSourceID);
 
     const allPosts = [];
 
@@ -42,12 +42,12 @@ const notion = new Client({
 (async () => {
   await Promise.all([
     cacheItems(notion, {
-      databaseId: process.env.NOTION_DATABASE_ID!,
+      dataSourceID: process.env.NOTION_DATA_SOURCE_ID!,
       cacheFileName: 'posts-cache.json',
       itemName: 'posts',
     }),
     cacheItems(notion, {
-      databaseId: process.env.NOTION_PHOTOS_DATABASE_ID!,
+      dataSourceID: process.env.NOTION_PHOTOS_DATA_SOURCE_ID!,
       cacheFileName: 'photos-cache.json',
       itemName: 'photos',
     }),
