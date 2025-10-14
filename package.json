@@ -21,7 +21,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@notionhq/client": "5.1.0",
+    "@notionhq/client": "5.2.0",
     "@radix-ui/react-label": "2.1.7",
     "@radix-ui/react-slot": "1.2.3",
     "@types/react-syntax-highlighter": "15.5.13",
