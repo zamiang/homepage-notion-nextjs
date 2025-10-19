@@ -3,7 +3,14 @@
     "allow": [
       "Bash(awk '{if($1>400) print $0}')",
       "Bash(npm run lint)",
-      "Bash(mkdir -p docs)"
+      "Bash(mkdir -p docs)",
+      "Bash(npm outdated)",
+      "Bash(npm update @notionhq/client @tailwindcss/postcss @testing-library/jest-dom @types/node @types/react @types/react-dom @typescript-eslint/parser dotenv eslint eslint-config-next jsdom lucide-react next tailwindcss typescript typescript-eslint)",
+      "Bash(npm install @notionhq/client@latest @tailwindcss/postcss@latest tailwindcss@latest @testing-library/jest-dom@latest dotenv@latest jsdom@latest lucide-react@latest typescript@latest)",
+      "Bash(npm install next@latest eslint-config-next@latest)",
+      "Bash(npm install @types/node@latest @types/react@latest @types/react-dom@latest)",
+      "Bash(npm install eslint@latest @typescript-eslint/parser@latest typescript-eslint@latest)",
+      "Bash(npm install react@latest react-dom@latest)"
     ],
     "deny": [],
     "ask": []

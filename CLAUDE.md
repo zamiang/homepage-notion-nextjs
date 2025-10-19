@@ -3,11 +3,33 @@
 ## Project Information
 
 - **Project**: Personal homepage/blog built with Next.js and Notion as CMS
-- **Tech Stack**: Next.js 15.5.4, TypeScript, @notionhq/client 5.1.0, notion-to-md, Tailwind CSS
+- **Tech Stack**: Next.js 15.5.6, React 19.2.0, TypeScript 5.9.3, @notionhq/client 5.3.0, Tailwind CSS 4.1.14
 - **Testing**: Vitest with 97 tests (64.48% coverage)
 - **Node Version**: 22.x
 
 ## Recent Updates
+
+### Dependency Updates - Completed
+
+**Date**: 2025-10-19
+
+Successfully updated all 18 outdated npm packages to their latest versions.
+
+**Key Updates**:
+- React: 19.1.1 → 19.2.0
+- Next.js: 15.5.4 → 15.5.6
+- Notion Client: 5.1.0 → 5.3.0
+- TypeScript: 5.9.2 → 5.9.3
+- ESLint: 9.36.0 → 9.38.0
+- Tailwind CSS: 4.1.13 → 4.1.14
+
+**Verification**:
+- ✅ All 97 tests passing
+- ✅ TypeScript compilation successful
+- ✅ Production build successful
+- ✅ No breaking changes
+
+See `docs/DEPENDENCY_UPDATES_2025-10-19.md` for full details.
 
 ### Code Quality Improvements - Completed
 
