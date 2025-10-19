@@ -1,5 +1,6 @@
 import Layout from '@/components/layout';
 import { ThemeProvider } from '@/components/theme-provider';
+import { config } from '@/lib/config';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
@@ -10,10 +11,9 @@ import './globals.css';
 const serifFont = EB_Garamond({ subsets: ['latin'] });
 const sansFont = Lato({ subsets: ['latin'], weight: '400' });
 
-const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.zamiang.com';
-
-const title = 'Brennan Moore - Blog';
-const description = 'Writing and photos by Brennan Moore';
+const siteUrl = config.site.url;
+const title = config.site.title;
+const description = config.site.description;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

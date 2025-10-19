@@ -1,9 +1,10 @@
+import { config } from '@/lib/config';
 import { getAllSectionPostsFromCache } from '@/lib/notion';
 
 const title = 'Articles by Brennan Moore';
 const description =
   "I see engineering as a creative craft. Whether my canvas is healthcare, art, or e-commerce, I build beauty by transforming complex problems into elegant solutions. I work best with a small crew, digging in with the business to find the one lever that can move a mountain. For me, success isn't just shipping a quality product—it's fostering an energized team and watching the business grow";
-const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.zamiang.com';
+const siteUrl = config.site.url;
 
 const getRssXml = () => {
   const posts = getAllSectionPostsFromCache();
