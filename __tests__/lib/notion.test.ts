@@ -138,7 +138,9 @@ describe('notion.ts - Unit Tests', () => {
       existsSyncMock.mockReturnValue(true);
       readFileSyncMock.mockReturnValue('invalid json');
 
-      expect(() => getPostsFromCache()).toThrow();
+      // Should log error and return empty array instead of throwing
+      const posts = getPostsFromCache();
+      expect(posts).toEqual([]);
     });
   });
 

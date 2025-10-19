@@ -6,7 +6,9 @@ import fs from 'fs';
 import { NotionToMarkdown } from 'notion-to-md';
 import path from 'path';
 
+import { config } from './config';
 import { downloadImage, getFilename } from './download-image';
+import { NotionApiError, ValidationError, logError } from './errors';
 
 dotenv.config();
 
@@ -31,37 +33,57 @@ export function getWordCount(content: string): number {
 }
 
 export function getPostsFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), 'posts-cache.json');
+  const cachePath = path.join(process.cwd(), config.cache.postsFileName);
   if (fs.existsSync(cachePath)) {
-    const cache = fs.readFileSync(cachePath, 'utf-8');
-    return JSON.parse(cache);
+    try {
+      const cache = fs.readFileSync(cachePath, 'utf-8');
+      return JSON.parse(cache);
+    } catch (error) {
+      logError('getPostsFromCache', error, { cachePath });
+      return [];
+    }
   }
   return [];
 }
 
 export function getAllSectionPostsFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), 'posts-cache.json');
+  const cachePath = path.join(process.cwd(), config.cache.postsFileName);
   if (fs.existsSync(cachePath)) {
-    const cache = fs.readFileSync(cachePath, 'utf-8');
-    return JSON.parse(cache).filter((post: Post) => post.section === 'All');
+    try {
+      const cache = fs.readFileSync(cachePath, 'utf-8');
+      return JSON.parse(cache).filter((post: Post) => post.section === 'All');
+    } catch (error) {
+      logError('getAllSectionPostsFromCache', error, { cachePath });
+      return [];
+    }
   }
   return [];
 }
 
 export function getVBCSectionPostsPostsFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), 'posts-cache.json');
+  const cachePath = path.join(process.cwd(), config.cache.postsFileName);
   if (fs.existsSync(cachePath)) {
-    const cache = fs.readFileSync(cachePath, 'utf-8');
-    return JSON.parse(cache).filter((post: Post) => post.section === 'VBC');
+    try {
+      const cache = fs.readFileSync(cachePath, 'utf-8');
+      return JSON.parse(cache).filter((post: Post) => post.section === 'VBC');
+    } catch (error) {
+      logError('getVBCSectionPostsPostsFromCache', error, { cachePath });
+      return [];
+    }
   }
   return [];
 }
 
 export function getPhotosFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), 'photos-cache.json');
+  const cachePath = path.join(process.cwd(), config.cache.photosFileName);
   if (fs.existsSync(cachePath)) {
-    const cache = fs.readFileSync(cachePath, 'utf-8');
-    return JSON.parse(cache);
+    try {
+      const cache = fs.readFileSync(cachePath, 'utf-8');
+      return JSON.parse(cache);
+    } catch (error) {
+      logError('getPhotosFromCache', error, { cachePath });
+      return [];
+    }
   }
   return [];
 }
@@ -100,7 +122,7 @@ export async function getPost(slug: string): Promise<Post | null> {
 export async function getPostFromNotion(pageId: string): Promise<Post | null> {
   try {
     const notion = new Client({
-      auth: process.env.NOTION_TOKEN,
+      auth: config.notion.token,
     });
     const n2m = new NotionToMarkdown({ notionClient: notion });
 
@@ -109,9 +131,8 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       const src = image.type === 'external' ? image.external.url : image.file.url;
       const filename = getFilename(src);
 
-      if (true) {
-        downloadImage(src);
-      }
+      // Download image for local serving
+      downloadImage(src);
 
       return `<figure><img src="/images/${filename}" /></figure>`;
     });
@@ -148,7 +169,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       title.type === 'title' && title.title[0]?.plain_text ? title.title[0].plain_text : undefined;
 
     if (!titleText) {
-      throw new Error(`Add a title for ${pageId}`);
+      throw new ValidationError(`Missing title for page ${pageId}`, 'title');
     }
 
     const slugText =
@@ -157,7 +178,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
         : 'no-slug';
 
     if (!slugText) {
-      throw new Error(`Add a slug for ${titleText}`);
+      throw new ValidationError(`Missing slug for post: ${titleText}`, 'slug');
     }
 
     const coverImage =
@@ -166,7 +187,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
         : undefined;
 
     if (!coverImage) {
-      throw new Error(`Add a cover image for ${titleText}`);
+      throw new ValidationError(`Missing cover image for post: ${titleText}`, 'coverImage');
     }
 
     const sectionText =
@@ -178,13 +199,13 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
         : undefined;
 
     if (!excerptText) {
-      throw new Error(`Add excerpt text for ${titleText}`);
+      throw new ValidationError(`Missing excerpt for post: ${titleText}`, 'excerpt');
     }
 
     const dateText = date.type === 'date' && date.date?.start ? date.date?.start : undefined;
 
     if (!dateText) {
-      throw new Error(`Add a date for ${titleText}`);
+      throw new ValidationError(`Missing date for post: ${titleText}`, 'date');
     }
 
     const post: Post = {
@@ -201,7 +222,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
 
     return post;
   } catch (error) {
-    console.error('Error getting post:', error);
+    logError('getPostFromNotion', error, { pageId });
     return null;
   }
 }

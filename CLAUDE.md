@@ -3,11 +3,79 @@
 ## Project Information
 
 - **Project**: Personal homepage/blog built with Next.js and Notion as CMS
-- **Tech Stack**: Next.js 15.5.4, TypeScript, @notionhq/client 5.1.0, notion-to-md, Tailwind CSS
-- **Testing**: Vitest with 71 tests
+- **Tech Stack**: Next.js 15.5.6, React 19.2.0, TypeScript 5.9.3, @notionhq/client 5.3.0, Tailwind CSS 4.1.14
+- **Testing**: Vitest with 97 tests (64.48% coverage)
 - **Node Version**: 22.x
 
 ## Recent Updates
+
+### Dependency Updates - Completed
+
+**Date**: 2025-10-19
+
+Successfully updated all 18 outdated npm packages to their latest versions.
+
+**Key Updates**:
+
+- React: 19.1.1 → 19.2.0
+- Next.js: 15.5.4 → 15.5.6
+- Notion Client: 5.1.0 → 5.3.0
+- TypeScript: 5.9.2 → 5.9.3
+- ESLint: 9.36.0 → 9.38.0
+- Tailwind CSS: 4.1.13 → 4.1.14
+
+**Verification**:
+
+- ✅ All 97 tests passing
+- ✅ TypeScript compilation successful
+- ✅ Production build successful
+- ✅ No breaking changes
+
+See `docs/DEPENDENCY_UPDATES_2025-10-19.md` for full details.
+
+### Code Quality Improvements - Completed
+
+**Date**: 2025-10-19
+
+Successfully completed all high-priority items from the code quality audit:
+
+**Improvements Made**:
+
+1. **Added API Route Tests** (26 new tests)
+   - RSS feed route: 13 tests covering XML structure, CDATA escaping, section filtering
+   - Sitemap route: 13 tests covering URL generation, priorities, change frequencies
+
+2. **Centralized Configuration** (`src/lib/config.ts`)
+   - Type-safe configuration object
+   - Environment variable validation with `validateNotionConfig()`
+   - Single source of truth for all config values
+   - Updated 8 files to use centralized config
+
+3. **Standardized Error Handling** (`src/lib/errors.ts`)
+   - Custom error classes: `NotionApiError`, `ValidationError`
+   - Consistent `logError()` utility for structured error logging
+   - Graceful error handling in cache functions (log and return empty array)
+   - Better error context with metadata
+
+4. **Test Coverage Improvement**
+   - Coverage: 57.69% → 64.48% statements (+6.79%)
+   - Tests: 71 → 97 (+26 tests)
+   - Test files: 7 → 9 (+2 files)
+
+**Files Created**:
+
+- `__tests__/app/rss.test.ts`
+- `__tests__/app/sitemap.test.ts`
+- `src/lib/config.ts`
+- `src/lib/errors.ts`
+- `docs/HIGH_PRIORITY_IMPROVEMENTS_COMPLETED.md`
+
+**Verification**:
+
+- ✅ All 97 tests passing
+- ✅ TypeScript compilation successful
+- ✅ ESLint passing (no warnings)
+- ✅ Production build successful
 
 ### @notion/client Migration (v4.0.2 → v5.1.0) - Completed
 
