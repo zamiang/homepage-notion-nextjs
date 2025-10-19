@@ -14,13 +14,20 @@ export interface ErrorContext {
 /**
  * Converts an unknown error to a standardized error context for logging
  */
-export function errorToLogContext(error: unknown, context: string, metadata?: Record<string, unknown>): ErrorContext {
+export function errorToLogContext(
+  error: unknown,
+  context: string,
+  metadata?: Record<string, unknown>,
+): ErrorContext {
   return {
-    error: error instanceof Error ? {
-      message: error.message,
-      stack: error.stack,
-      name: error.name,
-    } : error,
+    error:
+      error instanceof Error
+        ? {
+            message: error.message,
+            stack: error.stack,
+            name: error.name,
+          }
+        : error,
     context,
     metadata,
   };
@@ -30,7 +37,11 @@ export function errorToLogContext(error: unknown, context: string, metadata?: Re
  * Logs an error with context to the console
  * In production, this could be extended to send to an error tracking service
  */
-export function logError(context: string, error: unknown, metadata?: Record<string, unknown>): void {
+export function logError(
+  context: string,
+  error: unknown,
+  metadata?: Record<string, unknown>,
+): void {
   const errorContext = errorToLogContext(error, context, metadata);
   console.error(`Error in ${context}:`, errorContext);
 }
