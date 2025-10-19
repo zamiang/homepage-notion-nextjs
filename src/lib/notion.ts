@@ -8,7 +8,7 @@ import path from 'path';
 
 import { config } from './config';
 import { downloadImage, getFilename } from './download-image';
-import { logError, NotionApiError, ValidationError } from './errors';
+import { NotionApiError, ValidationError, logError } from './errors';
 
 dotenv.config();
 
