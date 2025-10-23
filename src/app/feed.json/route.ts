@@ -1,12 +1,12 @@
 import { config } from '@/lib/config';
-import { getAllSectionPostsFromCache, getWordCount } from '@/lib/notion';
+import { getAllItemsSortedByDate, getWordCount } from '@/lib/notion';
 
 /**
  * JSON Feed 1.1 route
  * Spec: https://jsonfeed.org/version/1.1
  */
 export async function GET() {
-  const posts = getAllSectionPostsFromCache();
+  const allItems = getAllItemsSortedByDate();
   const siteUrl = config.site.url;
 
   const feed = {
@@ -24,24 +24,33 @@ export async function GET() {
       },
     ],
     language: 'en',
-    items: posts.map((post) => {
-      const wordCount = post.content ? getWordCount(post.content) : 0;
+    items: allItems.map((item) => {
+      const wordCount = item.content ? getWordCount(item.content) : 0;
+      const itemUrl =
+        item.type === 'photo'
+          ? `${siteUrl}/photos/${item.slug}`
+          : `${siteUrl}/writing/${item.slug}`;
+      const imageUrl =
+        item.type === 'photo'
+          ? `${siteUrl}/images/photos/${item.coverImage}`
+          : `${siteUrl}/images/${item.coverImage}`;
 
       return {
-        id: `${siteUrl}/writing/${post.slug}`,
-        url: `${siteUrl}/writing/${post.slug}`,
-        title: post.title,
-        content_html: post.content,
-        summary: post.excerpt,
-        image: `${siteUrl}/images/${post.coverImage}`,
-        date_published: new Date(post.date).toISOString(),
+        id: itemUrl,
+        url: itemUrl,
+        title: item.title,
+        content_html: item.content,
+        summary: item.excerpt,
+        image: imageUrl,
+        date_published: new Date(item.date).toISOString(),
         authors: [
           {
-            name: post.author,
+            name: item.author,
           },
         ],
-        tags: post.section ? [post.section] : undefined,
+        tags: item.section ? [item.section, item.type] : [item.type],
         _word_count: wordCount, // Custom extension
+        _content_type: item.type, // Custom extension to distinguish photos from writing
       };
     }),
   };
