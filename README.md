@@ -9,8 +9,12 @@ This is a [Next.js](https://nextjs.org/) blog written in [TypeScript](https://ww
 ## 🌟 Key Features
 
 - **High performance due to SSR**: Pages are rendered server-side and are very small all have a 100 score from Vercel's performance dashboard.
-- **Sitemap Generation**: Automatically creates a sitemap for SEO optimization.
-- **RSS Feed**: Provides an RSS feed for syndication and content aggregation.
+- **SEO Optimized**:
+  - Sitemap generation for search engine discovery
+  - RSS 2.0 feed (`/rss.xml`) for syndication
+  - JSON Feed 1.1 (`/feed.json`) for modern feed readers
+  - Schema.org JSON-LD structured data (Person, Blog, BlogPosting, Photograph types)
+  - OpenGraph and Twitter Card metadata
 - **Content Security Policy (CSP)**: Enhances security by restricting sources of executable scripts, styles, and other resources.
 - **Code Quality Tools**: Comes with a robust [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) configuration for consistent, clean code.
 - **Photo & Writing Pages**: Separate sections for blog posts and photo galleries, both sourced from Notion.

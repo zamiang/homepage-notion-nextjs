@@ -69,5 +69,80 @@ describe('page-utils', () => {
       expect(jsonLd.headline).toBe('Test Post 1');
       expect(jsonLd.mainEntityOfPage['@id']).toBe('https://www.zamiang.com/photos/test-post-1');
     });
+
+    it('should generate BlogPosting type for writing posts', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing');
+      expect(jsonLd['@type']).toBe('BlogPosting');
+    });
+
+    it('should generate Photograph type for photo posts', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'photos');
+      expect(jsonLd['@type']).toBe('Photograph');
+    });
+
+    it('should include wordCount for writing posts', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing') as any;
+      expect(jsonLd.wordCount).toBeGreaterThan(0);
+      expect(typeof jsonLd.wordCount).toBe('number');
+    });
+
+    it('should include articleSection for VBC posts', () => {
+      const jsonLd = generateJsonLd(mockPosts[1], 'writing') as any;
+      expect(jsonLd.articleSection).toBe('Value-Based Care');
+    });
+
+    it('should include keywords based on section', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing') as any;
+      expect(jsonLd.keywords).toEqual(['All']);
+    });
+
+    it('should include enhanced image object', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing');
+      expect(jsonLd.image['@type']).toBe('ImageObject');
+      expect(jsonLd.image.url).toContain('/images/cover1.jpg');
+      expect(jsonLd.image.caption).toBe('Test Post 1');
+    });
+
+    it('should include author URL', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing');
+      expect(jsonLd.author.url).toBe('https://www.zamiang.com');
+    });
+
+    it('should include publisher URL', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing');
+      expect(jsonLd.publisher.url).toBe('https://www.zamiang.com');
+    });
+
+    it('should throw error for invalid dates', () => {
+      const invalidPost = { ...mockPosts[0], date: 'invalid-date' };
+      expect(() => generateJsonLd(invalidPost, 'writing')).toThrow(
+        'Invalid date format for post: 1',
+      );
+    });
+
+    it('should handle posts without content', () => {
+      const postWithoutContent = { ...mockPosts[0], content: '' };
+      const jsonLd = generateJsonLd(postWithoutContent, 'writing') as any;
+      // Should not have wordCount if no content
+      expect(jsonLd.wordCount).toBeUndefined();
+    });
+
+    it('should handle posts without section', () => {
+      const postWithoutSection = { ...mockPosts[0], section: undefined };
+      const jsonLd = generateJsonLd(postWithoutSection, 'writing') as any;
+      expect(jsonLd.keywords).toBeUndefined();
+      expect(jsonLd.articleSection).toBeUndefined();
+    });
+
+    it('should include absolute image URLs', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing');
+      expect(jsonLd.image.url).toMatch(/^https?:\/\//);
+    });
+
+    it('should include dateModified', () => {
+      const jsonLd = generateJsonLd(mockPosts[0], 'writing');
+      expect(jsonLd.dateModified).toBeDefined();
+      expect(jsonLd.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+    });
   });
 });
