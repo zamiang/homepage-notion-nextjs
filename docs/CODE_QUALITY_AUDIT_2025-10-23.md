@@ -775,8 +775,8 @@ The site is **production-ready and successfully deployed** at zamiang.com. The c
 **Recommended Before Next Major Release:** *(Updated 2025-10-23)*
 
 1. ~~**Increase test coverage to 70%**~~ - ✅ **COMPLETE** - Now at 75.64%
-2. **Add .env.example** - Critical for developer onboarding (only remaining high-priority item)
-3. **Address prismjs vulnerability** - Update react-syntax-highlighter or accept the build-time-only risk
+2. ~~**Add .env.example**~~ - ✅ **COMPLETE** - File added with all required variables
+3. **Address prismjs vulnerability** - Update react-syntax-highlighter or accept the build-time-only risk (medium priority, no high-priority blockers remaining)
 
 **Before Scaling to 10k+ Users:**
 
