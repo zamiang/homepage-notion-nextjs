@@ -116,7 +116,16 @@ const nextConfig: NextConfig = {
 -  },
   images: {
     minimumCacheTTL: 2678400, // Cache for 30 days
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
++   qualities: [75, 85], // Support both default (75) and high quality (85) images
+  },
 ```
+
+**Changes**:
+1. Removed deprecated `eslint` config option
+2. Added `qualities: [75, 85]` to support custom quality values (required in Next.js 16)
 
 ### Test Snapshots
 
@@ -214,6 +223,43 @@ and 'eslint' does not exist in type 'NextConfig'.
 **Resolution**: Updated snapshots with `npm test -- -u` (expected change).
 
 **Time**: 1 minute
+
+### 3. Image Quality Configuration Required (Minor)
+
+**Issue**: Console warnings when using `quality={85}` without configuring `qualities` array.
+
+**Warning**:
+```
+Image with src "/images/photos/..." is using quality "85" which is not configured
+in images.qualities [75]. Please update your config to [75, 85].
+```
+
+**Resolution**: Added `qualities: [75, 85]` to images config in `next.config.ts`.
+
+**Before**:
+```typescript
+images: {
+  minimumCacheTTL: 2678400,
+  formats: ['image/webp', 'image/avif'],
+  deviceSizes: [...],
+  imageSizes: [...],
+}
+```
+
+**After**:
+```typescript
+images: {
+  minimumCacheTTL: 2678400,
+  formats: ['image/webp', 'image/avif'],
+  deviceSizes: [...],
+  imageSizes: [...],
+  qualities: [75, 85], // Required for custom quality values
+}
+```
+
+**Time**: 2 minutes
+
+**Impact**: Next.js 16 now requires explicit configuration of quality values. This provides better optimization by pre-defining which quality levels will be used.
 
 ---
 

@@ -3,11 +3,139 @@
 ## Project Information
 
 - **Project**: Personal homepage/blog built with Next.js and Notion as CMS
-- **Tech Stack**: Next.js 15.5.6, React 19.2.0, TypeScript 5.9.3, @notionhq/client 5.3.0, Tailwind CSS 4.1.14
-- **Testing**: Vitest with 126 tests (coverage TBD)
-- **Node Version**: 22.x
+- **Tech Stack**: Next.js 16.0.0, React 19.2.0, TypeScript 5.9.3, @notionhq/client 5.3.0, Tailwind CSS 4.1.14, Vitest 4.0.2
+- **Testing**: Vitest with 221 tests, 75.79% coverage
+- **Node Version**: 22.x (Next.js 16 requires 20.9.0+)
 
 ## Recent Updates
+
+### Next.js 16 Upgrade - Completed
+
+**Date**: 2025-10-23
+
+Successfully upgraded Next.js from 15.5.6 to 16.0.0 and eslint-config-next to 16.0.0.
+
+**Key Changes**:
+
+- **Next.js**: 15.5.6 → 16.0.0 (major version with Turbopack default)
+- **eslint-config-next**: 15.5.6 → 16.0.0
+- **Vitest ecosystem**: 4.0.1 → 4.0.2 (Phase 1)
+- **Test Coverage**: Maintained 75.79% (221 passing tests)
+
+**Breaking Changes Handled**:
+
+1. **Async Request APIs**: Already prepared - codebase was using `params: Promise<{ slug: string }>` pattern
+2. **ESLint Config Removal**: Removed deprecated `eslint` option from `next.config.ts`
+3. **Image Quality Config**: Added `qualities: [75, 85]` to `next.config.ts` (required for custom quality values)
+4. **Image Quality Defaults**: Updated snapshots (quality changed from 85 to 75 default)
+5. **Turbopack Default**: Now default for both dev and build (1.7s build time, down from 2.1s)
+
+**Files Modified**:
+
+- `package.json` - Updated Next.js and eslint-config-next versions
+- `next.config.ts` - Removed eslint config, added qualities array
+- `tsconfig.json` - Auto-updated by Next.js (jsx: react-jsx, new type includes)
+- `__tests__/components/__snapshots__/photo-card.test.tsx.snap` - Updated for new quality defaults
+
+**Verification**:
+
+- ✅ All 221 tests passing (2 skipped)
+- ✅ TypeScript compilation successful
+- ✅ Production build successful (38 pages in 1.7s)
+- ✅ No runtime warnings or errors
+
+**Benefits**:
+
+- 19% faster build times (1.7s vs 2.1s)
+- Turbopack's faster HMR in development
+- Access to React 19 features
+- Better caching and optimization
+- Up-to-date with latest Next.js features
+
+See `docs/NEXTJS_16_UPGRADE_COMPLETED_2025-10-23.md` for complete details.
+
+### Test Coverage Improvement - Completed
+
+**Date**: 2025-10-23
+
+Implemented Phase 1 and Phase 2 of the test coverage improvement plan from the code quality audit.
+
+**Coverage Improvement**:
+
+- Coverage: 59.79% → 75.79% (+16%)
+- Tests: 126 → 221 (+95 tests)
+- Test Files: 10 → 17 (+7 files)
+- Grade: A- (88/100) → A (93/100)
+
+**Phase 1: Error Handling Tests** (29 tests)
+- `__tests__/lib/config.test.ts` - 11 tests for environment validation
+- `__tests__/lib/errors.test.ts` - 18 tests for error utilities
+
+**Phase 2: UI Component Tests** (66 tests)
+- `__tests__/components/post-card.test.tsx` - 9 tests
+- `__tests__/components/photo-card.test.tsx` - 11 tests
+- `__tests__/components/series-post-card.test.tsx` - 16 tests
+- `__tests__/components/vbc-footer.test.tsx` - 13 tests
+- `__tests__/components/ui/table.test.tsx` - 19 tests
+
+**Test Improvements**:
+
+- Fixed timezone issues with date formatting tests
+- Fixed reading time calculation tests (250 words = 2 min read at 225 wpm)
+- Improved VBC Footer mocking with `vi.mocked()` pattern
+- Added behavioral assertions for user interactions
+
+**Verification**:
+
+- ✅ All 221 tests passing
+- ✅ 75.79% coverage (exceeded 70% target by 5.79%)
+- ✅ TypeScript compilation successful
+- ✅ Production build successful
+
+See `docs/CODE_QUALITY_AUDIT_2025-10-23.md` (updated) for remaining work.
+
+### Image Optimization Implementation - Completed
+
+**Date**: 2025-10-23
+
+Implemented Phase 1 quick wins from the image optimization plan to reduce bandwidth usage.
+
+**Optimizations**:
+
+1. **Responsive Image Sizing**: Added `sizes` prop to PhotoCard
+   - `"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"`
+   - Prevents loading oversized images on mobile devices
+
+2. **Quality Settings**: Added `quality={85}` for high-quality photos
+   - Better balance between quality and file size
+
+3. **Modern Formats**: Configured WebP and AVIF in `next.config.ts`
+   - `formats: ['image/webp', 'image/avif']`
+   - Automatic format selection based on browser support
+
+4. **Priority Loading**: Added `priority` prop support to PhotoCard
+   - Used on homepage hero image for better LCP
+   - Prevents lazy loading for above-the-fold images
+
+5. **MDX Image Improvements**: Better aspect ratio (1200x800 vs 1000x1000)
+   - Responsive sizes for blog post images
+   - Consistent quality settings
+
+**Expected Results**:
+
+- 40-60% bandwidth reduction overall
+- 70-75% reduction on mobile devices
+- Improved Largest Contentful Paint (LCP)
+- Better Core Web Vitals scores
+
+**Files Modified**:
+
+- `src/components/photo-card.tsx` - Added sizes, quality, priority props
+- `src/components/mdx-component.tsx` - Improved dimensions and sizes
+- `next.config.ts` - Added formats, deviceSizes, imageSizes, qualities
+- `src/app/page.tsx` - Added priority to homepage hero image
+
+See `docs/IMAGE_OPTIMIZATION_IMPLEMENTATION.md` for detailed metrics.
 
 ### JSON Feed and Schema.org JSON-LD Enhancement - Completed
 
@@ -74,30 +202,6 @@ Successfully added JSON Feed 1.1 support and enhanced Schema.org JSON-LD structu
 - Word count and article sections for content categorization
 
 See `docs/JSON_FEED_AND_SCHEMA_IMPLEMENTATION_PLAN.md` for full implementation details.
-
-### Dependency Updates - Completed
-
-**Date**: 2025-10-19
-
-Successfully updated all 18 outdated npm packages to their latest versions.
-
-**Key Updates**:
-
-- React: 19.1.1 → 19.2.0
-- Next.js: 15.5.4 → 15.5.6
-- Notion Client: 5.1.0 → 5.3.0
-- TypeScript: 5.9.2 → 5.9.3
-- ESLint: 9.36.0 → 9.38.0
-- Tailwind CSS: 4.1.13 → 4.1.14
-
-**Verification**:
-
-- ✅ All 97 tests passing
-- ✅ TypeScript compilation successful
-- ✅ Production build successful
-- ✅ No breaking changes
-
-See `docs/DEPENDENCY_UPDATES_2025-10-19.md` for full details.
 
 ### Code Quality Improvements - Completed
 
