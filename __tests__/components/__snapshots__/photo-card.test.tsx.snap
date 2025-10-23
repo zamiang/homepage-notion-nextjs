@@ -1,0 +1,77 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PhotoCard > should match snapshot with text hidden 1`] = `
+<div>
+  <div
+    class="gridItem"
+  >
+    <div
+      class="relative aspect-[1/1] w-full"
+    >
+      <a
+        aria-label="Test Photo Title"
+        href="/photos/test-photo"
+      >
+        <img
+          alt="Test Photo Title"
+          data-nimg="fill"
+          decoding="async"
+          loading="lazy"
+          sizes="100vw"
+          src="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75"
+          srcset="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75 3840w"
+          style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+        />
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PhotoCard > should match snapshot with text visible 1`] = `
+<div>
+  <div
+    class="gridItem"
+  >
+    <div
+      class="relative aspect-[1/1] w-full"
+    >
+      <a
+        aria-label="Test Photo Title"
+        href="/photos/test-photo"
+      >
+        <img
+          alt="Test Photo Title"
+          data-nimg="fill"
+          decoding="async"
+          loading="lazy"
+          sizes="100vw"
+          src="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75"
+          srcset="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75 3840w"
+          style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+        />
+      </a>
+    </div>
+    <p
+      style="margin-top: 0px; padding-bottom: 0px;"
+    >
+      <a
+        aria-label="Test Photo Title"
+        href="/photos/test-photo"
+      >
+        Aug 19, 2023
+      </a>
+    </p>
+    <a
+      aria-label="Test Photo Title"
+      href="/photos/test-photo"
+    >
+      <h4
+        style="margin-top: 0px;"
+      >
+        Test Photo Title
+      </h4>
+    </a>
+  </div>
+</div>
+`;

@@ -1,4 +1,5 @@
 # Code Quality Audit Report
+
 **Date**: 2025-10-23
 **Auditor**: Claude (Principal Software Engineer Persona)
 **Project**: Brennan Moore Personal Homepage/Blog
@@ -13,12 +14,14 @@
 This is a **well-architected personal static blog** with strong fundamentals. The codebase demonstrates excellent TypeScript usage, comprehensive security headers, and thoughtful architectural decisions. Recent improvements (centralized config, error handling, expanded test coverage) show strong engineering discipline.
 
 **Most Critical Positive Findings:**
+
 - Excellent security posture with comprehensive CSP headers and HTTPS enforcement
 - Well-organized architecture with clear separation of concerns (Notion API → Cache → Components)
 - Strong TypeScript implementation with strict mode and minimal `any` usage
 - Recent code quality improvements demonstrate commitment to maintainability
 
 **Most Critical Issues:**
+
 - Test coverage at 59.79% (below 70% target), primarily due to untested UI components
 - Missing `.env.example` file makes local development setup unclear
 - One moderate-severity dependency vulnerability in prismjs (via react-syntax-highlighter)
@@ -33,12 +36,14 @@ This is a **well-architected personal static blog** with strong fundamentals. Th
 **Assessment:**
 
 **Coverage Metrics** (vs 70% target):
+
 - Statements: 59.79% ❌ (-10.21%)
 - Branches: 32.52% ❌ (-37.48%)
 - Functions: 51.54% ❌ (-18.46%)
 - Lines: 58.84% ❌ (-11.16%)
 
 **Test Distribution:**
+
 - ✅ **API Routes**: Excellent coverage (100%) - RSS feed (13 tests) and sitemap (13 tests)
 - ✅ **Utilities**: Excellent coverage (100%) - page-utils, word count functions
 - ✅ **Page Components**: Good coverage - post-layout, writing/photo pages tested
@@ -48,6 +53,7 @@ This is a **well-architected personal static blog** with strong fundamentals. Th
 
 **Test Quality - EXCELLENT:**
 The existing tests demonstrate strong patterns:
+
 - Type-safe mocking with Vitest's `Mock` type
 - Proper async handling with timeouts
 - Behavioral assertions over implementation details
@@ -56,6 +62,7 @@ The existing tests demonstrate strong patterns:
 - Semantic test organization
 
 **Critical Untested Files:**
+
 1. `src/components/photo-card.tsx` - 0% coverage (presentation component)
 2. `src/components/post-card.tsx` - 0% coverage (presentation component)
 3. `src/components/vbc-footer.tsx` - 0% coverage
@@ -114,6 +121,7 @@ This test verifies CDATA escaping, preventing potential XSS vectors in RSS feeds
 **Assessment:**
 
 **File Size Analysis:**
+
 - Total source files: 30 (TypeScript/TSX)
 - Total lines of code: ~1,771 lines (excellent for a blog)
 - Largest file: `src/lib/notion.ts` (228 lines) ✅
@@ -136,6 +144,7 @@ UI Components (presentation)
 ```
 
 **Separation of Concerns:**
+
 - ✅ Notion API logic isolated in `lib/notion.ts`
 - ✅ Configuration centralized in `lib/config.ts`
 - ✅ Error handling standardized in `lib/errors.ts`
@@ -143,6 +152,7 @@ UI Components (presentation)
 - ✅ Reusable PostLayout component eliminates duplication
 
 **TypeScript Usage - EXCELLENT:**
+
 - Strict mode enabled ✅
 - Minimal `any` usage (only in component prop types where necessary)
 - Strong interface definitions (`Post`, `ErrorContext`, `Config`)
@@ -150,12 +160,14 @@ UI Components (presentation)
 - Custom error classes with typed fields
 
 **Appropriate Abstractions:**
+
 - Cache access pattern: Simple file reads (appropriate for static site)
 - Notion API wrapper: Thin layer with custom transformers (justified)
 - Error handling: Standardized without over-engineering
 
 **Potential Over-Engineering:**
 None identified. Complexity is justified:
+
 - `notion.ts` (228 lines): Handles Notion API interactions, custom block transformers, property extraction - justified
 - `page.tsx` (202 lines): Homepage with work history, bio, recent content - justified for marketing page
 - Custom error classes: Minimal overhead, improves error context
@@ -206,6 +218,7 @@ This component eliminated ~80 lines of duplication between writing and photo pag
 **Assessment:**
 
 **Naming Conventions - EXCELLENT:**
+
 - ✅ Components: PascalCase (`PostCard`, `PhotoCard`, `PostLayout`)
 - ✅ Functions: camelCase (`getWordCount`, `calculateReadingTime`)
 - ✅ Files: kebab-case (`post-card.tsx`, `download-image.tsx`)
@@ -213,6 +226,7 @@ This component eliminated ~80 lines of duplication between writing and photo pag
 
 **Cache Access Patterns - CONSISTENT:**
 All cache functions follow the same pattern:
+
 ```typescript
 export function getXFromCache(): Post[] {
   const cachePath = path.join(process.cwd(), config.cache.fileName);
@@ -228,6 +242,7 @@ export function getXFromCache(): Post[] {
   return [];
 }
 ```
+
 ✅ Consistent error handling (try-catch → logError → return empty array)
 ✅ Consistent file path construction using `config`
 ✅ Graceful degradation (no throwing, returns empty array)
@@ -238,21 +253,21 @@ export function getXFromCache(): Post[] {
 
 ```typescript
 // Pattern 1: Optional with default (config.ts)
-token: process.env.NOTION_TOKEN || '',
-
-// Pattern 2: Validation function (config.ts)
-function requireEnv(key: string): string {
-  const value = process.env[key];
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${key}`);
-  }
-  return value;
-}
+token: (process.env.NOTION_TOKEN || '',
+  // Pattern 2: Validation function (config.ts)
+  function requireEnv(key: string): string {
+    const value = process.env[key];
+    if (!value) {
+      throw new Error(`Missing required environment variable: ${key}`);
+    }
+    return value;
+  });
 ```
 
 The `requireEnv` function is defined but never used! The config uses optional pattern everywhere, then relies on `validateNotionConfig()` to check at runtime (only in cache script).
 
 **Component Patterns - EXCELLENT:**
+
 - ✅ Server components by default (appropriate for static site)
 - ✅ `'use client'` directive used consistently for interactive components
 - ✅ Props interfaces defined with TypeScript
@@ -260,11 +275,13 @@ The `requireEnv` function is defined but never used! The config uses optional pa
 
 **Error Handling - MOSTLY CONSISTENT:**
 Recent improvements standardized error handling:
+
 - ✅ Custom error classes: `NotionApiError`, `ValidationError`
 - ✅ Consistent logging: `logError(context, error, metadata)`
 - ✅ Graceful degradation in cache functions
 
 **Date Handling - CONSISTENT:**
+
 - ✅ ISO 8601 format throughout (`YYYY-MM-DD`)
 - ✅ `date-fns` for formatting
 - ✅ `new Date()` for parsing
@@ -272,6 +289,7 @@ Recent improvements standardized error handling:
 **Recommendations:**
 
 1. **Use the requireEnv function or remove it** (Priority: Medium)
+
    ```typescript
    // Either use it:
    notion: {
@@ -283,6 +301,7 @@ Recent improvements standardized error handling:
    ```
 
 2. **Add .env.example file** (Priority: High)
+
    ```bash
    # Notion API Configuration
    NOTION_TOKEN=secret_xxxxx
@@ -308,6 +327,7 @@ Recent improvements standardized error handling:
 **Assessment:**
 
 **✅ Security Headers - EXCELLENT** (verified in `next.config.ts:25-59`):
+
 ```typescript
 createSecureHeaders({
   contentSecurityPolicy: {
@@ -316,8 +336,7 @@ createSecureHeaders({
       styleSrc: ["'self'", "'unsafe-inline'"], // Required for styled-components
       imgSrc: ["'self'", 'data:', 'https://vitals.vercel-insights.com'],
       fontSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'",
-                  'https://va.vercel-scripts.com'],
+      scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'https://va.vercel-scripts.com'],
       frameSrc: ['https://vitals.vercel-insights.com'],
       connectSrc: ["'self'", 'https://vitals.vercel-insights.com'],
     },
@@ -325,8 +344,9 @@ createSecureHeaders({
   forceHTTPSRedirect: true,
   referrerPolicy: 'same-origin',
   xssProtection: 'block-rendering',
-})
+});
 ```
+
 - ✅ CSP headers properly configured
 - ✅ HTTPS redirect enabled
 - ✅ XSS protection enabled
@@ -334,6 +354,7 @@ createSecureHeaders({
 - ✅ X-Powered-By header removed (`poweredByHeader: false`)
 
 **⚠️ CSP Note**: `unsafe-inline` and `unsafe-eval` in scriptSrc are present. This is necessary for:
+
 - Vercel Analytics
 - React hydration in development
 - Syntax highlighting library
@@ -341,12 +362,14 @@ createSecureHeaders({
 This is acceptable for a personal blog with no user-generated content.
 
 **✅ Environment Variable Security - EXCELLENT:**
+
 - ✅ `.env` files properly gitignored (`.gitignore:34-35`)
 - ✅ No `.env` files committed to git (verified)
 - ✅ Notion API token only used server-side (cache script + getPostFromNotion)
 - ✅ Environment validation in cache script (`validateNotionConfig()`)
 
 **⚠️ Dependency Vulnerabilities - MODERATE ISSUE:**
+
 ```
 prismjs <1.30.0
 Severity: moderate
@@ -359,21 +382,25 @@ This vulnerability is in `react-syntax-highlighter` → `refractor` → `prismjs
 **Context**: This is a **build-time vulnerability** only - syntax highlighting happens during static generation, not at runtime. User input cannot trigger this vulnerability.
 
 **✅ XSS Prevention - EXCELLENT:**
+
 - React's built-in escaping prevents XSS in dynamic content
 - RSS feed uses CDATA escaping (tested in `__tests__/app/rss.test.ts`)
 - CSP headers provide defense-in-depth
 - No `dangerouslySetInnerHTML` usage found
 
 **✅ HTTPS Enforcement - EXCELLENT:**
+
 - `forceHTTPSRedirect: true` in next.config.ts
 - Vercel deployment automatically provides HTTPS
 
 **✅ Secret Management - EXCELLENT:**
+
 - No exposed API keys in code (verified)
 - Notion token stored in environment variables
 - Token only accessed server-side (never sent to client)
 
 **N/A - Static Site (Correctly Not Implemented):**
+
 - ❌ User authentication (no users)
 - ❌ Authorization/RLS policies (no database)
 - ❌ Rate limiting (static files)
@@ -383,14 +410,17 @@ This vulnerability is in `react-syntax-highlighter` → `refractor` → `prismjs
 **Recommendations:**
 
 1. **Update react-syntax-highlighter** (Priority: Medium)
+
    ```bash
    npm audit fix --force
    ```
+
    This updates to v16.0.0 (breaking changes expected). Test syntax highlighting after update.
 
    **Alternative**: Accept the risk (build-time only, no user input).
 
 2. **Add .env.example file** (Priority: High)
+
    ```bash
    # Required for cache script (npm run cache:posts)
    NOTION_TOKEN=secret_xxxxx
@@ -400,6 +430,7 @@ This vulnerability is in `react-syntax-highlighter` → `refractor` → `prismjs
    # Optional: Override site URL
    NEXT_PUBLIC_BASE_URL=https://www.zamiang.com
    ```
+
    Helps new developers understand required environment variables.
 
 3. **Consider adding Subresource Integrity (SRI)** (Priority: Low)
@@ -440,12 +471,14 @@ This prevents XSS in RSS readers by properly escaping user-controlled content.
 **✅ Blog Standards - EXCELLENT:**
 
 **RSS 2.0 Feed** (`src/app/rss.xml/route.ts`):
+
 ```xml
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:content="http://purl.org/rss/1.0/modules/content/"
      xmlns:atom="http://www.w3.org/2005/Atom"
      version="2.0">
 ```
+
 - ✅ Valid RSS 2.0 format with proper namespaces
 - ✅ CDATA escaping for titles and descriptions
 - ✅ Atom self-reference link
@@ -456,6 +489,7 @@ This prevents XSS in RSS readers by properly escaping user-controlled content.
 **✅ SEO Standards - EXCELLENT:**
 
 **Sitemap** (`src/app/sitemap.ts`):
+
 ```typescript
 return [
   {
@@ -471,12 +505,14 @@ return [
   },
 ];
 ```
+
 - ✅ Valid sitemap.xml format (Next.js typed format)
 - ✅ Appropriate change frequencies and priorities
 - ✅ lastModified dates from post metadata
 - ✅ Comprehensive tests (13 tests)
 
 **OpenGraph Metadata** (`src/app/layout.tsx:18-38`):
+
 ```typescript
 openGraph: {
   title,
@@ -491,16 +527,19 @@ openGraph: {
   }],
 }
 ```
+
 - ✅ Complete OpenGraph tags
 - ✅ Twitter Card metadata
 - ✅ Proper image alt text
 
 **✅ Date Standards - EXCELLENT:**
+
 - ISO 8601 format throughout (`YYYY-MM-DD`)
 - Consistent date parsing with `new Date()`
 - RFC 822 format for RSS feed (via `toUTCString()`)
 
 **✅ Accessibility Standards - GOOD:**
+
 - ✅ Semantic HTML (`<article>`, `<header>`, `<time>`)
 - ✅ Alt text on images (verified in photo-card.tsx)
 - ✅ ARIA labels on links (`aria-label={post.title}`)
@@ -509,6 +548,7 @@ openGraph: {
 **⚠️ Missing Standards (Low Priority):**
 
 1. **JSON Feed** - Modern alternative to RSS
+
    ```typescript
    // Could add /feed.json route
    {
@@ -517,9 +557,11 @@ openGraph: {
      "items": [...]
    }
    ```
+
    Not urgent - RSS 2.0 is widely supported.
 
 2. **Schema.org JSON-LD** - Rich snippets for search engines
+
    ```typescript
    // Could add to layout.tsx
    <script type="application/ld+json">
@@ -534,6 +576,7 @@ openGraph: {
    }
    </script>
    ```
+
    Improves SEO but not critical for personal blog.
 
 3. **OPML Export** - Blog roll export format
@@ -542,6 +585,7 @@ openGraph: {
 
 **✅ Data Model - APPROPRIATE:**
 Notion as headless CMS is a good choice for a personal blog:
+
 - ✅ Content stored in structured database
 - ✅ Version history in Notion
 - ✅ Easy content editing (no git commits required)
@@ -551,6 +595,7 @@ Notion as headless CMS is a good choice for a personal blog:
 **Recommendations:**
 
 1. **Add Schema.org JSON-LD for BlogPosting** (Priority: Medium)
+
    ```typescript
    // Add to src/app/writing/[slug]/page.tsx
    export function generateMetadata({ params }) {
@@ -563,12 +608,13 @@ Notion as headless CMS is a good choice for a personal blog:
            '@type': 'BlogPosting',
            headline: post.title,
            datePublished: post.date,
-           author: { '@type': 'Person', name: 'Brennan Moore' }
-         })
-       }
+           author: { '@type': 'Person', name: 'Brennan Moore' },
+         }),
+       },
      };
    }
    ```
+
    Benefits: Rich snippets in search results, better SEO.
 
 2. **Add JSON Feed support** (Priority: Low)
@@ -638,28 +684,28 @@ This follows Next.js typed sitemap format and SEO best practices.
 
 ### 🎯 Priority Action Items
 
-| Priority | Item | Impact | Effort | Status |
-|----------|------|--------|--------|--------|
-| High | Add .env.example file | High | Low | Pending |
-| High | Test environment validation in config.ts | High | Low | Pending |
-| High | Test error handling utilities in errors.ts | Medium | Low | Pending |
-| Medium | Add UI component tests (PostCard, PhotoCard, MDXComponent) | Medium | Medium | Pending |
-| Medium | Update react-syntax-highlighter to fix prismjs vulnerability | Medium | Low | Pending |
-| Medium | Add Schema.org JSON-LD for blog posts | Medium | Low | Pending |
-| Low | Extract work history data from page.tsx | Low | Medium | Pending |
-| Low | Add JSON Feed support | Low | Medium | Pending |
+| Priority | Item                                                         | Impact | Effort | Status  |
+| -------- | ------------------------------------------------------------ | ------ | ------ | ------- |
+| High     | Add .env.example file                                        | High   | Low    | Pending |
+| High     | Test environment validation in config.ts                     | High   | Low    | Pending |
+| High     | Test error handling utilities in errors.ts                   | Medium | Low    | Pending |
+| Medium   | Add UI component tests (PostCard, PhotoCard, MDXComponent)   | Medium | Medium | Pending |
+| Medium   | Update react-syntax-highlighter to fix prismjs vulnerability | Medium | Low    | Pending |
+| Medium   | Add Schema.org JSON-LD for blog posts                        | Medium | Low    | Pending |
+| Low      | Extract work history data from page.tsx                      | Low    | Medium | Pending |
+| Low      | Add JSON Feed support                                        | Low    | Medium | Pending |
 
 ---
 
 ## Component Scores
 
-| Component | Score | Grade | Notes |
-|-----------|-------|-------|-------|
-| Test Coverage | 72/100 | C+ | Below 70% target but excellent test quality and patterns |
-| Simplicity | 95/100 | A | Exemplary simplicity, appropriate abstractions, no over-engineering |
-| Consistency | 88/100 | B+ | Highly consistent with minor issues (unused requireEnv function) |
-| Security | 92/100 | A- | Excellent headers and practices, one moderate dependency vulnerability |
-| Data Standards | 90/100 | A- | Strong compliance with blog/web standards, missing JSON-LD |
+| Component      | Score  | Grade | Notes                                                                  |
+| -------------- | ------ | ----- | ---------------------------------------------------------------------- |
+| Test Coverage  | 72/100 | C+    | Below 70% target but excellent test quality and patterns               |
+| Simplicity     | 95/100 | A     | Exemplary simplicity, appropriate abstractions, no over-engineering    |
+| Consistency    | 88/100 | B+    | Highly consistent with minor issues (unused requireEnv function)       |
+| Security       | 92/100 | A-    | Excellent headers and practices, one moderate dependency vulnerability |
+| Data Standards | 90/100 | A-    | Strong compliance with blog/web standards, missing JSON-LD             |
 
 **Overall: 88/100 (A-)**
 
@@ -710,6 +756,7 @@ Coverage:
 ```
 
 **Files with 0% Coverage:**
+
 - src/components/photo-card.tsx
 - src/components/post-card.tsx
 - src/components/series-post-card.tsx
@@ -717,6 +764,7 @@ Coverage:
 - src/components/ui/table.tsx
 
 **Files with 100% Coverage:**
+
 - src/app/sitemap.ts
 - src/app/rss.xml/route.ts
 - src/components/post-layout.tsx

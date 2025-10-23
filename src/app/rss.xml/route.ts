@@ -1,6 +1,9 @@
 import { config } from '@/lib/config';
 import { getAllItemsSortedByDate } from '@/lib/notion';
 
+// Force static generation at build time
+export const dynamic = 'force-static';
+
 const title = 'Articles by Brennan Moore';
 const description =
   "I see engineering as a creative craft. Whether my canvas is healthcare, art, or e-commerce, I build beauty by transforming complex problems into elegant solutions. I work best with a small crew, digging in with the business to find the one lever that can move a mountain. For me, success isn't just shipping a quality product—it's fostering an energized team and watching the business grow";

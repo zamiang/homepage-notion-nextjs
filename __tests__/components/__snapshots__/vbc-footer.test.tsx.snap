@@ -1,0 +1,94 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`VBCFooter > should match snapshot 1`] = `
+<div>
+  <div>
+    <div
+      class="center-divider"
+    />
+    <div
+      class=""
+    >
+      <h3
+        class="heading"
+      >
+        Why Value-Based Care is Harder Than Rocket Science
+      </h3>
+      <p>
+        This series argues that U.S. healthcare is "harder than rocket science" due to its "consolidated fragmentation," where powerful, siloed players hinder effective, affordable patient care. The main conclusion is that in an era of AI and consolidation, we need a major shift in data policy to deliver on the promise of improved quality of care at reduced cost.
+      </p>
+      <div
+        class="divider"
+      />
+      <div
+        class="post past-post"
+      >
+        <h4
+          style="margin-top: 0px;"
+        >
+          <a
+            aria-label="A First Post"
+            href="/writing/first-post"
+          >
+            A First Post
+          </a>
+        </h4>
+      </div>
+      <div
+        class="post current-post"
+      >
+        <h4
+          style="margin-top: 0px;"
+        >
+          <a
+            aria-label="B Second Post"
+            href="/writing/second-post"
+          >
+            B Second Post
+          </a>
+        </h4>
+      </div>
+      <div
+        class="post next-post"
+      >
+        <a
+          aria-label="Next post: C Third Post"
+          class="next-button"
+          href="/writing/third-post"
+        >
+          Next
+        </a>
+        <h4
+          style="margin-top: 0px;"
+        >
+          <a
+            aria-label="C Third Post"
+            href="/writing/third-post"
+          >
+            C Third Post
+          </a>
+        </h4>
+        <p
+          class="truncated-text"
+        >
+          Third VBC post.
+        </p>
+      </div>
+      <div
+        class="post future-post"
+      >
+        <div
+          class="next-button"
+        >
+          September 2025
+        </div>
+        <h4
+          style="margin-top: 0px;"
+        >
+          The wide business: VBC through the lens of operations research
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
+`;

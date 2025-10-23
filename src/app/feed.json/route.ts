@@ -1,6 +1,9 @@
 import { config } from '@/lib/config';
 import { getAllItemsSortedByDate, getWordCount } from '@/lib/notion';
 
+// Force static generation at build time
+export const dynamic = 'force-static';
+
 /**
  * JSON Feed 1.1 route
  * Spec: https://jsonfeed.org/version/1.1
