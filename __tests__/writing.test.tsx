@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Import the utility functions
-import { createMockPost, createMockPosts } from './utils';
+import { createMockPosts } from './utils';
 
 vi.mock('@/lib/notion', () => ({
   getPostsFromCache: vi.fn(),

@@ -1,3 +1,14 @@
 {
-  "extends": ["next/typescript", "next/core-web-vitals", "prettier", "plugin:prettier/recommended"]
+  "extends": ["next/typescript", "next/core-web-vitals", "prettier"],
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.ts", "**/__tests__/**/*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ],
+  "rules": {
+    "@typescript-eslint/no-require-imports": "off"
+  }
 }
