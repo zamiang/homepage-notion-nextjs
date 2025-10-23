@@ -1,12 +1,12 @@
 import { config } from '@/lib/config';
-import { getAllSectionPostsFromCache, getWordCount } from '@/lib/notion';
+import { getPostsFromCache, getWordCount } from '@/lib/notion';
 
 /**
  * JSON Feed 1.1 route
  * Spec: https://jsonfeed.org/version/1.1
  */
 export async function GET() {
-  const posts = getAllSectionPostsFromCache();
+  const posts = getPostsFromCache();
   const siteUrl = config.site.url;
 
   const feed = {

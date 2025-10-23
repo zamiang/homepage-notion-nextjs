@@ -128,7 +128,7 @@ describe('RSS Feed Route', () => {
     );
   });
 
-  it('should include all posts from "All" section', async () => {
+  it('should include all posts regardless of section', async () => {
     const existsSyncMock = fs.existsSync as Mock;
     const readFileSyncMock = fs.readFileSync as Mock;
 
@@ -138,11 +138,13 @@ describe('RSS Feed Route', () => {
     const response = await GET();
     const xml = await response.text();
 
-    // Should include posts from "All" section
+    // Should include all posts (both "All" and "VBC" sections)
     expect(xml).toContain('<title><![CDATA[Test Post 1]]></title>');
     expect(xml).toContain('<title><![CDATA[Test Post 2]]></title>');
+    expect(xml).toContain('<title><![CDATA[VBC Post]]></title>');
     expect(xml).toContain('https://www.zamiang.com/writing/test-post-1');
     expect(xml).toContain('https://www.zamiang.com/writing/test-post-2');
+    expect(xml).toContain('https://www.zamiang.com/writing/vbc-post');
   });
 
   it('should include post excerpts in descriptions', async () => {
@@ -264,7 +266,7 @@ describe('RSS Feed Route', () => {
     expect(xml).toContain('https://www.zamiang.com');
   });
 
-  it('should only include posts from "All" section, not VBC', async () => {
+  it('should include posts from both "All" and "VBC" sections', async () => {
     const existsSyncMock = fs.existsSync as Mock;
     const readFileSyncMock = fs.readFileSync as Mock;
 
@@ -274,8 +276,10 @@ describe('RSS Feed Route', () => {
     const response = await GET();
     const xml = await response.text();
 
-    // Should NOT include VBC post
-    expect(xml).not.toContain('<title><![CDATA[VBC Post]]></title>');
-    expect(xml).not.toContain('https://www.zamiang.com/writing/vbc-post');
+    // Should include VBC post as well as "All" posts
+    expect(xml).toContain('<title><![CDATA[VBC Post]]></title>');
+    expect(xml).toContain('https://www.zamiang.com/writing/vbc-post');
+    expect(xml).toContain('<title><![CDATA[Test Post 1]]></title>');
+    expect(xml).toContain('<title><![CDATA[Test Post 2]]></title>');
   });
 });

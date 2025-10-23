@@ -93,18 +93,19 @@ describe('JSON Feed Route', () => {
     expect(json).toHaveProperty('language');
   });
 
-  it('should only include "All" section posts', async () => {
+  it('should include all posts regardless of section', async () => {
     (fs.existsSync as Mock).mockReturnValue(true);
     (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
 
     const response = await GET();
     const json = await response.json();
 
-    // Should only have 2 posts (excluding VBC)
-    expect(json.items).toHaveLength(2);
-    expect(
-      json.items.every((item: { tags?: string[] }) => !item.tags || item.tags.includes('All')),
-    ).toBe(true);
+    // Should have all 3 posts (including VBC)
+    expect(json.items).toHaveLength(3);
+    const titles = json.items.map((item: { title: string }) => item.title);
+    expect(titles).toContain('Test Post 1');
+    expect(titles).toContain('Test Post 2');
+    expect(titles).toContain('VBC Post');
   });
 
   it('should properly format post URLs', async () => {

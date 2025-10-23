@@ -1,5 +1,5 @@
 import { config } from '@/lib/config';
-import { getAllSectionPostsFromCache } from '@/lib/notion';
+import { getPostsFromCache } from '@/lib/notion';
 
 const title = 'Articles by Brennan Moore';
 const description =
@@ -7,7 +7,7 @@ const description =
 const siteUrl = config.site.url;
 
 const getRssXml = () => {
-  const posts = getAllSectionPostsFromCache();
+  const posts = getPostsFromCache();
 
   let latestPostDate = '';
   let rssItemsXml = '';
