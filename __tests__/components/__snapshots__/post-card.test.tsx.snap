@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PostCard > should match snapshot 1`] = `
+<div>
+  <div
+    class="post"
+  >
+    <div
+      class="flex items-center gap-4"
+    >
+      <div
+        class="flex items-center gap-1.5"
+      >
+        <p>
+          <a
+            aria-label="Test Post Title"
+            href="/writing/test-post"
+          >
+            Jun 14, 2023
+          </a>
+        </p>
+      </div>
+      <div
+        class="flex items-center gap-1.5"
+      >
+        <p
+          class="text-muted-foreground"
+        >
+          2 min read
+        </p>
+      </div>
+    </div>
+    <h4
+      style="margin-top: 0px;"
+    >
+      <a
+        aria-label="Test Post Title"
+        href="/writing/test-post"
+      >
+        Test Post Title
+      </a>
+    </h4>
+    <p
+      class="truncated-text"
+    >
+      This is a test post excerpt that should be displayed.
+    </p>
+  </div>
+</div>
+`;
