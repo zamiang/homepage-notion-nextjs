@@ -1,8 +1,13 @@
 # Notion Blog with Next.js
 
-This is a [Next.js](https://nextjs.org/) blog written in [TypeScript](https://www.typescriptlang.org/) that integrates with [Notion's Public API](https://developers.notion.com) to fetch and display content. Notion posts are cached so that they are updated when `npm run cache-posts` is run. The project is a fork and enhancement of the [Notion Blog template](https://github.com/thegesturs/notion-blogs) tailored for performance, security, and ease of use.
+A high-performance [Next.js 16](https://nextjs.org/) blog written in [TypeScript](https://www.typescriptlang.org/) that uses [Notion's Public API](https://developers.notion.com) as a headless CMS. Features Turbopack builds, 75% test coverage, optimized images with WebP/AVIF support, and comprehensive SEO with JSON Feed and Schema.org structured data.
 
-**Live Site:** [https://www.zamiang.com](https://www.zamiang.com)
+**Live Site:** [https://brennanmoore.com](https://brennanmoore.com)
+
+[![Tests](https://img.shields.io/badge/tests-221%20passing-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/coverage-75.79%25-green)]()
+[![Next.js](https://img.shields.io/badge/Next.js-16.0-black)]()
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)]()
 
 ---
 
