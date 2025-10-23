@@ -38,7 +38,9 @@
       "WebFetch(domain:developers.notion.com)",
       "Bash(node:*)",
       "Bash(npm run build:*)",
-      "Bash(git diff --diff-filter=U --name-only)"
+      "Bash(git diff --diff-filter=U --name-only)",
+      "Bash(npm update:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
