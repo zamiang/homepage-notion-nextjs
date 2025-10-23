@@ -1,8 +1,8 @@
 # Notion Blog with Next.js
 
-A high-performance [Next.js 16](https://nextjs.org/) blog written in [TypeScript](https://www.typescriptlang.org/) that uses [Notion's Public API](https://developers.notion.com) as a headless CMS. Features Turbopack builds, 75% test coverage, optimized images with WebP/AVIF support, and comprehensive SEO with JSON Feed and Schema.org structured data.
+A high-performance [Next.js 16](https://nextjs.org/) blog written in [TypeScript](https://www.typescriptlang.org/) that uses [Notion's Public API](https://developers.notion.com) as a headless CMS. Features Turbopack builds, 75% test coverage, optimized images with WebP/AVIF support, and comprehensive SEO with sitemap, RSS, JSON Feed and Schema.org structured data.
 
-**Live Site:** [https://brennanmoore.com](https://brennanmoore.com)
+**Live Site:** [https://www.zamiang.com](https://www.zamiang.com)
 
 [![Tests](https://img.shields.io/badge/tests-221%20passing-brightgreen)]()
 [![Coverage](https://img.shields.io/badge/coverage-75.79%25-green)]()
@@ -238,9 +238,6 @@ Comprehensive documentation is available in the `/docs` directory:
 
 - **[CLAUDE.md](CLAUDE.md)**: AI context, patterns, and conventions (start here!)
 - **[Code Quality Audit](docs/CODE_QUALITY_AUDIT_2025-10-23.md)**: Test coverage and quality metrics
-- **[Next.js 16 Upgrade](docs/NEXTJS_16_UPGRADE_COMPLETED_2025-10-23.md)**: Breaking changes and migration guide
-- **[Image Optimization](docs/IMAGE_OPTIMIZATION_PLAN.md)**: Performance optimization strategies
-- **[Dependency Updates](docs/DEPENDENCY_UPDATES_PLAN_2025-10-23.md)**: Package update strategy
 
 ---
 
