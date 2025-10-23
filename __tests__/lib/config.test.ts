@@ -74,7 +74,9 @@ describe('config', () => {
       process.env.NOTION_PHOTOS_DATA_SOURCE_ID = 'test-photos-id';
 
       const { validateNotionConfig } = await import('@/lib/config');
-      expect(() => validateNotionConfig()).toThrow('Missing required environment variable: NOTION_TOKEN');
+      expect(() => validateNotionConfig()).toThrow(
+        'Missing required environment variable: NOTION_TOKEN',
+      );
     });
 
     it('should throw error when NOTION_DATA_SOURCE_ID is missing', async () => {

@@ -57,7 +57,9 @@ describe('VBCFooter', () => {
 
   it('should render VBC series title', () => {
     render(<VBCFooter slug="second-post" />);
-    expect(screen.getByText('Why Value-Based Care is Harder Than Rocket Science')).toBeInTheDocument();
+    expect(
+      screen.getByText('Why Value-Based Care is Harder Than Rocket Science'),
+    ).toBeInTheDocument();
   });
 
   it('should render VBC series description', () => {
@@ -147,7 +149,9 @@ describe('VBCFooter', () => {
     vi.mocked(notionModule.getVBCSectionPostsPostsFromCache).mockReturnValue([]);
 
     render(<VBCFooter slug="any-slug" />);
-    expect(screen.getByText('Why Value-Based Care is Harder Than Rocket Science')).toBeInTheDocument();
+    expect(
+      screen.getByText('Why Value-Based Care is Harder Than Rocket Science'),
+    ).toBeInTheDocument();
   });
 
   it('should match snapshot', () => {

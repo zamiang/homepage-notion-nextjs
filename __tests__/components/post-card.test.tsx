@@ -28,7 +28,9 @@ describe('PostCard', () => {
 
   it('should render excerpt', () => {
     render(<PostCard post={mockPost} />);
-    expect(screen.getByText('This is a test post excerpt that should be displayed.')).toBeInTheDocument();
+    expect(
+      screen.getByText('This is a test post excerpt that should be displayed.'),
+    ).toBeInTheDocument();
   });
 
   it('should render reading time', () => {
