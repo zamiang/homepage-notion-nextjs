@@ -5,8 +5,19 @@ import path from 'path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock dependencies
-vi.mock('fs');
-vi.mock('axios');
+vi.mock('fs', () => ({
+  default: {
+    existsSync: vi.fn(),
+    mkdirSync: vi.fn(),
+    createWriteStream: vi.fn(),
+  },
+  existsSync: vi.fn(),
+  mkdirSync: vi.fn(),
+  createWriteStream: vi.fn(),
+}));
+vi.mock('axios', () => ({
+  default: vi.fn(),
+}));
 
 // Mock console methods
 const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -57,9 +68,9 @@ describe('download-image.tsx', () => {
     const mockDirname = path.dirname(mockDest);
 
     beforeEach(() => {
-      vi.mocked(fs.existsSync).mockReturnValue(false);
-      vi.mocked(fs.mkdirSync).mockImplementation(() => undefined as any);
-      vi.mocked(fs.createWriteStream).mockReturnValue({
+      (fs.existsSync as any).mockReturnValue(false);
+      (fs.mkdirSync as any).mockImplementation(() => undefined as any);
+      (fs.createWriteStream as any).mockReturnValue({
         on: vi.fn((event, callback) => {
           if (event === 'close') {
             // Simulate successful write
@@ -75,7 +86,7 @@ describe('download-image.tsx', () => {
         pipe: vi.fn(),
       };
 
-      vi.mocked(axios).mockResolvedValue({
+      (axios as any).mockResolvedValue({
         data: mockStream,
       } as any);
 
@@ -96,7 +107,7 @@ describe('download-image.tsx', () => {
     });
 
     it('should skip download if file already exists', async () => {
-      vi.mocked(fs.existsSync).mockImplementation((path) => {
+      (fs.existsSync as any).mockImplementation((path: string) => {
         if (path === mockDest) return true; // File exists
         return false; // Directory doesn't exist
       });
@@ -108,7 +119,7 @@ describe('download-image.tsx', () => {
     });
 
     it('should not create directory if it already exists', async () => {
-      vi.mocked(fs.existsSync).mockImplementation((path) => {
+      (fs.existsSync as any).mockImplementation((path: string) => {
         if (path === mockDirname) return true; // Directory exists
         return false;
       });
@@ -117,7 +128,7 @@ describe('download-image.tsx', () => {
         pipe: vi.fn(),
       };
 
-      vi.mocked(axios).mockResolvedValue({
+      (axios as any).mockResolvedValue({
         data: mockStream,
       } as any);
 
@@ -128,7 +139,7 @@ describe('download-image.tsx', () => {
     });
 
     it('should handle download errors gracefully', async () => {
-      vi.mocked(axios).mockRejectedValue(new Error('Network error'));
+      (axios as any).mockRejectedValue(new Error('Network error'));
 
       await downloadImage(mockUrl);
 
@@ -144,7 +155,7 @@ describe('download-image.tsx', () => {
         pipe: vi.fn(),
       };
 
-      vi.mocked(axios).mockResolvedValue({
+      (axios as any).mockResolvedValue({
         data: mockStream,
       } as any);
 
@@ -160,7 +171,7 @@ describe('download-image.tsx', () => {
         }),
       };
 
-      vi.mocked(fs.createWriteStream).mockReturnValue(mockWriteStream as any);
+      (fs.createWriteStream as any).mockReturnValue(mockWriteStream as any);
 
       // Start the download (don't await it since it won't complete due to error)
       downloadImage(mockUrl);
@@ -188,7 +199,7 @@ describe('download-image.tsx', () => {
     });
 
     it('should handle axios returning undefined', async () => {
-      vi.mocked(axios).mockResolvedValue(undefined as any);
+      (axios as any).mockResolvedValue(undefined as any);
 
       await downloadImage(mockUrl);
 
@@ -197,7 +208,7 @@ describe('download-image.tsx', () => {
     });
 
     it('should handle directory creation errors', async () => {
-      vi.mocked(fs.mkdirSync).mockImplementation(() => {
+      (fs.mkdirSync as any).mockImplementation(() => {
         throw new Error('Permission denied');
       });
 
@@ -215,7 +226,7 @@ describe('download-image.tsx', () => {
         pipe: vi.fn(),
       };
 
-      vi.mocked(axios).mockResolvedValue({
+      (axios as any).mockResolvedValue({
         data: mockStream,
       } as any);
 
@@ -241,7 +252,7 @@ describe('download-image.tsx', () => {
         pipe: vi.fn(),
       };
 
-      vi.mocked(axios).mockResolvedValue({
+      (axios as any).mockResolvedValue({
         data: mockStream,
       } as any);
 
@@ -259,7 +270,7 @@ describe('download-image.tsx', () => {
         pipe: vi.fn(),
       };
 
-      vi.mocked(axios).mockResolvedValue({
+      (axios as any).mockResolvedValue({
         data: mockStream,
       } as any);
 
