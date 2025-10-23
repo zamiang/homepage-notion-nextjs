@@ -46,3 +46,5 @@ next-env.d.ts
 
 # cache
 /cache
+
+.claude/settings.local.json
