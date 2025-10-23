@@ -58,14 +58,54 @@ describe('JSON Feed Route', () => {
     },
   ];
 
+  const mockPhotos: Post[] = [
+    {
+      id: '4',
+      title: 'Photo 1',
+      slug: 'photo-1',
+      coverImage: 'photo1.jpg',
+      date: '2023-06-12',
+      excerpt: 'First photo post.',
+      content: 'Photo content 1',
+      author: 'Brennan Moore',
+      section: undefined,
+    },
+    {
+      id: '5',
+      title: 'Photo 2',
+      slug: 'photo-2',
+      coverImage: 'photo2.jpg',
+      date: '2023-06-08',
+      excerpt: 'Second photo post.',
+      content: 'Photo content 2',
+      author: 'Brennan Moore',
+      section: undefined,
+    },
+    {
+      id: '6',
+      title: 'Photo 3',
+      slug: 'photo-3',
+      coverImage: 'photo3.jpg',
+      date: '2023-06-03',
+      excerpt: 'Third photo post.',
+      content: 'Photo content 3',
+      author: 'Brennan Moore',
+      section: undefined,
+    },
+  ];
+
   beforeEach(() => {
     vi.clearAllMocks();
+    (fs.existsSync as Mock).mockReturnValue(true);
+    (fs.readFileSync as Mock).mockImplementation((path: string) => {
+      if (path.includes('photos-cache.json')) {
+        return JSON.stringify(mockPhotos);
+      }
+      return JSON.stringify(mockPosts);
+    });
   });
 
   it('should return valid JSON Feed 1.1 structure', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
@@ -77,9 +117,6 @@ describe('JSON Feed Route', () => {
   });
 
   it('should include required top-level fields', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
@@ -93,37 +130,39 @@ describe('JSON Feed Route', () => {
     expect(json).toHaveProperty('language');
   });
 
-  it('should include all posts regardless of section', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
+  it('should include all posts and photos', async () => {
     const response = await GET();
     const json = await response.json();
 
-    // Should have all 3 posts (including VBC)
-    expect(json.items).toHaveLength(3);
+    // Should have all 6 items (3 posts + 3 photos)
+    expect(json.items).toHaveLength(6);
     const titles = json.items.map((item: { title: string }) => item.title);
     expect(titles).toContain('Test Post 1');
     expect(titles).toContain('Test Post 2');
     expect(titles).toContain('VBC Post');
+    expect(titles).toContain('Photo 1');
+    expect(titles).toContain('Photo 2');
+    expect(titles).toContain('Photo 3');
   });
 
-  it('should properly format post URLs', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
+  it('should properly format post and photo URLs', async () => {
     const response = await GET();
     const json = await response.json();
 
-    expect(json.items[0].url).toContain('/writing/test-post-1');
-    expect(json.items[0].id).toContain('/writing/test-post-1');
-    expect(json.items[0].url).toMatch(/^https?:\/\//);
+    // Find a writing post and a photo post
+    const writingPost = json.items.find((item: { title: string }) => item.title === 'Test Post 1');
+    const photoPost = json.items.find((item: { title: string }) => item.title === 'Photo 1');
+
+    expect(writingPost.url).toContain('/writing/test-post-1');
+    expect(writingPost.id).toContain('/writing/test-post-1');
+    expect(writingPost.url).toMatch(/^https?:\/\//);
+
+    expect(photoPost.url).toContain('/photos/photo-1');
+    expect(photoPost.id).toContain('/photos/photo-1');
+    expect(photoPost.url).toMatch(/^https?:\/\//);
   });
 
   it('should include ISO 8601 date format', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
@@ -133,31 +172,28 @@ describe('JSON Feed Route', () => {
   });
 
   it('should include post excerpt as summary', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
-    expect(json.items[0].summary).toBe('This is the first test post excerpt.');
-    expect(json.items[1].summary).toBe('This is the second test post excerpt.');
+    const post1 = json.items.find((item: { title: string }) => item.title === 'Test Post 1');
+    const post2 = json.items.find((item: { title: string }) => item.title === 'Test Post 2');
+
+    expect(post1.summary).toBe('This is the first test post excerpt.');
+    expect(post2.summary).toBe('This is the second test post excerpt.');
   });
 
   it('should include full content as content_html', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
-    expect(json.items[0].content_html).toBe('Content of test post 1');
-    expect(json.items[1].content_html).toBe('Content of test post 2');
+    const post1 = json.items.find((item: { title: string }) => item.title === 'Test Post 1');
+    const post2 = json.items.find((item: { title: string }) => item.title === 'Test Post 2');
+
+    expect(post1.content_html).toBe('Content of test post 1');
+    expect(post2.content_html).toBe('Content of test post 2');
   });
 
   it('should include author information', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
@@ -168,18 +204,12 @@ describe('JSON Feed Route', () => {
   });
 
   it('should set correct Content-Type header', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
 
     expect(response.headers.get('Content-Type')).toBe('application/feed+json; charset=utf-8');
   });
 
   it('should set cache control headers', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
 
     expect(response.headers.get('Cache-Control')).toBe(
@@ -197,20 +227,18 @@ describe('JSON Feed Route', () => {
     expect(json.version).toBe('https://jsonfeed.org/version/1.1');
   });
 
-  it('should include section as tags', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
+  it('should include section and type as tags', async () => {
     const response = await GET();
     const json = await response.json();
 
-    expect(json.items[0].tags).toEqual(['All']);
+    const writingPost = json.items.find((item: { title: string }) => item.title === 'Test Post 1');
+    const photoPost = json.items.find((item: { title: string }) => item.title === 'Photo 1');
+
+    expect(writingPost.tags).toEqual(['All', 'writing']);
+    expect(photoPost.tags).toEqual(['photo']); // Photos without section
   });
 
   it('should include word count as custom extension', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
@@ -221,8 +249,12 @@ describe('JSON Feed Route', () => {
   it('should handle posts without content gracefully', async () => {
     const postsWithoutContent = [{ ...mockPosts[0], content: '' }];
 
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(postsWithoutContent));
+    (fs.readFileSync as Mock).mockImplementation((path: string) => {
+      if (path.includes('photos-cache.json')) {
+        return JSON.stringify([]);
+      }
+      return JSON.stringify(postsWithoutContent);
+    });
 
     const response = await GET();
     const json = await response.json();
@@ -232,20 +264,20 @@ describe('JSON Feed Route', () => {
   });
 
   it('should include image URLs with full domain', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 
-    expect(json.items[0].image).toMatch(/^https?:\/\//);
-    expect(json.items[0].image).toContain('/images/cover1.jpg');
+    const writingPost = json.items.find((item: { title: string }) => item.title === 'Test Post 1');
+    const photoPost = json.items.find((item: { title: string }) => item.title === 'Photo 1');
+
+    expect(writingPost.image).toMatch(/^https?:\/\//);
+    expect(writingPost.image).toContain('/images/cover1.jpg');
+
+    expect(photoPost.image).toMatch(/^https?:\/\//);
+    expect(photoPost.image).toContain('/images/photos/photo1.jpg');
   });
 
   it('should include feed_url pointing to itself', async () => {
-    (fs.existsSync as Mock).mockReturnValue(true);
-    (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(mockPosts));
-
     const response = await GET();
     const json = await response.json();
 

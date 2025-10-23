@@ -1,5 +1,5 @@
 import { config } from '@/lib/config';
-import { getPostsFromCache } from '@/lib/notion';
+import { getAllItemsSortedByDate } from '@/lib/notion';
 
 const title = 'Articles by Brennan Moore';
 const description =
@@ -7,22 +7,23 @@ const description =
 const siteUrl = config.site.url;
 
 const getRssXml = () => {
-  const posts = getPostsFromCache();
+  const allItems = getAllItemsSortedByDate();
 
   let latestPostDate = '';
   let rssItemsXml = '';
 
-  posts.forEach((post) => {
-    const postDate = Date.parse(post.date);
-    const postHref = `${siteUrl}/writing/${post.slug}`;
+  allItems.forEach((item) => {
+    const postDate = Date.parse(item.date);
+    const postHref =
+      item.type === 'photo' ? `${siteUrl}/photos/${item.slug}` : `${siteUrl}/writing/${item.slug}`;
 
     if (!latestPostDate || postDate > Date.parse(latestPostDate)) {
-      latestPostDate = new Date(post.date).toUTCString();
+      latestPostDate = new Date(item.date).toUTCString();
     }
 
-    const date = new Date(post.date).toUTCString();
-    const title = post.title;
-    const excerpt = post.excerpt;
+    const date = new Date(item.date).toUTCString();
+    const title = item.title;
+    const excerpt = item.excerpt;
 
     rssItemsXml += `
           <item>

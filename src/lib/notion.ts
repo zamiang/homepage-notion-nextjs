@@ -226,3 +226,18 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     return null;
   }
 }
+
+/**
+ * Gets all posts and photos combined, sorted by date (newest first)
+ * Adds a 'type' field to distinguish between 'writing' and 'photo' items
+ */
+export type PostWithType = Post & { type: 'writing' | 'photo' };
+
+export function getAllItemsSortedByDate(): PostWithType[] {
+  const writingPosts = getPostsFromCache().map((post) => ({ ...post, type: 'writing' as const }));
+  const photos = getPhotosFromCache().map((post) => ({ ...post, type: 'photo' as const }));
+  const allItems = [...writingPosts, ...photos].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+  return allItems;
+}
