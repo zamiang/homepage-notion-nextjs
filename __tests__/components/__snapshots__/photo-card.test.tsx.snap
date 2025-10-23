@@ -17,9 +17,9 @@ exports[`PhotoCard > should match snapshot with text hidden 1`] = `
           data-nimg="fill"
           decoding="async"
           loading="lazy"
-          sizes="100vw"
-          src="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75"
-          srcset="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75 3840w"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          src="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=85"
+          srcset="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=256&q=85 256w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=384&q=85 384w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=640&q=85 640w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=750&q=85 750w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=828&q=85 828w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1080&q=85 1080w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1200&q=85 1200w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1920&q=85 1920w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=2048&q=85 2048w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=85 3840w"
           style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
         />
       </a>
@@ -45,9 +45,9 @@ exports[`PhotoCard > should match snapshot with text visible 1`] = `
           data-nimg="fill"
           decoding="async"
           loading="lazy"
-          sizes="100vw"
-          src="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75"
-          srcset="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=75 3840w"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          src="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=85"
+          srcset="/_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=256&q=85 256w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=384&q=85 384w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=640&q=85 640w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=750&q=85 750w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=828&q=85 828w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1080&q=85 1080w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1200&q=85 1200w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=1920&q=85 1920w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=2048&q=85 2048w, /_next/image?url=%2Fimages%2Fphotos%2Fphoto.jpg&w=3840&q=85 3840w"
           style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
         />
       </a>
