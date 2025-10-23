@@ -1,58 +1,189 @@
 # Claude Code Memory Bank
 
-## Project Information
+> **Purpose**: This document serves as a persistent memory for Claude Code sessions, providing context about the project, recent work, and important patterns to follow.
+>
+> **Maintenance**: When completing significant work, update the "Recent Updates" section with a dated entry. Archive entries older than 3 months to the bottom of the file.
 
-- **Project**: Personal homepage/blog built with Next.js and Notion as CMS
-- **Tech Stack**: Next.js 16.0.0, React 19.2.0, TypeScript 5.9.3, @notionhq/client 5.3.0, Tailwind CSS 4.1.14, Vitest 4.0.2
-- **Testing**: Vitest with 221 tests, 75.79% coverage
-- **Node Version**: 22.x (Next.js 16 requires 20.9.0+)
+---
+
+## Project Overview
+
+### Tech Stack (Current)
+
+| Component | Version | Notes |
+|-----------|---------|-------|
+| Next.js | 16.0.0 | Upgraded Oct 2025, Turbopack default |
+| React | 19.2.0 | Using automatic JSX runtime |
+| TypeScript | 5.9.3 | Strict mode enabled |
+| Notion Client | 5.3.0 | Uses dataSources API (not databases) |
+| Tailwind CSS | 4.1.14 | v4 with Lightning CSS |
+| Vitest | 4.0.2 | Test runner with Istanbul coverage |
+
+### Project Statistics
+
+- **Tests**: 221 tests (2 skipped), 75.79% coverage
+- **Build Time**: 1.7s (production, with Turbopack)
+- **Pages**: 38 static pages (19 photos, 13 posts, 6 utility)
+- **Node Version**: 22.x (minimum 20.9.0 for Next.js 16)
+
+### Architecture
+
+- **Type**: Static site with ISR (Incremental Static Regeneration)
+- **CMS**: Notion as headless CMS
+- **Caching**: Posts cached locally in JSON files (`posts-cache.json`, `photos-cache.json`)
+- **Sections**: "All" (general posts) and "VBC" (Value-Based Care series)
+- **Images**: Local optimization with Next.js Image component (WebP/AVIF, quality 85)
+
+---
+
+## Key Patterns & Conventions
+
+### Development Workflow
+
+1. **Testing First**: Run tests before any changes (`npm test`)
+2. **Type Safety**: Verify TypeScript compilation (`npm run typecheck`)
+3. **Build Verification**: Test production builds after major changes (`npm run build`)
+4. **Feature Branches**: Use descriptive branch names (e.g., `upgrade/nextjs-16`, `feature/json-feed`)
+
+### Code Patterns
+
+#### Notion API Usage
+```typescript
+// ✅ Correct (v5.x API)
+await notion.dataSources.query({
+  data_source_id: NOTION_DATABASE_ID,
+  // ...
+});
+
+// ❌ Incorrect (old v4.x API)
+await notion.databases.query({
+  database_id: NOTION_DATABASE_ID,
+  // ...
+});
+```
+
+#### Async Route Params (Next.js 16+)
+```typescript
+// ✅ Correct (Next.js 16 requires Promise)
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+  // ...
+}
+```
+
+#### Image Configuration
+```typescript
+// Required in next.config.ts for custom quality values
+images: {
+  qualities: [75, 85],  // Must list all quality values used
+  formats: ['image/webp', 'image/avif'],
+  // ...
+}
+```
+
+### Testing Patterns
+
+- **Vitest**: Test runner with global imports configured
+- **React Testing Library**: Behavioral testing, avoid implementation details
+- **Mocking**: Use `vi.mocked()` for type-safe mocks
+- **Snapshots**: Update with `npm test -- -u` after intentional changes
+- **Timezone Handling**: Use regex for date assertions (e.g., `/Aug (19|20), 2023/`)
+
+### File Locations
+
+| Purpose | Location | Example |
+|---------|----------|---------|
+| Components | `src/components/` | `post-card.tsx` |
+| API Routes | `src/app/*/route.ts` | `feed.json/route.ts` |
+| Utilities | `src/lib/` | `notion.ts`, `config.ts` |
+| Tests | `__tests__/` | `__tests__/lib/notion.test.ts` |
+| Scripts | `scripts/` | `cache-posts.ts` |
+| Documentation | `docs/` | `*.md` files |
+
+### Commands Reference
+
+```bash
+# Development
+npm run dev              # Start dev server (Turbopack HMR)
+npm run build            # Production build
+npm run cache:posts      # Fetch & cache posts from Notion
+
+# Testing
+npm test                 # Run all tests
+npm run test:watch       # Watch mode
+npm run test:coverage    # Coverage report
+npm run test:ui          # Vitest UI
+
+# Quality Checks
+npm run typecheck        # TypeScript validation
+npm run lint             # ESLint
+```
+
+---
 
 ## Recent Updates
 
-### Next.js 16 Upgrade - Completed
+> **Note**: Keep high-level summaries here. Link to detailed docs in `/docs` for full context.
+>
+> **Archive Policy**: Move entries older than 3 months to the "Archive" section at the bottom.
 
-**Date**: 2025-10-23
+### October 2025 Work Summary
 
-Successfully upgraded Next.js from 15.5.6 to 16.0.0 and eslint-config-next to 16.0.0.
+**Major Accomplishments**:
+- ✅ **Next.js 16 Upgrade**: 15.5.6 → 16.0.0, Turbopack default, 19% faster builds
+- ✅ **Test Coverage**: 59.79% → 75.79% (+95 tests across 7 new test files)
+- ✅ **Image Optimization**: Responsive sizing, WebP/AVIF support, 40-60% bandwidth reduction
+- ✅ **JSON Feed**: Added JSON Feed 1.1 route with Schema.org enhancements
+- ✅ **Code Quality**: Centralized config, standardized error handling, API route tests
 
-**Key Changes**:
+**Key Metrics**:
+- Tests: 221 passing (75.79% coverage)
+- Build time: 1.7s (down from 2.1s)
+- All dependencies current except `react-syntax-highlighter` (Phase 3 pending)
 
-- **Next.js**: 15.5.6 → 16.0.0 (major version with Turbopack default)
-- **eslint-config-next**: 15.5.6 → 16.0.0
-- **Vitest ecosystem**: 4.0.1 → 4.0.2 (Phase 1)
-- **Test Coverage**: Maintained 75.79% (221 passing tests)
+**Important Breaking Changes Handled**:
+- Next.js 16 async Request APIs (already prepared with `Promise<>` types)
+- Image quality config now requires `qualities: [75, 85]` in next.config.ts
+- ESLint config removed from next.config.ts (use eslint.config.js)
 
-**Breaking Changes Handled**:
+**Documentation**:
+- 📄 [Next.js 16 Upgrade](docs/NEXTJS_16_UPGRADE_COMPLETED_2025-10-23.md)
+- 📄 [Test Coverage Plan](docs/CODE_QUALITY_AUDIT_2025-10-23.md)
+- 📄 [Image Optimization](docs/IMAGE_OPTIMIZATION_IMPLEMENTATION.md)
+- 📄 [Dependency Updates](docs/DEPENDENCY_UPDATES_PLAN_2025-10-23.md)
 
-1. **Async Request APIs**: Already prepared - codebase was using `params: Promise<{ slug: string }>` pattern
-2. **ESLint Config Removal**: Removed deprecated `eslint` option from `next.config.ts`
-3. **Image Quality Config**: Added `qualities: [75, 85]` to `next.config.ts` (required for custom quality values)
-4. **Image Quality Defaults**: Updated snapshots (quality changed from 85 to 75 default)
-5. **Turbopack Default**: Now default for both dev and build (1.7s build time, down from 2.1s)
+---
 
-**Files Modified**:
+## Troubleshooting & Known Issues
 
-- `package.json` - Updated Next.js and eslint-config-next versions
-- `next.config.ts` - Removed eslint config, added qualities array
-- `tsconfig.json` - Auto-updated by Next.js (jsx: react-jsx, new type includes)
-- `__tests__/components/__snapshots__/photo-card.test.tsx.snap` - Updated for new quality defaults
+### Common Issues
 
-**Verification**:
+**Image Quality Warnings (Next.js 16)**
+```
+Image with src "..." is using quality "85" which is not configured in images.qualities
+```
+**Solution**: Add `qualities: [75, 85]` to `images` config in `next.config.ts`
 
-- ✅ All 221 tests passing (2 skipped)
-- ✅ TypeScript compilation successful
-- ✅ Production build successful (38 pages in 1.7s)
-- ✅ No runtime warnings or errors
+**Notion API Errors**
+- Ensure using `dataSources.query()` not `databases.query()` (v5+ API)
+- Verify `data_source_id` is correct in environment variables
+- Check API version is compatible (default 2025-09-03 works)
 
-**Benefits**:
+**Test Failures**
+- Date assertions: Use regex for timezone variations (e.g., `/Aug (19|20), 2023/`)
+- Snapshot mismatches: Review changes, update with `npm test -- -u` if intentional
+- Mock errors: Use `vi.mocked()` for type-safe mocking
 
-- 19% faster build times (1.7s vs 2.1s)
-- Turbopack's faster HMR in development
-- Access to React 19 features
-- Better caching and optimization
-- Up-to-date with latest Next.js features
+---
 
-See `docs/NEXTJS_16_UPGRADE_COMPLETED_2025-10-23.md` for complete details.
+## Archive
+
+<details>
+<summary><strong>Detailed Update History (Expand for full details)</strong></summary>
 
 ### Test Coverage Improvement - Completed
 
@@ -278,39 +409,43 @@ Successfully migrated from @notion/client v4.0.2 to v5.1.0 without breaking func
 - ✅ Build completes without errors
 - ✅ Static generation works correctly
 
-## Commands to Remember
+</details>
 
-### Development
+---
 
-- `npm run dev` - Start development server
-- `npm run build` - Production build
-- `npm test` - Run all tests
-- `npm run typecheck` - TypeScript validation
-- `npm run lint` - ESLint
-- `npm run cache:posts` - Cache posts from Notion
+## Quick Reference
 
-### Testing
+### Environment Variables Required
 
-- `npm run test:watch` - Watch mode testing
-- `npm run test:coverage` - Coverage report
-- `npm run test:ui` - Vitest UI
+```bash
+NOTION_TOKEN=secret_xxx                    # Notion API integration token
+NOTION_POSTS_DATABASE_ID=xxx               # Posts database/datasource ID
+NOTION_PHOTOS_DATABASE_ID=xxx              # Photos database/datasource ID
+SITE_URL=https://brennanmoore.com          # Site URL for absolute links
+```
 
-## Architecture Notes
+### Project Structure
 
-### Notion Integration
+```
+homepage-notion-nextjs/
+├── src/
+│   ├── app/                    # Next.js 16 App Router
+│   │   ├── (routes)/          # Page routes
+│   │   ├── feed.json/         # JSON Feed route
+│   │   ├── rss.xml/           # RSS feed route
+│   │   └── sitemap.xml/       # Dynamic sitemap
+│   ├── components/            # React components
+│   ├── lib/                   # Utilities (notion, config, errors)
+│   └── styles/                # Tailwind CSS
+├── __tests__/                 # Vitest tests
+├── scripts/                   # Build scripts (cache-posts.ts)
+├── docs/                      # Project documentation
+├── posts-cache.json          # Cached posts from Notion
+├── photos-cache.json         # Cached photos from Notion
+└── public/images/            # Optimized images
+```
 
-- Uses Notion as headless CMS for blog posts and photos
-- Posts cached locally in `posts-cache.json` and `photos-cache.json`
-- Supports two sections: "All" (general posts) and "VBC" (Value-Based Care posts)
-- Image handling with local download and optimization
+---
 
-### File Structure
-
-- `src/lib/notion.ts` - Main Notion API wrapper
-- `scripts/cache-posts.ts` - Caching script for posts and photos
-- `__tests__/` - Test files using Vitest
-- Posts cached as JSON files in project root
-
-### API Compatibility
-
-- Database queries work with both posts and photos databases
+**Last Updated**: 2025-10-23
+**Document Version**: 2.0 (Restructured for easier maintenance)
