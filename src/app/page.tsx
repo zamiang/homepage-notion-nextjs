@@ -2,6 +2,7 @@ import { VBC_DESCRIPTION, VBC_TITLE } from '@/components/consts';
 import PhotoCard from '@/components/photo-card';
 import PostCard from '@/components/post-card';
 import SeriesPostCard from '@/components/series-post-card';
+import { config } from '@/lib/config';
 import {
   getAllSectionPostsFromCache,
   getPhotosFromCache,
@@ -13,8 +14,49 @@ export default function Home() {
   const photos = getPhotosFromCache();
   const vbcPosts = getVBCSectionPostsPostsFromCache().sort((a, b) => (a.title > b.title ? 1 : -1));
 
+  const siteUrl = config.site.url;
+
+  // Schema.org JSON-LD for homepage (Person + Blog)
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': `${siteUrl}/#person`,
+        name: 'Brennan Moore',
+        url: siteUrl,
+        image: `${siteUrl}/about.jpg`,
+        jobTitle: 'CTO / Engineering Leader',
+        description:
+          'I see engineering as a creative craft. I build innovative digital products by creating elegant solutions for complex problems.',
+        sameAs: [],
+      },
+      {
+        '@type': 'Blog',
+        '@id': `${siteUrl}/#blog`,
+        name: config.site.title,
+        description: config.site.description,
+        url: siteUrl,
+        author: {
+          '@id': `${siteUrl}/#person`,
+        },
+        blogPost: posts.slice(0, 5).map((post) => ({
+          '@type': 'BlogPosting',
+          '@id': `${siteUrl}/writing/${post.slug}`,
+          headline: post.title,
+          datePublished: new Date(post.date).toISOString(),
+        })),
+      },
+    ],
+  };
+
   return (
-    <article>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <article>
       <header className="header">
         <div className="profile-photo"></div>
         <h2>Hi, I&apos;m Brennan.</h2>
@@ -198,5 +240,6 @@ export default function Home() {
         </ul>
       </div>
     </article>
+    </>
   );
 }

@@ -4,10 +4,76 @@
 
 - **Project**: Personal homepage/blog built with Next.js and Notion as CMS
 - **Tech Stack**: Next.js 15.5.6, React 19.2.0, TypeScript 5.9.3, @notionhq/client 5.3.0, Tailwind CSS 4.1.14
-- **Testing**: Vitest with 97 tests (64.48% coverage)
+- **Testing**: Vitest with 126 tests (coverage TBD)
 - **Node Version**: 22.x
 
 ## Recent Updates
+
+### JSON Feed and Schema.org JSON-LD Enhancement - Completed
+
+**Date**: 2025-10-23
+
+Successfully added JSON Feed 1.1 support and enhanced Schema.org JSON-LD structured data across the blog.
+
+**JSON Feed Implementation**:
+
+- Added JSON Feed 1.1 route at `/feed.json`
+- Auto-discovery link in HTML head for feed readers
+- Full content included in feed items (better UX than RSS summaries)
+- Custom `_word_count` extension for analytics
+- Section-based filtering (matches RSS behavior - "All" section only)
+- 16 comprehensive tests covering structure, content, and edge cases
+
+**Schema.org JSON-LD Enhancements**:
+
+- Homepage now includes Person + Blog schema with `@graph`
+- Blog posts use `BlogPosting` type with enhanced properties
+- Photos use `Photograph` type (more specific than generic BlogPosting)
+- Added `wordCount` property for writing posts (SEO benefit)
+- Added `articleSection` for VBC posts ("Value-Based Care")
+- Added `keywords` array based on post section
+- Enhanced image objects with `ImageObject` type and captions
+- Absolute image URLs for better search engine compatibility
+- Added author and publisher URLs for entity recognition
+- 13 new tests for JSON-LD validation
+
+**Files Created**:
+
+- `src/app/feed.json/route.ts` - JSON Feed route handler
+- `__tests__/app/feed.test.ts` - 16 tests for JSON Feed
+- `docs/JSON_FEED_AND_SCHEMA_IMPLEMENTATION_PLAN.md` - Implementation plan
+
+**Files Modified**:
+
+- `src/app/layout.tsx` - Added feed auto-discovery links
+- `src/app/page.tsx` - Added homepage Person + Blog JSON-LD
+- `src/lib/page-utils.ts` - Enhanced `generateJsonLd()` function
+- `__tests__/lib/page-utils.test.ts` - Added 13 new JSON-LD tests
+
+**Test Coverage Improvement**:
+
+- Tests: 97 → 126 (+29 tests)
+- Test files: 9 → 10 (+1 file)
+- All 126 tests passing
+
+**Verification**:
+
+- ✅ All 126 tests passing
+- ✅ TypeScript compilation successful
+- ✅ Production build successful
+- ✅ JSON Feed 1.1 spec compliant
+- ✅ Schema.org valid (Person, Blog, BlogPosting, Photograph types)
+- ✅ Auto-discovery working (RSS + JSON Feed)
+
+**Benefits**:
+
+- Modern JSON-based feed format (easier to parse than XML)
+- Improved SEO with enhanced structured data
+- Rich snippets potential in search results
+- Better entity recognition for search engines
+- Word count and article sections for content categorization
+
+See `docs/JSON_FEED_AND_SCHEMA_IMPLEMENTATION_PLAN.md` for full implementation details.
 
 ### Dependency Updates - Completed
 
