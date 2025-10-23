@@ -47,7 +47,15 @@ const components = {
   img: ({ src, alt }: { src?: string | Blob; alt?: string }) => {
     const imageUrl = src ? (typeof src === 'string' ? src : URL.createObjectURL(src)) : '';
     return (
-      <Image src={imageUrl} alt={alt || ''} className="h-auto w-full" width={1000} height={1000} />
+      <Image
+        src={imageUrl}
+        alt={alt || ''}
+        className="h-auto w-full"
+        width={1200}
+        height={800}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+        quality={85}
+      />
     );
   },
   h1: ({ children }: { children?: React.ReactNode }) => <h2>{children}</h2>,

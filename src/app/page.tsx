@@ -76,7 +76,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <i>Latest photos</i>
-              <PhotoCard post={photos[0]} shouldHideText />
+              <PhotoCard post={photos[0]} shouldHideText priority />
             </div>
             <div>
               <i>Latest writing</i>
