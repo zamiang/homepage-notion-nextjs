@@ -102,9 +102,9 @@ describe('JSON Feed Route', () => {
 
     // Should only have 2 posts (excluding VBC)
     expect(json.items).toHaveLength(2);
-    expect(json.items.every((item: { tags?: string[] }) =>
-      !item.tags || item.tags.includes('All')
-    )).toBe(true);
+    expect(
+      json.items.every((item: { tags?: string[] }) => !item.tags || item.tags.includes('All')),
+    ).toBe(true);
   });
 
   it('should properly format post URLs', async () => {
@@ -172,9 +172,7 @@ describe('JSON Feed Route', () => {
 
     const response = await GET();
 
-    expect(response.headers.get('Content-Type')).toBe(
-      'application/feed+json; charset=utf-8'
-    );
+    expect(response.headers.get('Content-Type')).toBe('application/feed+json; charset=utf-8');
   });
 
   it('should set cache control headers', async () => {
@@ -184,7 +182,7 @@ describe('JSON Feed Route', () => {
     const response = await GET();
 
     expect(response.headers.get('Cache-Control')).toBe(
-      'public, max-age=3600, stale-while-revalidate=86400'
+      'public, max-age=3600, stale-while-revalidate=86400',
     );
   });
 
@@ -220,9 +218,7 @@ describe('JSON Feed Route', () => {
   });
 
   it('should handle posts without content gracefully', async () => {
-    const postsWithoutContent = [
-      { ...mockPosts[0], content: '' },
-    ];
+    const postsWithoutContent = [{ ...mockPosts[0], content: '' }];
 
     (fs.existsSync as Mock).mockReturnValue(true);
     (fs.readFileSync as Mock).mockReturnValue(JSON.stringify(postsWithoutContent));

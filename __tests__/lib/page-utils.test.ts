@@ -116,7 +116,7 @@ describe('page-utils', () => {
     it('should throw error for invalid dates', () => {
       const invalidPost = { ...mockPosts[0], date: 'invalid-date' };
       expect(() => generateJsonLd(invalidPost, 'writing')).toThrow(
-        'Invalid date format for post: 1'
+        'Invalid date format for post: 1',
       );
     });
 
