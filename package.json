@@ -14,9 +14,9 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "start": "next start",
     "test": "vitest run",
-    "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
+    "test:watch": "vitest --watch",
     "test:watch:coverage": "vitest --watch --coverage",
     "typecheck": "tsc --noEmit"
   },

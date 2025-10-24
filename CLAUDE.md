@@ -18,6 +18,7 @@
 | Notion Client | 5.3.0 | Uses dataSources API (not databases) |
 | Tailwind CSS | 4.1.14 | v4 with Lightning CSS |
 | Vitest | 4.0.2 | Test runner with Istanbul coverage |
+| ESLint | 9.38.0 | Flat config format (eslint.config.mjs) |
 
 ### Project Statistics
 
@@ -85,6 +86,33 @@ images: {
 }
 ```
 
+#### ESLint Configuration (v9 Flat Config)
+```javascript
+// eslint.config.mjs - ESLint v9 uses flat config format
+import nextPlugin from 'eslint-config-next';
+
+const eslintConfig = [
+  {
+    ignores: ['.next/**', 'node_modules/**', 'coverage/**'],
+  },
+  ...nextPlugin,
+  {
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    files: ['**/__tests__/**/*.ts', '**/__tests__/**/*.tsx'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+];
+
+export default eslintConfig;
+```
+**Note**: ESLint v9 requires flat config format. Legacy `.eslintrc.json` files are no longer supported.
+
 ### Testing Patterns
 
 - **Vitest**: Test runner with global imports configured
@@ -103,6 +131,7 @@ images: {
 | Tests | `__tests__/` | `__tests__/lib/notion.test.ts` |
 | Scripts | `scripts/` | `cache-posts.ts` |
 | Documentation | `docs/` | `*.md` files |
+| Config | Root directory | `eslint.config.mjs`, `next.config.ts` |
 
 ### Commands Reference
 
@@ -135,6 +164,7 @@ npm run lint             # ESLint
 
 **Major Accomplishments**:
 - ✅ **Next.js 16 Upgrade**: 15.5.6 → 16.0.0, Turbopack default, 19% faster builds
+- ✅ **ESLint v9 Migration**: 8.57.1 → 9.38.0, flat config format, fixed React hooks pattern
 - ✅ **Test Coverage**: 59.79% → 75.79% (+95 tests across 7 new test files)
 - ✅ **Image Optimization**: Responsive sizing, WebP/AVIF support, 40-60% bandwidth reduction
 - ✅ **JSON Feed**: Added JSON Feed 1.1 route with Schema.org enhancements
@@ -143,12 +173,14 @@ npm run lint             # ESLint
 **Key Metrics**:
 - Tests: 221 passing (75.79% coverage)
 - Build time: 1.7s (down from 2.1s)
-- All dependencies current except `react-syntax-highlighter` (Phase 3 pending)
+- Security: 0 vulnerabilities (down from 3)
+- All dependencies current except `react-syntax-highlighter` (v16 has compatibility issues)
 
 **Important Breaking Changes Handled**:
 - Next.js 16 async Request APIs (already prepared with `Promise<>` types)
 - Image quality config now requires `qualities: [75, 85]` in next.config.ts
-- ESLint config removed from next.config.ts (use eslint.config.js)
+- ESLint v9 flat config format (migrated from `.eslintrc.json` to `eslint.config.mjs`)
+- eslint-config-next v16 upgrade (Next.js 16 compatibility)
 
 **Documentation**:
 - 📄 [Next.js 16 Upgrade](docs/NEXTJS_16_UPGRADE_COMPLETED_2025-10-23.md)
@@ -184,6 +216,61 @@ Image with src "..." is using quality "85" which is not configured in images.qua
 
 <details>
 <summary><strong>Detailed Update History (Expand for full details)</strong></summary>
+
+### ESLint v9 & Dependency Updates - Completed
+
+**Date**: 2025-10-24
+
+Successfully upgraded ESLint to v9 and updated all outdated dependencies for Next.js 16 compatibility.
+
+**Packages Updated**:
+
+1. **@vitejs/plugin-react**: 5.0.4 → 5.1.0 (minor update)
+2. **ESLint**: 8.57.1 → 9.38.0 (major upgrade)
+   - Migrated to flat config format (`eslint.config.mjs`)
+   - Removed legacy `.eslintrc.json` file
+   - Added `coverage/` to ignore patterns
+3. **eslint-config-next**: 15.5.6 → 16.0.0 (Next.js 16 compatibility)
+4. **react-syntax-highlighter**: Evaluated v16 upgrade
+   - v16.0.0 has refractor v5 compatibility issues
+   - Staying on v15.6.6 until patches released
+   - Security fixes in v16 only affect refractor (we use Prism)
+
+**Code Fixes**:
+
+- Fixed `use-mobile.ts` React hook (src/hooks/use-mobile.ts:6-13)
+  - Resolved ESLint error: "Calling setState synchronously within an effect"
+  - Used lazy initializer pattern for `useState`
+  - Added SSR check with `typeof window !== 'undefined'`
+
+**ESLint v9 Migration**:
+
+- Created new `eslint.config.mjs` with flat config format
+- Native import of `eslint-config-next` (no FlatCompat needed)
+- Updated ignore patterns to include `coverage/**`
+- Preserved all custom rules for tests and project
+
+**Files Modified**:
+
+- `eslint.config.mjs` (created)
+- `.eslintrc.json` (removed)
+- `src/hooks/use-mobile.ts` (fixed React pattern)
+- `package.json` & `package-lock.json` (dependency updates)
+
+**Verification**:
+
+- ✅ All 221 tests passing
+- ✅ ESLint v9 running without errors or warnings
+- ✅ TypeScript compilation successful
+- ✅ Production build successful (1.7s)
+- ✅ 0 security vulnerabilities (down from 3)
+
+**Key Learnings**:
+
+- ESLint v9 requires flat config format (`.mjs` file)
+- `eslint-config-next@16` works natively with ESLint v9
+- React hooks should initialize state with lazy initializers, not in effects
+- Coverage directory should be ignored in ESLint config
 
 ### Test Coverage Improvement - Completed
 
@@ -447,5 +534,5 @@ homepage-notion-nextjs/
 
 ---
 
-**Last Updated**: 2025-10-23
-**Document Version**: 2.0 (Restructured for easier maintenance)
+**Last Updated**: 2025-10-24
+**Document Version**: 2.1 (Added ESLint v9 migration details)
