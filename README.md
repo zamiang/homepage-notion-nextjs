@@ -31,9 +31,9 @@ A high-performance [Next.js 16](https://nextjs.org/) blog written in [TypeScript
 ### Developer Experience
 - **✅ 75% Test Coverage**: 221 comprehensive tests with Vitest and React Testing Library
 - **🎯 Type Safety**: Strict TypeScript with full type coverage
-- **🔒 Security**: Content Security Policy (CSP) and secure headers
+- **🔒 Security**: Content Security Policy (CSP) and secure headers, 0 vulnerabilities
 - **📚 Well-Documented**: Comprehensive docs in `/docs` and inline comments
-- **🎨 Code Quality**: ESLint 9, Prettier, and automated formatting
+- **🎨 Code Quality**: ESLint 9 (flat config), Prettier, and automated formatting
 
 ### Content Management
 - **📝 Notion as CMS**: Easy content management through Notion's intuitive interface
@@ -93,6 +93,8 @@ homepage-notion-nextjs/
 ├── posts-cache.json             # Cached blog posts
 ├── photos-cache.json            # Cached photos
 ├── public/images/               # Optimized images
+├── eslint.config.mjs            # ESLint v9 flat config
+├── next.config.ts               # Next.js 16 configuration
 ├── CLAUDE.md                    # AI context & patterns
 └── README.md                    # This file
 ```
