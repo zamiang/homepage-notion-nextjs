@@ -1,9 +1,13 @@
 import { Client } from '@notionhq/client';
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
 import { config, validateNotionConfig } from '../src/lib/config';
 import { fetchPublishedPosts, getPostFromNotion } from '../src/lib/notion';
+
+// Load environment variables FIRST, before any other imports
+dotenv.config();
 
 // Validate required Notion environment variables before proceeding
 validateNotionConfig();
@@ -39,19 +43,19 @@ const cacheItems = async (notion: Client, config: CacheConfig) => {
 };
 
 const notion = new Client({
-  auth: config.notion.token,
+  auth: process.env.NOTION_TOKEN!,
 });
 
 // Cache posts and photos using the generic function
 (async () => {
   await Promise.all([
     cacheItems(notion, {
-      dataSourceID: config.notion.dataSourceId,
+      dataSourceID: process.env.NOTION_DATA_SOURCE_ID!,
       cacheFileName: config.cache.postsFileName,
       itemName: 'posts',
     }),
     cacheItems(notion, {
-      dataSourceID: config.notion.photosDataSourceId,
+      dataSourceID: process.env.NOTION_PHOTOS_DATA_SOURCE_ID!,
       cacheFileName: config.cache.photosFileName,
       itemName: 'photos',
     }),

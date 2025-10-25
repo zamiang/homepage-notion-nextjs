@@ -1,7 +1,6 @@
 import { Client } from '@notionhq/client';
 import { ImageBlockObjectResponse } from '@notionhq/client';
 import { PageObjectResponse } from '@notionhq/client/';
-import dotenv from 'dotenv';
 import fs from 'fs';
 import { NotionToMarkdown } from 'notion-to-md';
 import path from 'path';
@@ -9,8 +8,6 @@ import path from 'path';
 import { config } from './config';
 import { downloadImage, getFilename } from './download-image';
 import { ValidationError, logError } from './errors';
-
-dotenv.config();
 
 export interface Post {
   id: string;
@@ -122,7 +119,7 @@ export async function getPost(slug: string): Promise<Post | null> {
 export async function getPostFromNotion(pageId: string): Promise<Post | null> {
   try {
     const notion = new Client({
-      auth: config.notion.token,
+      auth: process.env.NOTION_TOKEN || config.notion.token,
     });
     const n2m = new NotionToMarkdown({ notionClient: notion });
 
