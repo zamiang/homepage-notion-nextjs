@@ -1,3 +1,8 @@
+import dotenv from 'dotenv';
+
+// Load environment variables FIRST, before any other imports
+dotenv.config();
+
 import { Client } from '@notionhq/client';
 import fs from 'fs';
 import path from 'path';
@@ -39,19 +44,19 @@ const cacheItems = async (notion: Client, config: CacheConfig) => {
 };
 
 const notion = new Client({
-  auth: config.notion.token,
+  auth: process.env.NOTION_TOKEN!,
 });
 
 // Cache posts and photos using the generic function
 (async () => {
   await Promise.all([
     cacheItems(notion, {
-      dataSourceID: config.notion.dataSourceId,
+      dataSourceID: process.env.NOTION_DATA_SOURCE_ID!,
       cacheFileName: config.cache.postsFileName,
       itemName: 'posts',
     }),
     cacheItems(notion, {
-      dataSourceID: config.notion.photosDataSourceId,
+      dataSourceID: process.env.NOTION_PHOTOS_DATA_SOURCE_ID!,
       cacheFileName: config.cache.photosFileName,
       itemName: 'photos',
     }),
