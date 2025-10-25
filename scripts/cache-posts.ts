@@ -1,14 +1,13 @@
-import dotenv from 'dotenv';
-
-// Load environment variables FIRST, before any other imports
-dotenv.config();
-
 import { Client } from '@notionhq/client';
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
 import { config, validateNotionConfig } from '../src/lib/config';
 import { fetchPublishedPosts, getPostFromNotion } from '../src/lib/notion';
+
+// Load environment variables FIRST, before any other imports
+dotenv.config();
 
 // Validate required Notion environment variables before proceeding
 validateNotionConfig();
