@@ -107,7 +107,7 @@ export default function Home() {
           <div className="center-divider"></div>
           <p>2022</p>
           <h4 style={{ marginTop: 0 }}>
-            <a href="https://kelp.nyc/">Kelp</a>
+            <a href="https://version-one.kelp.nyc/">Kelp</a>
           </h4>
           <p>
             I founded Kelp to solve a complex problem: getting people the right information at the
