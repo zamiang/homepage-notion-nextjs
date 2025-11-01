@@ -14,11 +14,7 @@ export default function PostCard({ post }: PostCardProps) {
     <div className="post">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-1.5">
-          <p>
-            <Link href={`/writing/${post.slug}`} aria-label={post.title}>
-              {format(new Date(post.date), 'MMM d, yyyy')}
-            </Link>
-          </p>
+          <p>{format(new Date(post.date), 'MMM d, yyyy')}</p>
         </div>
         <div className="flex items-center gap-1.5">
           <p className="text-muted-foreground">{readingTime}</p>
