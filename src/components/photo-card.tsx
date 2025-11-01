@@ -26,14 +26,12 @@ export default function PhotoCard({ post, shouldHideText, priority = false }: Po
       </div>
       {!shouldHideText && (
         <p style={{ marginTop: 0, paddingBottom: 0 }}>
-          <Link href={`/photos/${post.slug}`} aria-label={post.title}>
-            {format(new Date(post.date), 'MMM d, yyyy')}
-          </Link>
+          {format(new Date(post.date), 'MMM d, yyyy')}
         </p>
       )}
       {!shouldHideText && (
         <Link href={`/photos/${post.slug}`} aria-label={post.title}>
-          <h4 style={{ marginTop: 0 }}>{post.title}</h4>
+          <h4 style={{ marginTop: 0, display: 'inline-blockm' }}>{post.title}</h4>
         </Link>
       )}
     </div>
