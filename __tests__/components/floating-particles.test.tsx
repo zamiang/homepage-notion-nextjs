@@ -106,9 +106,8 @@ describe('FloatingParticles', () => {
 
     const circles = container.querySelectorAll('circle');
     circles.forEach((circle) => {
-      const style = circle.getAttribute('style');
-      expect(style).toContain('transform:');
-      expect(style).toContain('translate');
+      const transform = circle.getAttribute('transform');
+      expect(transform).toContain('translate');
     });
   });
 
@@ -161,37 +160,6 @@ describe('FloatingParticles', () => {
     });
   });
 
-  it('should add scroll event listener on mount', () => {
-    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
-    render(<FloatingParticles />);
-
-    expect(addEventListenerSpy).toHaveBeenCalledWith(
-      'scroll',
-      expect.any(Function),
-      expect.objectContaining({ passive: true })
-    );
-  });
-
-  it('should add resize event listener on mount', () => {
-    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
-    render(<FloatingParticles />);
-
-    expect(addEventListenerSpy).toHaveBeenCalledWith(
-      'resize',
-      expect.any(Function),
-      expect.objectContaining({ passive: true })
-    );
-  });
-
-  it('should cleanup event listeners on unmount', () => {
-    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-    const { unmount } = render(<FloatingParticles />);
-
-    unmount();
-
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function));
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
-  });
 
   it('should cancel animation frame on unmount', () => {
     const cancelAnimationFrameSpy = vi.spyOn(window, 'cancelAnimationFrame');

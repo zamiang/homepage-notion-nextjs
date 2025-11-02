@@ -6,31 +6,28 @@ interface Particle {
   id: number;
   x: number;
   y: number;
-  vx: number;
-  vy: number;
   baseX: number;
   baseY: number;
   size: number;
   opacity: number;
   blurRadius: number;
-  speed: number;
-  phase: number;
+  // Independent animation parameters
+  angleX: number; // Current angle in X oscillation
+  angleY: number; // Current angle in Y oscillation
+  speedX: number; // How fast X oscillation changes
+  speedY: number; // How fast Y oscillation changes
+  radiusX: number; // How far X oscillates
+  radiusY: number; // How far Y oscillates
 }
 
 const PARTICLE_COUNT = 40;
-const DRIFT_SPEED = 0.15;
-const SCROLL_FORCE = 0.15; // Reduced from 0.8 for smoother scroll reaction
-const SCROLL_DAMPING = 0.75; // Much faster decay for quick stabilization (was 0.85)
-const VELOCITY_DAMPING = 0.94; // Faster particle velocity damping for quicker settling (was 0.98)
-const RETURN_FORCE = 0.006; // Stronger return force for faster stabilization (was 0.002)
 
 export default function FloatingParticles() {
   const canvasRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const [particles, setParticles] = useState<Particle[]>([]);
-  const scrollVelocityRef = useRef(0);
-  const lastScrollRef = useRef(0);
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const scrollYRef = useRef(0);
 
   useEffect(() => {
     // Initialize particles with even distribution
@@ -50,99 +47,77 @@ export default function FloatingParticles() {
 
       // Size determines movement characteristics
       const size = 2 + Math.random() * 4; // 2-6px
-      const sizeRatio = (size - 2) / 4; // 0-1 based on size
+
+      // Smaller particles are more transparent, larger ones more opaque
+      const opacity = 0.08 + (size / 6) * 0.25; // 0.08-0.33 range (size-dependent)
 
       initialParticles.push({
         id: i,
         x,
         y,
-        vx: 0,
-        vy: 0,
         baseX: x,
         baseY: y,
         size,
-        opacity: 0.15 + Math.random() * 0.2, // 0.15-0.35
+        opacity,
         blurRadius: 4 + Math.random() * 4, // 4-8px
-        speed: 0.2 + sizeRatio * 1.0, // Much wider range: small=0.2, large=1.2
-        phase: Math.random() * Math.PI * 2, // Random starting phase for sine wave
+        // Each particle gets completely independent animation parameters
+        angleX: Math.random() * Math.PI * 2, // Random starting angle
+        angleY: Math.random() * Math.PI * 2,
+        speedX: 0.001 + Math.random() * 0.003, // 0.001-0.004 (very slow, independent speeds)
+        speedY: 0.0008 + Math.random() * 0.0025, // 0.0008-0.0033 (different range for Y)
+        radiusX: 15 + Math.random() * 35, // 15-50px horizontal movement
+        radiusY: 10 + Math.random() * 25, // 10-35px vertical movement
       });
     }
 
     particlesRef.current = initialParticles;
     setParticles(initialParticles);
 
-    // Track scroll velocity
-    let lastScroll = window.scrollY;
-    let lastTime = Date.now();
-
+    // Scroll handler - subtle parallax effect
     const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      const currentTime = Date.now();
-      const deltaTime = currentTime - lastTime;
-      const deltaScroll = currentScroll - lastScroll;
-
-      // Calculate scroll velocity (pixels per millisecond, scaled up for effect)
-      if (deltaTime > 0) {
-        scrollVelocityRef.current = (deltaScroll / deltaTime) * SCROLL_FORCE;
-      }
-
-      lastScroll = currentScroll;
-      lastTime = currentTime;
+      scrollYRef.current = window.scrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Animation loop
-    let time = 0;
+    // Animation loop - each particle moves completely independently
     const animate = () => {
-      time += 0.016; // ~60fps
-      scrollVelocityRef.current *= SCROLL_DAMPING; // Decay scroll velocity quickly
-
-      const elements = canvasRef.current?.children;
-      if (!elements) return;
+      const svg = canvasRef.current?.querySelector('svg');
+      const circles = svg?.querySelectorAll('circle');
+      if (!circles) return;
 
       particlesRef.current.forEach((particle, index) => {
-        // Size-based movement multiplier (larger = much faster)
-        const sizeRatio = (particle.size - 2) / 4; // 0-1 based on size
-        const speedMultiplier = 0.3 + sizeRatio * 1.4; // 0.3-1.7 (much wider range!)
+        // Each particle independently updates its angle (this is the key to independence!)
+        particle.angleX += particle.speedX;
+        particle.angleY += particle.speedY;
 
-        // Gentle sine wave drift
-        const driftX = Math.sin(time * particle.speed + particle.phase) * DRIFT_SPEED;
-        const driftY = Math.cos(time * particle.speed * 0.7 + particle.phase) * DRIFT_SPEED;
+        // Calculate position based on particle's own angle and radius
+        // No shared time variable - each particle is on its own timeline!
+        const oscillationX = Math.sin(particle.angleX) * particle.radiusX;
+        const oscillationY = Math.cos(particle.angleY) * particle.radiusY;
 
-        // Apply drift with dramatic size-based multiplier
-        particle.vx += driftX * 0.015 * speedMultiplier; // Increased from 0.01
-        particle.vy += driftY * 0.015 * speedMultiplier;
+        // Add subtle scroll-based offset - move particles UP as user scrolls DOWN
+        // This creates a parallax effect where particles stay visible in viewport
+        // Larger particles (closer) move MORE than smaller particles (farther away)
+        const scrollFactor = 0.02 + (particle.size / 6) * 0.05; // 0.02-0.07 range (larger = faster)
+        const scrollOffset = -scrollYRef.current * scrollFactor; // Negative = move up when scrolling down
 
-        // Apply scroll force - larger particles react dramatically more
-        const scrollForce = scrollVelocityRef.current * speedMultiplier;
-        particle.vy += scrollForce * 0.25; // Increased slightly
-        particle.vx += scrollForce * 0.08 * (Math.random() - 0.5); // Increased slightly
+        // Wrap particles vertically so they stay visible throughout the page
+        // Use viewport height for wrapping to keep particles in view
+        const viewportHeight = window.innerHeight;
+        let finalY = particle.baseY + oscillationY + scrollOffset;
 
-        // Return force to base position (very gentle)
-        const dx = particle.baseX - particle.x;
-        const dy = particle.baseY - particle.y;
-        particle.vx += dx * RETURN_FORCE;
-        particle.vy += dy * RETURN_FORCE;
+        // Wrap around: if particle goes above viewport, move it to bottom
+        // This creates infinite particles as you scroll
+        finalY = ((finalY % viewportHeight) + viewportHeight) % viewportHeight;
 
-        // Apply velocity damping
-        particle.vx *= VELOCITY_DAMPING;
-        particle.vy *= VELOCITY_DAMPING;
+        particle.x = particle.baseX + oscillationX;
+        particle.y = finalY;
 
-        // Update position
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        // Wrap around screen boundaries
-        if (particle.x < -50) particle.x = window.innerWidth + 50;
-        if (particle.x > window.innerWidth + 50) particle.x = -50;
-        if (particle.y < -50) particle.y = window.innerHeight + 50;
-        if (particle.y > window.innerHeight + 50) particle.y = -50;
-
-        // Update DOM element
-        const element = elements[index] as HTMLElement;
-        if (element) {
-          element.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
+        // Update SVG element using setAttribute (works correctly for SVG)
+        const circle = circles[index];
+        if (circle) {
+          circle.setAttribute('transform', `translate(${particle.x}, ${particle.y})`);
         }
       });
 
@@ -151,25 +126,8 @@ export default function FloatingParticles() {
 
     animate();
 
-    // Handle window resize
-    const handleResize = () => {
-      // Reposition particles proportionally
-      const widthRatio = window.innerWidth / (particlesRef.current[0]?.baseX ? window.innerWidth : 1);
-      const heightRatio = window.innerHeight / (particlesRef.current[0]?.baseY ? window.innerHeight : 1);
-
-      particlesRef.current.forEach((particle) => {
-        particle.baseX *= widthRatio;
-        particle.baseY *= heightRatio;
-        particle.x *= widthRatio;
-        particle.y *= heightRatio;
-      });
-    };
-
-    window.addEventListener('resize', handleResize, { passive: true });
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -208,9 +166,9 @@ export default function FloatingParticles() {
             style={{
               opacity: particle.opacity,
               filter: `url(#particle-blur-${particle.id})`,
-              transform: `translate(${particle.x}px, ${particle.y}px)`,
               willChange: 'transform',
             }}
+            transform={`translate(${particle.x}, ${particle.y})`}
           />
         ))}
       </svg>
