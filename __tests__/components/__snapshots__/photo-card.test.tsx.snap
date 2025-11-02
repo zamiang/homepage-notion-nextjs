@@ -55,12 +55,7 @@ exports[`PhotoCard > should match snapshot with text visible 1`] = `
     <p
       style="margin-top: 0px; padding-bottom: 0px;"
     >
-      <a
-        aria-label="Test Photo Title"
-        href="/photos/test-photo"
-      >
-        Aug 19, 2023
-      </a>
+      Aug 19, 2023
     </p>
     <a
       aria-label="Test Photo Title"

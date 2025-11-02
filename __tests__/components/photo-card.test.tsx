@@ -52,7 +52,7 @@ describe('PhotoCard', () => {
   it('should render links to photo page', () => {
     render(<PhotoCard post={mockPhotoPost} shouldHideText={false} />);
     const links = screen.getAllByRole('link');
-    expect(links.length).toBeGreaterThanOrEqual(2); // Image link, date link, title link
+    expect(links).toHaveLength(2); // Image link and title link
     links.forEach((link) => {
       expect(link).toHaveAttribute('href', '/photos/test-photo');
       expect(link).toHaveAttribute('aria-label', 'Test Photo Title');
