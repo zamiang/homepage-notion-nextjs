@@ -22,59 +22,66 @@ interface Particle {
 
 const PARTICLE_COUNT = 40;
 
+// Initialize particles function
+function initializeParticles(): Particle[] {
+  // Check if window is available (SSR safety)
+  if (typeof window === 'undefined') {
+    return [];
+  }
+
+  const initialParticles: Particle[] = [];
+  const cols = Math.ceil(Math.sqrt(PARTICLE_COUNT * (window.innerWidth / window.innerHeight)));
+  const rows = Math.ceil(PARTICLE_COUNT / cols);
+  const cellWidth = window.innerWidth / cols;
+  const cellHeight = window.innerHeight / rows;
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+
+    // Random position within cell for even distribution
+    const x = col * cellWidth + Math.random() * cellWidth;
+    const y = row * cellHeight + Math.random() * cellHeight;
+
+    // Size determines movement characteristics
+    const size = 2 + Math.random() * 4; // 2-6px
+
+    // Smaller particles are more transparent, larger ones more opaque
+    const opacity = 0.08 + (size / 6) * 0.25; // 0.08-0.33 range (size-dependent)
+
+    initialParticles.push({
+      id: i,
+      x,
+      y,
+      baseX: x,
+      baseY: y,
+      size,
+      opacity,
+      blurRadius: 4 + Math.random() * 4, // 4-8px
+      // Each particle gets completely independent animation parameters
+      angleX: Math.random() * Math.PI * 2, // Random starting angle
+      angleY: Math.random() * Math.PI * 2,
+      speedX: 0.001 + Math.random() * 0.003, // 0.001-0.004 (very slow, independent speeds)
+      speedY: 0.0008 + Math.random() * 0.0025, // 0.0008-0.0033 (different range for Y)
+      radiusX: 15 + Math.random() * 35, // 15-50px horizontal movement
+      radiusY: 10 + Math.random() * 25, // 10-35px vertical movement
+    });
+  }
+
+  return initialParticles;
+}
+
 export default function FloatingParticles() {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
-  const [particles, setParticles] = useState<Particle[]>([]);
+  // Use lazy initializer to avoid setState in effect
+  const [particles, setParticles] = useState<Particle[]>(initializeParticles);
+  const particlesRef = useRef<Particle[]>(particles);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const scrollYRef = useRef(0);
   const frameTimesRef = useRef<number[]>([]);
   const lastFrameTimeRef = useRef<number>(0);
 
   useEffect(() => {
-    // Initialize particles with even distribution
-    const initialParticles: Particle[] = [];
-    const cols = Math.ceil(Math.sqrt(PARTICLE_COUNT * (window.innerWidth / window.innerHeight)));
-    const rows = Math.ceil(PARTICLE_COUNT / cols);
-    const cellWidth = window.innerWidth / cols;
-    const cellHeight = window.innerHeight / rows;
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-
-      // Random position within cell for even distribution
-      const x = col * cellWidth + Math.random() * cellWidth;
-      const y = row * cellHeight + Math.random() * cellHeight;
-
-      // Size determines movement characteristics
-      const size = 2 + Math.random() * 4; // 2-6px
-
-      // Smaller particles are more transparent, larger ones more opaque
-      const opacity = 0.08 + (size / 6) * 0.25; // 0.08-0.33 range (size-dependent)
-
-      initialParticles.push({
-        id: i,
-        x,
-        y,
-        baseX: x,
-        baseY: y,
-        size,
-        opacity,
-        blurRadius: 4 + Math.random() * 4, // 4-8px
-        // Each particle gets completely independent animation parameters
-        angleX: Math.random() * Math.PI * 2, // Random starting angle
-        angleY: Math.random() * Math.PI * 2,
-        speedX: 0.001 + Math.random() * 0.003, // 0.001-0.004 (very slow, independent speeds)
-        speedY: 0.0008 + Math.random() * 0.0025, // 0.0008-0.0033 (different range for Y)
-        radiusX: 15 + Math.random() * 35, // 15-50px horizontal movement
-        radiusY: 10 + Math.random() * 25, // 10-35px vertical movement
-      });
-    }
-
-    particlesRef.current = initialParticles;
-    setParticles(initialParticles);
-
     // Scroll handler - subtle parallax effect
     const handleScroll = () => {
       scrollYRef.current = window.scrollY;
