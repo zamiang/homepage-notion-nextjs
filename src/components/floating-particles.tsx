@@ -148,7 +148,8 @@ export default function FloatingParticles() {
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    // Start animation with initial timestamp
+    animationFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
