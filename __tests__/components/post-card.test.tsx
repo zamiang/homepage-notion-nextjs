@@ -42,7 +42,7 @@ describe('PostCard', () => {
   it('should render links to post', () => {
     render(<PostCard post={mockPost} />);
     const links = screen.getAllByRole('link');
-    expect(links).toHaveLength(2); // Date link and title link
+    expect(links).toHaveLength(1); // Title link only
     links.forEach((link) => {
       expect(link).toHaveAttribute('href', '/writing/test-post');
       expect(link).toHaveAttribute('aria-label', 'Test Post Title');

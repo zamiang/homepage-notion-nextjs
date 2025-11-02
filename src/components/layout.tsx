@@ -2,6 +2,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+import FloatingParticles from './floating-particles';
 import Footer from './footer';
 
 interface LayoutProps {
@@ -10,8 +11,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-background">
-      <header>
+    <div className="relative min-h-screen bg-background">
+      <FloatingParticles />
+      <header className="relative z-10">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
@@ -50,7 +52,7 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </nav>
       </header>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">{children}</main>
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">{children}</main>
       <Footer />
     </div>
   );

@@ -12,12 +12,7 @@ exports[`PostCard > should match snapshot 1`] = `
         class="flex items-center gap-1.5"
       >
         <p>
-          <a
-            aria-label="Test Post Title"
-            href="/writing/test-post"
-          >
-            Jun 14, 2023
-          </a>
+          Jun 14, 2023
         </p>
       </div>
       <div
