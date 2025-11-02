@@ -142,17 +142,24 @@ export default function FloatingParticles() {
     >
       <svg className="absolute inset-0 size-full">
         <defs>
-          {/* Blur filter for soft particles */}
+          {/* Enhanced blur filter for soft, organic particles */}
           {particles.map((particle) => (
             <filter
               key={`blur-${particle.id}`}
               id={`particle-blur-${particle.id}`}
-              x="-50%"
-              y="-50%"
-              width="200%"
-              height="200%"
+              x="-100%"
+              y="-100%"
+              width="300%"
+              height="300%"
+              colorInterpolationFilters="sRGB"
             >
-              <feGaussianBlur stdDeviation={particle.blurRadius} />
+              {/* Multiple blur passes for smoother, rounder effect */}
+              <feGaussianBlur in="SourceGraphic" stdDeviation={particle.blurRadius} result="blur1" />
+              <feGaussianBlur in="blur1" stdDeviation={particle.blurRadius * 0.5} result="blur2" />
+              {/* Morphology to make particles rounder */}
+              <feMorphology in="blur2" operator="dilate" radius="0.5" result="dilated" />
+              {/* Final blur to smooth edges */}
+              <feGaussianBlur in="dilated" stdDeviation={particle.blurRadius * 0.3} />
             </filter>
           ))}
         </defs>
