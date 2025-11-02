@@ -71,23 +71,23 @@ describe('FloatingParticles', () => {
     expect(circles.length).toBeGreaterThan(0);
   });
 
-  it('should create blur filters for each particle', () => {
+  it('should create shared blur filter for all particles', () => {
     const { container } = render(<FloatingParticles />);
 
     const filters = container.querySelectorAll('filter');
-    const circles = container.querySelectorAll('circle');
 
-    // Each particle should have a corresponding blur filter
-    expect(filters.length).toBe(circles.length);
+    // Should have single shared blur filter for performance
+    expect(filters.length).toBe(1);
+    expect(filters[0].id).toBe('particle-blur');
   });
 
   it('should apply blur filters to particles', () => {
     const { container } = render(<FloatingParticles />);
 
     const circles = container.querySelectorAll('circle');
-    circles.forEach((circle, index) => {
+    circles.forEach((circle) => {
       const style = circle.getAttribute('style');
-      expect(style).toContain(`url(#particle-blur-${index})`);
+      expect(style).toContain('url(#particle-blur)');
     });
   });
 
@@ -121,15 +121,13 @@ describe('FloatingParticles', () => {
     });
   });
 
-  it('should have unique IDs for blur filters', () => {
+  it('should have particle-blur filter ID', () => {
     const { container } = render(<FloatingParticles />);
 
-    const filters = container.querySelectorAll('filter');
-    const ids = Array.from(filters).map((filter) => filter.id);
-    const uniqueIds = new Set(ids);
+    const filter = container.querySelector('filter');
 
-    // All filter IDs should be unique
-    expect(uniqueIds.size).toBe(filters.length);
+    // Should have the shared filter ID
+    expect(filter).toHaveAttribute('id', 'particle-blur');
   });
 
   it('should use feGaussianBlur in filters', () => {

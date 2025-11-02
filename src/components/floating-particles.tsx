@@ -28,6 +28,8 @@ export default function FloatingParticles() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const scrollYRef = useRef(0);
+  const frameTimesRef = useRef<number[]>([]);
+  const lastFrameTimeRef = useRef<number>(0);
 
   useEffect(() => {
     // Initialize particles with even distribution
@@ -81,10 +83,32 @@ export default function FloatingParticles() {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Animation loop - each particle moves completely independently
-    const animate = () => {
+    const animate = (currentTime: number) => {
       const svg = canvasRef.current?.querySelector('svg');
       const circles = svg?.querySelectorAll('circle');
       if (!circles) return;
+
+      // Performance monitoring
+      if (lastFrameTimeRef.current > 0) {
+        const frameDuration = currentTime - lastFrameTimeRef.current;
+        frameTimesRef.current.push(frameDuration);
+
+        // Keep only last 60 frames for average
+        if (frameTimesRef.current.length > 60) {
+          frameTimesRef.current.shift();
+        }
+
+        // Log performance stats every 5 seconds
+        if (frameTimesRef.current.length === 60) {
+          const avgFrameTime = frameTimesRef.current.reduce((a, b) => a + b, 0) / 60;
+          const fps = 1000 / avgFrameTime;
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`[Particles] FPS: ${fps.toFixed(1)}, Avg frame time: ${avgFrameTime.toFixed(2)}ms`);
+          }
+          frameTimesRef.current = [];
+        }
+      }
+      lastFrameTimeRef.current = currentTime;
 
       particlesRef.current.forEach((particle, index) => {
         // Each particle independently updates its angle (this is the key to independence!)
@@ -142,26 +166,22 @@ export default function FloatingParticles() {
     >
       <svg className="absolute inset-0 size-full">
         <defs>
-          {/* Enhanced blur filter for soft, organic particles */}
-          {particles.map((particle) => (
-            <filter
-              key={`blur-${particle.id}`}
-              id={`particle-blur-${particle.id}`}
-              x="-100%"
-              y="-100%"
-              width="300%"
-              height="300%"
-              colorInterpolationFilters="sRGB"
-            >
-              {/* Multiple blur passes for smoother, rounder effect */}
-              <feGaussianBlur in="SourceGraphic" stdDeviation={particle.blurRadius} result="blur1" />
-              <feGaussianBlur in="blur1" stdDeviation={particle.blurRadius * 0.5} result="blur2" />
-              {/* Morphology to make particles rounder */}
-              <feMorphology in="blur2" operator="dilate" radius="0.5" result="dilated" />
-              {/* Final blur to smooth edges */}
-              <feGaussianBlur in="dilated" stdDeviation={particle.blurRadius * 0.3} />
-            </filter>
-          ))}
+          {/* Optimized blur filter - single shared filter for all particles */}
+          <filter
+            id="particle-blur"
+            x="-75%"
+            y="-75%"
+            width="250%"
+            height="250%"
+            colorInterpolationFilters="sRGB"
+          >
+            {/* First blur to soften edges */}
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur1" />
+            {/* Morphology to make rounder (dilate slightly) */}
+            <feMorphology in="blur1" operator="dilate" radius="0.8" result="round" />
+            {/* Final blur to smooth out the morphology */}
+            <feGaussianBlur in="round" stdDeviation="2" />
+          </filter>
         </defs>
 
         {/* Render particles */}
@@ -172,7 +192,7 @@ export default function FloatingParticles() {
             className="fill-foreground dark:fill-accent"
             style={{
               opacity: particle.opacity,
-              filter: `url(#particle-blur-${particle.id})`,
+              filter: 'url(#particle-blur)',
               willChange: 'transform',
             }}
             transform={`translate(${particle.x}, ${particle.y})`}
