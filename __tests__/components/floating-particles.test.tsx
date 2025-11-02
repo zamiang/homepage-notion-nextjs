@@ -1,0 +1,222 @@
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import FloatingParticles from '@/components/floating-particles';
+
+describe('FloatingParticles', () => {
+  beforeEach(() => {
+    // Mock window dimensions
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1024,
+    });
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 768,
+    });
+
+    // Mock scrollY
+    Object.defineProperty(window, 'scrollY', {
+      writable: true,
+      configurable: true,
+      value: 0,
+    });
+
+    // Mock requestAnimationFrame - don't call callback to avoid infinite loop
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(() => 1);
+
+    // Mock cancelAnimationFrame
+    vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {});
+  });
+
+  it('should render without crashing', () => {
+    const { container } = render(<FloatingParticles />);
+    const particleContainer = container.querySelector('[aria-hidden="true"]');
+    expect(particleContainer).toBeInTheDocument();
+  });
+
+  it('should have correct container classes', () => {
+    const { container } = render(<FloatingParticles />);
+    const particleContainer = container.querySelector('[aria-hidden="true"]');
+    expect(particleContainer).toHaveClass('pointer-events-none');
+    expect(particleContainer).toHaveClass('fixed');
+    expect(particleContainer).toHaveClass('inset-0');
+    expect(particleContainer).toHaveClass('z-0');
+    expect(particleContainer).toHaveClass('overflow-hidden');
+  });
+
+  it('should have aria-hidden attribute', () => {
+    const { container } = render(<FloatingParticles />);
+    const particleContainer = container.querySelector('[aria-hidden="true"]');
+    expect(particleContainer).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  it('should render SVG element', () => {
+    const { container } = render(<FloatingParticles />);
+    const svg = container.querySelector('svg');
+    expect(svg).toBeInTheDocument();
+    expect(svg).toHaveClass('absolute');
+    expect(svg).toHaveClass('inset-0');
+    expect(svg).toHaveClass('size-full');
+  });
+
+  it('should initialize particles on mount', () => {
+    const { container } = render(<FloatingParticles />);
+
+    // Wait for particles to be initialized (after useEffect)
+    // Check for circle elements
+    const circles = container.querySelectorAll('circle');
+    expect(circles.length).toBeGreaterThan(0);
+  });
+
+  it('should create blur filters for each particle', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const filters = container.querySelectorAll('filter');
+    const circles = container.querySelectorAll('circle');
+
+    // Each particle should have a corresponding blur filter
+    expect(filters.length).toBe(circles.length);
+  });
+
+  it('should apply blur filters to particles', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const circles = container.querySelectorAll('circle');
+    circles.forEach((circle, index) => {
+      const style = circle.getAttribute('style');
+      expect(style).toContain(`url(#particle-blur-${index})`);
+    });
+  });
+
+  it('should set opacity for each particle', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const circles = container.querySelectorAll('circle');
+    circles.forEach((circle) => {
+      const style = circle.getAttribute('style');
+      expect(style).toContain('opacity:');
+    });
+  });
+
+  it('should position particles with transform', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const circles = container.querySelectorAll('circle');
+    circles.forEach((circle) => {
+      const style = circle.getAttribute('style');
+      expect(style).toContain('transform:');
+      expect(style).toContain('translate');
+    });
+  });
+
+  it('should apply theme-aware fill classes', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const circles = container.querySelectorAll('circle');
+    circles.forEach((circle) => {
+      expect(circle).toHaveClass('fill-foreground');
+      expect(circle).toHaveClass('dark:fill-accent');
+    });
+  });
+
+  it('should have unique IDs for blur filters', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const filters = container.querySelectorAll('filter');
+    const ids = Array.from(filters).map((filter) => filter.id);
+    const uniqueIds = new Set(ids);
+
+    // All filter IDs should be unique
+    expect(uniqueIds.size).toBe(filters.length);
+  });
+
+  it('should use feGaussianBlur in filters', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const filters = container.querySelectorAll('filter');
+    filters.forEach((filter) => {
+      const blur = filter.querySelector('feGaussianBlur');
+      expect(blur).toBeInTheDocument();
+      expect(blur).toHaveAttribute('stdDeviation');
+    });
+  });
+
+  it('should set varying particle sizes', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const circles = container.querySelectorAll('circle');
+    const radii = Array.from(circles).map((circle) => parseFloat(circle.getAttribute('r') || '0'));
+
+    // Should have varying sizes (at least some different values)
+    const uniqueRadii = new Set(radii);
+    expect(uniqueRadii.size).toBeGreaterThan(1);
+
+    // All radii should be within expected range (2-6px)
+    radii.forEach((r) => {
+      expect(r).toBeGreaterThanOrEqual(2);
+      expect(r).toBeLessThanOrEqual(6);
+    });
+  });
+
+  it('should add scroll event listener on mount', () => {
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    render(<FloatingParticles />);
+
+    expect(addEventListenerSpy).toHaveBeenCalledWith(
+      'scroll',
+      expect.any(Function),
+      expect.objectContaining({ passive: true })
+    );
+  });
+
+  it('should add resize event listener on mount', () => {
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    render(<FloatingParticles />);
+
+    expect(addEventListenerSpy).toHaveBeenCalledWith(
+      'resize',
+      expect.any(Function),
+      expect.objectContaining({ passive: true })
+    );
+  });
+
+  it('should cleanup event listeners on unmount', () => {
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+    const { unmount } = render(<FloatingParticles />);
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+  });
+
+  it('should cancel animation frame on unmount', () => {
+    const cancelAnimationFrameSpy = vi.spyOn(window, 'cancelAnimationFrame');
+    const { unmount } = render(<FloatingParticles />);
+
+    unmount();
+
+    expect(cancelAnimationFrameSpy).toHaveBeenCalled();
+  });
+
+  it('should start animation loop on mount', () => {
+    const requestAnimationFrameSpy = vi.spyOn(window, 'requestAnimationFrame');
+    render(<FloatingParticles />);
+
+    expect(requestAnimationFrameSpy).toHaveBeenCalled();
+  });
+
+  it('should have will-change optimization on particles', () => {
+    const { container } = render(<FloatingParticles />);
+
+    const circles = container.querySelectorAll('circle');
+    circles.forEach((circle) => {
+      const style = circle.getAttribute('style');
+      // Check for will-change with or without spaces
+      expect(style).toMatch(/will-change:\s*transform/);
+    });
+  });
+});
