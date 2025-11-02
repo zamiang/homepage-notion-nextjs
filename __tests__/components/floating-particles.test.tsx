@@ -1,7 +1,6 @@
+import FloatingParticles from '@/components/floating-particles';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-
-import FloatingParticles from '@/components/floating-particles';
 
 describe('FloatingParticles', () => {
   beforeEach(() => {
@@ -157,7 +156,6 @@ describe('FloatingParticles', () => {
       expect(r).toBeLessThanOrEqual(6);
     });
   });
-
 
   it('should cancel animation frame on unmount', () => {
     const cancelAnimationFrameSpy = vi.spyOn(window, 'cancelAnimationFrame');

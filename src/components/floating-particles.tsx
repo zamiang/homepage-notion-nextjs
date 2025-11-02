@@ -110,7 +110,9 @@ export default function FloatingParticles() {
           const avgFrameTime = frameTimesRef.current.reduce((a, b) => a + b, 0) / 60;
           const fps = 1000 / avgFrameTime;
           if (process.env.NODE_ENV === 'development') {
-            console.log(`[Particles] FPS: ${fps.toFixed(1)}, Avg frame time: ${avgFrameTime.toFixed(2)}ms`);
+            console.log(
+              `[Particles] FPS: ${fps.toFixed(1)}, Avg frame time: ${avgFrameTime.toFixed(2)}ms`,
+            );
           }
           frameTimesRef.current = [];
         }
