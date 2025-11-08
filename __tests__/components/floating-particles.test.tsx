@@ -110,13 +110,21 @@ describe('FloatingParticles', () => {
     });
   });
 
-  it('should apply theme-aware fill classes', () => {
+  it('should apply theme-aware colors using data attributes', () => {
     const { container } = render(<FloatingParticles />);
 
     const circles = container.querySelectorAll('circle');
     circles.forEach((circle) => {
-      expect(circle).toHaveClass('fill-foreground');
-      expect(circle).toHaveClass('dark:fill-accent');
+      // Should have data attributes for both light and dark colors
+      const lightColor = circle.getAttribute('data-light-color');
+      const darkColor = circle.getAttribute('data-dark-color');
+      expect(lightColor).toBeTruthy();
+      expect(darkColor).toBeTruthy();
+
+      // Should have fill color set (initially light mode)
+      const fill = circle.getAttribute('fill');
+      expect(fill).toBeTruthy();
+      expect(fill).toBe(lightColor); // Should start with light color
     });
   });
 
