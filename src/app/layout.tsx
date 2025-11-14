@@ -1,3 +1,4 @@
+import FloatingParticles from '@/components/floating-particles';
 import Layout from '@/components/layout';
 import { ThemeProvider } from '@/components/theme-provider';
 import { config } from '@/lib/config';
@@ -82,7 +83,8 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${serifFont.className} ${sansFont.className}`}>
+      <body className={`${serifFont.className} ${sansFont.className} bg-background`}>
+        <FloatingParticles />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
