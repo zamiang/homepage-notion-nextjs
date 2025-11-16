@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface Particle {
   id: number;
@@ -119,6 +120,7 @@ function initializeParticles(): Particle[] {
 
 export default function FloatingParticles() {
   const canvasRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname(); // Track route changes
   // Use lazy initializer to avoid setState in effect
   const [particles] = useState<Particle[]>(initializeParticles);
   const particlesRef = useRef<Particle[]>(particles);
@@ -127,6 +129,17 @@ export default function FloatingParticles() {
   const scrollVelocityRef = useRef(0);
   const frameTimesRef = useRef<number[]>([]);
   const lastFrameTimeRef = useRef<number>(0);
+
+  // Reset scroll position and velocity when route changes
+  useEffect(() => {
+    scrollYRef.current = 0;
+    scrollVelocityRef.current = 0;
+
+    // Reset particle velocities to prevent jolting
+    particlesRef.current.forEach((particle) => {
+      particle.velocityY = 0;
+    });
+  }, [pathname]);
 
   useEffect(() => {
     // Theme change handler - update particle colors based on dark mode
