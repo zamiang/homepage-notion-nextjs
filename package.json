@@ -75,7 +75,7 @@
     "react-syntax-highlighter": "16.1.0",
     "tsx": "4.20.6",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.46.4",
+    "typescript-eslint": "8.47.0",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "4.0.9"
   },
