@@ -62,7 +62,7 @@
     "@types/react-syntax-highlighter": "15.5.13",
     "@typescript-eslint/parser": "8.46.4",
     "@vitejs/plugin-react": "5.1.1",
-    "@vitest/coverage-istanbul": "4.0.9",
+    "@vitest/coverage-istanbul": "4.0.13",
     "@vitest/ui": "4.0.9",
     "dotenv": "17.2.3",
     "eslint": "9.39.1",
