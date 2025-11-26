@@ -23,6 +23,29 @@ describe('FloatingParticles', () => {
       value: 0,
     });
 
+    // Mock matchMedia for prefers-reduced-motion
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      configurable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+
+    // Mock document.hidden for visibility API
+    Object.defineProperty(document, 'hidden', {
+      writable: true,
+      configurable: true,
+      value: false,
+    });
+
     // Mock requestAnimationFrame - don't call callback to avoid infinite loop
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation(() => 1);
 
@@ -121,10 +144,10 @@ describe('FloatingParticles', () => {
       expect(lightColor).toBeTruthy();
       expect(darkColor).toBeTruthy();
 
-      // Should have fill color set (initially light mode)
-      const fill = circle.getAttribute('fill');
-      expect(fill).toBeTruthy();
-      expect(fill).toBe(lightColor); // Should start with light color
+      // Should have fill color set via style (initially light mode)
+      const style = circle.getAttribute('style');
+      expect(style).toContain('fill:');
+      expect(style).toContain(lightColor); // Should start with light color
     });
   });
 
