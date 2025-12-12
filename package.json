@@ -44,7 +44,7 @@
     "sitemap": "9.0.0",
     "slugify": "1.6.6",
     "tailwind-merge": "3.4.0",
-    "tailwindcss": "4.1.17"
+    "tailwindcss": "4.1.18"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.3",
