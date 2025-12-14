@@ -25,7 +25,7 @@
 - **Tests**: 221 tests (2 skipped), 75.79% coverage
 - **Build Time**: 1.7s (production, with Turbopack)
 - **Pages**: 38 static pages (19 photos, 13 posts, 6 utility)
-- **Node Version**: 22.x (minimum 20.9.0 for Next.js 16)
+- **Node Version**: 24.x (minimum 20.9.0 for Next.js 16)
 
 ### Architecture
 
