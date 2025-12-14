@@ -55,7 +55,6 @@ export const downloadImage = async (url: string) => {
     const download = fs.createWriteStream(dest);
     return await new Promise((resolve) => {
       file?.data.pipe(download);
-      // @ts-expect-error not useful function incompatibility
       download.on('close', resolve);
       download.on('error', console.error);
     });
