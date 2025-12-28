@@ -30,6 +30,7 @@ const components = {
   a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
     <a href={href}>{children}</a>
   ),
+  u: ({ children }: { children?: React.ReactNode }) => <span>{children}</span>,
   ul: ({ children }: { children?: React.ReactNode }) => <ul>{children}</ul>,
   ol: ({ children }: { children?: React.ReactNode }) => <ol>{children}</ol>,
   li: ({ children }: { children?: React.ReactNode }) => <li>{children}</li>,

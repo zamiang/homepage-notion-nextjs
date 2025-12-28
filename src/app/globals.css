@@ -1,7 +1,19 @@
+/* ==========================================================================
+   Global Styles
+   Organized into logical sections for maintainability
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS & TAILWIND CONFIGURATION
+   ========================================================================== */
+
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:is(.dark *));
+/* ==========================================================================
+   2. THEME CONFIGURATION
+   Maps CSS variables to Tailwind theme tokens
+   ========================================================================== */
 
 @theme inline {
   --font-size: var(--font-size);
@@ -22,50 +34,64 @@
   --color-primary: var(--primary);
 }
 
+/* ==========================================================================
+   3. CSS VARIABLES
+   ========================================================================== */
+
 :root {
+  /* Typography */
   --font-size: 16px;
+
+  /* Core Colors */
   --background: #f9f6f0;
   --foreground: #4b5673;
+
+  /* Primary */
   --primary: #5a6b8a;
   --primary-foreground: #f9f6f0;
+
+  /* Secondary */
   --secondary: #e8e2d5;
   --secondary-foreground: #3a4555;
+
+  /* Muted */
   --muted: #f2eee6;
   --muted-foreground: #6b7588;
-  --accent: #ffa726; /* Accent Color */
+
+  /* Accent */
+  --accent: #ffa726;
   --accent-foreground: #1a1c20;
+
+  /* UI Elements */
   --border: #ddd6c8;
   --input: #f2eee6;
   --card: #ffffff;
   --card-foreground: #4b5673;
+
+  /* Semantic Colors */
   --destructive: #c14242;
   --destructive-foreground: #f9f6f0;
   --success: #5a8a5f;
   --success-foreground: #f9f6f0;
 }
 
-.dark {
-  --background: #1a1c20;
-  --foreground: #c5c9d1;
-  --primary: #cad0db;
-  --primary-foreground: #1a1c20;
-  --secondary: #2a2d33;
-  --secondary-foreground: #b8bcc4;
-  --muted: #222529;
-  --muted-foreground: #8a8e96;
-  --accent: #ffa726; /* Accent Color */
-  --accent-foreground: #1a1c20;
-  --border: #363940;
-  --input: #2a2d33;
-  --card: #242731;
-  --card-foreground: #c5c9d1;
-  --destructive: #e85a5a;
-  --destructive-foreground: #1a1c20;
-  --success: #7bb584;
-  --success-foreground: #1a1c20;
-}
+/* ==========================================================================
+   4. BASE LAYER STYLES
+   ========================================================================== */
 
 @layer base {
+  /* --------------------------------------------------------------------------
+     5.1 Reset & Box Model
+     -------------------------------------------------------------------------- */
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* --------------------------------------------------------------------------
+     5.2 Document & Body
+     -------------------------------------------------------------------------- */
+
   body {
     @apply bg-background text-foreground;
   }
@@ -74,77 +100,53 @@
   body {
     margin: 0;
     font-family: var(--font-sans);
-    /* Make the text nice and crisp */
+    font-size: var(--font-size);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-primary);
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
-
-    /* Improve kerning for good measure */
-    text-rendering: optimizeLegibility;
-    color: var(--color-primary);
-    font-size: var(--font-size);
-    line-height: 1.5;
-    font-weight: 500;
+    -webkit-text-size-adjust: 100%;
   }
 
-  a {
-    color: inherit; /* CHANGED: Reverted to inherit text color */
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent); /* CHANGED: Underline is accent color */
-    transition: color 0.1s ease-in; /* ADDED: Smooth transition for hover */
-  }
-
-  a:hover {
-    color: var(--accent); /* CHANGED: Text becomes accent color on hover */
-    opacity: 1;
-  }
-
-  u {
-    text-decoration: none;
-  }
-
-  p {
-    background: rgb(from var(--background) r g b / 0.61);
-    border-radius: 4px;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
+  /* --------------------------------------------------------------------------
+     5.3 Typography - Headings
+     -------------------------------------------------------------------------- */
 
   h1 {
-    line-height: 1.27;
+    font-family: var(--font-serif);
     font-size: 2.986rem;
     font-weight: 700;
+    line-height: 1.27;
     display: block;
-    font-family: var(--font-serif);
     background: rgb(from var(--background) r g b / 0.61);
     border-radius: 4px;
   }
 
   h2 {
     font-family: var(--font-serif);
+    font-size: 2.488rem;
+    font-weight: bold;
     display: block;
     margin-block-start: 0.83em;
     margin-block-end: 0.83em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    font-weight: bold;
     margin-top: 1.5em;
     margin-bottom: 0.25em;
     text-indent: -0.05em;
     white-space: pre-wrap;
     word-break: break-word;
-    font-size: 2.488rem;
     background: rgb(from var(--background) r g b / 0.61);
     border-radius: 4px;
   }
 
   h3 {
     font-family: var(--font-serif);
-    margin-top: 1.75rem;
     font-size: 2.074rem;
     font-weight: 500;
+    margin-top: 1.75rem;
     margin-bottom: 0.25em;
     background: rgb(from var(--background) r g b / 0.61);
     border-radius: 4px;
@@ -152,86 +154,89 @@
 
   h4 {
     font-family: var(--font-serif);
-    margin-top: 1.1rem;
     font-size: 1.728rem;
     font-weight: 500;
+    margin-top: 1.1rem;
     margin-bottom: 0.25em;
     background: rgb(from var(--background) r g b / 0.61);
     border-radius: 4px;
   }
 
-  article {
-    width: 100%;
-    max-width: 680px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0px;
-    margin-bottom: 0px;
-  }
-
-  @media only screen and (max-width: 600px) {
-    article {
-      margin-top: 0px;
-      margin-bottom: 0px;
-    }
-  }
-
-  figure {
-    overflow: hidden;
-    position: relative;
-    box-sizing: border-box;
-    margin: 0px;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    max-width: 100%;
-  }
-
-  figure img {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  figcaption {
-    text-align: center;
-    padding: 6px 0 0;
-    color: var(--color-secondary);
-    line-height: 1.7;
-  }
-
-  /* Fix border colour for captions that contain links */
-  figcaption a {
-    opacity: 1;
-    border-color: var(--color-border);
-  }
-
-  blockquote {
-    display: block;
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-    padding-left: 1.5em;
-    border-left: 4px solid var(--accent); /* CHANGED: Use accent color */
-    line-height: 1.7;
-  }
+  /* --------------------------------------------------------------------------
+     5.4 Typography - Paragraphs & Text
+     -------------------------------------------------------------------------- */
 
   p {
-    min-height: 0px;
+    margin-bottom: 1.7em;
+    line-height: 1.7;
+    background: rgb(from var(--background) r g b / 0.61);
+    border-radius: 4px;
   }
+
+  /* Remove margin-bottom from last paragraph in sections */
+  p:last-child,
+  blockquote p:last-child,
+  li p:last-child {
+    margin-bottom: 0;
+  }
+
+  .excerpt {
+    line-height: 1.7;
+  }
+
+  .truncated-text {
+    overflow: hidden;
+    display: -webkit-box;
+    line-height: 1.8;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  /* --------------------------------------------------------------------------
+     5.5 Links
+     -------------------------------------------------------------------------- */
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    transition: color 0.1s ease-in;
+  }
+
+  a:hover {
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  /* Links inside images */
+  a img {
+    opacity: 1;
+    border-bottom: 1px solid transparent;
+  }
+
+  a img:hover {
+    opacity: 0.7;
+  }
+
+  /* --------------------------------------------------------------------------
+     5.6 Lists
+     -------------------------------------------------------------------------- */
 
   ul {
     margin: 2px 0;
+    margin-bottom: 0.5em;
+    padding-left: 1.25em;
     padding-inline-start: calc(1.5em + 4px);
     line-height: 1.5;
-    padding-left: 1.25em;
-    margin-bottom: 0.5em;
     list-style-type: disc;
   }
 
   ol {
     margin: 2px 0;
+    margin-bottom: 0.5em;
+    padding-left: 1.25em;
     padding-inline-start: calc(1.5em + 4px);
     line-height: 1.5;
-    padding-left: 1.25em;
-    margin-bottom: 0.5em;
     list-style-type: auto;
   }
 
@@ -244,23 +249,35 @@
   li a {
     color: inherit;
     text-decoration: none;
-    border-bottom: 1px solid var(--accent); /* CHANGED: Use accent color */
+    border-bottom: 1px solid var(--accent);
     opacity: 0.7;
     transition:
       border-color 0.1s ease-in,
       opacity 0.1s ease-in,
-      color 0.1s ease-in; /* ADDED: transition color */
+      color 0.1s ease-in;
   }
 
   li a:hover {
     opacity: 1;
-    color: var(--accent); /* ADDED: Match hover effect */
+    color: var(--accent);
   }
 
-  P {
+  /* --------------------------------------------------------------------------
+     5.7 Blockquotes
+     -------------------------------------------------------------------------- */
+
+  blockquote {
+    display: block;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.5em;
+    border-left: 4px solid var(--accent);
     line-height: 1.7;
-    border-radius: 4px;
   }
+
+  /* --------------------------------------------------------------------------
+     5.8 Code Blocks
+     -------------------------------------------------------------------------- */
 
   pre {
     color: var(--color-text-default);
@@ -279,8 +296,95 @@
     overflow: auto;
   }
 
+  /* --------------------------------------------------------------------------
+     5.9 Figures & Images
+     -------------------------------------------------------------------------- */
+
+  figure {
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    max-width: 100%;
+  }
+
+  figure img {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    text-align: center;
+    padding: 6px 0 0;
+    color: var(--color-secondary);
+    line-height: 1.7;
+  }
+
+  /* Fix border color for captions that contain links */
+  figcaption a {
+    opacity: 1;
+    border-color: var(--color-border);
+  }
+
+  /* --------------------------------------------------------------------------
+     5.10 Layout - Article
+     -------------------------------------------------------------------------- */
+
+  article {
+    width: 100%;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  /* --------------------------------------------------------------------------
+     5.11 Layout - Sections
+     -------------------------------------------------------------------------- */
+
+  .header {
+    text-align: center;
+  }
+
+  .section {
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+  }
+
+  .section:last-child {
+    border-bottom: 0px solid;
+  }
+
+  /* --------------------------------------------------------------------------
+     5.12 Layout - Columns
+     -------------------------------------------------------------------------- */
+
+  .column {
+    display: flex;
+    column-gap: 20px;
+    font-size: 0.9em;
+  }
+
+  .column div {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  /* --------------------------------------------------------------------------
+     5.13 Components - Post Cards
+     -------------------------------------------------------------------------- */
+
   .post {
     margin: 2em 0 3em;
+  }
+
+  .posts {
+    margin: 0 auto;
   }
 
   .next-post {
@@ -302,35 +406,18 @@
     text-decoration: line-through;
   }
 
-  .posts {
-    margin: 0 auto;
-  }
-
-  .header {
-    text-align: center;
-  }
-
-  .section {
-    padding-bottom: 32px;
-    margin-bottom: 32px;
-  }
-
-  .section:last-child {
-    border-bottom: 0px solid;
-  }
-
-  .excerpt {
-    line-height: 1.7;
-  }
+  /* --------------------------------------------------------------------------
+     5.14 Components - Buttons
+     -------------------------------------------------------------------------- */
 
   .next-button {
+    display: inline-block;
     padding: 0.5em;
+    margin-bottom: 0.5em;
     font-weight: bold;
     border-radius: 0.2em;
     background: var(--color-primary);
     color: var(--color-secondary);
-    margin-bottom: 0.5em;
-    display: inline-block;
     cursor: pointer;
   }
 
@@ -338,6 +425,24 @@
     text-decoration: underline;
     opacity: 0.8;
   }
+
+  /* --------------------------------------------------------------------------
+     5.15 Components - Profile
+     -------------------------------------------------------------------------- */
+
+  .profile-photo {
+    width: 180px;
+    height: 180px;
+    margin: 0px auto;
+    border-radius: 50%;
+    background-image: url('/about.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* --------------------------------------------------------------------------
+     5.16 Utilities - Dividers
+     -------------------------------------------------------------------------- */
 
   .divider {
     width: 60px;
@@ -353,44 +458,15 @@
     margin: 40px auto;
   }
 
-  .truncated-text {
-    overflow: hidden;
-    display: -webkit-box;
-    line-height: 1.8;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
+  /* --------------------------------------------------------------------------
+     5.17 Responsive - Mobile
+     -------------------------------------------------------------------------- */
 
-  a img {
-    opacity: 1;
-    border-bottom: 1px solid transparent;
-  }
-
-  a img:hover {
-    opacity: 0.7;
-  }
-
-  .profile-photo {
-    background-image: url('/about.jpg');
-    background-size: cover;
-    background-position: center;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-
-  .column {
-    display: flex;
-    column-gap: 20px;
-    font-size: 0.9em;
-  }
-
-  .column div {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+  @media only screen and (max-width: 600px) {
+    article {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
   }
 
   @media screen and (max-width: 630px) {

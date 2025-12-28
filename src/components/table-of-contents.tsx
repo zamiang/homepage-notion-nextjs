@@ -14,12 +14,16 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
 
   return (
     <nav className="toc mb-4 p-4 bg-muted rounded-lg">
-      <h2 className="text-lg" style={{ background: 'transparent' }}>
+      <h4 className="text-lg mt-0 pt-0" style={{ background: 'transparent' }}>
         Contents
-      </h2>
+      </h4>
       <ul className="space-y-1">
         {items.map((item) => (
-          <li key={item.id} className="text-muted-foreground" style={{ marginLeft: `${(item.level - minLevel) * 1}rem` }}>
+          <li
+            key={item.id}
+            className="text-muted-foreground"
+            style={{ marginLeft: `${(item.level - minLevel) * 1}rem` }}
+          >
             <a
               href={`#${item.id}`}
               className="text-muted-foreground hover:text-foreground transition-colors no-underline border-none"

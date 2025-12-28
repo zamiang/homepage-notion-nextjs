@@ -102,6 +102,6 @@ describe('TableOfContents', () => {
     render(<TableOfContents items={mockItems} />);
 
     const nav = screen.getByRole('navigation');
-    expect(nav).toHaveClass('toc', 'mb-8', 'p-4', 'bg-muted', 'rounded-lg');
+    expect(nav).toHaveClass('toc', 'mb-4', 'p-4', 'bg-muted', 'rounded-lg');
   });
 });
