@@ -40,7 +40,7 @@
 
 :root {
   /* Typography - Modern Professional Scale */
-  --font-size: 1.125rem;  /* 18px base for better readability */
+  --font-size: 1.125rem; /* 18px base for better readability */
 
   /* Core Colors - "The Slate Executive" Palette */
   --background: #f0f2f5; /* Cool Mist - pale grey-white */
@@ -116,7 +116,7 @@
 
   h1 {
     font-family: var(--font-serif);
-    font-size: 2.25rem;            /* 36px - post titles */
+    font-size: 2.25rem; /* 36px - post titles */
     font-weight: 700;
     line-height: 1.2;
     display: block;
@@ -128,7 +128,7 @@
 
   h2 {
     font-family: var(--font-serif);
-    font-size: 1.75rem;            /* 28px - major sections */
+    font-size: 1.75rem; /* 28px - major sections */
     font-weight: 600;
     display: block;
     margin-top: 2em;
@@ -142,7 +142,7 @@
 
   h3 {
     font-family: var(--font-serif);
-    font-size: 1.375rem;           /* 22px - subsections */
+    font-size: 1.375rem; /* 22px - subsections */
     font-weight: 600;
     margin-top: 1.5em;
     margin-bottom: 0.5em;
@@ -153,7 +153,7 @@
 
   h4 {
     font-family: var(--font-serif);
-    font-size: 1.125rem;           /* 18px - minor headings */
+    font-size: 1.125rem; /* 18px - minor headings */
     font-weight: 600;
     margin-top: 1.25em;
     margin-bottom: 0.5em;
@@ -164,7 +164,7 @@
 
   h5 {
     font-family: var(--font-serif);
-    font-size: 1rem;               /* 16px */
+    font-size: 1rem; /* 16px */
     font-weight: 600;
     margin-top: 1em;
     margin-bottom: 0.5em;
@@ -173,7 +173,7 @@
 
   h6 {
     font-family: var(--font-serif);
-    font-size: 0.875rem;           /* 14px */
+    font-size: 0.875rem; /* 14px */
     font-weight: 600;
     margin-top: 1em;
     margin-bottom: 0.5em;
