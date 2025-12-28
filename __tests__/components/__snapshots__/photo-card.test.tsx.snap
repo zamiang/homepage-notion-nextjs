@@ -3,17 +3,19 @@
 exports[`PhotoCard > should match snapshot with text hidden 1`] = `
 <div>
   <div
-    class="photo-card"
+    class="photo-card group"
   >
     <div
-      class="relative aspect-[1/1] w-full"
+      class="relative aspect-[1/1] w-full overflow-hidden rounded-sm"
     >
       <a
         aria-label="Test Photo Title"
+        class="block border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         href="/photos/test-photo"
       >
         <img
           alt="Test Photo Title"
+          class="transition-transform duration-300 ease-out group-hover:scale-[1.03]"
           data-nimg="fill"
           decoding="async"
           loading="lazy"
@@ -31,17 +33,19 @@ exports[`PhotoCard > should match snapshot with text hidden 1`] = `
 exports[`PhotoCard > should match snapshot with text visible 1`] = `
 <div>
   <div
-    class="photo-card"
+    class="photo-card group"
   >
     <div
-      class="relative aspect-[1/1] w-full"
+      class="relative aspect-[1/1] w-full overflow-hidden rounded-sm"
     >
       <a
         aria-label="Test Photo Title"
+        class="block border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         href="/photos/test-photo"
       >
         <img
           alt="Test Photo Title"
+          class="transition-transform duration-300 ease-out group-hover:scale-[1.03]"
           data-nimg="fill"
           decoding="async"
           loading="lazy"

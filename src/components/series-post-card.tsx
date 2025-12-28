@@ -34,7 +34,7 @@ export default function SeriesPostCard({
           Next
         </Link>
       )}
-      <h4 style={{ marginTop: 0 }}>
+      <h4 className="mt-0">
         <Link href={`/writing/${post.slug}`} aria-label={post.title}>
           {post.title}
         </Link>

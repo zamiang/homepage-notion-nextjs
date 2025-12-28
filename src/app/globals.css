@@ -241,12 +241,21 @@
     color: inherit;
     text-decoration: none;
     border-bottom: 1px solid var(--accent);
-    transition: color 0.1s ease-in;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease,
+      opacity 0.15s ease;
   }
 
   a:hover {
     color: var(--accent);
     opacity: 1;
+  }
+
+  a:focus-visible {
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 0 0 2px var(--accent);
   }
 
   /* Links inside images */
@@ -391,21 +400,20 @@
   }
 
   .section {
-    padding-bottom: 32px;
-    margin-bottom: 32px;
+    @apply pb-8 mb-8;
   }
 
   .section:last-child {
-    border-bottom: 0px solid;
+    @apply border-b-0;
   }
 
   /* Homepage sections - consistent vertical spacing */
   .homepage-section {
-    margin-top: 3rem;
+    @apply mt-12;
   }
 
   .homepage-section:first-child {
-    margin-top: 0;
+    @apply mt-0;
   }
 
   /* --------------------------------------------------------------------------
@@ -413,16 +421,15 @@
      -------------------------------------------------------------------------- */
 
   .column {
-    display: flex;
-    column-gap: 20px;
-    font-size: 0.9em;
+    @apply flex gap-5 text-sm;
   }
 
   .column div {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+    @apply flex-1 flex justify-start flex-col;
+  }
+
+  .prose .column p {
+    @apply !mb-0;
   }
 
   /* --------------------------------------------------------------------------
@@ -430,31 +437,27 @@
      -------------------------------------------------------------------------- */
 
   .post {
-    margin: 1.5em 0;
+    @apply my-6;
   }
 
   .post-meta {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    @apply flex items-center gap-4;
   }
 
   .post-meta p {
-    margin: 0;
-    background: none;
+    @apply m-0 bg-transparent;
   }
 
   .post-date {
-    color: var(--foreground);
+    @apply text-foreground;
   }
 
   .post-reading-time {
-    color: var(--muted-foreground);
+    @apply text-muted-foreground;
   }
 
   .post-title {
-    margin-top: 0.25em;
-    margin-bottom: 0.5em;
+    @apply mt-1 mb-2;
   }
 
   .posts {
@@ -462,36 +465,37 @@
   }
 
   .next-post {
-    background: var(--color-secondary);
-    padding: 2em;
+    @apply bg-secondary text-secondary-foreground p-8 rounded-lg;
+  }
+
+  .next-post h4,
+  .next-post p {
+    @apply bg-transparent;
   }
 
   .current-post {
-    opacity: 0.8;
-    text-decoration: line-through;
+    @apply opacity-80 line-through;
   }
 
   .future-post {
-    opacity: 0.8;
+    @apply opacity-80;
   }
 
   .past-post {
-    opacity: 0.8;
-    text-decoration: line-through;
+    @apply opacity-80 line-through;
   }
 
   /* Photo Cards */
   .photo-card {
-    margin-bottom: 1em;
+    @apply mb-4;
   }
 
   .photo-card-date {
-    margin: 0.5em 0 0;
-    background: none;
+    @apply mt-2 mb-0 bg-transparent text-muted-foreground text-sm;
   }
 
   .photo-card-title {
-    margin: 0.25em 0 0;
+    @apply mt-1 mb-0;
   }
 
   /* --------------------------------------------------------------------------
@@ -499,19 +503,11 @@
      -------------------------------------------------------------------------- */
 
   .next-button {
-    display: inline-block;
-    padding: 0.5em;
-    margin-bottom: 0.5em;
-    font-weight: bold;
-    border-radius: 0.2em;
-    background: var(--color-primary);
-    color: var(--color-secondary);
-    cursor: pointer;
+    @apply inline-block px-3 py-2 mb-2 font-bold rounded bg-primary text-primary-foreground cursor-pointer border-none transition-opacity duration-150;
   }
 
   .next-button:hover {
-    text-decoration: underline;
-    opacity: 0.8;
+    @apply underline opacity-80;
   }
 
   /* --------------------------------------------------------------------------
@@ -519,13 +515,8 @@
      -------------------------------------------------------------------------- */
 
   .profile-photo {
-    width: 180px;
-    height: 180px;
-    margin: 0px auto;
-    border-radius: 50%;
+    @apply w-44 h-44 mx-auto rounded-full bg-cover bg-center;
     background-image: url('/about.jpg');
-    background-size: cover;
-    background-position: center;
   }
 
   /* --------------------------------------------------------------------------
@@ -533,17 +524,11 @@
      -------------------------------------------------------------------------- */
 
   .divider {
-    width: 60px;
-    height: 1px;
-    border-top: 1px solid var(--color-border);
-    margin: 0.5em 0 1.5em;
+    @apply w-16 h-px border-t border-border mt-2 mb-6;
   }
 
   .center-divider {
-    width: 60px;
-    height: 1px;
-    border-top: 1px solid var(--color-border);
-    margin: 40px auto;
+    @apply w-16 h-px border-t border-border my-10 mx-auto;
   }
 
   /* --------------------------------------------------------------------------

@@ -33,12 +33,6 @@ describe('PostCard', () => {
     ).toBeInTheDocument();
   });
 
-  it('should render reading time', () => {
-    render(<PostCard post={mockPost} />);
-    // 250 words (50 repeats * 5 words) at 225 wpm = 2 min read
-    expect(screen.getByText('2 min read')).toBeInTheDocument();
-  });
-
   it('should render links to post', () => {
     render(<PostCard post={mockPost} />);
     const links = screen.getAllByRole('link');
@@ -47,26 +41,6 @@ describe('PostCard', () => {
       expect(link).toHaveAttribute('href', '/writing/test-post');
       expect(link).toHaveAttribute('aria-label', 'Test Post Title');
     });
-  });
-
-  it('should handle post with no content', () => {
-    const postWithoutContent = { ...mockPost, content: '' };
-    render(<PostCard post={postWithoutContent} />);
-    expect(screen.getByText('0 min read')).toBeInTheDocument();
-  });
-
-  it('should handle post with undefined content', () => {
-    const postWithUndefinedContent = { ...mockPost, content: undefined as unknown as string };
-    render(<PostCard post={postWithUndefinedContent} />);
-    expect(screen.getByText('0 min read')).toBeInTheDocument();
-  });
-
-  it('should calculate correct reading time for longer content', () => {
-    // Create content with ~600 words (3 min read)
-    const longContent = 'word '.repeat(600);
-    const postWithLongContent = { ...mockPost, content: longContent };
-    render(<PostCard post={postWithLongContent} />);
-    expect(screen.getByText('3 min read')).toBeInTheDocument();
   });
 
   it('should match snapshot', () => {

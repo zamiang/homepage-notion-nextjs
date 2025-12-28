@@ -17,33 +17,29 @@ export default function Layout({ children }: LayoutProps) {
               <Link
                 href="/"
                 className="flex items-center text-md text-foreground border-none text-sm"
-                style={{ borderStyle: 'none' }}
               >
                 Brennan Moore
               </Link>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex invisible md:visible">
-                <Link href="/#work" className="flex items-center text-md text-foreground text-sm ">
-                  Work
-                </Link>
-              </div>
-              <div className="flex invisible md:visible">
-                <Link
-                  href="/#writing"
-                  className="flex items-center text-md text-foreground text-sm "
-                >
-                  Writing
-                </Link>
-              </div>
-              <div className="flex invisible md:visible">
-                <Link
-                  href="/#photography"
-                  className="flex items-center text-md text-foreground text-sm"
-                >
-                  Photography
-                </Link>
-              </div>
+            <div className="hidden md:flex items-center gap-4">
+              <Link
+                href="/#work"
+                className="text-foreground text-sm border-none hover:text-accent transition-colors duration-150"
+              >
+                Work
+              </Link>
+              <Link
+                href="/#writing"
+                className="text-foreground text-sm border-none hover:text-accent transition-colors duration-150"
+              >
+                Writing
+              </Link>
+              <Link
+                href="/#photography"
+                className="text-foreground text-sm border-none hover:text-accent transition-colors duration-150"
+              >
+                Photography
+              </Link>
             </div>
           </div>
         </nav>
