@@ -39,40 +39,40 @@
    ========================================================================== */
 
 :root {
-  /* Typography */
-  --font-size: 16px;
+  /* Typography - Modern Professional Scale */
+  --font-size: 1.125rem;  /* 18px base for better readability */
 
   /* Core Colors - "The Slate Executive" Palette */
-  --background: #F0F2F5;           /* Cool Mist - pale grey-white */
-  --foreground: #2C333A;           /* Deep Charcoal Blue - main text */
+  --background: #f0f2f5; /* Cool Mist - pale grey-white */
+  --foreground: #2c333a; /* Deep Charcoal Blue - main text */
 
   /* Primary - Steel Blue (headers/branding) */
-  --primary: #5A7684;
-  --primary-foreground: #F0F2F5;
+  --primary: #5a7684;
+  --primary-foreground: #f0f2f5;
 
   /* Secondary - Dusty Teal (buttons/links) */
-  --secondary: #E3E7EB;            /* Lighter mist for secondary surfaces */
-  --secondary-foreground: #2C333A;
+  --secondary: #e3e7eb; /* Lighter mist for secondary surfaces */
+  --secondary-foreground: #2c333a;
 
   /* Muted */
-  --muted: #E8EAED;                /* Slightly darker than background */
-  --muted-foreground: #5A6570;     /* Softer charcoal */
+  --muted: #e8eaed; /* Slightly darker than background */
+  --muted-foreground: #5a6570; /* Softer charcoal */
 
   /* Accent - Dusty Teal */
-  --accent: #749CA8;
-  --accent-foreground: #2C333A;
+  --accent: #749ca8;
+  --accent-foreground: #2c333a;
 
   /* UI Elements */
-  --border: #D1D5DB;               /* Cool grey border */
-  --input: #E8EAED;
-  --card: #FFFFFF;
-  --card-foreground: #2C333A;
+  --border: #d1d5db; /* Cool grey border */
+  --input: #e8eaed;
+  --card: #ffffff;
+  --card-foreground: #2c333a;
 
   /* Semantic Colors */
-  --destructive: #B44D4D;          /* Muted red */
-  --destructive-foreground: #F0F2F5;
-  --success: #5A8A6B;              /* Muted teal-green */
-  --success-foreground: #F0F2F5;
+  --destructive: #b44d4d; /* Muted red */
+  --destructive-foreground: #f0f2f5;
+  --success: #5a8a6b; /* Muted teal-green */
+  --success-foreground: #f0f2f5;
 }
 
 /* ==========================================================================
@@ -116,26 +116,24 @@
 
   h1 {
     font-family: var(--font-serif);
-    font-size: 2.986rem;
+    font-size: 2.25rem;            /* 36px - post titles */
     font-weight: 700;
-    line-height: 1.27;
+    line-height: 1.2;
     display: block;
+    margin-top: 0;
+    margin-bottom: 0.5em;
     background: rgb(from var(--background) r g b / 0.61);
     border-radius: 4px;
   }
 
   h2 {
     font-family: var(--font-serif);
-    font-size: 2.488rem;
-    font-weight: bold;
+    font-size: 1.75rem;            /* 28px - major sections */
+    font-weight: 600;
     display: block;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    margin-top: 1.5em;
-    margin-bottom: 0.25em;
-    text-indent: -0.05em;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
     white-space: pre-wrap;
     word-break: break-word;
     background: rgb(from var(--background) r g b / 0.61);
@@ -144,22 +142,65 @@
 
   h3 {
     font-family: var(--font-serif);
-    font-size: 2.074rem;
-    font-weight: 500;
-    margin-top: 1.75rem;
-    margin-bottom: 0.25em;
+    font-size: 1.375rem;           /* 22px - subsections */
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
     background: rgb(from var(--background) r g b / 0.61);
     border-radius: 4px;
   }
 
   h4 {
     font-family: var(--font-serif);
-    font-size: 1.728rem;
-    font-weight: 500;
-    margin-top: 1.1rem;
-    margin-bottom: 0.25em;
+    font-size: 1.125rem;           /* 18px - minor headings */
+    font-weight: 600;
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
     background: rgb(from var(--background) r g b / 0.61);
     border-radius: 4px;
+  }
+
+  h5 {
+    font-family: var(--font-serif);
+    font-size: 1rem;               /* 16px */
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+  }
+
+  h6 {
+    font-family: var(--font-serif);
+    font-size: 0.875rem;           /* 14px */
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    color: var(--muted-foreground);
+  }
+
+  /* Section headings - used for major page sections */
+  .heading {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  /* Subsection headings - used for items within sections */
+  .subsection {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
+
+  /* Tagline - intro text styled like a heading but semantically a paragraph */
+  .tagline {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--muted-foreground);
+    margin-bottom: 0;
   }
 
   /* --------------------------------------------------------------------------
@@ -358,6 +399,15 @@
     border-bottom: 0px solid;
   }
 
+  /* Homepage sections - consistent vertical spacing */
+  .homepage-section {
+    margin-top: 3rem;
+  }
+
+  .homepage-section:first-child {
+    margin-top: 0;
+  }
+
   /* --------------------------------------------------------------------------
      4.12 Layout - Columns
      -------------------------------------------------------------------------- */
@@ -380,7 +430,31 @@
      -------------------------------------------------------------------------- */
 
   .post {
-    margin: 2em 0 3em;
+    margin: 1.5em 0;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .post-meta p {
+    margin: 0;
+    background: none;
+  }
+
+  .post-date {
+    color: var(--foreground);
+  }
+
+  .post-reading-time {
+    color: var(--muted-foreground);
+  }
+
+  .post-title {
+    margin-top: 0.25em;
+    margin-bottom: 0.5em;
   }
 
   .posts {
@@ -404,6 +478,20 @@
   .past-post {
     opacity: 0.8;
     text-decoration: line-through;
+  }
+
+  /* Photo Cards */
+  .photo-card {
+    margin-bottom: 1em;
+  }
+
+  .photo-card-date {
+    margin: 0.5em 0 0;
+    background: none;
+  }
+
+  .photo-card-title {
+    margin: 0.25em 0 0;
   }
 
   /* --------------------------------------------------------------------------
@@ -448,7 +536,7 @@
     width: 60px;
     height: 1px;
     border-top: 1px solid var(--color-border);
-    margin: 20px 0 0;
+    margin: 0.5em 0 1.5em;
   }
 
   .center-divider {

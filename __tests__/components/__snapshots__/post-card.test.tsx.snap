@@ -6,27 +6,21 @@ exports[`PostCard > should match snapshot 1`] = `
     class="post"
   >
     <div
-      class="flex items-center gap-4"
+      class="post-meta"
     >
-      <div
-        class="flex items-center gap-1.5"
+      <p
+        class="post-date"
       >
-        <p>
-          Jun 14, 2023
-        </p>
-      </div>
-      <div
-        class="flex items-center gap-1.5"
+        Jun 14, 2023
+      </p>
+      <p
+        class="post-reading-time"
       >
-        <p
-          class="text-muted-foreground"
-        >
-          2 min read
-        </p>
-      </div>
+        2 min read
+      </p>
     </div>
-    <h4
-      style="margin-top: 0px;"
+    <h3
+      class="post-title"
     >
       <a
         aria-label="Test Post Title"
@@ -34,7 +28,7 @@ exports[`PostCard > should match snapshot 1`] = `
       >
         Test Post Title
       </a>
-    </h4>
+    </h3>
     <p
       class="truncated-text"
     >

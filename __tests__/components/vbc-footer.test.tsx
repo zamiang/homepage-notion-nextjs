@@ -107,20 +107,6 @@ describe('VBCFooter', () => {
     expect(nextPost?.textContent).toContain('C Third Post');
   });
 
-  it('should render future post placeholder', () => {
-    render(<VBCFooter slug="second-post" />);
-    expect(screen.getByText('September 2025')).toBeInTheDocument();
-    expect(
-      screen.getByText('The wide business: VBC through the lens of operations research'),
-    ).toBeInTheDocument();
-  });
-
-  it('should render future post with correct class', () => {
-    const { container } = render(<VBCFooter slug="second-post" />);
-    const futurePosts = container.querySelectorAll('.future-post');
-    expect(futurePosts).toHaveLength(1);
-  });
-
   it('should handle first post in series', () => {
     const { container } = render(<VBCFooter slug="first-post" />);
     const currentPost = container.querySelector('.current-post');

@@ -9,7 +9,7 @@ import {
 import { slugify } from '@/lib/toc';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import React, { isValidElement, ReactNode } from 'react';
+import React, { ReactNode, isValidElement } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 

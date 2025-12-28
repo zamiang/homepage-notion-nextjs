@@ -1,4 +1,4 @@
-import { extractHeadings, slugify, TocItem } from '@/lib/toc';
+import { TocItem, extractHeadings, slugify } from '@/lib/toc';
 import { describe, expect, it } from 'vitest';
 
 describe('toc.ts', () => {

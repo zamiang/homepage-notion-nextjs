@@ -3,7 +3,7 @@
 exports[`PhotoCard > should match snapshot with text hidden 1`] = `
 <div>
   <div
-    class="gridItem"
+    class="photo-card"
   >
     <div
       class="relative aspect-[1/1] w-full"
@@ -31,7 +31,7 @@ exports[`PhotoCard > should match snapshot with text hidden 1`] = `
 exports[`PhotoCard > should match snapshot with text visible 1`] = `
 <div>
   <div
-    class="gridItem"
+    class="photo-card"
   >
     <div
       class="relative aspect-[1/1] w-full"
@@ -53,20 +53,20 @@ exports[`PhotoCard > should match snapshot with text visible 1`] = `
       </a>
     </div>
     <p
-      style="margin-top: 0px; padding-bottom: 0px;"
+      class="photo-card-date"
     >
       Aug 19, 2023
     </p>
-    <a
-      aria-label="Test Photo Title"
-      href="/photos/test-photo"
+    <h3
+      class="photo-card-title"
     >
-      <h4
-        style="margin-top: 0px;"
+      <a
+        aria-label="Test Photo Title"
+        href="/photos/test-photo"
       >
         Test Photo Title
-      </h4>
-    </a>
+      </a>
+    </h3>
   </div>
 </div>
 `;

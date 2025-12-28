@@ -193,8 +193,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     const sectionText =
       section?.type === 'select' && section.select ? section.select.name : undefined;
 
-    const showToc =
-      showTocProp?.type === 'checkbox' ? showTocProp.checkbox : undefined;
+    const showToc = showTocProp?.type === 'checkbox' ? showTocProp.checkbox : undefined;
 
     const excerptText =
       excerpt.type === 'rich_text' && excerpt.rich_text[0]?.plain_text

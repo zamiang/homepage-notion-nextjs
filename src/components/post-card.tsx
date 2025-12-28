@@ -12,19 +12,15 @@ export default function PostCard({ post }: PostCardProps) {
   const readingTime = calculateReadingTime(wordCount);
   return (
     <div className="post">
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1.5">
-          <p>{format(new Date(post.date), 'MMM d, yyyy')}</p>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <p className="text-muted-foreground">{readingTime}</p>
-        </div>
+      <div className="post-meta">
+        <p className="post-date">{format(new Date(post.date), 'MMM d, yyyy')}</p>
+        <p className="post-reading-time">{readingTime}</p>
       </div>
-      <h4 style={{ marginTop: 0 }}>
+      <h3 className="post-title">
         <Link href={`/writing/${post.slug}`} aria-label={post.title}>
           {post.title}
         </Link>
-      </h4>
+      </h3>
       <p className="truncated-text">{post.excerpt}</p>
     </div>
   );
