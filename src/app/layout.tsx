@@ -1,6 +1,5 @@
 import FloatingParticles from '@/components/floating-particles';
 import Layout from '@/components/layout';
-import { ThemeProvider } from '@/components/theme-provider';
 import { config } from '@/lib/config';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -74,25 +73,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  themeColor: '#F0F2F5',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={`${serifFont.className} ${sansFont.className} bg-background`}>
         <FloatingParticles />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Layout>{children}</Layout>
-        </ThemeProvider>
+        <Layout>{children}</Layout>
         <SpeedInsights />
         <Analytics />
       </body>

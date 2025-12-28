@@ -214,4 +214,70 @@ describe('FloatingParticles', () => {
       expect(style).toMatch(/will-change:\s*transform/);
     });
   });
+
+  describe('Reduced motion preference', () => {
+    it('should handle prefers-reduced-motion', () => {
+      // Mock prefers-reduced-motion: reduce
+      Object.defineProperty(window, 'matchMedia', {
+        writable: true,
+        configurable: true,
+        value: vi.fn().mockImplementation((query: string) => ({
+          matches: query === '(prefers-reduced-motion: reduce)',
+          media: query,
+          onchange: null,
+          addListener: vi.fn(),
+          removeListener: vi.fn(),
+          addEventListener: vi.fn(),
+          removeEventListener: vi.fn(),
+          dispatchEvent: vi.fn(),
+        })),
+      });
+
+      const { container } = render(<FloatingParticles />);
+      // Component should still render but may have reduced animation
+      expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('Document visibility', () => {
+    it('should handle document being hidden', () => {
+      // Mock document.hidden = true
+      Object.defineProperty(document, 'hidden', {
+        writable: true,
+        configurable: true,
+        value: true,
+      });
+
+      const { container } = render(<FloatingParticles />);
+      // Component should still render
+      expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('Window resize', () => {
+    it('should handle window resize events', () => {
+      const { container } = render(<FloatingParticles />);
+
+      // Simulate resize
+      Object.defineProperty(window, 'innerWidth', { value: 800, configurable: true });
+      Object.defineProperty(window, 'innerHeight', { value: 600, configurable: true });
+      window.dispatchEvent(new Event('resize'));
+
+      // Component should still be rendered
+      expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('Scroll handling', () => {
+    it('should handle scroll events', () => {
+      const { container } = render(<FloatingParticles />);
+
+      // Simulate scroll
+      Object.defineProperty(window, 'scrollY', { value: 500, configurable: true });
+      window.dispatchEvent(new Event('scroll'));
+
+      // Component should still be rendered
+      expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
+    });
+  });
 });

@@ -74,20 +74,6 @@ exports[`VBCFooter > should match snapshot 1`] = `
           Third VBC post.
         </p>
       </div>
-      <div
-        class="post future-post"
-      >
-        <div
-          class="next-button"
-        >
-          September 2025
-        </div>
-        <h4
-          style="margin-top: 0px;"
-        >
-          The wide business: VBC through the lens of operations research
-        </h4>
-      </div>
     </div>
   </div>
 </div>

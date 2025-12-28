@@ -22,7 +22,6 @@ export default function PostsFooter(params: { slug: string }) {
       <div className="">
         <h2 className="heading">Recommended Photos</h2>
         <div className="divider"></div>
-        <br />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredPhotos.map((post) => (
             <PhotoCard key={post.id} post={post} />

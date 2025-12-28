@@ -6,13 +6,13 @@ import { config } from '@/lib/config';
 import {
   getAllSectionPostsFromCache,
   getPhotosFromCache,
-  getVBCSectionPostsPostsFromCache,
+  getVBCSectionPostsFromCache,
 } from '@/lib/notion';
 
 export default function Home() {
   const posts = getAllSectionPostsFromCache();
   const photos = getPhotosFromCache();
-  const vbcPosts = getVBCSectionPostsPostsFromCache().sort((a, b) => (a.title > b.title ? 1 : -1));
+  const vbcPosts = getVBCSectionPostsFromCache().sort((a, b) => (a.title > b.title ? 1 : -1));
 
   const siteUrl = config.site.url;
 
@@ -59,8 +59,8 @@ export default function Home() {
       <article>
         <header className="header">
           <div className="profile-photo"></div>
-          <h2>Hi, I&apos;m Brennan.</h2>
-          <h3>I build innovative digital products people love.</h3>
+          <h1>Hi, I&apos;m Brennan.</h1>
+          <p className="tagline">I build innovative digital products people love.</p>
           <div className="center-divider"></div>
         </header>
         <div className="section">
@@ -72,7 +72,7 @@ export default function Home() {
             creating small empowered teams that grow the business.
           </p>
           <div className="center-divider"></div>
-          <h4 style={{ marginTop: 0 }}>Currently: Consulting</h4>
+          <h3 className="subsection">Currently: Consulting</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <i>Latest photos</i>
@@ -86,11 +86,10 @@ export default function Home() {
           <div className="center-divider" id="work"></div>
           <h2 className="heading">Work</h2>
           <div className="divider"></div>
-          <br />
           <time className="text-muted-foreground">2022-2025</time>
-          <h4 style={{ marginTop: 0 }}>
+          <h3 className="subsection">
             <a href="https://www.firsthandcares.com">firsthand cares</a>
-          </h4>
+          </h3>
           <p>
             As CTO at firsthand, I grew the tech team from 3 to 25 people so we could handle larger
             projects and more payer integrations. I led the effort to get our HITRUST r2
@@ -105,10 +104,10 @@ export default function Home() {
             that accelerated our ability to deliver value.
           </p>
           <div className="center-divider"></div>
-          <p>2022</p>
-          <h4 style={{ marginTop: 0 }}>
+          <time className="text-muted-foreground">2022</time>
+          <h3 className="subsection">
             <a href="https://version-one.kelp.nyc/">Kelp</a>
-          </h4>
+          </h3>
           <p>
             I founded Kelp to solve a complex problem: getting people the right information at the
             right time. As a solo founder, I independently designed, built, and launched the
@@ -121,9 +120,9 @@ export default function Home() {
           </p>
           <div className="center-divider"></div>
           <time className="text-muted-foreground">2017-2021</time>
-          <h4 style={{ marginTop: 0 }}>
+          <h3 className="subsection">
             <a href="https://www.cityblock.com/">Cityblock Health</a>
-          </h4>
+          </h3>
           <p>
             I was a founding team member at Cityblock Health, which started at Alphabet&apos;s
             Sidewalk Labs. I focused on building the company&apos;s main software systems. This
@@ -134,9 +133,9 @@ export default function Home() {
           </p>
           <div className="center-divider"></div>
           <time className="text-muted-foreground">2015</time>
-          <h4 style={{ marginTop: 0 }}>
+          <h3 className="subsection">
             <a href="https://www.motivateco.com/">Motivate</a>
-          </h4>
+          </h3>
           <p>
             At Motivate, I was the engineering lead for the software that ran bike share systems in
             10 cities, including New York&apos;s Citi Bike. I led the company&apos;s first project
@@ -146,9 +145,9 @@ export default function Home() {
           </p>
           <div className="center-divider"></div>
           <time className="text-muted-foreground">2011-2014</time>
-          <h4 style={{ marginTop: 0 }}>
+          <h3 className="subsection">
             <a href="https://artsy.net/">Artsy</a>
-          </h4>
+          </h3>
           <p>
             I was the tech lead manager for the web engineering team at Artsy. My team handled the
             public website&apos;s architecture and performance. I led several major technical
@@ -157,14 +156,14 @@ export default function Home() {
             art fairs, which became important products for Artsy&apos;s business.
           </p>
         </div>
-        <div className="" id="writing">
+        <div className="homepage-section" id="writing">
           <h2 className="heading">Writing</h2>
           <div className="divider"></div>
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-        <div className="" id="vbc">
+        <div className="homepage-section" id="vbc">
           <h2 className="heading">{VBC_TITLE}</h2>
           <p>{VBC_DESCRIPTION}</p>
           <div className="divider"></div>
@@ -177,27 +176,19 @@ export default function Home() {
               isNext={false}
             />
           ))}
-          <div className={['post', 'future-post'].join(' ')}>
-            <div className="next-button">September 2025</div>
-            <h4 style={{ marginTop: 0 }}>
-              The wide business: VBC through the lens of operations research
-            </h4>
-          </div>
         </div>
-        <div className="" id="photography">
+        <div className="homepage-section" id="photography">
           <h2 className="heading">Photography</h2>
           <div className="divider"></div>
-          <br />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {photos.map((post) => (
               <PhotoCard key={post.id} post={post} />
             ))}
           </div>
         </div>
-        <div className="gap-8" id="publications">
+        <div className="homepage-section" id="publications">
           <h2 className="heading">Publications</h2>
           <div className="divider"></div>
-          <br />
           <ul>
             <li>
               <h4>

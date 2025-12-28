@@ -1,9 +1,11 @@
 import { VBC_TITLE } from '@/components/consts';
 import PostLayout from '@/components/post-layout';
 import PostsFooter from '@/components/posts-footer';
+import TableOfContents from '@/components/table-of-contents';
 import VBCFooter from '@/components/vbc-footer';
 import { getPostsFromCache, getWordCount } from '@/lib/notion';
 import { generateJsonLd, generatePostMetadata, generatePostStaticParams } from '@/lib/page-utils';
+import { extractHeadings } from '@/lib/toc';
 import { calculateReadingTime } from '@/lib/utils';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -33,6 +35,11 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const wordCount = getWordCount(post.content);
   const jsonLd = generateJsonLd(post, 'writing');
+
+  // Extract headings for TOC only if showToc is enabled
+  const tocItems = post.showToc ? extractHeadings(post.content) : [];
+  const tocContent =
+    post.showToc && tocItems.length >= 3 ? <TableOfContents items={tocItems} /> : null;
 
   const headerContent = (
     <>
@@ -68,6 +75,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <PostLayout
         post={post}
         headerContent={headerContent}
+        tocContent={tocContent}
         footerContent={footerContent}
         subHeaderContent={subHeaderContent}
       />

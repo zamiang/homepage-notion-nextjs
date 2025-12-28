@@ -3,16 +3,25 @@ import React from 'react';
 
 const Footer = () => (
   <footer className="border-t p-4 border-border">
-    <div className="text-center text-muted-foreground">
-      <Link href="https://www.instagram.com/zamiang">Instagram</Link>
+    <div className="text-center text-muted-foreground text-sm">
+      <Link className="no-underline border-none" href="https://www.instagram.com/zamiang">
+        Instagram
+      </Link>
       {' · '}
-      <Link href="/rss.xml">RSS</Link>
+      <Link className="no-underline border-none" href="/rss.xml">
+        RSS
+      </Link>
       {' · '}
-      <Link href="https://github.com/zamiang/homepage-notion-nextjs">Source</Link>
+      <Link
+        className="no-underline border-none"
+        href="https://github.com/zamiang/homepage-notion-nextjs"
+      >
+        Source
+      </Link>
     </div>
-    <p className="text-center text-muted-foreground">
+    <p className="text-center text-muted-foreground text-sm">
       {'Copyright © '}
-      <Link href="/" style={{ margin: 0 }}>
+      <Link className="no-underline border-none" href="/" style={{ margin: 0 }}>
         Brennan Moore
       </Link>{' '}
       {new Date().getFullYear()}

@@ -11,7 +11,7 @@ interface PostCardProps {
 
 export default function PhotoCard({ post, shouldHideText, priority = false }: PostCardProps) {
   return (
-    <div className="gridItem">
+    <div className="photo-card">
       <div className="relative aspect-[1/1] w-full">
         <Link href={`/photos/${post.slug}`} aria-label={post.title}>
           <Image
@@ -25,14 +25,14 @@ export default function PhotoCard({ post, shouldHideText, priority = false }: Po
         </Link>
       </div>
       {!shouldHideText && (
-        <p style={{ marginTop: 0, paddingBottom: 0 }}>
-          {format(new Date(post.date), 'MMM d, yyyy')}
-        </p>
+        <p className="photo-card-date">{format(new Date(post.date), 'MMM d, yyyy')}</p>
       )}
       {!shouldHideText && (
-        <Link href={`/photos/${post.slug}`} aria-label={post.title}>
-          <h4 style={{ marginTop: 0, display: 'inline-blockm' }}>{post.title}</h4>
-        </Link>
+        <h3 className="photo-card-title">
+          <Link href={`/photos/${post.slug}`} aria-label={post.title}>
+            {post.title}
+          </Link>
+        </h3>
       )}
     </div>
   );

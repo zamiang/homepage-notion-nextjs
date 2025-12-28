@@ -88,7 +88,9 @@ export function generateJsonLd(post: Post, type: PostType) {
       caption: post.title,
     },
     datePublished: new Date(post.date).toISOString(),
-    dateModified: new Date(post.date).toISOString(),
+    dateModified: post.dateModified
+      ? new Date(post.dateModified).toISOString()
+      : new Date(post.date).toISOString(),
     author: {
       '@type': 'Person',
       name: post.author,

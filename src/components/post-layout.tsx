@@ -10,6 +10,7 @@ interface PostLayoutProps {
   post: Post;
   headerContent?: React.ReactNode;
   subHeaderContent?: React.ReactNode;
+  tocContent?: React.ReactNode;
   footerContent?: React.ReactNode;
 }
 
@@ -17,6 +18,7 @@ export default function PostLayout({
   post,
   headerContent,
   subHeaderContent,
+  tocContent,
   footerContent,
 }: PostLayoutProps) {
   return (
@@ -32,6 +34,7 @@ export default function PostLayout({
           <div className="excerpt text-muted-foreground">{post.excerpt}</div>
           <div className="divider"></div>
         </header>
+        {tocContent}
         <div className="max-w-none">
           <ReactMarkdown
             components={components}

@@ -3,6 +3,7 @@ import { NextConfig } from 'next';
 const { createSecureHeaders } = require('next-secure-headers');
 
 const nextConfig: NextConfig = {
+  reactCompiler: true,
   images: {
     minimumCacheTTL: 2678400, // Cache for 30 days
     formats: ['image/webp', 'image/avif'], // Prioritize modern formats

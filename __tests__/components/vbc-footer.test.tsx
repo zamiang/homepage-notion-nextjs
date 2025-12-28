@@ -9,7 +9,7 @@ vi.mock('@/lib/notion', async () => {
   const actual = await vi.importActual<typeof notionModule>('@/lib/notion');
   return {
     ...actual,
-    getVBCSectionPostsPostsFromCache: vi.fn(),
+    getVBCSectionPostsFromCache: vi.fn(),
   };
 });
 
@@ -52,7 +52,7 @@ const mockVBCPosts: Post[] = [
 describe('VBCFooter', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(notionModule.getVBCSectionPostsPostsFromCache).mockReturnValue(mockVBCPosts);
+    vi.mocked(notionModule.getVBCSectionPostsFromCache).mockReturnValue(mockVBCPosts);
   });
 
   it('should render VBC series title', () => {
@@ -107,20 +107,6 @@ describe('VBCFooter', () => {
     expect(nextPost?.textContent).toContain('C Third Post');
   });
 
-  it('should render future post placeholder', () => {
-    render(<VBCFooter slug="second-post" />);
-    expect(screen.getByText('September 2025')).toBeInTheDocument();
-    expect(
-      screen.getByText('The wide business: VBC through the lens of operations research'),
-    ).toBeInTheDocument();
-  });
-
-  it('should render future post with correct class', () => {
-    const { container } = render(<VBCFooter slug="second-post" />);
-    const futurePosts = container.querySelectorAll('.future-post');
-    expect(futurePosts).toHaveLength(1);
-  });
-
   it('should handle first post in series', () => {
     const { container } = render(<VBCFooter slug="first-post" />);
     const currentPost = container.querySelector('.current-post');
@@ -146,7 +132,7 @@ describe('VBCFooter', () => {
   });
 
   it('should handle empty VBC posts', () => {
-    vi.mocked(notionModule.getVBCSectionPostsPostsFromCache).mockReturnValue([]);
+    vi.mocked(notionModule.getVBCSectionPostsFromCache).mockReturnValue([]);
 
     render(<VBCFooter slug="any-slug" />);
     expect(
