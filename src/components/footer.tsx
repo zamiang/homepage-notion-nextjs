@@ -11,7 +11,10 @@ const Footer = () => (
         Instagram
       </Link>
       {' · '}
-      <Link className="!border-none hover:text-accent transition-colors duration-150" href="/rss.xml">
+      <Link
+        className="!border-none hover:text-accent transition-colors duration-150"
+        href="/rss.xml"
+      >
         RSS
       </Link>
       {' · '}

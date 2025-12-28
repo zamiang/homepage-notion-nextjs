@@ -14,9 +14,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
 
   return (
     <nav className="toc mb-4 p-4 bg-muted rounded-lg">
-      <h4 className="text-lg mt-0 pt-0 bg-transparent">
-        Contents
-      </h4>
+      <h4 className="text-lg mt-0 pt-0 bg-transparent">Contents</h4>
       <ul className="space-y-1">
         {items.map((item) => (
           <li

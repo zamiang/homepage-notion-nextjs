@@ -13,11 +13,6 @@ exports[`PostCard > should match snapshot 1`] = `
       >
         Jun 14, 2023
       </p>
-      <p
-        class="post-reading-time"
-      >
-        2 min read
-      </p>
     </div>
     <h3
       class="post-title"
