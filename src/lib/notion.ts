@@ -15,10 +15,12 @@ export interface Post {
   slug: string;
   coverImage: string;
   date: string;
+  dateModified?: string;
   excerpt?: string;
   content: string;
   author: string;
   section?: string; // 'All' | 'VBC';
+  showToc?: boolean;
 }
 
 export function getWordCount(content: string): number {
@@ -161,6 +163,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     const excerpt = properties['Excerpt'];
     const date = properties['Published Date'];
     const section = properties['Section'];
+    const showTocProp = properties['Show TOC'];
 
     const titleText =
       title.type === 'title' && title.title[0]?.plain_text ? title.title[0].plain_text : undefined;
@@ -190,6 +193,9 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     const sectionText =
       section?.type === 'select' && section.select ? section.select.name : undefined;
 
+    const showToc =
+      showTocProp?.type === 'checkbox' ? showTocProp.checkbox : undefined;
+
     const excerptText =
       excerpt.type === 'rich_text' && excerpt.rich_text[0]?.plain_text
         ? excerpt.rich_text[0]?.plain_text
@@ -212,8 +218,10 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       excerpt: excerptText,
       coverImage,
       date: dateText,
+      dateModified: page.last_edited_time,
       content: contentString,
       section: sectionText,
+      showToc,
       author: 'Brennan Moore',
     };
 

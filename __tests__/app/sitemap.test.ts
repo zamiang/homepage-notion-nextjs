@@ -315,4 +315,41 @@ describe('Sitemap Generation', () => {
     // 1 homepage + 2 posts + 1 photo = 4 total
     expect(result.length).toBe(4);
   });
+
+  it('should use dateModified when available for lastModified', () => {
+    const postsWithDateModified = [
+      {
+        ...mockPosts[0],
+        dateModified: '2024-01-20T10:30:00.000Z',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(postsWithDateModified))
+      .mockReturnValueOnce(JSON.stringify([]));
+
+    const result = sitemap();
+
+    const post = result.find((entry) => entry.url.includes('test-post-1'));
+    expect(post?.lastModified).toEqual(new Date('2024-01-20T10:30:00.000Z'));
+  });
+
+  it('should fall back to date when dateModified is not present', () => {
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(mockPosts))
+      .mockReturnValueOnce(JSON.stringify([]));
+
+    const result = sitemap();
+
+    const post = result.find((entry) => entry.url.includes('test-post-1'));
+    expect(post?.lastModified).toEqual(new Date('2023-06-15'));
+  });
 });

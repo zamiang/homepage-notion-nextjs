@@ -144,5 +144,21 @@ describe('page-utils', () => {
       expect(jsonLd.dateModified).toBeDefined();
       expect(jsonLd.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}T/);
     });
+
+    it('should use actual dateModified when present', () => {
+      const postWithDateModified = {
+        ...mockPosts[0],
+        dateModified: '2024-06-15T10:30:00.000Z',
+      };
+      const jsonLd = generateJsonLd(postWithDateModified, 'writing');
+      expect(jsonLd.dateModified).toBe('2024-06-15T10:30:00.000Z');
+    });
+
+    it('should fall back to date when dateModified is not present', () => {
+      const postWithoutDateModified = { ...mockPosts[0] };
+      delete (postWithoutDateModified as any).dateModified;
+      const jsonLd = generateJsonLd(postWithoutDateModified, 'writing');
+      expect(jsonLd.dateModified).toBe(new Date(mockPosts[0].date).toISOString());
+    });
   });
 });

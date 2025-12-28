@@ -6,13 +6,24 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { slugify } from '@/lib/toc';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import type React from 'react';
+import React, { isValidElement, ReactNode } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 import { Badge } from './ui/badge';
+
+function getTextContent(children: ReactNode): string {
+  if (typeof children === 'string') return children;
+  if (typeof children === 'number') return String(children);
+  if (Array.isArray(children)) return children.map(getTextContent).join('');
+  if (isValidElement(children)) {
+    return getTextContent((children.props as { children?: ReactNode }).children);
+  }
+  return '';
+}
 
 const components = {
   p: ({ children }: { children?: React.ReactNode }) => <p>{children}</p>,
@@ -58,12 +69,30 @@ const components = {
       />
     );
   },
-  h1: ({ children }: { children?: React.ReactNode }) => <h2>{children}</h2>,
-  h2: ({ children }: { children?: React.ReactNode }) => <h3>{children}</h3>,
-  h3: ({ children }: { children?: React.ReactNode }) => <h4>{children}</h4>,
-  h4: ({ children }: { children?: React.ReactNode }) => <h5>{children}</h5>,
-  h5: ({ children }: { children?: React.ReactNode }) => <h5>{children}</h5>,
-  h6: ({ children }: { children?: React.ReactNode }) => <h6>{children}</h6>,
+  h1: ({ children }: { children?: React.ReactNode }) => {
+    const id = slugify(getTextContent(children));
+    return <h2 id={id}>{children}</h2>;
+  },
+  h2: ({ children }: { children?: React.ReactNode }) => {
+    const id = slugify(getTextContent(children));
+    return <h3 id={id}>{children}</h3>;
+  },
+  h3: ({ children }: { children?: React.ReactNode }) => {
+    const id = slugify(getTextContent(children));
+    return <h4 id={id}>{children}</h4>;
+  },
+  h4: ({ children }: { children?: React.ReactNode }) => {
+    const id = slugify(getTextContent(children));
+    return <h5 id={id}>{children}</h5>;
+  },
+  h5: ({ children }: { children?: React.ReactNode }) => {
+    const id = slugify(getTextContent(children));
+    return <h5 id={id}>{children}</h5>;
+  },
+  h6: ({ children }: { children?: React.ReactNode }) => {
+    const id = slugify(getTextContent(children));
+    return <h6 id={id}>{children}</h6>;
+  },
   table: ({ children }: { children?: React.ReactNode }) => <Table>{children}</Table>,
   thead: ({ children }: { children?: React.ReactNode }) => <TableHeader>{children}</TableHeader>,
   tbody: ({ children }: { children?: React.ReactNode }) => <TableBody>{children}</TableBody>,

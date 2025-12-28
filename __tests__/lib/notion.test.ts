@@ -73,6 +73,7 @@ describe('notion.ts - Unit Tests', () => {
     slug: 'test-post',
     coverImage: 'test-image.jpg',
     date: '2023-01-01',
+    dateModified: '2023-06-15T10:30:00.000Z',
     excerpt: 'This is a test post.',
     content: 'This is the content of the test post.',
     author: 'Brennan Moore',
@@ -353,6 +354,7 @@ describe('notion.ts - Unit Tests', () => {
     const mockPageId = 'test-page-id';
     const mockPageResponse = {
       id: mockPageId,
+      last_edited_time: '2023-06-15T10:30:00.000Z',
       properties: {
         Title: {
           type: 'title',
