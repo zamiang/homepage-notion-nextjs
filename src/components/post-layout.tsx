@@ -35,7 +35,7 @@ export default function PostLayout({
           <div className="divider"></div>
         </header>
         {tocContent}
-        <div className="max-w-none">
+        <div className="prose prose-slate max-w-none prose-headings:font-serif prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80">
           <ReactMarkdown
             components={components}
             remarkPlugins={[remarkGfm]}

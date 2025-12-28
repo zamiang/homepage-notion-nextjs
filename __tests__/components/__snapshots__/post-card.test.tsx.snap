@@ -3,7 +3,7 @@
 exports[`PostCard > should match snapshot 1`] = `
 <div>
   <div
-    class="post"
+    class="post group rounded-lg -mx-3 px-3 py-2 transition-colors duration-200 hover:bg-muted/40"
   >
     <div
       class="post-meta"
@@ -24,6 +24,7 @@ exports[`PostCard > should match snapshot 1`] = `
     >
       <a
         aria-label="Test Post Title"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
         href="/writing/test-post"
       >
         Test Post Title

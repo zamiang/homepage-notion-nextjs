@@ -14,7 +14,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
 
   return (
     <nav className="toc mb-4 p-4 bg-muted rounded-lg">
-      <h4 className="text-lg mt-0 pt-0" style={{ background: 'transparent' }}>
+      <h4 className="text-lg mt-0 pt-0 bg-transparent">
         Contents
       </h4>
       <ul className="space-y-1">
@@ -26,8 +26,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
           >
             <a
               href={`#${item.id}`}
-              className="text-muted-foreground hover:text-foreground transition-colors no-underline border-none"
-              style={{ textDecoration: 'none', borderBottom: 'none' }}
+              className="text-muted-foreground hover:text-foreground transition-colors !border-none !no-underline"
             >
               {item.text}
             </a>
