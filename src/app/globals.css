@@ -42,37 +42,37 @@
   /* Typography */
   --font-size: 16px;
 
-  /* Core Colors */
-  --background: #f9f6f0;
-  --foreground: #4b5673;
+  /* Core Colors - "The Slate Executive" Palette */
+  --background: #F0F2F5;           /* Cool Mist - pale grey-white */
+  --foreground: #2C333A;           /* Deep Charcoal Blue - main text */
 
-  /* Primary */
-  --primary: #5a6b8a;
-  --primary-foreground: #f9f6f0;
+  /* Primary - Steel Blue (headers/branding) */
+  --primary: #5A7684;
+  --primary-foreground: #F0F2F5;
 
-  /* Secondary */
-  --secondary: #e8e2d5;
-  --secondary-foreground: #3a4555;
+  /* Secondary - Dusty Teal (buttons/links) */
+  --secondary: #E3E7EB;            /* Lighter mist for secondary surfaces */
+  --secondary-foreground: #2C333A;
 
   /* Muted */
-  --muted: #f2eee6;
-  --muted-foreground: #6b7588;
+  --muted: #E8EAED;                /* Slightly darker than background */
+  --muted-foreground: #5A6570;     /* Softer charcoal */
 
-  /* Accent */
-  --accent: #ffa726;
-  --accent-foreground: #1a1c20;
+  /* Accent - Dusty Teal */
+  --accent: #749CA8;
+  --accent-foreground: #2C333A;
 
   /* UI Elements */
-  --border: #ddd6c8;
-  --input: #f2eee6;
-  --card: #ffffff;
-  --card-foreground: #4b5673;
+  --border: #D1D5DB;               /* Cool grey border */
+  --input: #E8EAED;
+  --card: #FFFFFF;
+  --card-foreground: #2C333A;
 
   /* Semantic Colors */
-  --destructive: #c14242;
-  --destructive-foreground: #f9f6f0;
-  --success: #5a8a5f;
-  --success-foreground: #f9f6f0;
+  --destructive: #B44D4D;          /* Muted red */
+  --destructive-foreground: #F0F2F5;
+  --success: #5A8A6B;              /* Muted teal-green */
+  --success-foreground: #F0F2F5;
 }
 
 /* ==========================================================================
@@ -81,7 +81,7 @@
 
 @layer base {
   /* --------------------------------------------------------------------------
-     5.1 Reset & Box Model
+     4.1 Reset & Box Model
      -------------------------------------------------------------------------- */
 
   * {
@@ -89,7 +89,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.2 Document & Body
+     4.2 Document & Body
      -------------------------------------------------------------------------- */
 
   body {
@@ -111,7 +111,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.3 Typography - Headings
+     4.3 Typography - Headings
      -------------------------------------------------------------------------- */
 
   h1 {
@@ -163,7 +163,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.4 Typography - Paragraphs & Text
+     4.4 Typography - Paragraphs & Text
      -------------------------------------------------------------------------- */
 
   p {
@@ -193,7 +193,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.5 Links
+     4.5 Links
      -------------------------------------------------------------------------- */
 
   a {
@@ -219,7 +219,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.6 Lists
+     4.6 Lists
      -------------------------------------------------------------------------- */
 
   ul {
@@ -263,7 +263,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.7 Blockquotes
+     4.7 Blockquotes
      -------------------------------------------------------------------------- */
 
   blockquote {
@@ -276,13 +276,13 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.8 Code Blocks
+     4.8 Code Blocks
      -------------------------------------------------------------------------- */
 
   pre {
-    color: var(--color-text-default);
-    background: #f5f2f0;
-    text-shadow: 0 1px white;
+    color: var(--foreground);
+    background: var(--muted);
+    text-shadow: 0 1px var(--card);
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -297,7 +297,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.9 Figures & Images
+     4.9 Figures & Images
      -------------------------------------------------------------------------- */
 
   figure {
@@ -329,7 +329,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.10 Layout - Article
+     4.10 Layout - Article
      -------------------------------------------------------------------------- */
 
   article {
@@ -342,7 +342,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.11 Layout - Sections
+     4.11 Layout - Sections
      -------------------------------------------------------------------------- */
 
   .header {
@@ -359,7 +359,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.12 Layout - Columns
+     4.12 Layout - Columns
      -------------------------------------------------------------------------- */
 
   .column {
@@ -376,7 +376,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.13 Components - Post Cards
+     4.13 Components - Post Cards
      -------------------------------------------------------------------------- */
 
   .post {
@@ -407,7 +407,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.14 Components - Buttons
+     4.14 Components - Buttons
      -------------------------------------------------------------------------- */
 
   .next-button {
@@ -427,7 +427,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.15 Components - Profile
+     4.15 Components - Profile
      -------------------------------------------------------------------------- */
 
   .profile-photo {
@@ -441,7 +441,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.16 Utilities - Dividers
+     4.16 Utilities - Dividers
      -------------------------------------------------------------------------- */
 
   .divider {
@@ -459,7 +459,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     5.17 Responsive - Mobile
+     4.17 Responsive - Mobile
      -------------------------------------------------------------------------- */
 
   @media only screen and (max-width: 600px) {
