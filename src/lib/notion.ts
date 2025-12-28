@@ -57,14 +57,14 @@ export function getAllSectionPostsFromCache(): Post[] {
   return [];
 }
 
-export function getVBCSectionPostsPostsFromCache(): Post[] {
+export function getVBCSectionPostsFromCache(): Post[] {
   const cachePath = path.join(process.cwd(), config.cache.postsFileName);
   if (fs.existsSync(cachePath)) {
     try {
       const cache = fs.readFileSync(cachePath, 'utf-8');
       return JSON.parse(cache).filter((post: Post) => post.section === 'VBC');
     } catch (error) {
-      logError('getVBCSectionPostsPostsFromCache', error, { cachePath });
+      logError('getVBCSectionPostsFromCache', error, { cachePath });
       return [];
     }
   }

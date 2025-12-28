@@ -6,13 +6,13 @@ import { config } from '@/lib/config';
 import {
   getAllSectionPostsFromCache,
   getPhotosFromCache,
-  getVBCSectionPostsPostsFromCache,
+  getVBCSectionPostsFromCache,
 } from '@/lib/notion';
 
 export default function Home() {
   const posts = getAllSectionPostsFromCache();
   const photos = getPhotosFromCache();
-  const vbcPosts = getVBCSectionPostsPostsFromCache().sort((a, b) => (a.title > b.title ? 1 : -1));
+  const vbcPosts = getVBCSectionPostsFromCache().sort((a, b) => (a.title > b.title ? 1 : -1));
 
   const siteUrl = config.site.url;
 

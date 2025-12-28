@@ -9,7 +9,7 @@ vi.mock('@/lib/notion', async () => {
   const actual = await vi.importActual<typeof notionModule>('@/lib/notion');
   return {
     ...actual,
-    getVBCSectionPostsPostsFromCache: vi.fn(),
+    getVBCSectionPostsFromCache: vi.fn(),
   };
 });
 
@@ -52,7 +52,7 @@ const mockVBCPosts: Post[] = [
 describe('VBCFooter', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(notionModule.getVBCSectionPostsPostsFromCache).mockReturnValue(mockVBCPosts);
+    vi.mocked(notionModule.getVBCSectionPostsFromCache).mockReturnValue(mockVBCPosts);
   });
 
   it('should render VBC series title', () => {
@@ -146,7 +146,7 @@ describe('VBCFooter', () => {
   });
 
   it('should handle empty VBC posts', () => {
-    vi.mocked(notionModule.getVBCSectionPostsPostsFromCache).mockReturnValue([]);
+    vi.mocked(notionModule.getVBCSectionPostsFromCache).mockReturnValue([]);
 
     render(<VBCFooter slug="any-slug" />);
     expect(
