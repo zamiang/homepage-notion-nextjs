@@ -11,8 +11,8 @@ export const INERTIA_MULTIPLIER = 0.1;
 // Particle size and movement ranges
 export const MIN_PARTICLE_SIZE = 2;
 export const MAX_PARTICLE_SIZE = 6;
-export const MIN_OPACITY = 0.12;
-export const MAX_OPACITY = 0.42;
+export const MIN_OPACITY = 0.25;
+export const MAX_OPACITY = 0.55;
 export const MIN_SPEED_X = 0.002;
 export const MAX_SPEED_X = 0.006;
 export const MIN_SPEED_Y = 0.0015;
@@ -49,29 +49,46 @@ export interface Particle {
 }
 
 // Color variations within the theme for light and dark modes
+// Each palette has subtle hue variations for visual interest
 export const LIGHT_MODE_COLORS = [
-  '#3a4555', // Deep slate (darker variation)
-  '#4b5673', // Slate blue (foreground)
-  '#5a6b8a', // Medium blue (primary)
+  // Blues (core palette)
+  '#3a4555', // Deep slate
+  '#4b5673', // Slate blue
+  '#5a6b8a', // Medium blue
   '#6b7ba8', // Brighter blue
-  '#6b7588', // Blue-gray (muted-foreground)
-  '#7a8090', // Light gray-blue
-  '#526382', // Deep blue-gray
   '#5d7399', // Sky blue
-  '#445166', // Charcoal blue
+  // Teals (subtle variation)
+  '#3d5a6b', // Deep teal
+  '#4a6d7a', // Muted teal
+  '#5a8090', // Light teal-gray
+  // Purples (accent variation)
+  '#5a4b73', // Dusty purple
+  '#6b5a8a', // Muted violet
+  '#7a6a99', // Soft purple
+  // Warm grays (neutral anchors)
+  '#6b7588', // Blue-gray
+  '#7a8090', // Light gray-blue
   '#8490a8', // Pale blue
 ];
 
 export const DARK_MODE_COLORS = [
+  // Oranges (core accent)
   '#ff8f00', // Deep orange
-  '#ffa726', // Orange (accent)
+  '#ffa726', // Orange
   '#ffb34d', // Light orange
-  '#ff9d0f', // Amber orange
+  '#ff9d0f', // Amber
   '#ffcc80', // Pale orange
-  '#c5c9d1', // Cool white (foreground)
-  '#cad0db', // Bright white (primary)
+  // Warm pinks/corals (accent variation)
+  '#ff7b6b', // Coral
+  '#ff9a8a', // Light coral
+  '#e8a090', // Muted rose
+  // Golds/yellows (warm variation)
+  '#ffc107', // Gold
+  '#ffe082', // Pale gold
+  // Cool whites/grays (neutral anchors)
+  '#c5c9d1', // Cool white
+  '#cad0db', // Bright white
   '#a0a8b5', // Medium gray
-  '#8a8e96', // Warm gray (muted-foreground)
   '#d5d9e0', // Very light gray
 ];
 

@@ -41,9 +41,9 @@ export function ParticleCanvas({ particles, circlesRef }: ParticleCanvasProps) {
               if (el) circlesRef.current[index] = el;
             }}
             r={particle.size}
+            fill={particle.color.light}
+            opacity={particle.opacity}
             style={{
-              fill: particle.color.light,
-              opacity: particle.opacity,
               filter: 'url(#particle-blur)',
               willChange: 'transform',
             }}
