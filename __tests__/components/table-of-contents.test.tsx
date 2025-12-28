@@ -15,7 +15,7 @@ describe('TableOfContents', () => {
   it('should render the table of contents with heading', () => {
     render(<TableOfContents items={mockItems} />);
 
-    expect(screen.getByRole('heading', { name: 'Contents' })).toBeInTheDocument();
+    expect(screen.getByText('In This Article')).toBeInTheDocument();
   });
 
   it('should render all items as links', () => {
@@ -102,6 +102,6 @@ describe('TableOfContents', () => {
     render(<TableOfContents items={mockItems} />);
 
     const nav = screen.getByRole('navigation');
-    expect(nav).toHaveClass('toc', 'mb-4', 'p-4', 'bg-muted', 'rounded-lg');
+    expect(nav).toHaveClass('toc', 'mb-8', 'p-5', 'rounded-lg');
   });
 });

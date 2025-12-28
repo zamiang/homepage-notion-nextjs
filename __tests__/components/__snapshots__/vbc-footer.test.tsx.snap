@@ -2,23 +2,30 @@
 
 exports[`VBCFooter > should match snapshot 1`] = `
 <div>
-  <div>
+  <div
+    class="mt-12"
+  >
     <div
-      class="center-divider"
+      class="section-rule mb-8"
     />
-    <div
-      class=""
-    >
+    <div>
+      <p
+        class="section-label"
+      >
+        Deep Dive Series
+      </p>
       <h3
-        class="heading"
+        class="section-heading"
       >
         Why Value-Based Care is Harder Than Rocket Science
       </h3>
-      <p>
+      <p
+        class="section-subtitle"
+      >
         This series argues that U.S. healthcare is "harder than rocket science" due to its "consolidated fragmentation," where powerful, siloed players hinder effective, affordable patient care. The main conclusion is that in an era of AI and consolidation, we need a major shift in data policy to deliver on the promise of improved quality of care at reduced cost.
       </p>
       <div
-        class="divider"
+        class="section-rule"
       />
       <div
         class="post past-post"

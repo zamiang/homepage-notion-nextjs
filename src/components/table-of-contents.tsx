@@ -13,18 +13,18 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
   const minLevel = Math.min(...items.map((item) => item.level));
 
   return (
-    <nav className="toc mb-4 p-4 bg-muted rounded-lg">
-      <h4 className="text-lg mt-0 pt-0 bg-transparent">Contents</h4>
-      <ul className="space-y-1">
+    <nav className="toc mb-8 p-5 bg-accent/10 border border-accent/20 rounded-lg">
+      <p className="section-label mb-2">In This Article</p>
+      <ul className="space-y-2 m-0 p-0 list-none">
         {items.map((item) => (
           <li
             key={item.id}
-            className="text-muted-foreground"
+            className="text-muted-foreground m-0"
             style={{ marginLeft: `${(item.level - minLevel) * 1}rem` }}
           >
             <a
               href={`#${item.id}`}
-              className="text-muted-foreground hover:text-foreground transition-colors !border-none !no-underline"
+              className="text-sm text-muted-foreground hover:text-accent transition-colors duration-150 !border-none !no-underline"
             >
               {item.text}
             </a>

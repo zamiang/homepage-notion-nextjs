@@ -57,9 +57,12 @@ export default async function PostPage({ params }: PostPageProps) {
   const subHeaderContent = (
     <>
       {post.section === 'VBC' && (
-        <div className="mb-2 ">
-          <Link href="/#vbc">
-            <b>{VBC_TITLE}</b>
+        <div className="mb-4">
+          <Link
+            href="/#vbc"
+            className="inline-block text-xs font-semibold uppercase tracking-wider text-accent bg-accent/15 px-3 py-1 rounded hover:bg-accent/25 transition-colors duration-150 !border-none"
+          >
+            {VBC_TITLE}
           </Link>
         </div>
       )}

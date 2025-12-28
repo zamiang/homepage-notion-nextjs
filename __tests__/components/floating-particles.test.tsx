@@ -118,8 +118,10 @@ describe('FloatingParticles', () => {
 
     const circles = container.querySelectorAll('circle');
     circles.forEach((circle) => {
-      const style = circle.getAttribute('style');
-      expect(style).toContain('opacity:');
+      // Opacity is set as an attribute
+      const opacity = circle.getAttribute('opacity');
+      expect(opacity).toBeTruthy();
+      expect(parseFloat(opacity!)).toBeGreaterThan(0);
     });
   });
 
@@ -128,8 +130,9 @@ describe('FloatingParticles', () => {
 
     const circles = container.querySelectorAll('circle');
     circles.forEach((circle) => {
-      const transform = circle.getAttribute('transform');
-      expect(transform).toContain('translate');
+      // Transform is now set via style
+      const style = circle.getAttribute('style');
+      expect(style).toContain('translate');
     });
   });
 
@@ -144,10 +147,9 @@ describe('FloatingParticles', () => {
       expect(lightColor).toBeTruthy();
       expect(darkColor).toBeTruthy();
 
-      // Should have fill color set via style (initially light mode)
-      const style = circle.getAttribute('style');
-      expect(style).toContain('fill:');
-      expect(style).toContain(lightColor); // Should start with light color
+      // Fill color is set as an attribute (initially light mode)
+      const fill = circle.getAttribute('fill');
+      expect(fill).toBe(lightColor);
     });
   });
 

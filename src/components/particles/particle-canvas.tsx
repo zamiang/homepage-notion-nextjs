@@ -12,21 +12,9 @@ export function ParticleCanvas({ particles, circlesRef }: ParticleCanvasProps) {
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
       <svg className="absolute inset-0 size-full">
         <defs>
-          {/* Optimized blur filter - single shared filter for all particles */}
-          <filter
-            id="particle-blur"
-            x="-75%"
-            y="-75%"
-            width="250%"
-            height="250%"
-            colorInterpolationFilters="sRGB"
-          >
-            {/* First blur to soften edges */}
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur1" />
-            {/* Morphology to make rounder (dilate slightly) */}
-            <feMorphology in="blur1" operator="dilate" radius="0.8" result="round" />
-            {/* Final blur to smooth out the morphology */}
-            <feGaussianBlur in="round" stdDeviation="2" />
+          {/* Simplified blur filter for better performance */}
+          <filter id="particle-blur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
           </filter>
         </defs>
 
@@ -43,10 +31,10 @@ export function ParticleCanvas({ particles, circlesRef }: ParticleCanvasProps) {
             style={{
               filter: 'url(#particle-blur)',
               willChange: 'transform',
+              transform: `translate(${particle.x}px, ${particle.y}px)`,
             }}
             data-light-color={particle.color.light}
             data-dark-color={particle.color.dark}
-            transform={`translate(${particle.x}, ${particle.y})`}
           />
         ))}
       </svg>

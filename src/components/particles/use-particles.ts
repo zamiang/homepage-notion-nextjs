@@ -32,6 +32,8 @@ export function useParticles(): UseParticlesResult {
   const scrollVelocityRef = useRef(0);
   const isVisibleRef = useRef(true);
   const prefersReducedMotionRef = useRef(false);
+  const lastScrollTimeRef = useRef(0);
+  const frameCountRef = useRef(0);
 
   // Keep particlesRef in sync with state
   useEffect(() => {
@@ -113,8 +115,13 @@ export function useParticles(): UseParticlesResult {
       attributeFilter: ['class'],
     });
 
-    // Scroll handler - calculate scroll velocity for inertia
+    // Throttled scroll handler - calculate scroll velocity for inertia
     const handleScroll = () => {
+      const now = performance.now();
+      // Throttle to ~30fps for scroll updates
+      if (now - lastScrollTimeRef.current < 33) return;
+      lastScrollTimeRef.current = now;
+
       const currentScrollY = window.scrollY;
       scrollVelocityRef.current = currentScrollY - scrollYRef.current;
       scrollYRef.current = currentScrollY;
@@ -122,7 +129,7 @@ export function useParticles(): UseParticlesResult {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Animation loop - each particle moves completely independently
+    // Animation loop - optimized for performance
     const animate = () => {
       // Skip animation if tab is hidden or user prefers reduced motion
       if (!isVisibleRef.current || prefersReducedMotionRef.current) {
@@ -135,6 +142,10 @@ export function useParticles(): UseParticlesResult {
         animationFrameRef.current = requestAnimationFrame(animate);
         return;
       }
+
+      // Increment frame counter and skip every other frame for DOM updates
+      frameCountRef.current++;
+      const shouldUpdateDOM = frameCountRef.current % 2 === 0;
 
       // Apply inertia decay to scroll velocity (smooth deceleration)
       scrollVelocityRef.current *= SCROLL_VELOCITY_DECAY;
@@ -170,10 +181,12 @@ export function useParticles(): UseParticlesResult {
         particle.x = particle.baseX + oscillationX;
         particle.y = finalY;
 
-        // Update SVG element using cached ref
-        const circle = circles[index];
-        if (circle) {
-          circle.setAttribute('transform', `translate(${particle.x}, ${particle.y})`);
+        // Only update DOM every other frame for better performance
+        if (shouldUpdateDOM) {
+          const circle = circles[index];
+          if (circle) {
+            circle.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
+          }
         }
       });
 
