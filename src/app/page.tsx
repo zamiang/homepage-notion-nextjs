@@ -71,10 +71,10 @@ export default function Home() {
         </header>
         <div className="section">
           <p>
-            I make things: valuable software crafted by small empowered teams. I work best with a
-            small crew, digging in with the business to find the one lever that can move a mountain.
-            For me, success isn&apos;t just shipping a quality product—it&apos;s creating small
-            empowered teams that continue to deliver value every day.
+            I work best with a small crew, digging in with the business to find the one lever that
+            can move a mountain. For me, success isn&apos;t just shipping a quality
+            product—it&apos;s creating small empowered teams that continue to deliver value every
+            day.
           </p>
           <div className="section-rule"></div>
           <p className="section-label">Currently</p>
@@ -136,9 +136,9 @@ export default function Home() {
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
               Founded Kelp to filter our ocean of information down to just what you need right now.
-              Built a Chrome Extension with integrations across major workplace platforms. Now
-              focused on helping executives stay current on industry, technology, and cultural
-              shifts.
+              Built a Chrome Extension with integrations across major workplace platforms. Now it is
+              an AI assistant focused on helping executives stay current on industry, technology,
+              and cultural shifts.
             </p>
           </div>
 
@@ -154,10 +154,10 @@ export default function Home() {
               <a href="https://www.cityblock.com/">Cityblock Health</a>
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
-              As a founding member, instrumental in incubation and launch from within
-              Alphabet&apos;s Sidewalk Labs. Built the core data and software technology foundation,
-              including data-sharing partnerships with payers and Commons—the proprietary care
-              management platform.
+              As the 3rd team member, I was instrumental in incubating and launching Cityblock from
+              within Alphabet&apos;s Sidewalk Labs. My team built the core data and software
+              technology foundation, including data-sharing partnerships with payers and Commons—the
+              proprietary care management platform.
             </p>
           </div>
 
@@ -173,9 +173,8 @@ export default function Home() {
               <a href="https://www.linkedin.com/in/brennan-moore/">More on LinkedIn</a>
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
-              Many different projects across leading Artsy.net, Motivate (Citi Bike), doing HCI
-              research at MIT CSAIL and working at the MIT Media lab on visualizations for Ars
-              Electronica.
+              Many different projects across leading Artsy.net, Motivate (Citi Bike), HCI research
+              at MIT CSAIL and working at the MIT Media lab on visualizations for Ars Electronica.
             </p>
           </div>
         </div>
