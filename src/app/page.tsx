@@ -105,17 +105,15 @@ export default function Home() {
           </p>
 
           {/* Work Item: Firsthand */}
-          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
-            <div className="flex items-center gap-3 mb-2">
-              <time className="text-sm font-semibold text-accent tracking-wide">2022–2025</time>
-              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
-                CTO
-              </span>
+          <div className="work-card">
+            <div className="work-card-header">
+              <time className="work-card-date">2022–2025</time>
+              <span className="work-card-role">CTO</span>
             </div>
-            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+            <h3 className="work-card-title">
               <a href="https://www.firsthandcares.com">Firsthand</a>
             </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+            <p className="work-card-description">
               Led the technology organization across Product, Software, Data, IT, and Security,
               scaling the team from 3 to 25 while supporting rapid physical expansion across 28
               offices. Architected helpinghand, our proprietary AI-powered care management tool, and
@@ -124,17 +122,15 @@ export default function Home() {
           </div>
 
           {/* Work Item: Kelp */}
-          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
-            <div className="flex items-center gap-3 mb-2">
-              <time className="text-sm font-semibold text-accent tracking-wide">2022–2026</time>
-              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
-                Founder
-              </span>
+          <div className="work-card">
+            <div className="work-card-header">
+              <time className="work-card-date">2022–2026</time>
+              <span className="work-card-role">Founder</span>
             </div>
-            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+            <h3 className="work-card-title">
               <a href="https://www.kelp.nyc/">Kelp</a>
             </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+            <p className="work-card-description">
               Founded Kelp to filter our ocean of information down to just what you need right now.
               Built a Chrome Extension with integrations across major workplace platforms. Now it is
               an AI assistant focused on helping executives stay current on industry, technology,
@@ -143,17 +139,15 @@ export default function Home() {
           </div>
 
           {/* Work Item: Cityblock Health */}
-          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
-            <div className="flex items-center gap-3 mb-2">
-              <time className="text-sm font-semibold text-accent tracking-wide">2017–2021</time>
-              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
-                Founding Engineer
-              </span>
+          <div className="work-card">
+            <div className="work-card-header">
+              <time className="work-card-date">2017–2021</time>
+              <span className="work-card-role">Founding Engineer</span>
             </div>
-            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+            <h3 className="work-card-title">
               <a href="https://www.cityblock.com/">Cityblock Health</a>
             </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+            <p className="work-card-description">
               As the 3rd team member, I was instrumental in incubating and launching Cityblock from
               within Alphabet&apos;s Sidewalk Labs. My team built the core data and software
               technology foundation, including data-sharing partnerships with payers and Commons—the
@@ -162,17 +156,15 @@ export default function Home() {
           </div>
 
           {/* Work Item: Motivate */}
-          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
-            <div className="flex items-center gap-3 mb-2">
-              <time className="text-sm font-semibold text-accent tracking-wide">2009-2015</time>
-              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
-                Lots of projects
-              </span>
+          <div className="work-card">
+            <div className="work-card-header">
+              <time className="work-card-date">2009-2015</time>
+              <span className="work-card-role">Lots of projects</span>
             </div>
-            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+            <h3 className="work-card-title">
               <a href="https://www.linkedin.com/in/brennan-moore/">More on LinkedIn</a>
             </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+            <p className="work-card-description">
               Many past projects such as leading Artsy.net&apos;s public web presense and auctions,
               Motivate (Citi Bike), HCI research at MIT CSAIL and working at the MIT Media lab on
               visualizations for Ars Electronica.
