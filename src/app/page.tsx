@@ -173,8 +173,9 @@ export default function Home() {
               <a href="https://www.linkedin.com/in/brennan-moore/">More on LinkedIn</a>
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
-              Many different projects across leading Artsy.net, Motivate (Citi Bike), HCI research
-              at MIT CSAIL and working at the MIT Media lab on visualizations for Ars Electronica.
+              Many past projects such as leading Artsy.net&apos;s public web presense and auctions,
+              Motivate (Citi Bike), HCI research at MIT CSAIL and working at the MIT Media lab on
+              visualizations for Ars Electronica.
             </p>
           </div>
         </div>
