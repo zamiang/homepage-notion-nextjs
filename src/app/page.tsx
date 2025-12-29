@@ -199,7 +199,7 @@ export default function Home() {
       {/* VBC Section - Accent background */}
       <section className="section-wrapper section-wrapper--accent" id="vbc">
         <div className="section-wrapper-inner">
-          <p className="section-label">Deep Dive Series</p>
+          <p className="section-label">VBC Deep Dive</p>
           <h2 className="section-heading">{VBC_TITLE}</h2>
           <p className="section-subtitle">{VBC_DESCRIPTION}</p>
           <div className="section-rule"></div>

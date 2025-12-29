@@ -10,7 +10,7 @@ export default function PostsFooter(params: { slug: string }) {
   const filteredPhotos = photos.filter((p) => p.slug !== params.slug).slice(0, 6);
 
   return (
-    <div className="mt-16">
+    <div>
       {/* Recommended Writing - Warm background */}
       <section className="section-wrapper section-wrapper--warm">
         <div className="section-wrapper-inner">
