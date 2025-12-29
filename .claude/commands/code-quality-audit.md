@@ -2,7 +2,7 @@
 
 **Persona:**
 
-You are an expert Principal Software Engineer. You have deep expertise in building secure, scalable, and maintainable applications. You specialize in auditing code for clarity, consistency, and adherence to industry best practices.
+You are an expert Principal Software Engineer with strong frontend design sensibilities. You have deep expertise in building secure, scalable, and maintainable applications. You specialize in auditing code for clarity, consistency, adherence to industry best practices, and evaluating frontend design quality including typography, color systems, animations, and UI/UX patterns.
 
 **Context:**
 
@@ -83,6 +83,17 @@ Perform a comprehensive code audit based on the criteria below. Your goal is to 
     - **Accessibility**: Semantic HTML, alt text on images, ARIA when needed
     - **Consider Adding**: JSON Feed (modern alternative to RSS), OPML export
     - **Don't expect**: API documentation (no public API), database schemas (no database), OAuth (no user auth)
+
+6.  **Frontend Design Quality:**
+    - **Typography**: Evaluate font choices (avoid generic fonts like Arial, Inter). Check for distinctive display/body font pairing, proper hierarchy, readable line heights
+    - **Color System**: Review CSS variables for cohesive palette. Check for accent colors, proper contrast, theme consistency
+    - **Motion & Animation**: Evaluate transitions, hover states, any page animations. Check for `prefers-reduced-motion` support
+    - **Spatial Composition**: Layout quality, use of whitespace, responsive breakpoints
+    - **Visual Texture**: Background treatments, shadows, borders - does the design have depth?
+    - **Component Quality**: Card designs, buttons, form elements - are they polished and consistent?
+    - **Distinctiveness**: Does the design avoid generic "AI slop" aesthetics? Is there a clear design point-of-view?
+    - **Files to Review**: `src/app/globals.css`, component files in `src/components/`, `src/app/layout.tsx`
+    - **Context**: This is a personal portfolio - design should reflect professional identity and be memorable
 
 **Output Format:**
 
@@ -218,6 +229,38 @@ Save the report to `docs/CODE_QUALITY_AUDIT_YYYY-MM-DD.md` with this structure:
 
 ---
 
+## 6. Frontend Design Quality
+
+**Assessment:**
+
+- Typography evaluation (font choices, pairing, hierarchy)
+- Color system review (palette cohesion, accent usage, contrast)
+- Motion & animation quality (transitions, hover states, reduced motion support)
+- Layout and spatial composition (whitespace, responsive design)
+- Visual texture and depth (backgrounds, shadows, borders)
+- Component polish (cards, buttons, interactive elements)
+- Overall distinctiveness (avoids generic aesthetics, has clear POV)
+
+**Current Design System:**
+
+| Element    | Implementation      | Assessment |
+| ---------- | ------------------- | ---------- |
+| Fonts      | [List fonts used]   | ✅/⚠️/❌   |
+| Colors     | [Key CSS variables] | ✅/⚠️/❌   |
+| Animations | [Key animations]    | ✅/⚠️/❌   |
+| Components | [Key patterns]      | ✅/⚠️/❌   |
+
+**Recommendations:**
+
+1. Typography improvements
+2. Color/visual enhancements
+3. Animation/interaction opportunities
+4. Component refinements
+
+**Score: X/100 (Grade)** - Brief justification
+
+---
+
 ## Summary of Critical Findings
 
 ### ✅ Strengths
@@ -242,13 +285,14 @@ Save the report to `docs/CODE_QUALITY_AUDIT_YYYY-MM-DD.md` with this structure:
 
 ## Component Scores
 
-| Component      | Score | Grade | Notes      |
-| -------------- | ----- | ----- | ---------- |
-| Test Coverage  | X/100 | Grade | Brief note |
-| Simplicity     | X/100 | Grade | Brief note |
-| Consistency    | X/100 | Grade | Brief note |
-| Security       | X/100 | Grade | Brief note |
-| Data Standards | X/100 | Grade | Brief note |
+| Component       | Score | Grade | Notes      |
+| --------------- | ----- | ----- | ---------- |
+| Test Coverage   | X/100 | Grade | Brief note |
+| Simplicity      | X/100 | Grade | Brief note |
+| Consistency     | X/100 | Grade | Brief note |
+| Security        | X/100 | Grade | Brief note |
+| Data Standards  | X/100 | Grade | Brief note |
+| Frontend Design | X/100 | Grade | Brief note |
 
 **Overall: X/100 (Grade)**
 
@@ -281,3 +325,5 @@ Save the report to `docs/CODE_QUALITY_AUDIT_YYYY-MM-DD.md` with this structure:
 - Run `npm run test:coverage` and `npm run typecheck` before starting
 - Don't expect/require: user auth, RLS policies, rate limiting, CSRF protection, database patterns
 - DO expect: Security headers, RSS feeds, Schema.org markup, type safety, test quality
+- **Frontend Design**: Review `globals.css` for design system, evaluate typography/color choices, check for visual polish and distinctiveness
+- **Design Context**: This is a personal portfolio for a CTO - design should be professional, memorable, and avoid generic aesthetics
