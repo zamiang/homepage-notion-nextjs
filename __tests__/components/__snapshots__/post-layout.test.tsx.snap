@@ -9,24 +9,24 @@ exports[`PostLayout > should match snapshot 1`] = `
       class="mb-8"
     >
       <div
-        class="flex items-center gap-4 text-muted-foreground mb-4"
+        class="section-label flex items-center gap-2 mb-3"
       >
         <time>
           December 31, 2022
         </time>
       </div>
       <h1
-        class="text-4xl font-bold mb-4 text-foreground"
+        class="font-serif text-3xl md:text-4xl font-normal italic leading-tight mb-4 text-foreground"
       >
         Test Post
       </h1>
-      <div
-        class="excerpt text-muted-foreground"
+      <p
+        class="section-subtitle text-lg"
       >
         This is a test post.
-      </div>
+      </p>
       <div
-        class="divider"
+        class="section-rule mt-6"
       />
     </header>
     <div

@@ -25,14 +25,21 @@ export default function PostLayout({
     <>
       <article className="max-w-2xl mx-auto">
         <header className="mb-8">
-          <div className="flex items-center gap-4 text-muted-foreground mb-4">
-            <time>{format(new Date(post.date), 'MMMM d, yyyy')}</time>
-            {headerContent}
-          </div>
           {subHeaderContent}
-          <h1 className="text-4xl font-bold mb-4 text-foreground">{post.title}</h1>
-          <div className="excerpt text-muted-foreground">{post.excerpt}</div>
-          <div className="divider"></div>
+          <div className="section-label flex items-center gap-2 mb-3">
+            <time>{format(new Date(post.date), 'MMMM d, yyyy')}</time>
+            {headerContent && (
+              <>
+                <span className="text-border">·</span>
+                {headerContent}
+              </>
+            )}
+          </div>
+          <h1 className="font-serif text-3xl md:text-4xl font-normal italic leading-tight mb-4 text-foreground">
+            {post.title}
+          </h1>
+          <p className="section-subtitle text-lg">{post.excerpt}</p>
+          <div className="section-rule mt-6"></div>
         </header>
         {tocContent}
         <div className="prose prose-slate max-w-none prose-headings:font-serif prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80">

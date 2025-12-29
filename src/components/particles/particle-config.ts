@@ -1,12 +1,12 @@
 // Animation constants
-export const PARTICLE_COUNT = 40;
-export const SCROLL_VELOCITY_DECAY = 0.92; // 8% decay per frame
-export const PARTICLE_VELOCITY_DECAY = 0.88; // 12% decay per frame
-export const MIN_INERTIA_FACTOR = 0.3;
-export const MAX_INERTIA_FACTOR = 0.7;
-export const MIN_SCROLL_FACTOR = 0.02;
-export const MAX_SCROLL_FACTOR = 0.07;
-export const INERTIA_MULTIPLIER = 0.1;
+export const PARTICLE_COUNT = 20; // Reduced from 40 for better performance
+export const SCROLL_VELOCITY_DECAY = 0.95; // Slower decay for smoother feel
+export const PARTICLE_VELOCITY_DECAY = 0.92; // Slower decay
+export const MIN_INERTIA_FACTOR = 0.15; // Reduced inertia response
+export const MAX_INERTIA_FACTOR = 0.35;
+export const MIN_SCROLL_FACTOR = 0.01; // Reduced scroll parallax
+export const MAX_SCROLL_FACTOR = 0.04;
+export const INERTIA_MULTIPLIER = 0.05; // Reduced multiplier
 
 // Particle size and movement ranges
 export const MIN_PARTICLE_SIZE = 2;

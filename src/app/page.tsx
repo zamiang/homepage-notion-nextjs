@@ -51,17 +51,23 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className="homepage">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      {/* Hero & About Section */}
       <article>
         <header className="header">
           <div className="profile-photo"></div>
-          <h1>Hi, I&apos;m Brennan.</h1>
-          <p className="tagline">I build innovative digital products people love.</p>
-          <div className="center-divider"></div>
+          <p className="section-label">Engineering Leader &amp; Builder</p>
+          <h1 className="section-heading" style={{ fontSize: '2.75rem' }}>
+            Hi, I&apos;m Brennan.
+          </h1>
+          <p className="section-subtitle" style={{ maxWidth: '480px', margin: '0 auto' }}>
+            I build innovative digital products people love.
+          </p>
         </header>
         <div className="section">
           <p>
@@ -70,116 +76,133 @@ export default function Home() {
             For me, success isn&apos;t just shipping a quality product—it&apos;s creating small
             empowered teams that continue to deliver value every day.
           </p>
-          <div className="center-divider"></div>
-          <h3 className="subsection">Currently: Consulting</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="section-rule"></div>
+          <p className="section-label">Currently</p>
+          <h3 className="section-heading" style={{ fontSize: '1.5rem' }}>
+            Consulting
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             <div>
-              <i>Latest photos</i>
+              <p className="section-label" style={{ marginBottom: '0.25rem' }}>
+                Latest photos
+              </p>
               <PhotoCard post={photos[0]} shouldHideText priority />
             </div>
             <div>
-              <i>Latest writing</i>
+              <p className="section-label" style={{ marginBottom: '0.25rem' }}>
+                Latest writing
+              </p>
               <PostCard post={vbcPosts[0]} />
             </div>
           </div>
-          <div className="center-divider" id="work"></div>
-          <h2 className="heading">Work</h2>
-          <div className="divider"></div>
-          <time className="text-muted-foreground">2022-2025</time>
-          <h3 className="subsection">
-            <a href="https://www.firsthandcares.com">firsthand cares</a>
-          </h3>
-          <p>
-            As CTO at Firsthand, I led the technology organization across Product, Software, Data,
-            IT, and Security, scaling the team from 3 to 25 while supporting rapid physical
-            expansion across 28 offices. My primary focus was architecting helpinghand, our
-            proprietary AI-powered care management tool, and securing HITRUST r2 certification under
-            strict deadlines.
+
+          {/* Work Section */}
+          <div className="section-rule" id="work"></div>
+          <p className="section-label">Career Journey</p>
+          <h2 className="section-heading">Work</h2>
+          <p className="section-subtitle">
+            Building technology teams and products that make a difference.
           </p>
-          <p>
-            I am most proud of the culture we built. I restructured the organization into small,
-            empowered teams focused on specific business verticals, driven by the mantra to
-            &quot;deliver value every day.&quot; By prioritizing deep collaboration—including
-            frequent market visits and integration with L&amp;D—we broke the traditional silo where
-            tech is viewed merely as &quot;IT support.&quot; Instead, we operated as strategic
-            partners, resulting in high product adoption, a data-driven operational culture, and
-            remarkable efficiency.
-          </p>
-          <div className="center-divider"></div>
-          <time className="text-muted-foreground">2022-2026</time>
-          <h3 className="subsection">
-            <a href="https://www.kelp.nyc/">Kelp</a>
-          </h3>
-          <p>
-            I founded Kelp to solve a complex problem: to filter our ocean of information down to
-            just what you need right now.
-          </p>
-          <p>
-            My initial version was focused on contextual information retrieval such as surfacing a
-            website recommended by a person in your next meeting with them. I created the Chrome
-            Extension and setup integrations across the major workplace platforms with a dedicated
-            customer base. The process of taking Kelp to market provided a crucial insight: true
-            contextual awareness is nearly impossible without deep, OS-level integration. This
-            analysis led to my decision to pause the that iteration and open source that project.
-          </p>
-          <p>
-            The second iteration is focused on helping executives stay up to date on an increasingly
-            vast landscape of industry, technology and cultural shifts. It crawls a curated lists of
-            high quality sources, derives facts, entities and structure that allows executives to
-            efficiently maintain their expertise.
-          </p>
-          <div className="center-divider"></div>
-          <time className="text-muted-foreground">2017-2021</time>
-          <h3 className="subsection">
-            <a href="https://www.cityblock.com/">Cityblock Health</a>
-          </h3>
-          <p>
-            As a founding member of the Cityblock Health team, I was instrumental in its incubation
-            and launch from within Alphabet&apos;s Sidewalk Labs. I focused on building the core
-            data and software technology foundation. This included implementing data-sharing
-            partnerships with payers, architecting our custom analytics infrastructure, and
-            spearheading the development of Commons—Cityblock&apos;s proprietary care management
-            platform that became essential for our care teams.
-          </p>
-          <div className="center-divider"></div>
-          <time className="text-muted-foreground">2015</time>
-          <h3 className="subsection">
-            <a href="https://www.motivateco.com/">Motivate</a>
-          </h3>
-          <p>
-            As the engineering lead at Motivate, I was responsible for the software powering bike
-            share systems in 10 cities, including New York&apos;s Citi Bike. I led the initiative to
-            achieve PCI compliance for our payment platform. I directed both in-house and contractor
-            development teams to deliver projects that directly impacted the bottom line, from
-            strategic billing optimizations (cardrefresher) that increased revenue, data science
-            efforts and efficient marketing tools that could be shared across all operations.
-          </p>
-          <div className="center-divider"></div>
-          <time className="text-muted-foreground">2011-2014</time>
-          <h3 className="subsection">
-            <a href="https://artsy.net/">Artsy</a>
-          </h3>
-          <p>
-            As the tech-lead manager for Artsy&apos;s web engineering team, I led the group
-            responsible for our public website&apos;s performance and architecture. During my
-            tenure, I directed several transformative technical projects, including the initial
-            open-sourcing of our well-regarded frontend and a strategic migration to an in-house
-            isomorphic application that dramatically improved our SEO. Perhaps most impactfully, my
-            team developed the custom software for live auctions and art fairs—products that are now
-            cornerstones of Artsy&apos;s business.
-          </p>
+
+          {/* Work Item: Firsthand */}
+          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
+            <div className="flex items-center gap-3 mb-2">
+              <time className="text-sm font-semibold text-accent tracking-wide">2022–2025</time>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
+                CTO
+              </span>
+            </div>
+            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+              <a href="https://www.firsthandcares.com">Firsthand</a>
+            </h3>
+            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+              Led the technology organization across Product, Software, Data, IT, and Security,
+              scaling the team from 3 to 25 while supporting rapid physical expansion across 28
+              offices. Architected helpinghand, our proprietary AI-powered care management tool, and
+              secured HITRUST r2 certification under strict deadlines.
+            </p>
+          </div>
+
+          {/* Work Item: Kelp */}
+          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
+            <div className="flex items-center gap-3 mb-2">
+              <time className="text-sm font-semibold text-accent tracking-wide">2022–2026</time>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
+                Founder
+              </span>
+            </div>
+            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+              <a href="https://www.kelp.nyc/">Kelp</a>
+            </h3>
+            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+              Founded Kelp to filter our ocean of information down to just what you need right now.
+              Built a Chrome Extension with integrations across major workplace platforms. Now
+              focused on helping executives stay current on industry, technology, and cultural
+              shifts.
+            </p>
+          </div>
+
+          {/* Work Item: Cityblock Health */}
+          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
+            <div className="flex items-center gap-3 mb-2">
+              <time className="text-sm font-semibold text-accent tracking-wide">2017–2021</time>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
+                Founding Engineer
+              </span>
+            </div>
+            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+              <a href="https://www.cityblock.com/">Cityblock Health</a>
+            </h3>
+            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+              As a founding member, instrumental in incubation and launch from within
+              Alphabet&apos;s Sidewalk Labs. Built the core data and software technology foundation,
+              including data-sharing partnerships with payers and Commons—the proprietary care
+              management platform.
+            </p>
+          </div>
+
+          {/* Work Item: Motivate */}
+          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
+            <div className="flex items-center gap-3 mb-2">
+              <time className="text-sm font-semibold text-accent tracking-wide">2009-2015</time>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
+                Lots of projects
+              </span>
+            </div>
+            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
+              <a href="https://www.linkedin.com/in/brennan-moore/">More on LinkedIn</a>
+            </h3>
+            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
+              Many different projects across leading Artsy.net, Motivate (Citi Bike), doing HCI
+              research at MIT CSAIL and working at the MIT Media lab on visualizations for Ars
+              Electronica.
+            </p>
+          </div>
         </div>
-        <div className="homepage-section" id="writing">
-          <h2 className="heading">Writing</h2>
-          <div className="divider"></div>
+      </article>
+
+      {/* Writing Section - Warm background */}
+      <section className="section-wrapper section-wrapper--warm" id="writing">
+        <div className="section-wrapper-inner">
+          <p className="section-label">Thoughts &amp; Reflections</p>
+          <h2 className="section-heading">Writing</h2>
+          <p className="section-subtitle">
+            Essays on engineering leadership, startups, and building teams.
+          </p>
+          <div className="section-rule"></div>
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-        <div className="homepage-section" id="vbc">
-          <h2 className="heading">{VBC_TITLE}</h2>
-          <p>{VBC_DESCRIPTION}</p>
-          <div className="divider"></div>
+      </section>
+
+      {/* VBC Section - Accent background */}
+      <section className="section-wrapper section-wrapper--accent" id="vbc">
+        <div className="section-wrapper-inner">
+          <p className="section-label">Deep Dive Series</p>
+          <h2 className="section-heading">{VBC_TITLE}</h2>
+          <p className="section-subtitle">{VBC_DESCRIPTION}</p>
+          <div className="section-rule"></div>
           {vbcPosts.map((post) => (
             <SeriesPostCard
               key={post.id}
@@ -190,18 +213,32 @@ export default function Home() {
             />
           ))}
         </div>
-        <div className="homepage-section" id="photography">
-          <h2 className="heading">Photography</h2>
-          <div className="divider"></div>
+      </section>
+
+      {/* Photography Section - Muted background */}
+      <section className="section-wrapper section-wrapper--muted" id="photography">
+        <div className="section-wrapper-inner">
+          <p className="section-label">Visual Stories</p>
+          <h2 className="section-heading">Photography</h2>
+          <p className="section-subtitle">Capturing moments from travels and everyday life.</p>
+          <div className="section-rule"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {photos.map((post) => (
               <PhotoCard key={post.id} post={post} />
             ))}
           </div>
         </div>
-        <div className="homepage-section" id="publications">
-          <h2 className="heading">Publications</h2>
-          <div className="divider"></div>
+      </section>
+
+      {/* Publications Section - Warm background */}
+      <section className="section-wrapper section-wrapper--warm" id="publications">
+        <div className="section-wrapper-inner">
+          <p className="section-label">Academic Research</p>
+          <h2 className="section-heading">Publications</h2>
+          <p className="section-subtitle">
+            Peer-reviewed work on personal informatics and automation.
+          </p>
+          <div className="section-rule"></div>
           <ul>
             <li>
               <h4>
@@ -243,7 +280,7 @@ export default function Home() {
             </li>
           </ul>
         </div>
-      </article>
-    </>
+      </section>
+    </div>
   );
 }
