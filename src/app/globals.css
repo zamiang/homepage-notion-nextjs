@@ -623,6 +623,24 @@
       flex-direction: column;
     }
   }
+
+  /* --------------------------------------------------------------------------
+     4.18 Accessibility - Reduced Motion
+     -------------------------------------------------------------------------- */
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-card,
+    .cta-button,
+    .photo-card img,
+    a {
+      transition: none !important;
+    }
+
+    .work-card:hover,
+    .cta-button:hover {
+      transform: none !important;
+    }
+  }
 }
 
 /* ==========================================================================

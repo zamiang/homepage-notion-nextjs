@@ -136,6 +136,9 @@ export default function Home() {
               an AI assistant focused on helping executives stay current on industry, technology,
               and cultural shifts.
             </p>
+            <a href="https://www.kelp.nyc/" className="cta-button mt-4">
+              Try Kelp
+            </a>
           </div>
 
           {/* Work Item: Cityblock Health */}
