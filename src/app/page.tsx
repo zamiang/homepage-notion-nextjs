@@ -164,36 +164,18 @@ export default function Home() {
           {/* Work Item: Motivate */}
           <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
             <div className="flex items-center gap-3 mb-2">
-              <time className="text-sm font-semibold text-accent tracking-wide">2015</time>
+              <time className="text-sm font-semibold text-accent tracking-wide">2009-2015</time>
               <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
-                Engineering Lead
+                Lots of projects
               </span>
             </div>
             <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
-              <a href="https://www.motivateco.com/">Motivate</a>
+              <a href="https://www.linkedin.com/in/brennan-moore/">More on LinkedIn</a>
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
-              Responsible for the software powering bike share systems in 10 cities, including New
-              York&apos;s Citi Bike. Led PCI compliance initiative and directed teams to deliver
-              strategic billing optimizations and marketing tools.
-            </p>
-          </div>
-
-          {/* Work Item: Artsy */}
-          <div className="relative p-5 mb-4 bg-white/50 border border-border/40 rounded-lg transition-all duration-200 hover:bg-white/70 hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-md">
-            <div className="flex items-center gap-3 mb-2">
-              <time className="text-sm font-semibold text-accent tracking-wide">2011–2014</time>
-              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-accent/15 px-2 py-0.5 rounded">
-                Tech Lead Manager
-              </span>
-            </div>
-            <h3 className="font-serif text-xl font-semibold mb-2 bg-transparent">
-              <a href="https://artsy.net/">Artsy</a>
-            </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground m-0 bg-transparent">
-              Led the web engineering team responsible for public website performance and
-              architecture. Directed the initial open-sourcing of our frontend and migration to an
-              isomorphic application. Developed custom software for live auctions and art fairs.
+              Many different projects across leading Artsy.net, Motivate (Citi Bike), doing HCI
+              research at MIT CSAIL and working at the MIT Media lab on visualizations for Ars
+              Electronica.
             </p>
           </div>
         </div>
