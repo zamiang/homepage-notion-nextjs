@@ -12,18 +12,18 @@
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Next.js | 16.0.0 | Upgraded Oct 2025, Turbopack default |
-| React | 19.2.0 | Using automatic JSX runtime |
+| Next.js | 16.1.1 | Turbopack default, async route params |
+| React | 19.2.3 | Using automatic JSX runtime |
 | TypeScript | 5.9.3 | Strict mode enabled |
-| Notion Client | 5.3.0 | Uses dataSources API (not databases) |
-| Tailwind CSS | 4.1.14 | v4 with Lightning CSS |
-| Vitest | 4.0.2 | Test runner with Istanbul coverage |
-| ESLint | 9.38.0 | Flat config format (eslint.config.mjs) |
+| Notion Client | 5.6.0 | Uses dataSources API (not databases) |
+| Tailwind CSS | 4.1.18 | v4 with Lightning CSS |
+| Vitest | 4.0.16 | Test runner with Istanbul coverage |
+| ESLint | 9.39.2 | Flat config format (eslint.config.mjs) |
 
 ### Project Statistics
 
-- **Tests**: 221 tests (2 skipped), 75.79% coverage
-- **Build Time**: 1.7s (production, with Turbopack)
+- **Tests**: 292 tests (2 skipped), 76.9% coverage
+- **Build Time**: ~1.7s (production, with Turbopack)
 - **Pages**: 38 static pages (19 photos, 13 posts, 6 utility)
 - **Node Version**: 24.x (minimum 20.9.0 for Next.js 16)
 
@@ -160,33 +160,30 @@ npm run lint             # ESLint
 >
 > **Archive Policy**: Move entries older than 3 months to the "Archive" section at the bottom.
 
-### October 2025 Work Summary
+### December 2025 Work Summary
 
-**Major Accomplishments**:
-- ✅ **Next.js 16 Upgrade**: 15.5.6 → 16.0.0, Turbopack default, 19% faster builds
-- ✅ **ESLint v9 Migration**: 8.57.1 → 9.38.0, flat config format, fixed React hooks pattern
-- ✅ **Test Coverage**: 59.79% → 75.79% (+95 tests across 7 new test files)
-- ✅ **Image Optimization**: Responsive sizing, WebP/AVIF support, 40-60% bandwidth reduction
-- ✅ **JSON Feed**: Added JSON Feed 1.1 route with Schema.org enhancements
-- ✅ **Code Quality**: Centralized config, standardized error handling, API route tests
+**Visual Theme Overhaul** (PR #872):
+- ✅ Redesigned homepage layout with improved visual hierarchy
+- ✅ Updated footer design with better spacing and styling
+- ✅ Enhanced particle animation system with theme-aware colors
+- ✅ Improved table of contents component styling
+- ✅ Refreshed post layout and VBC footer components
+- ✅ Added 190+ lines of new CSS utilities in `globals.css`
+
+**Floating Particles Optimization**:
+- ✅ Disabled particle background on mobile browsers (viewport < 768px)
+- ✅ Uses existing `useIsMobile` hook for responsive detection
+- ✅ Improves mobile performance by skipping animation entirely
+
+**Infrastructure**:
+- ✅ Added GitHub Actions workflow for Claude Code (`.github/workflows/claude.yml`)
+- ✅ Updated all dependencies to latest versions
+- ✅ Node.js 24.x support confirmed
 
 **Key Metrics**:
-- Tests: 221 passing (75.79% coverage)
-- Build time: 1.7s (down from 2.1s)
-- Security: 0 vulnerabilities (down from 3)
-- All dependencies current except `react-syntax-highlighter` (v16 has compatibility issues)
-
-**Important Breaking Changes Handled**:
-- Next.js 16 async Request APIs (already prepared with `Promise<>` types)
-- Image quality config now requires `qualities: [75, 85]` in next.config.ts
-- ESLint v9 flat config format (migrated from `.eslintrc.json` to `eslint.config.mjs`)
-- eslint-config-next v16 upgrade (Next.js 16 compatibility)
-
-**Documentation**:
-- 📄 [Next.js 16 Upgrade](docs/NEXTJS_16_UPGRADE_COMPLETED_2025-10-23.md)
-- 📄 [Test Coverage Plan](docs/CODE_QUALITY_AUDIT_2025-10-23.md)
-- 📄 [Image Optimization](docs/IMAGE_OPTIMIZATION_IMPLEMENTATION.md)
-- 📄 [Dependency Updates](docs/DEPENDENCY_UPDATES_PLAN_2025-10-23.md)
+- Tests: 292 passing (76.9% coverage, +71 tests since October)
+- All dependencies current
+- 0 security vulnerabilities
 
 ---
 
@@ -216,6 +213,22 @@ Image with src "..." is using quality "85" which is not configured in images.qua
 
 <details>
 <summary><strong>Detailed Update History (Expand for full details)</strong></summary>
+
+### October 2025 Work Summary (Archived)
+
+**Major Accomplishments**:
+- ✅ **Next.js 16 Upgrade**: 15.5.6 → 16.0.0, Turbopack default, 19% faster builds
+- ✅ **ESLint v9 Migration**: 8.57.1 → 9.38.0, flat config format, fixed React hooks pattern
+- ✅ **Test Coverage**: 59.79% → 75.79% (+95 tests across 7 new test files)
+- ✅ **Image Optimization**: Responsive sizing, WebP/AVIF support, 40-60% bandwidth reduction
+- ✅ **JSON Feed**: Added JSON Feed 1.1 route with Schema.org enhancements
+- ✅ **Code Quality**: Centralized config, standardized error handling, API route tests
+
+**Documentation**:
+- 📄 [Next.js 16 Upgrade](docs/NEXTJS_16_UPGRADE_COMPLETED_2025-10-23.md)
+- 📄 [Test Coverage Plan](docs/CODE_QUALITY_AUDIT_2025-10-23.md)
+- 📄 [Image Optimization](docs/IMAGE_OPTIMIZATION_IMPLEMENTATION.md)
+- 📄 [Dependency Updates](docs/DEPENDENCY_UPDATES_PLAN_2025-10-23.md)
 
 ### ESLint v9 & Dependency Updates - Completed
 
@@ -534,5 +547,5 @@ homepage-notion-nextjs/
 
 ---
 
-**Last Updated**: 2025-10-24
-**Document Version**: 2.1 (Added ESLint v9 migration details)
+**Last Updated**: 2025-12-28
+**Document Version**: 2.2 (December 2025 visual theme + mobile particle optimization)

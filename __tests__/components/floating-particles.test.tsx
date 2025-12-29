@@ -282,4 +282,30 @@ describe('FloatingParticles', () => {
       expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
     });
   });
+
+  describe('Mobile behavior', () => {
+    it('should not render particles on mobile devices', () => {
+      // Mock matchMedia to return true for mobile breakpoint query
+      Object.defineProperty(window, 'matchMedia', {
+        writable: true,
+        configurable: true,
+        value: vi.fn().mockImplementation((query: string) => ({
+          matches: query.includes('max-width: 767px'),
+          media: query,
+          onchange: null,
+          addListener: vi.fn(),
+          removeListener: vi.fn(),
+          addEventListener: vi.fn(),
+          removeEventListener: vi.fn(),
+          dispatchEvent: vi.fn(),
+        })),
+      });
+
+      const { container } = render(<FloatingParticles />);
+
+      // Should not render the particle container on mobile
+      expect(container.querySelector('[aria-hidden="true"]')).not.toBeInTheDocument();
+      expect(container.querySelector('svg')).not.toBeInTheDocument();
+    });
+  });
 });
