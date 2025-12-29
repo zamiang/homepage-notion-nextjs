@@ -42,7 +42,7 @@ export default function PostLayout({
           <div className="section-rule mt-6"></div>
         </header>
         {tocContent}
-        <div className="prose prose-slate max-w-none prose-headings:font-serif prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80">
+        <div className="prose prose-slate max-w-none mb-12 prose-headings:font-serif prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80">
           <ReactMarkdown
             components={components}
             remarkPlugins={[remarkGfm]}

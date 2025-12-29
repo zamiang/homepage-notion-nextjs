@@ -3,7 +3,7 @@
 exports[`VBCFooter > should match snapshot 1`] = `
 <div>
   <section
-    class="section-wrapper section-wrapper--accent mt-12"
+    class="section-wrapper section-wrapper--accent"
   >
     <div
       class="section-wrapper-inner"
@@ -11,7 +11,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
       <p
         class="section-label"
       >
-        Deep Dive Series
+        VBC Deep Dive
       </p>
       <h3
         class="section-heading"
