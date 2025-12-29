@@ -2,13 +2,12 @@
 
 exports[`VBCFooter > should match snapshot 1`] = `
 <div>
-  <div
-    class="mt-12"
+  <section
+    class="section-wrapper section-wrapper--accent mt-12"
   >
     <div
-      class="section-rule mb-8"
-    />
-    <div>
+      class="section-wrapper-inner"
+    >
       <p
         class="section-label"
       >
@@ -82,6 +81,6 @@ exports[`VBCFooter > should match snapshot 1`] = `
         </p>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 `;

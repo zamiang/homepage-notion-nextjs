@@ -10,9 +10,8 @@ export default function VBCFooter(params: { slug: string }) {
   const indexOfSlug = filteredVbcPosts.map((p) => p.slug).indexOf(params.slug);
 
   return (
-    <div className="mt-12">
-      <div className="section-rule mb-8"></div>
-      <div>
+    <section className="section-wrapper section-wrapper--accent mt-12">
+      <div className="section-wrapper-inner">
         <p className="section-label">Deep Dive Series</p>
         <h3 className="section-heading">{VBC_TITLE}</h3>
         <p className="section-subtitle">{VBC_DESCRIPTION}</p>
@@ -27,6 +26,6 @@ export default function VBCFooter(params: { slug: string }) {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
