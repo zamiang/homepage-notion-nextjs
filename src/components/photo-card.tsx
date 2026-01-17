@@ -15,7 +15,7 @@ export default function PhotoCard({ post, shouldHideText, priority = false }: Po
       <div className="relative aspect-[1/1] w-full overflow-hidden rounded-sm">
         <Link
           href={`/photos/${post.slug}`}
-          aria-label={post.title}
+          aria-label={shouldHideText ? post.title : `View photo: ${post.title}`}
           className="block border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <Image
@@ -30,13 +30,15 @@ export default function PhotoCard({ post, shouldHideText, priority = false }: Po
         </Link>
       </div>
       {!shouldHideText && (
-        <p className="photo-card-date">{format(new Date(post.date), 'MMM d, yyyy')}</p>
+        <p className="photo-card-date">
+          <time dateTime={new Date(post.date).toISOString().split('T')[0]}>
+            {format(new Date(post.date), 'MMM d, yyyy')}
+          </time>
+        </p>
       )}
       {!shouldHideText && (
         <h3 className="photo-card-title">
-          <Link href={`/photos/${post.slug}`} aria-label={post.title}>
-            {post.title}
-          </Link>
+          <Link href={`/photos/${post.slug}`}>{post.title}</Link>
         </h3>
       )}
     </div>

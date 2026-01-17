@@ -8,6 +8,7 @@ import {
   getPhotosFromCache,
   getVBCSectionPostsFromCache,
 } from '@/lib/notion';
+import Image from 'next/image';
 
 export default function Home() {
   const posts = getAllSectionPostsFromCache();
@@ -60,7 +61,16 @@ export default function Home() {
       {/* Hero & About Section */}
       <article>
         <header className="header">
-          <div className="profile-photo"></div>
+          <div className="profile-photo-container w-44 h-44 mx-auto rounded-full overflow-hidden mb-5">
+            <Image
+              src="/about.jpg"
+              alt="Brennan Moore - Engineering Leader and CTO"
+              width={176}
+              height={176}
+              priority
+              className="w-full h-full object-cover"
+            />
+          </div>
           <p className="section-label">Engineering Leader &amp; Builder</p>
           <h1 className="section-heading section-heading--hero">Hi, I&apos;m Brennan.</h1>
           <p className="section-subtitle section-subtitle--constrained">
@@ -99,7 +109,9 @@ export default function Home() {
           {/* Work Item: Firsthand */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date">2022–2025</time>
+              <time className="work-card-date" dateTime="2022/2025">
+                2022–2025
+              </time>
               <span className="work-card-role">CTO</span>
             </div>
             <h3 className="work-card-title">
@@ -116,7 +128,9 @@ export default function Home() {
           {/* Work Item: Kelp */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date">2022–2026</time>
+              <time className="work-card-date" dateTime="2022/2026">
+                2022–2026
+              </time>
               <span className="work-card-role">Founder</span>
             </div>
             <h3 className="work-card-title">
@@ -136,7 +150,9 @@ export default function Home() {
           {/* Work Item: Cityblock Health */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date">2017–2021</time>
+              <time className="work-card-date" dateTime="2017/2021">
+                2017–2021
+              </time>
               <span className="work-card-role">Founding Engineer</span>
             </div>
             <h3 className="work-card-title">
@@ -153,7 +169,9 @@ export default function Home() {
           {/* Work Item: Motivate */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date">2009-2015</time>
+              <time className="work-card-date" dateTime="2009/2015">
+                2009–2015
+              </time>
               <span className="work-card-role">Lots of projects</span>
             </div>
             <h3 className="work-card-title">

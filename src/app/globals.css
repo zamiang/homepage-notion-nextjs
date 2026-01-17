@@ -585,12 +585,9 @@
 
   /* --------------------------------------------------------------------------
      4.15 Components - Profile
+     Note: Profile photo now uses Next.js Image component for accessibility
+     and optimization. Container styles are applied via Tailwind utilities.
      -------------------------------------------------------------------------- */
-
-  .profile-photo {
-    @apply w-44 h-44 mx-auto rounded-full bg-cover bg-center;
-    background-image: url('/about.jpg');
-  }
 
   /* --------------------------------------------------------------------------
      4.16 Utilities - Dividers

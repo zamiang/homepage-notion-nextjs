@@ -60,7 +60,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="mb-4">
           <Link
             href="/#vbc"
-            className="inline-block text-xs font-semibold uppercase tracking-wider text-accent bg-accent/15 px-3 py-1 rounded hover:bg-accent/25 transition-colors duration-150 !border-none"
+            className="inline-block text-xs font-semibold uppercase tracking-wider text-accent bg-accent/15 px-3 py-1 rounded hover:bg-accent/25 transition-colors duration-150 !border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
           >
             {VBC_TITLE}
           </Link>
