@@ -39,7 +39,8 @@ describe('PostCard', () => {
     expect(links).toHaveLength(1); // Title link only
     links.forEach((link) => {
       expect(link).toHaveAttribute('href', '/writing/test-post');
-      expect(link).toHaveAttribute('aria-label', 'Test Post Title');
+      // Link text "Test Post Title" provides sufficient accessible name
+      expect(link).not.toHaveAttribute('aria-label');
     });
   });
 

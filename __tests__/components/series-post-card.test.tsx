@@ -24,7 +24,8 @@ describe('SeriesPostCard', () => {
     render(<SeriesPostCard post={mockPost} />);
     const links = screen.getAllByRole('link');
     expect(links[0]).toHaveAttribute('href', '/writing/test-series-post');
-    expect(links[0]).toHaveAttribute('aria-label', 'Test Series Post');
+    // Link text "Test Series Post" provides sufficient accessible name
+    expect(links[0]).not.toHaveAttribute('aria-label');
   });
 
   it('should render excerpt by default', () => {

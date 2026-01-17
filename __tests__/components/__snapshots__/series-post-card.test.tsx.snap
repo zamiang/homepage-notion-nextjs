@@ -9,7 +9,7 @@ exports[`SeriesPostCard > should match snapshot for current post 1`] = `
       class="mt-0"
     >
       <a
-        aria-label="Test Series Post"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
         href="/writing/test-series-post"
       >
         Test Series Post
@@ -28,7 +28,7 @@ exports[`SeriesPostCard > should match snapshot for default state 1`] = `
       class="mt-0"
     >
       <a
-        aria-label="Test Series Post"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
         href="/writing/test-series-post"
       >
         Test Series Post
@@ -50,7 +50,7 @@ exports[`SeriesPostCard > should match snapshot for next post 1`] = `
   >
     <a
       aria-label="Next post: Test Series Post"
-      class="next-button"
+      class="next-button focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
       href="/writing/test-series-post"
     >
       Next
@@ -59,7 +59,7 @@ exports[`SeriesPostCard > should match snapshot for next post 1`] = `
       class="mt-0"
     >
       <a
-        aria-label="Test Series Post"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
         href="/writing/test-series-post"
       >
         Test Series Post
@@ -83,7 +83,7 @@ exports[`SeriesPostCard > should match snapshot for past post 1`] = `
       class="mt-0"
     >
       <a
-        aria-label="Test Series Post"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
         href="/writing/test-series-post"
       >
         Test Series Post
