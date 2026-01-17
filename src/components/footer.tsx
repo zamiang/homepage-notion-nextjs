@@ -9,6 +9,15 @@ const Footer = () => (
       <div className="text-center text-muted-foreground text-sm mb-2">
         <Link
           className="!border-none hover:text-accent transition-colors duration-150"
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener"
+        >
+          Resume
+        </Link>
+        {' · '}
+        <Link
+          className="!border-none hover:text-accent transition-colors duration-150"
           href="https://www.instagram.com/zamiang"
         >
           Instagram
