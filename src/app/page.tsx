@@ -79,10 +79,9 @@ export default function Home() {
         </header>
         <div className="section">
           <p>
-            I work best with a small crew, digging in with the business to find the one lever that
-            can move a mountain. For me, success isn&apos;t just shipping a quality
-            product—it&apos;s creating small empowered teams that continue to deliver value every
-            day.
+            I work best with small teams, digging into the business to find what actually moves the
+            needle. For me, success isn’t just shipping a quality product—it’s building teams that
+            continue to deliver long after launch.
           </p>
           <div className="section-rule"></div>
           <p className="section-label">Currently</p>

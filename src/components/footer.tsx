@@ -11,10 +11,23 @@ const Footer = () => (
       <div className="w-16 h-px bg-border/50 mx-auto mb-8" aria-hidden="true" />
       {/* Navigation links with 44px minimum touch targets */}
       <nav aria-label="Footer navigation" className="text-center mb-4">
-        <ul className="flex justify-center items-center gap-1 list-none m-0 p-0">
+        <ul className="flex justify-center items-center gap-1 list-none m-0 p-0 flex-wrap">
           <li>
             <Link
-              className="!border-none hover:text-accent transition-colors duration-150 text-muted-foreground text-sm px-3 py-2 inline-block min-h-[44px] flex items-center"
+              className="!border-none hover:text-accent transition-colors duration-150 text-muted-foreground text-sm px-3 py-2 inline-flex items-center min-h-[44px]"
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener"
+            >
+              Resume
+            </Link>
+          </li>
+          <li aria-hidden="true" className="text-muted-foreground/50">
+            ·
+          </li>
+          <li>
+            <Link
+              className="!border-none hover:text-accent transition-colors duration-150 text-muted-foreground text-sm px-3 py-2 inline-flex items-center min-h-[44px]"
               href="https://www.instagram.com/zamiang"
             >
               Instagram
@@ -25,7 +38,7 @@ const Footer = () => (
           </li>
           <li>
             <Link
-              className="!border-none hover:text-accent transition-colors duration-150 text-muted-foreground text-sm px-3 py-2 inline-block min-h-[44px] flex items-center"
+              className="!border-none hover:text-accent transition-colors duration-150 text-muted-foreground text-sm px-3 py-2 inline-flex items-center min-h-[44px]"
               href="/rss.xml"
             >
               RSS
@@ -36,7 +49,7 @@ const Footer = () => (
           </li>
           <li>
             <Link
-              className="!border-none hover:text-accent transition-colors duration-150 text-muted-foreground text-sm px-3 py-2 inline-block min-h-[44px] flex items-center"
+              className="!border-none hover:text-accent transition-colors duration-150 text-muted-foreground text-sm px-3 py-2 inline-flex items-center min-h-[44px]"
               href="https://github.com/zamiang/homepage-notion-nextjs"
             >
               Source

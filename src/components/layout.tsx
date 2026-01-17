@@ -9,10 +9,17 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const navLinks = [
+interface NavLink {
+  href: string;
+  label: string;
+  external?: boolean;
+}
+
+const navLinks: NavLink[] = [
   { href: '/#work', label: 'Work' },
   { href: '/#writing', label: 'Writing' },
   { href: '/#photography', label: 'Photography' },
+  { href: '/resume.pdf', label: 'Resume', external: true },
 ];
 
 export default function Layout({ children }: LayoutProps) {
@@ -47,6 +54,7 @@ export default function Layout({ children }: LayoutProps) {
                   key={link.href}
                   href={link.href}
                   className="text-foreground text-sm border-none hover:text-accent transition-colors duration-150"
+                  {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                 >
                   {link.label}
                 </Link>
@@ -111,6 +119,7 @@ export default function Layout({ children }: LayoutProps) {
                     role="menuitem"
                     className="text-foreground text-base py-2 border-none hover:text-accent transition-colors duration-150"
                     onClick={() => setMobileMenuOpen(false)}
+                    {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                   >
                     {link.label}
                   </Link>
