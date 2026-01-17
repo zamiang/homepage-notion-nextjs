@@ -62,10 +62,8 @@ export default function Home() {
         <header className="header">
           <div className="profile-photo"></div>
           <p className="section-label">Engineering Leader &amp; Builder</p>
-          <h1 className="section-heading" style={{ fontSize: '2.75rem' }}>
-            Hi, I&apos;m Brennan.
-          </h1>
-          <p className="section-subtitle" style={{ maxWidth: '480px', margin: '0 auto' }}>
+          <h1 className="section-heading section-heading--hero">Hi, I&apos;m Brennan.</h1>
+          <p className="section-subtitle section-subtitle--constrained">
             I build innovative digital products people love.
           </p>
         </header>
@@ -78,20 +76,14 @@ export default function Home() {
           </p>
           <div className="section-rule"></div>
           <p className="section-label">Currently</p>
-          <h3 className="section-heading" style={{ fontSize: '1.5rem' }}>
-            Consulting
-          </h3>
+          <h3 className="section-heading section-heading--subsection">Consulting</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             <div>
-              <p className="section-label" style={{ marginBottom: '0.25rem' }}>
-                Latest photos
-              </p>
+              <p className="section-label section-label--tight">Latest photos</p>
               <PhotoCard post={photos[0]} shouldHideText priority />
             </div>
             <div>
-              <p className="section-label" style={{ marginBottom: '0.25rem' }}>
-                Latest writing
-              </p>
+              <p className="section-label section-label--tight">Latest writing</p>
               <PostCard post={vbcPosts[0]} />
             </div>
           </div>

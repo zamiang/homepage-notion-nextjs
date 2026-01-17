@@ -59,7 +59,7 @@
 
   /* Muted */
   --muted: #e8eaed; /* Slightly darker than background */
-  --muted-foreground: #5a6570; /* Softer charcoal */
+  --muted-foreground: #4a5560; /* Softer charcoal - WCAG AA compliant (~5.2:1) */
 
   /* Accent - Dusty Teal */
   --accent: #749ca8;
@@ -314,15 +314,12 @@
     color: inherit;
     text-decoration: none;
     border-bottom: 1px solid var(--accent);
-    opacity: 0.7;
     transition:
       border-color 0.1s ease-in,
-      opacity 0.1s ease-in,
       color 0.1s ease-in;
   }
 
   li a:hover {
-    opacity: 1;
     color: var(--accent);
   }
 
@@ -626,6 +623,8 @@
 
   /* --------------------------------------------------------------------------
      4.18 Accessibility - Reduced Motion
+     Note: !important is intentional here to ensure motion preferences are
+     respected regardless of specificity. This is a valid accessibility pattern.
      -------------------------------------------------------------------------- */
 
   @media (prefers-reduced-motion: reduce) {
@@ -690,7 +689,7 @@
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #749ca8;
+    color: var(--accent);
     margin-bottom: 0.5rem;
     background: transparent;
   }
@@ -704,17 +703,38 @@
     line-height: 1.3;
     margin-top: 0;
     margin-bottom: 0.5rem;
-    color: #5a6570;
+    color: var(--muted-foreground);
     background: transparent;
+  }
+
+  /* Section heading size variants */
+  .section-heading--hero {
+    font-size: 2.75rem;
+  }
+
+  .section-heading--subsection {
+    font-size: 1.5rem;
   }
 
   /* Section subtitle */
   .section-subtitle {
     font-family: var(--font-sans);
     font-size: 1rem;
-    color: #5a6570;
+    color: var(--muted-foreground);
     margin-bottom: 1.5rem;
     background: transparent;
+  }
+
+  /* Section subtitle width constraint for hero */
+  .section-subtitle--constrained {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Section label with tighter bottom margin */
+  .section-label--tight {
+    margin-bottom: 0.25rem;
   }
 
   /* Section divider line */
@@ -755,7 +775,7 @@
     font-family: var(--font-sans);
     font-size: 0.8rem;
     font-weight: 600;
-    color: #749ca8;
+    color: var(--accent);
     letter-spacing: 0.05em;
   }
 
@@ -765,8 +785,8 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #5a6570;
-    background: rgba(116, 156, 168, 0.15);
+    color: var(--muted-foreground);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
   }
@@ -780,17 +800,17 @@
   }
 
   .work-card-title a {
-    border-bottom-color: rgba(116, 156, 168, 0.5);
+    border-bottom-color: color-mix(in srgb, var(--accent) 50%, transparent);
   }
 
   .work-card-title a:hover {
-    border-bottom-color: #749ca8;
+    border-bottom-color: var(--accent);
   }
 
   .work-card-description {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #5a6570;
+    color: var(--muted-foreground);
     margin: 0;
     background: transparent;
   }

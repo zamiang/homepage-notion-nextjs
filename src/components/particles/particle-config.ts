@@ -48,8 +48,18 @@ export interface Particle {
   velocityY: number; // Current velocity from scrolling
 }
 
-// Color variations within the theme for light and dark modes
-// Each palette has subtle hue variations for visual interest
+/**
+ * Particle Color Palettes
+ *
+ * DESIGN SYSTEM NOTE: These colors are intentionally separate from the main
+ * design system tokens. Particles are decorative, low-opacity background
+ * elements that benefit from a wider color range for visual interest.
+ *
+ * The light mode palette extends the "Slate Executive" theme with complementary
+ * blues, teals, and purples that harmonize with the cool mist background.
+ *
+ * Dark mode colors are prepared for future theme support but currently unused.
+ */
 export const LIGHT_MODE_COLORS = [
   // Blues (core palette)
   '#3a4555', // Deep slate

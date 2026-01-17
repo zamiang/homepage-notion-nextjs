@@ -6,6 +6,58 @@
 
 ---
 
+## Design Context
+
+### Users
+
+**Primary audience**: Engineering peers and the technical community—fellow engineers, CTOs, and technical leaders who appreciate craft and thoughtful problem-solving. Visitors arrive to evaluate Brennan's work, learn from his writing on engineering leadership and value-based care, or explore his photography. They expect a site that reflects the same care and attention to detail they'd expect in well-architected software.
+
+### Brand Personality
+
+**Voice**: Direct but warm. Explains complex ideas clearly without being condescending. Shares openly about challenges and learnings.
+
+**Tone**: Reflective and substantive—prioritizes depth over polish, insight over self-promotion.
+
+**Three words**: Thoughtful, Builder, Curious
+
+**Emotional goals**: Visitors should feel that Brennan is approachable and thoughtful ("I'd like to work with or learn from this person") and creative/distinctive ("This person thinks differently and has taste").
+
+### Aesthetic Direction
+
+**Visual tone**: Sophisticated minimalism with warmth. The current "Slate Executive" palette (cool mist backgrounds, steel blue and dusty teal accents, warm copper CTAs) establishes a calm, professional foundation while the serif typography (EB Garamond) and subtle texture add personality.
+
+**Current design language**:
+- Full-bleed sections with semi-transparent backgrounds reveal floating particles beneath
+- Work cards with hover states create tactile, interactive feel
+- Section labels in small caps + elegant serif italic headings establish hierarchy
+- Generous whitespace and 680px content width prioritize readability
+
+**Theme**: Light mode only (current implementation)
+
+**Colors in use**:
+| Token | Value | Usage |
+|-------|-------|-------|
+| Background | `#f0f2f5` | Cool Mist - page background |
+| Foreground | `#2c333a` | Deep Charcoal Blue - body text |
+| Primary | `#5a7684` | Steel Blue - headers, branding |
+| Accent | `#749ca8` | Dusty Teal - links, borders |
+| Accent Bold | `#c17f59` | Warm Copper - CTAs, emphasis |
+| Muted | `#e8eaed` / `#5a6570` | Subtle backgrounds, secondary text |
+
+### Design Principles
+
+1. **Clarity over cleverness**: Every design choice should make content easier to consume, not harder. Typography, spacing, and visual hierarchy serve readability first.
+
+2. **Warmth within professionalism**: Balance the cool, sophisticated palette with warm touches—the copper accent, the serif italics, the subtle texture—that make the site feel human and inviting.
+
+3. **Craft reflects craft**: The site should demonstrate the same attention to detail and quality that Brennan brings to engineering work. Small refinements matter.
+
+4. **Content breathes**: Generous whitespace, constrained content width, and clear section boundaries let the writing and photography take center stage.
+
+5. **Accessible by default**: WCAG 2.1 AA compliance, reduced motion support, semantic markup. Good design works for everyone.
+
+---
+
 ## Project Overview
 
 ### Tech Stack (Current)
