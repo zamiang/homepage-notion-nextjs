@@ -53,10 +53,13 @@ describe('PhotoCard', () => {
     render(<PhotoCard post={mockPhotoPost} shouldHideText={false} />);
     const links = screen.getAllByRole('link');
     expect(links).toHaveLength(2); // Image link and title link
+    // Both links should point to the same page
     links.forEach((link) => {
       expect(link).toHaveAttribute('href', '/photos/test-photo');
-      expect(link).toHaveAttribute('aria-label', 'Test Photo Title');
     });
+    // Image link has descriptive aria-label, title link uses visible text
+    expect(links[0]).toHaveAttribute('aria-label', 'View photo: Test Photo Title');
+    expect(links[1]).not.toHaveAttribute('aria-label'); // Uses visible text content
   });
 
   it('should render only image link when shouldHideText is true', () => {

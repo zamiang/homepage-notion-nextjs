@@ -3,30 +3,33 @@
 exports[`PostCard > should match snapshot 1`] = `
 <div>
   <div
-    class="post group rounded-lg -mx-3 px-3 py-2 transition-colors duration-200 hover:bg-muted/40"
+    class="post group rounded-lg -mx-3 px-3 py-3 transition-colors duration-200 ease-out hover:bg-muted/40"
   >
     <div
       class="post-meta"
     >
       <p
-        class="post-date"
+        class="post-date text-sm"
       >
-        Jun 14, 2023
+        <time
+          datetime="2023-06-15"
+        >
+          Jun 14, 2023
+        </time>
       </p>
     </div>
     <h3
       class="post-title"
     >
       <a
-        aria-label="Test Post Title"
-        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 group-hover:text-accent transition-colors duration-150"
         href="/writing/test-post"
       >
         Test Post Title
       </a>
     </h3>
     <p
-      class="truncated-text"
+      class="truncated-text text-muted-foreground"
     >
       This is a test post excerpt that should be displayed.
     </p>

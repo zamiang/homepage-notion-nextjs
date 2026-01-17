@@ -21,25 +21,36 @@ export default function PostLayout({
   tocContent,
   footerContent,
 }: PostLayoutProps) {
+  const postDate = new Date(post.date);
+
   return (
     <>
       <article className="max-w-2xl mx-auto">
         <header className="mb-8">
           {subHeaderContent}
           <div className="section-label flex items-center gap-2 mb-3">
-            <time>{format(new Date(post.date), 'MMMM d, yyyy')}</time>
+            <time dateTime={postDate.toISOString().split('T')[0]}>
+              {format(postDate, 'MMMM d, yyyy')}
+            </time>
             {headerContent && (
               <>
-                <span className="text-border">·</span>
+                <span className="text-border" aria-hidden="true">
+                  ·
+                </span>
                 {headerContent}
               </>
             )}
           </div>
-          <h1 className="font-serif text-3xl md:text-4xl font-normal italic leading-tight mb-4 text-foreground">
+          <h1
+            className="font-serif font-normal italic leading-tight mb-4 text-foreground"
+            style={{ fontSize: 'var(--font-size-4xl)' }}
+          >
             {post.title}
           </h1>
-          <p className="section-subtitle text-lg">{post.excerpt}</p>
-          <div className="section-rule mt-6"></div>
+          <p className="section-subtitle" style={{ fontSize: 'var(--font-size-lg)' }}>
+            {post.excerpt}
+          </p>
+          <div className="section-rule mt-6" aria-hidden="true"></div>
         </header>
         {tocContent}
         <div className="prose prose-slate max-w-none mb-12 prose-headings:font-serif prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80">

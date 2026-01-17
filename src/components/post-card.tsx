@@ -7,21 +7,26 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post }: PostCardProps) {
+  const postDate = new Date(post.date);
+
   return (
-    <div className="post group rounded-lg -mx-3 px-3 py-2 transition-colors duration-200 hover:bg-muted/40">
+    <div className="post group rounded-lg -mx-3 px-3 py-3 transition-colors duration-200 ease-out hover:bg-muted/40">
       <div className="post-meta">
-        <p className="post-date">{format(new Date(post.date), 'MMM d, yyyy')}</p>
+        <p className="post-date text-sm">
+          <time dateTime={postDate.toISOString().split('T')[0]}>
+            {format(postDate, 'MMM d, yyyy')}
+          </time>
+        </p>
       </div>
       <h3 className="post-title">
         <Link
           href={`/writing/${post.slug}`}
-          aria-label={post.title}
-          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 group-hover:text-accent transition-colors duration-150"
         >
           {post.title}
         </Link>
       </h3>
-      <p className="truncated-text">{post.excerpt}</p>
+      <p className="truncated-text text-muted-foreground">{post.excerpt}</p>
     </div>
   );
 }

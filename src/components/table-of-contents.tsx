@@ -13,8 +13,13 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
   const minLevel = Math.min(...items.map((item) => item.level));
 
   return (
-    <nav className="toc mb-8 p-5 bg-accent/10 border border-accent/20 rounded-lg">
-      <p className="section-label mb-2">In This Article</p>
+    <nav
+      aria-label="Table of contents"
+      className="toc mb-8 p-5 bg-accent/10 border border-accent/20 rounded-lg"
+    >
+      <p className="section-label mb-2" aria-hidden="true">
+        In This Article
+      </p>
       <ul className="space-y-2 m-0 p-0 list-none">
         {items.map((item) => (
           <li

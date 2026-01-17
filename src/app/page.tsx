@@ -8,6 +8,7 @@ import {
   getPhotosFromCache,
   getVBCSectionPostsFromCache,
 } from '@/lib/notion';
+import Image from 'next/image';
 
 export default function Home() {
   const posts = getAllSectionPostsFromCache();
@@ -60,38 +61,38 @@ export default function Home() {
       {/* Hero & About Section */}
       <article>
         <header className="header">
-          <div className="profile-photo"></div>
+          <div className="profile-photo-container w-44 h-44 mx-auto rounded-full overflow-hidden mb-5">
+            <Image
+              src="/about.jpg"
+              alt="Brennan Moore - Engineering Leader and CTO"
+              width={176}
+              height={176}
+              priority
+              className="w-full h-full object-cover"
+            />
+          </div>
           <p className="section-label">Engineering Leader &amp; Builder</p>
-          <h1 className="section-heading" style={{ fontSize: '2.75rem' }}>
-            Hi, I&apos;m Brennan.
-          </h1>
-          <p className="section-subtitle" style={{ maxWidth: '480px', margin: '0 auto' }}>
+          <h1 className="section-heading section-heading--hero">Hi, I&apos;m Brennan.</h1>
+          <p className="section-subtitle section-subtitle--constrained">
             I build innovative digital products people love.
           </p>
         </header>
         <div className="section">
           <p>
-            I work best with a small crew, digging in with the business to find the one lever that
-            can move a mountain. For me, success isn&apos;t just shipping a quality
-            product—it&apos;s creating small empowered teams that continue to deliver value every
-            day.
+            I work best with small teams, digging into the business to find what actually moves the
+            needle. For me, success isn’t just shipping a quality product—it’s building teams that
+            continue to deliver long after launch.
           </p>
           <div className="section-rule"></div>
           <p className="section-label">Currently</p>
-          <h3 className="section-heading" style={{ fontSize: '1.5rem' }}>
-            Consulting
-          </h3>
+          <h3 className="section-heading section-heading--subsection">Consulting</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             <div>
-              <p className="section-label" style={{ marginBottom: '0.25rem' }}>
-                Latest photos
-              </p>
+              <p className="section-label section-label--tight">Latest photos</p>
               <PhotoCard post={photos[0]} shouldHideText priority />
             </div>
             <div>
-              <p className="section-label" style={{ marginBottom: '0.25rem' }}>
-                Latest writing
-              </p>
+              <p className="section-label section-label--tight">Latest writing</p>
               <PostCard post={vbcPosts[0]} />
             </div>
           </div>
@@ -161,7 +162,7 @@ export default function Home() {
           {/* Work Item: Motivate */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date">2009-2015</time>
+              <time className="work-card-date">2009–2015</time>
               <span className="work-card-role">Lots of projects</span>
             </div>
             <h3 className="work-card-title">

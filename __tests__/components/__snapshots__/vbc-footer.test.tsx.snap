@@ -3,6 +3,7 @@
 exports[`VBCFooter > should match snapshot 1`] = `
 <div>
   <section
+    aria-labelledby="vbc-series-heading"
     class="section-wrapper section-wrapper--accent"
   >
     <div
@@ -13,17 +14,19 @@ exports[`VBCFooter > should match snapshot 1`] = `
       >
         VBC Deep Dive
       </p>
-      <h3
+      <h2
         class="section-heading"
+        id="vbc-series-heading"
       >
         Why Value-Based Care is Harder Than Rocket Science
-      </h3>
+      </h2>
       <p
         class="section-subtitle"
       >
         This series argues that U.S. healthcare is "harder than rocket science" due to its "consolidated fragmentation," where powerful, siloed players hinder effective, affordable patient care. The main conclusion is that in an era of AI and consolidation, we need a major shift in data policy to deliver on the promise of improved quality of care at reduced cost.
       </p>
       <div
+        aria-hidden="true"
         class="section-rule"
       />
       <div
@@ -33,7 +36,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
           class="mt-0"
         >
           <a
-            aria-label="A First Post"
+            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             href="/writing/first-post"
           >
             A First Post
@@ -47,7 +50,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
           class="mt-0"
         >
           <a
-            aria-label="B Second Post"
+            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             href="/writing/second-post"
           >
             B Second Post
@@ -59,7 +62,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
       >
         <a
           aria-label="Next post: C Third Post"
-          class="next-button"
+          class="next-button focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
           href="/writing/third-post"
         >
           Next
@@ -68,7 +71,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
           class="mt-0"
         >
           <a
-            aria-label="C Third Post"
+            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             href="/writing/third-post"
           >
             C Third Post

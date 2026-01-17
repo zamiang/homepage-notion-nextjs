@@ -29,13 +29,16 @@ export default function SeriesPostCard({
         <Link
           href={`/writing/${post.slug}`}
           aria-label={`Next post: ${post.title}`}
-          className="next-button"
+          className="next-button focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
         >
           Next
         </Link>
       )}
       <h4 className="mt-0">
-        <Link href={`/writing/${post.slug}`} aria-label={post.title}>
+        <Link
+          href={`/writing/${post.slug}`}
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        >
           {post.title}
         </Link>
       </h4>
