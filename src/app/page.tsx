@@ -108,9 +108,7 @@ export default function Home() {
           {/* Work Item: Firsthand */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date" dateTime="2022/2025">
-                2022–2025
-              </time>
+              <time className="work-card-date">2022–2025</time>
               <span className="work-card-role">CTO</span>
             </div>
             <h3 className="work-card-title">
@@ -127,9 +125,7 @@ export default function Home() {
           {/* Work Item: Kelp */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date" dateTime="2022/2026">
-                2022–2026
-              </time>
+              <time className="work-card-date">2022–2026</time>
               <span className="work-card-role">Founder</span>
             </div>
             <h3 className="work-card-title">
@@ -149,9 +145,7 @@ export default function Home() {
           {/* Work Item: Cityblock Health */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date" dateTime="2017/2021">
-                2017–2021
-              </time>
+              <time className="work-card-date">2017–2021</time>
               <span className="work-card-role">Founding Engineer</span>
             </div>
             <h3 className="work-card-title">
@@ -168,9 +162,7 @@ export default function Home() {
           {/* Work Item: Motivate */}
           <div className="work-card">
             <div className="work-card-header">
-              <time className="work-card-date" dateTime="2009/2015">
-                2009–2015
-              </time>
+              <time className="work-card-date">2009–2015</time>
               <span className="work-card-role">Lots of projects</span>
             </div>
             <h3 className="work-card-title">
