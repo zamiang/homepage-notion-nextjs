@@ -37,7 +37,7 @@ export default function SeriesPostCard({
       <h4 className="mt-0">
         <Link
           href={`/writing/${post.slug}`}
-          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           {post.title}
         </Link>

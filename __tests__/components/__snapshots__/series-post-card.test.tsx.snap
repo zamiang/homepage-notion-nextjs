@@ -9,7 +9,7 @@ exports[`SeriesPostCard > should match snapshot for current post 1`] = `
       class="mt-0"
     >
       <a
-        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         href="/writing/test-series-post"
       >
         Test Series Post
@@ -28,7 +28,7 @@ exports[`SeriesPostCard > should match snapshot for default state 1`] = `
       class="mt-0"
     >
       <a
-        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         href="/writing/test-series-post"
       >
         Test Series Post
@@ -59,7 +59,7 @@ exports[`SeriesPostCard > should match snapshot for next post 1`] = `
       class="mt-0"
     >
       <a
-        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         href="/writing/test-series-post"
       >
         Test Series Post
@@ -83,7 +83,7 @@ exports[`SeriesPostCard > should match snapshot for past post 1`] = `
       class="mt-0"
     >
       <a
-        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+        class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         href="/writing/test-series-post"
       >
         Test Series Post

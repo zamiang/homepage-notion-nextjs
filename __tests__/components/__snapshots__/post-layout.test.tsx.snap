@@ -18,12 +18,14 @@ exports[`PostLayout > should match snapshot 1`] = `
         </time>
       </div>
       <h1
-        class="font-serif text-3xl md:text-4xl font-normal italic leading-tight mb-4 text-foreground"
+        class="font-serif font-normal italic leading-tight mb-4 text-foreground"
+        style="font-size: var(--font-size-4xl);"
       >
         Test Post
       </h1>
       <p
-        class="section-subtitle text-lg"
+        class="section-subtitle"
+        style="font-size: var(--font-size-lg);"
       >
         This is a test post.
       </p>

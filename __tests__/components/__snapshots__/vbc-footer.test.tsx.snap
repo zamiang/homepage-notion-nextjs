@@ -36,7 +36,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
           class="mt-0"
         >
           <a
-            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             href="/writing/first-post"
           >
             A First Post
@@ -50,7 +50,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
           class="mt-0"
         >
           <a
-            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             href="/writing/second-post"
           >
             B Second Post
@@ -71,7 +71,7 @@ exports[`VBCFooter > should match snapshot 1`] = `
           class="mt-0"
         >
           <a
-            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+            class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             href="/writing/third-post"
           >
             C Third Post

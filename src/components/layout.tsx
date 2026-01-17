@@ -53,10 +53,26 @@ export default function Layout({ children }: LayoutProps) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-foreground text-sm border-none hover:text-accent transition-colors duration-150"
+                  className="text-foreground text-sm border-none hover:text-accent transition-colors duration-150 inline-flex items-center gap-1"
                   {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                 >
                   {link.label}
+                  {link.external && (
+                    <svg
+                      className="w-3 h-3 opacity-50"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                      />
+                    </svg>
+                  )}
                 </Link>
               ))}
             </div>
@@ -117,11 +133,27 @@ export default function Layout({ children }: LayoutProps) {
                     key={link.href}
                     href={link.href}
                     role="menuitem"
-                    className="text-foreground text-base py-2 border-none hover:text-accent transition-colors duration-150"
+                    className="text-foreground text-base py-2 border-none hover:text-accent transition-colors duration-150 inline-flex items-center gap-1"
                     onClick={() => setMobileMenuOpen(false)}
                     {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                   >
                     {link.label}
+                    {link.external && (
+                      <svg
+                        className="w-3.5 h-3.5 opacity-50"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                        />
+                      </svg>
+                    )}
                   </Link>
                 ))}
               </div>
