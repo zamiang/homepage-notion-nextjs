@@ -40,6 +40,14 @@ export default function Layout({ children }: LayoutProps) {
               >
                 Photography
               </Link>
+              <Link
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener"
+                className="text-foreground text-sm border-none hover:text-accent transition-colors duration-150"
+              >
+                Resume
+              </Link>
             </div>
           </div>
         </nav>
