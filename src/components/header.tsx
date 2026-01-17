@@ -106,7 +106,11 @@ export default function Header() {
 
         {/* Mobile menu - no role="menu" needed, semantic nav is sufficient */}
         {mobileMenuOpen && (
-          <nav id="mobile-menu" aria-label="Mobile navigation" className="md:hidden py-4 border-t border-border/50">
+          <nav
+            id="mobile-menu"
+            aria-label="Mobile navigation"
+            className="md:hidden py-4 border-t border-border/50"
+          >
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link
