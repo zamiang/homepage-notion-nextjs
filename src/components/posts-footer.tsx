@@ -12,10 +12,15 @@ export default function PostsFooter(params: { slug: string }) {
   return (
     <div>
       {/* Recommended Writing - Warm background */}
-      <section className="section-wrapper section-wrapper--warm" aria-labelledby="recommended-writing-heading">
+      <section
+        className="section-wrapper section-wrapper--warm"
+        aria-labelledby="recommended-writing-heading"
+      >
         <div className="section-wrapper-inner">
           <p className="section-label">More to Read</p>
-          <h2 id="recommended-writing-heading" className="section-heading">Recommended Writing</h2>
+          <h2 id="recommended-writing-heading" className="section-heading">
+            Recommended Writing
+          </h2>
           <p className="section-subtitle">
             Essays on engineering leadership, startups, and building teams.
           </p>
@@ -27,10 +32,15 @@ export default function PostsFooter(params: { slug: string }) {
       </section>
 
       {/* Recommended Photos - Muted background */}
-      <section className="section-wrapper section-wrapper--muted" aria-labelledby="recommended-photos-heading">
+      <section
+        className="section-wrapper section-wrapper--muted"
+        aria-labelledby="recommended-photos-heading"
+      >
         <div className="section-wrapper-inner">
           <p className="section-label">Visual Stories</p>
-          <h2 id="recommended-photos-heading" className="section-heading">Recommended Photos</h2>
+          <h2 id="recommended-photos-heading" className="section-heading">
+            Recommended Photos
+          </h2>
           <p className="section-subtitle">Capturing moments from travels and everyday life.</p>
           <div className="section-rule" aria-hidden="true"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

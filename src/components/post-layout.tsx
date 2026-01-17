@@ -41,10 +41,15 @@ export default function PostLayout({
               </>
             )}
           </div>
-          <h1 className="font-serif font-normal italic leading-tight mb-4 text-foreground" style={{ fontSize: 'var(--font-size-4xl)' }}>
+          <h1
+            className="font-serif font-normal italic leading-tight mb-4 text-foreground"
+            style={{ fontSize: 'var(--font-size-4xl)' }}
+          >
             {post.title}
           </h1>
-          <p className="section-subtitle" style={{ fontSize: 'var(--font-size-lg)' }}>{post.excerpt}</p>
+          <p className="section-subtitle" style={{ fontSize: 'var(--font-size-lg)' }}>
+            {post.excerpt}
+          </p>
           <div className="section-rule mt-6" aria-hidden="true"></div>
         </header>
         {tocContent}
