@@ -12,7 +12,6 @@ import {
 } from '@/lib/notion';
 import { Client } from '@notionhq/client';
 import fs from 'fs';
-import { NotionToMarkdown } from 'notion-to-md';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Mock } from 'vitest';
 

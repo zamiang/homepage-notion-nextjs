@@ -4,6 +4,7 @@
  * Shows the VBC series navigation at the bottom of VBC posts
  */
 
+import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
 import SeriesPostCard from './SeriesPostCard.astro';
@@ -20,13 +21,13 @@ interface Props {
 const { currentSlug } = Astro.props;
 
 // Get VBC posts from collection
-let vbcPosts: Array<{ data: any }> = [];
+let vbcPosts: CollectionEntry<'vbcPosts'>[] = [];
 
 try {
   vbcPosts = (await getCollection('vbcPosts')).sort((a, b) =>
     a.data.title > b.data.title ? 1 : -1,
   );
-} catch (error) {
+} catch {
   console.warn('Could not load VBC posts for VBCFooter');
 }
 

@@ -4,6 +4,7 @@
  * Main landing page with hero, work history, writing, VBC series, and photography
  */
 
+import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
 import PhotoCard from '../components/PhotoCard.astro';
@@ -18,9 +19,9 @@ const VBC_DESCRIPTION =
   'This series argues that U.S. healthcare is "harder than rocket science" due to its "consolidated fragmentation," where powerful, siloed players hinder effective, affordable patient care.';
 
 // Load content from collections
-let posts: Array<{ data: any }> = [];
-let vbcPosts: Array<{ data: any }> = [];
-let photos: Array<{ data: any }> = [];
+let posts: CollectionEntry<'posts'>[] = [];
+let vbcPosts: CollectionEntry<'vbcPosts'>[] = [];
+let photos: CollectionEntry<'photos'>[] = [];
 
 try {
   posts = await getCollection('posts');

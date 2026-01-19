@@ -5,6 +5,7 @@ const eslintConfig = [
   {
     ignores: [
       '.astro/**',
+      '.vercel/**',
       'dist/**',
       'node_modules/**',
       '.cache/**',

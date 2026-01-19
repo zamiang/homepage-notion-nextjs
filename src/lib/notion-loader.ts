@@ -74,7 +74,7 @@ export function notionLoader(options: NotionLoaderOptions): Loader {
         // Download image for local serving
         try {
           await downloadImage(src);
-        } catch (error) {
+        } catch {
           logger.warn(`Failed to download image: ${src}`);
         }
 

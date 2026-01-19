@@ -4,6 +4,7 @@
  * Shows recommended posts and photos at the bottom of a post
  */
 
+import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
 import PhotoCard from './PhotoCard.astro';
@@ -16,13 +17,13 @@ interface Props {
 const { currentSlug } = Astro.props;
 
 // Get posts and photos from collections
-let posts: Array<{ data: any }> = [];
-let photos: Array<{ data: any }> = [];
+let posts: CollectionEntry<'posts'>[] = [];
+let photos: CollectionEntry<'photos'>[] = [];
 
 try {
   posts = await getCollection('posts');
   photos = await getCollection('photos');
-} catch (error) {
+} catch {
   console.warn('Could not load collections for PostsFooter');
 }
 
