@@ -1,0 +1,51 @@
+---
+/**
+ * SeriesPostCard Component (Astro)
+ * Displays a post in a series (VBC) with optional navigation states
+ */
+
+interface Props {
+  post: {
+    slug: string;
+    title: string;
+    excerpt?: string;
+  };
+  isPast?: boolean;
+  isCurrent?: boolean;
+  isNext?: boolean;
+}
+
+const { post, isPast = false, isCurrent = false, isNext = false } = Astro.props;
+
+const classNames = [
+  'post',
+  isPast && 'past-post',
+  isCurrent && 'current-post',
+  isNext && 'next-post',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div class={classNames}>
+  {
+    isNext && (
+      <a
+        href={`/writing/${post.slug}`}
+        aria-label={`Next post: ${post.title}`}
+        class="next-button focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+      >
+        Next
+      </a>
+    )
+  }
+  <h4 class="mt-0">
+    <a
+      href={`/writing/${post.slug}`}
+      class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+    >
+      {post.title}
+    </a>
+  </h4>
+  {!isPast && !isCurrent && post.excerpt && <p class="truncated-text">{post.excerpt}</p>}
+</div>

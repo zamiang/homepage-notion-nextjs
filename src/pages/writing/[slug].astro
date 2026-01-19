@@ -1,0 +1,52 @@
+---
+/**
+ * Dynamic route for individual writing posts
+ * Generates static pages for all posts from the Content Collection
+ */
+
+import { getCollection } from 'astro:content';
+
+import PostsFooter from '../../components/PostsFooter.astro';
+import VBCFooter from '../../components/VBCFooter.astro';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+// Generate static paths for all posts (both regular and VBC)
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  const vbcPosts = await getCollection('vbcPosts');
+
+  const allPosts = [...posts, ...vbcPosts];
+
+  return allPosts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { post: post.data },
+  }));
+}
+
+interface Props {
+  post: {
+    id: string;
+    title: string;
+    slug: string;
+    coverImage: string;
+    date: string;
+    dateModified?: string;
+    excerpt?: string;
+    content: string;
+    author: string;
+    section?: string;
+    showToc?: boolean;
+  };
+}
+
+const { post } = Astro.props;
+const { slug } = Astro.params;
+---
+
+<PostLayout post={post} type="writing">
+  {/* VBC series footer for VBC posts */}
+  {post.section === 'VBC' && <VBCFooter currentSlug={slug} />}
+
+  {/* Recommended posts footer */}
+  <PostsFooter currentSlug={slug} />
+</PostLayout>

@@ -1,0 +1,82 @@
+---
+/**
+ * PostsFooter Component (Astro)
+ * Shows recommended posts and photos at the bottom of a post
+ */
+
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+import PhotoCard from './PhotoCard.astro';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+// Get posts and photos from collections
+let posts: CollectionEntry<'posts'>[] = [];
+let photos: CollectionEntry<'photos'>[] = [];
+
+try {
+  posts = await getCollection('posts');
+  photos = await getCollection('photos');
+} catch {
+  console.warn('Could not load collections for PostsFooter');
+}
+
+const filteredPosts = posts.filter((p) => p.data.slug !== currentSlug).slice(0, 4);
+const filteredPhotos = photos.filter((p) => p.data.slug !== currentSlug).slice(0, 6);
+---
+
+<div>
+  {/* Recommended Writing - Warm background */}
+  {
+    filteredPosts.length > 0 && (
+      <section
+        class="section-wrapper section-wrapper--warm"
+        aria-labelledby="recommended-writing-heading"
+      >
+        <div class="section-wrapper-inner">
+          <p class="section-label">More to Read</p>
+          <h2 id="recommended-writing-heading" class="section-heading">
+            Recommended Writing
+          </h2>
+          <p class="section-subtitle">
+            Essays on engineering leadership, startups, and building teams.
+          </p>
+          <div class="section-rule" aria-hidden="true" />
+          {filteredPosts.map((post) => (
+            <PostCard post={post.data} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {/* Recommended Photos - Muted background */}
+  {
+    filteredPhotos.length > 0 && (
+      <section
+        class="section-wrapper section-wrapper--muted"
+        aria-labelledby="recommended-photos-heading"
+      >
+        <div class="section-wrapper-inner">
+          <p class="section-label">Visual Stories</p>
+          <h2 id="recommended-photos-heading" class="section-heading">
+            Recommended Photos
+          </h2>
+          <p class="section-subtitle">Capturing moments from travels and everyday life.</p>
+          <div class="section-rule" aria-hidden="true" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {filteredPhotos.map((post) => (
+              <PhotoCard post={post.data} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</div>

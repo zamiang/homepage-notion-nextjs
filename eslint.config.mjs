@@ -1,16 +1,19 @@
-import nextPlugin from 'eslint-config-next';
+import eslintPluginAstro from 'eslint-plugin-astro';
+import tseslint from 'typescript-eslint';
 
 const eslintConfig = [
   {
     ignores: [
-      '.next/**',
+      '.astro/**',
+      '.vercel/**',
+      'dist/**',
       'node_modules/**',
-      'out/**',
       '.cache/**',
       'coverage/**',
     ],
   },
-  ...nextPlugin,
+  ...tseslint.configs.recommended,
+  ...eslintPluginAstro.configs.recommended,
   {
     rules: {
       '@typescript-eslint/no-require-imports': 'off',

@@ -1,0 +1,58 @@
+---
+/**
+ * VBCFooter Component (Astro)
+ * Shows the VBC series navigation at the bottom of VBC posts
+ */
+
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+import SeriesPostCard from './SeriesPostCard.astro';
+
+// VBC constants
+const VBC_TITLE = 'Why Value-Based Care is Harder Than Rocket Science';
+const VBC_DESCRIPTION =
+  'This series argues that U.S. healthcare is "harder than rocket science" due to its "consolidated fragmentation," where powerful, siloed players hinder effective, affordable patient care.';
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+// Get VBC posts from collection
+let vbcPosts: CollectionEntry<'vbcPosts'>[] = [];
+
+try {
+  vbcPosts = (await getCollection('vbcPosts')).sort((a, b) =>
+    a.data.title > b.data.title ? 1 : -1,
+  );
+} catch {
+  console.warn('Could not load VBC posts for VBCFooter');
+}
+
+const indexOfSlug = vbcPosts.findIndex((p) => p.data.slug === currentSlug);
+---
+
+{
+  vbcPosts.length > 0 && (
+    <section class="section-wrapper section-wrapper--accent" aria-labelledby="vbc-series-heading">
+      <div class="section-wrapper-inner">
+        <p class="section-label">VBC Deep Dive</p>
+        <h2 id="vbc-series-heading" class="section-heading">
+          {VBC_TITLE}
+        </h2>
+        <p class="section-subtitle">{VBC_DESCRIPTION}</p>
+        <div class="section-rule" aria-hidden="true" />
+        {vbcPosts.map((post, index) => (
+          <SeriesPostCard
+            post={post.data}
+            isPast={index < indexOfSlug}
+            isCurrent={index === indexOfSlug}
+            isNext={index === indexOfSlug + 1}
+          />
+        ))}
+      </div>
+    </section>
+  )
+}

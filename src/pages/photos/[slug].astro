@@ -1,0 +1,45 @@
+---
+/**
+ * Dynamic route for individual photo posts
+ * Generates static pages for all photos from the Content Collection
+ */
+
+import { getCollection } from 'astro:content';
+
+import PostsFooter from '../../components/PostsFooter.astro';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+// Generate static paths for all photos
+export async function getStaticPaths() {
+  const photos = await getCollection('photos');
+
+  return photos.map((photo) => ({
+    params: { slug: photo.data.slug },
+    props: { post: photo.data },
+  }));
+}
+
+interface Props {
+  post: {
+    id: string;
+    title: string;
+    slug: string;
+    coverImage: string;
+    date: string;
+    dateModified?: string;
+    excerpt?: string;
+    content: string;
+    author: string;
+    section?: string;
+    showToc?: boolean;
+  };
+}
+
+const { post } = Astro.props;
+const { slug } = Astro.params;
+---
+
+<PostLayout post={post} type="photos">
+  {/* Recommended posts footer */}
+  <PostsFooter currentSlug={slug} />
+</PostLayout>

@@ -1,0 +1,50 @@
+---
+/**
+ * TableOfContents Component (Astro)
+ * Shows a navigation sidebar for post headings
+ */
+
+export interface TocItem {
+  id: string;
+  text: string;
+  level: number;
+}
+
+interface Props {
+  items: TocItem[];
+}
+
+const { items } = Astro.props;
+
+// Don't render if less than 3 items
+if (items.length < 3) {
+  return null;
+}
+
+// Find the minimum heading level to use as baseline for indentation
+const minLevel = Math.min(...items.map((item) => item.level));
+---
+
+<nav
+  aria-label="Table of contents"
+  class="toc mb-8 p-5 bg-accent/10 border border-accent/20 rounded-lg"
+>
+  <p class="section-label mb-2" aria-hidden="true">In This Article</p>
+  <ul class="space-y-2 m-0 p-0 list-none">
+    {
+      items.map((item) => (
+        <li
+          class="text-muted-foreground m-0"
+          style={`margin-left: ${(item.level - minLevel) * 1}rem`}
+        >
+          <a
+            href={`#${item.id}`}
+            class="text-sm text-muted-foreground hover:text-accent transition-colors duration-150 !border-none !no-underline"
+          >
+            {item.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

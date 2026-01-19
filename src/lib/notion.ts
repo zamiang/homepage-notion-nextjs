@@ -1,9 +1,7 @@
 import { Client } from '@notionhq/client';
 import { ImageBlockObjectResponse } from '@notionhq/client';
 import { PageObjectResponse } from '@notionhq/client/';
-import fs from 'fs';
 import { NotionToMarkdown } from 'notion-to-md';
-import path from 'path';
 
 import { config } from './config';
 import { downloadImage, getFilename } from './download-image';
@@ -31,64 +29,7 @@ export function getWordCount(content: string): number {
   return cleanText.length === 0 ? 0 : cleanText.split(' ').length;
 }
 
-export function getPostsFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), config.cache.postsFileName);
-  if (fs.existsSync(cachePath)) {
-    try {
-      const cache = fs.readFileSync(cachePath, 'utf-8');
-      return JSON.parse(cache);
-    } catch (error) {
-      logError('getPostsFromCache', error, { cachePath });
-      return [];
-    }
-  }
-  return [];
-}
-
-export function getAllSectionPostsFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), config.cache.postsFileName);
-  if (fs.existsSync(cachePath)) {
-    try {
-      const cache = fs.readFileSync(cachePath, 'utf-8');
-      return JSON.parse(cache).filter((post: Post) => post.section === 'All');
-    } catch (error) {
-      logError('getAllSectionPostsFromCache', error, { cachePath });
-      return [];
-    }
-  }
-  return [];
-}
-
-export function getVBCSectionPostsFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), config.cache.postsFileName);
-  if (fs.existsSync(cachePath)) {
-    try {
-      const cache = fs.readFileSync(cachePath, 'utf-8');
-      return JSON.parse(cache).filter((post: Post) => post.section === 'VBC');
-    } catch (error) {
-      logError('getVBCSectionPostsFromCache', error, { cachePath });
-      return [];
-    }
-  }
-  return [];
-}
-
-export function getPhotosFromCache(): Post[] {
-  const cachePath = path.join(process.cwd(), config.cache.photosFileName);
-  if (fs.existsSync(cachePath)) {
-    try {
-      const cache = fs.readFileSync(cachePath, 'utf-8');
-      return JSON.parse(cache);
-    } catch (error) {
-      logError('getPhotosFromCache', error, { cachePath });
-      return [];
-    }
-  }
-  return [];
-}
-
 export const fetchPublishedPosts = async (notion: Client, dataSourceID: string) => {
-  // This function is now intended to be used only by the caching script.
   const posts = await notion.dataSources.query({
     data_source_id: dataSourceID!,
     filter: {
@@ -111,12 +52,6 @@ export const fetchPublishedPosts = async (notion: Client, dataSourceID: string) 
 
   return posts.results as PageObjectResponse[];
 };
-
-export async function getPost(slug: string): Promise<Post | null> {
-  const posts = getAllSectionPostsFromCache();
-  const post = posts.find((p) => p.slug === slug);
-  return post || null;
-}
 
 export async function getPostFromNotion(pageId: string): Promise<Post | null> {
   try {
@@ -229,19 +164,4 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     logError('getPostFromNotion', error, { pageId });
     return null;
   }
-}
-
-/**
- * Gets all posts and photos combined, sorted by date (newest first)
- * Adds a 'type' field to distinguish between 'writing' and 'photo' items
- */
-export type PostWithType = Post & { type: 'writing' | 'photo' };
-
-export function getAllItemsSortedByDate(): PostWithType[] {
-  const writingPosts = getPostsFromCache().map((post) => ({ ...post, type: 'writing' as const }));
-  const photos = getPhotosFromCache().map((post) => ({ ...post, type: 'photo' as const }));
-  const allItems = [...writingPosts, ...photos].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-  return allItems;
 }

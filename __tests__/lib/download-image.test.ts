@@ -1,4 +1,4 @@
-import { downloadImage, getFilename } from '@/lib/download-image';
+import { downloadImage, getFilename, isUrlSafe } from '@/lib/download-image';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
@@ -10,22 +10,76 @@ vi.mock('fs', () => ({
     existsSync: vi.fn(),
     mkdirSync: vi.fn(),
     createWriteStream: vi.fn(),
+    unlinkSync: vi.fn(),
   },
   existsSync: vi.fn(),
   mkdirSync: vi.fn(),
   createWriteStream: vi.fn(),
+  unlinkSync: vi.fn(),
 }));
 vi.mock('axios', () => ({
   default: vi.fn(),
 }));
 
 // Mock console methods
-const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+vi.spyOn(console, 'error').mockImplementation(() => {});
 
 describe('download-image.tsx', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  describe('isUrlSafe', () => {
+    it('should allow valid HTTPS URLs', () => {
+      expect(isUrlSafe('https://example.com/image.jpg')).toBe(true);
+      expect(isUrlSafe('https://cdn.notion.so/image.png')).toBe(true);
+      expect(isUrlSafe('https://s3.amazonaws.com/bucket/file.gif')).toBe(true);
+    });
+
+    it('should block HTTP URLs', () => {
+      expect(isUrlSafe('http://example.com/image.jpg')).toBe(false);
+    });
+
+    it('should block localhost', () => {
+      expect(isUrlSafe('https://localhost/image.jpg')).toBe(false);
+      expect(isUrlSafe('https://localhost.localdomain/image.jpg')).toBe(false);
+      expect(isUrlSafe('https://0.0.0.0/image.jpg')).toBe(false);
+    });
+
+    it('should block private IP ranges (127.x.x.x)', () => {
+      expect(isUrlSafe('https://127.0.0.1/image.jpg')).toBe(false);
+      expect(isUrlSafe('https://127.1.2.3/image.jpg')).toBe(false);
+    });
+
+    it('should block private IP ranges (10.x.x.x)', () => {
+      expect(isUrlSafe('https://10.0.0.1/image.jpg')).toBe(false);
+      expect(isUrlSafe('https://10.255.255.255/image.jpg')).toBe(false);
+    });
+
+    it('should block private IP ranges (192.168.x.x)', () => {
+      expect(isUrlSafe('https://192.168.0.1/image.jpg')).toBe(false);
+      expect(isUrlSafe('https://192.168.255.255/image.jpg')).toBe(false);
+    });
+
+    it('should block private IP ranges (172.16-31.x.x)', () => {
+      expect(isUrlSafe('https://172.16.0.1/image.jpg')).toBe(false);
+      expect(isUrlSafe('https://172.31.255.255/image.jpg')).toBe(false);
+      // 172.32 is not private
+      expect(isUrlSafe('https://172.32.0.1/image.jpg')).toBe(true);
+    });
+
+    it('should block link-local addresses', () => {
+      expect(isUrlSafe('https://169.254.1.1/image.jpg')).toBe(false);
+    });
+
+    it('should block file:// protocol', () => {
+      expect(isUrlSafe('file:///etc/passwd')).toBe(false);
+    });
+
+    it('should return false for invalid URLs', () => {
+      expect(isUrlSafe('not-a-url')).toBe(false);
+      expect(isUrlSafe('')).toBe(false);
+    });
   });
 
   describe('getFilename', () => {
@@ -44,20 +98,30 @@ describe('download-image.tsx', () => {
       expect(getFilename('https://example.com/images/filename')).toBe('filename');
     });
 
-    it('should handle invalid URLs gracefully', () => {
-      const result = getFilename('not-a-valid-url');
-      expect(result).toBeUndefined();
-      expect(consoleErrorSpy).toHaveBeenCalled();
+    it('should return undefined for invalid URLs', () => {
+      expect(getFilename('not-a-valid-url')).toBeUndefined();
+      expect(getFilename('')).toBeUndefined();
     });
 
-    it('should handle empty strings', () => {
-      const result = getFilename('');
-      expect(result).toBeUndefined();
-      expect(consoleErrorSpy).toHaveBeenCalled();
+    it('should return undefined for URLs ending with slash (empty filename)', () => {
+      expect(getFilename('https://example.com/images/')).toBeUndefined();
     });
 
-    it('should handle URLs ending with slash', () => {
-      expect(getFilename('https://example.com/images/')).toBe('');
+    it('should sanitize path traversal attempts', () => {
+      // These should be sanitized, not return the dangerous filename
+      expect(getFilename('https://example.com/../../../etc/passwd')).toBe('passwd');
+      expect(getFilename('https://example.com/..%2F..%2Fetc/passwd')).toBe('passwd');
+    });
+
+    it('should reject filenames with only dots', () => {
+      expect(getFilename('https://example.com/..')).toBeUndefined();
+      expect(getFilename('https://example.com/...')).toBeUndefined();
+    });
+
+    it('should handle special characters in filenames', () => {
+      expect(getFilename('https://example.com/image%20with%20spaces.jpg')).toBe(
+        'image%20with%20spaces.jpg',
+      );
     });
   });
 
@@ -68,48 +132,38 @@ describe('download-image.tsx', () => {
     const mockDirname = path.dirname(mockDest);
 
     beforeEach(() => {
-      (fs.existsSync as any).mockReturnValue(false);
-      (fs.mkdirSync as any).mockImplementation(() => undefined as any);
-      (fs.createWriteStream as any).mockReturnValue({
+      (fs.existsSync as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      (fs.mkdirSync as ReturnType<typeof vi.fn>).mockImplementation(() => undefined);
+      (fs.createWriteStream as ReturnType<typeof vi.fn>).mockReturnValue({
         on: vi.fn((event, callback) => {
           if (event === 'close') {
-            // Simulate successful write
             setTimeout(callback, 0);
           }
           return this;
         }),
-      } as any);
+      });
     });
 
     it('should download image successfully', async () => {
-      const mockStream = {
-        pipe: vi.fn(),
-      };
-
-      (axios as any).mockResolvedValue({
-        data: mockStream,
-      } as any);
+      const mockStream = { pipe: vi.fn() };
+      (axios as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({ data: mockStream });
 
       await downloadImage(mockUrl);
 
-      // Check directory creation
       expect(fs.mkdirSync).toHaveBeenCalledWith(mockDirname, { recursive: true });
-
-      // Check file download
       expect(axios).toHaveBeenCalledWith({
         url: mockUrl,
         method: 'GET',
         responseType: 'stream',
+        timeout: 30000,
       });
-
-      // Check write stream creation
       expect(fs.createWriteStream).toHaveBeenCalledWith(mockDest);
     });
 
     it('should skip download if file already exists', async () => {
-      (fs.existsSync as any).mockImplementation((path: string) => {
-        if (path === mockDest) return true; // File exists
-        return false; // Directory doesn't exist
+      (fs.existsSync as ReturnType<typeof vi.fn>).mockImplementation((p: string) => {
+        if (p === mockDest) return true;
+        return false;
       });
 
       await downloadImage(mockUrl);
@@ -119,18 +173,13 @@ describe('download-image.tsx', () => {
     });
 
     it('should not create directory if it already exists', async () => {
-      (fs.existsSync as any).mockImplementation((path: string) => {
-        if (path === mockDirname) return true; // Directory exists
+      (fs.existsSync as ReturnType<typeof vi.fn>).mockImplementation((p: string) => {
+        if (p === mockDirname) return true;
         return false;
       });
 
-      const mockStream = {
-        pipe: vi.fn(),
-      };
-
-      (axios as any).mockResolvedValue({
-        data: mockStream,
-      } as any);
+      const mockStream = { pipe: vi.fn() };
+      (axios as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({ data: mockStream });
 
       await downloadImage(mockUrl);
 
@@ -138,123 +187,111 @@ describe('download-image.tsx', () => {
       expect(axios).toHaveBeenCalled();
     });
 
-    it('should handle download errors gracefully', async () => {
-      (axios as any).mockRejectedValue(new Error('Network error'));
+    it('should throw on download errors', async () => {
+      (axios as unknown as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Network error'));
 
-      await downloadImage(mockUrl);
-
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        mockUrl,
-        'ERROR STORING THIS IMAGE',
-        expect.any(Error),
-      );
+      await expect(downloadImage(mockUrl)).rejects.toThrow('Network error');
     });
 
-    it('should handle write stream errors', async () => {
-      const mockStream = {
-        pipe: vi.fn(),
-      };
-
-      (axios as any).mockResolvedValue({
-        data: mockStream,
-      } as any);
-
-      let errorHandler: any = null;
-
-      const mockWriteStream = {
-        on: vi.fn((event, callback) => {
-          if (event === 'error') {
-            errorHandler = callback;
-          }
-          // Don't trigger close event when there's an error
-          return mockWriteStream;
-        }),
-      };
-
-      (fs.createWriteStream as any).mockReturnValue(mockWriteStream as any);
-
-      // Start the download (don't await it since it won't complete due to error)
-      downloadImage(mockUrl);
-
-      // Trigger the error after a small delay
-      await new Promise((resolve) => setTimeout(resolve, 10));
-      if (errorHandler) {
-        errorHandler(new Error('Write error'));
-      }
-
-      // Give it time to handle the error
-      await new Promise((resolve) => setTimeout(resolve, 10));
-
-      expect(consoleErrorSpy).toHaveBeenCalledWith(expect.any(Error));
-    });
-
-    it('should handle URLs without filename', async () => {
+    it('should throw for URLs without valid filename', async () => {
       const urlWithoutFile = 'https://example.com/';
-      const expectedDest = path.join(process.cwd(), 'public', 'images', '');
 
-      await downloadImage(urlWithoutFile);
-
-      // Should still attempt to create the file, even with empty filename
-      expect(fs.createWriteStream).toHaveBeenCalledWith(expectedDest);
+      await expect(downloadImage(urlWithoutFile)).rejects.toThrow('Invalid filename from URL');
     });
 
-    it('should handle axios returning undefined', async () => {
-      (axios as any).mockResolvedValue(undefined as any);
-
-      await downloadImage(mockUrl);
-
-      // Should handle gracefully without throwing
-      expect(fs.createWriteStream).toHaveBeenCalled();
-    });
-
-    it('should handle directory creation errors', async () => {
-      (fs.mkdirSync as any).mockImplementation(() => {
+    it('should throw on directory creation errors', async () => {
+      (fs.mkdirSync as ReturnType<typeof vi.fn>).mockImplementation(() => {
         throw new Error('Permission denied');
       });
 
-      await downloadImage(mockUrl);
-
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        mockUrl,
-        'ERROR STORING THIS IMAGE',
-        expect.any(Error),
-      );
+      await expect(downloadImage(mockUrl)).rejects.toThrow('Permission denied');
     });
 
     it('should handle concurrent downloads of the same file', async () => {
-      const mockStream = {
-        pipe: vi.fn(),
-      };
+      const mockStream = { pipe: vi.fn() };
+      (axios as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({ data: mockStream });
 
-      (axios as any).mockResolvedValue({
-        data: mockStream,
-      } as any);
-
-      // Start two downloads simultaneously
       const download1 = downloadImage(mockUrl);
       const download2 = downloadImage(mockUrl);
 
       await Promise.all([download1, download2]);
 
-      // Both should attempt to download (no file locking mechanism)
       expect(axios).toHaveBeenCalledTimes(2);
       expect(fs.createWriteStream).toHaveBeenCalledTimes(2);
     });
   });
 
+  describe('SSRF protection', () => {
+    it('should block localhost URLs', async () => {
+      await expect(downloadImage('https://localhost/image.jpg')).rejects.toThrow(
+        'Unsafe URL blocked',
+      );
+    });
+
+    it('should block private IP URLs', async () => {
+      await expect(downloadImage('https://192.168.1.1/image.jpg')).rejects.toThrow(
+        'Unsafe URL blocked',
+      );
+      await expect(downloadImage('https://10.0.0.1/image.jpg')).rejects.toThrow(
+        'Unsafe URL blocked',
+      );
+      await expect(downloadImage('https://127.0.0.1/image.jpg')).rejects.toThrow(
+        'Unsafe URL blocked',
+      );
+    });
+
+    it('should block HTTP URLs', async () => {
+      await expect(downloadImage('http://example.com/image.jpg')).rejects.toThrow(
+        'Unsafe URL blocked',
+      );
+    });
+  });
+
+  describe('path traversal protection', () => {
+    beforeEach(() => {
+      (fs.existsSync as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      (fs.mkdirSync as ReturnType<typeof vi.fn>).mockImplementation(() => undefined);
+    });
+
+    it('should sanitize path traversal in filename', async () => {
+      const mockStream = { pipe: vi.fn() };
+      (axios as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({ data: mockStream });
+      (fs.createWriteStream as ReturnType<typeof vi.fn>).mockReturnValue({
+        on: vi.fn((event, callback) => {
+          if (event === 'close') setTimeout(callback, 0);
+          return this;
+        }),
+      });
+
+      // The filename should be sanitized to just 'passwd'
+      await downloadImage('https://example.com/path/../../../etc/passwd');
+
+      // Should write to sanitized path, not the traversal path
+      expect(fs.createWriteStream).toHaveBeenCalledWith(
+        expect.stringContaining(path.join('public', 'images', 'passwd')),
+      );
+    });
+  });
+
   describe('edge cases', () => {
+    beforeEach(() => {
+      (fs.existsSync as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      (fs.mkdirSync as ReturnType<typeof vi.fn>).mockImplementation(() => undefined);
+    });
+
     it('should handle special characters in filenames', async () => {
       const specialUrl = 'https://example.com/image%20with%20spaces.jpg';
       const expectedFilename = 'image%20with%20spaces.jpg';
       const expectedDest = path.join(process.cwd(), 'public', 'images', expectedFilename);
 
-      const mockStream = {
-        pipe: vi.fn(),
-      };
-
-      (axios as any).mockResolvedValue({
-        data: mockStream,
-      } as any);
+      const mockStream = { pipe: vi.fn() };
+      (axios as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({ data: mockStream });
+      (fs.createWriteStream as ReturnType<typeof vi.fn>).mockReturnValue({
+        on: vi.fn((event, callback) => {
+          if (event === 'close') setTimeout(callback, 0);
+          return this;
+        }),
+      });
 
       await downloadImage(specialUrl);
 
@@ -266,13 +303,14 @@ describe('download-image.tsx', () => {
       const longUrl = `https://example.com/${longFilename}`;
       const expectedDest = path.join(process.cwd(), 'public', 'images', longFilename);
 
-      const mockStream = {
-        pipe: vi.fn(),
-      };
-
-      (axios as any).mockResolvedValue({
-        data: mockStream,
-      } as any);
+      const mockStream = { pipe: vi.fn() };
+      (axios as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({ data: mockStream });
+      (fs.createWriteStream as ReturnType<typeof vi.fn>).mockReturnValue({
+        on: vi.fn((event, callback) => {
+          if (event === 'close') setTimeout(callback, 0);
+          return this;
+        }),
+      });
 
       await downloadImage(longUrl);
 

@@ -1,0 +1,910 @@
+/* ==========================================================================
+   Global Styles
+   Organized into logical sections for maintainability
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS & TAILWIND CONFIGURATION
+   ========================================================================== */
+
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+/* ==========================================================================
+   2. THEME CONFIGURATION
+   Maps CSS variables to Tailwind theme tokens
+   ========================================================================== */
+
+@theme inline {
+  --font-size: var(--font-size);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-serif: 'EB Garamond', 'EB Garamond Fallback';
+  --font-sans: 'Lato', 'EB Garamond Fallback';
+  --font-mono: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-accent-bold: var(--accent-bold);
+  --color-accent-bold-hover: var(--accent-bold-hover);
+  --color-accent-bold-foreground: var(--accent-bold-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+}
+
+/* ==========================================================================
+   3. CSS VARIABLES
+   ========================================================================== */
+
+:root {
+  /* Typography - Modern Professional Scale with Fluid Sizing
+     Using clamp() for smooth scaling between viewport sizes:
+     clamp(min, preferred, max) where preferred uses viewport width */
+  --font-size: 1.125rem; /* 18px base for better readability */
+
+  /* Fluid Typography Scale */
+  --font-size-sm: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem); /* 14-15px */
+  --font-size-base: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); /* 16-18px */
+  --font-size-lg: clamp(1.125rem, 1rem + 0.4vw, 1.25rem); /* 18-20px */
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem); /* 20-24px */
+  --font-size-2xl: clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem); /* 24-30px */
+  --font-size-3xl: clamp(1.875rem, 1.5rem + 1.2vw, 2.5rem); /* 30-40px */
+  --font-size-4xl: clamp(2.25rem, 1.75rem + 1.5vw, 3rem); /* 36-48px */
+
+  /* Reading-optimized spacing */
+  --paragraph-spacing: 1.5em;
+  --line-height-body: 1.7;
+  --line-height-relaxed: 1.8; /* For long-form reading */
+  --line-height-tight: 1.3; /* For headings */
+
+  /* Transition Timing Scale - Consistent across all interactions */
+  --transition-fast: 150ms; /* Micro-interactions: focus, color changes */
+  --transition-normal: 200ms; /* Standard UI: hovers, state changes */
+  --transition-slow: 300ms; /* Transforms: scale, position, complex animations */
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1); /* Quart ease-out for natural deceleration */
+
+  /* Core Colors - "The Slate Executive" Palette */
+  --background: #f0f2f5; /* Cool Mist - pale grey-white */
+  --foreground: #2c333a; /* Deep Charcoal Blue - main text */
+
+  /* Primary - Steel Blue (headers/branding) */
+  --primary: #5a7684;
+  --primary-foreground: #f0f2f5;
+
+  /* Secondary - Dusty Teal (buttons/links) */
+  --secondary: #e3e7eb; /* Lighter mist for secondary surfaces */
+  --secondary-foreground: #2c333a;
+
+  /* Muted */
+  --muted: #e8eaed; /* Slightly darker than background */
+  --muted-foreground: #4a5560; /* Softer charcoal - WCAG AA compliant (~5.2:1) */
+
+  /* Accent - Dusty Teal */
+  --accent: #749ca8;
+  --accent-foreground: #2c333a;
+
+  /* Bold Accent - Warm Copper (CTAs, emphasis) */
+  --accent-bold: #c17f59;
+  --accent-bold-hover: #d4906a;
+  --accent-bold-foreground: #ffffff;
+
+  /* UI Elements */
+  --border: #d1d5db; /* Cool grey border */
+  --input: #e8eaed;
+  --card: #ffffff;
+  --card-foreground: #2c333a;
+
+  /* Semantic Colors */
+  --destructive: #b44d4d; /* Muted red */
+  --destructive-foreground: #f0f2f5;
+  --success: #5a8a6b; /* Muted teal-green */
+  --success-foreground: #f0f2f5;
+}
+
+/* ==========================================================================
+   4. BASE LAYER STYLES
+   ========================================================================== */
+
+@layer base {
+  /* --------------------------------------------------------------------------
+     4.1 Reset & Box Model
+     -------------------------------------------------------------------------- */
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.2 Document & Body
+     -------------------------------------------------------------------------- */
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html,
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--font-size);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-primary);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll from 100vw elements */
+  }
+
+  /* Subtle noise texture overlay for depth */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.3 Typography - Headings
+     -------------------------------------------------------------------------- */
+
+  h1 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4xl); /* Fluid: 36-48px */
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    border-radius: 4px;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-2xl); /* Fluid: 24-30px */
+    font-weight: 600;
+    display: block;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    line-height: var(--line-height-tight);
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-radius: 4px;
+  }
+
+  h3 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-xl); /* Fluid: 20-24px */
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    border-radius: 4px;
+  }
+
+  h4 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-lg); /* Fluid: 18-20px */
+    font-weight: 600;
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    border-radius: 4px;
+  }
+
+  h5 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-base); /* Fluid: 16-18px */
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+  }
+
+  h6 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-sm); /* Fluid: 14-15px */
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    color: var(--muted-foreground);
+  }
+
+  /* Section headings - used for major page sections */
+  .heading {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  /* Subsection headings - used for items within sections */
+  .subsection {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
+
+  /* Tagline - intro text styled like a heading but semantically a paragraph */
+  .tagline {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-xl); /* Fluid: 20-24px */
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--muted-foreground);
+    margin-bottom: 0;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.4 Typography - Paragraphs & Text
+     -------------------------------------------------------------------------- */
+
+  p {
+    margin-bottom: var(--paragraph-spacing);
+    line-height: var(--line-height-body);
+    font-size: var(--font-size-base);
+  }
+
+  /* Remove margin-bottom from last paragraph in sections */
+  p:last-child,
+  blockquote p:last-child,
+  li p:last-child {
+    margin-bottom: 0;
+  }
+
+  .excerpt {
+    line-height: var(--line-height-body);
+  }
+
+  .truncated-text {
+    overflow: hidden;
+    display: -webkit-box;
+    line-height: var(--line-height-relaxed);
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.4b Long-form Reading Optimizations
+     Applied to article prose content for optimal readability
+     -------------------------------------------------------------------------- */
+
+  /* Optimal line length: 45-75 characters (roughly 65ch ideal) */
+  article p,
+  article li {
+    max-width: 65ch;
+  }
+
+  /* Slightly larger line-height for long-form reading */
+  article p {
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* Better spacing between paragraphs in articles */
+  article p + p {
+    margin-top: 0;
+  }
+
+  /* Improved list spacing in articles */
+  article ul,
+  article ol {
+    margin-bottom: 1.5em;
+  }
+
+  article li {
+    line-height: var(--line-height-body);
+    margin-bottom: 0.5em;
+  }
+
+  article li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Better blockquote styling for articles */
+  article blockquote {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-body);
+    font-style: italic;
+    margin: 2em 0;
+  }
+
+  article blockquote p {
+    line-height: inherit;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.5 Links
+     -------------------------------------------------------------------------- */
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    transition:
+      color var(--transition-fast) var(--ease-out),
+      border-color var(--transition-fast) var(--ease-out);
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+
+  a:focus-visible {
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  /* Links inside images */
+  a img {
+    opacity: 1;
+    border-bottom: 1px solid transparent;
+  }
+
+  a img:hover {
+    opacity: 0.7;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.6 Lists
+     -------------------------------------------------------------------------- */
+
+  ul {
+    margin: 2px 0;
+    margin-bottom: 0.5em;
+    padding-left: 1.25em;
+    padding-inline-start: calc(1.5em + 4px);
+    line-height: 1.5;
+    list-style-type: disc;
+  }
+
+  ol {
+    margin: 2px 0;
+    margin-bottom: 0.5em;
+    padding-left: 1.25em;
+    padding-inline-start: calc(1.5em + 4px);
+    line-height: 1.5;
+    list-style-type: auto;
+  }
+
+  li {
+    margin: 2px 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  li a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    transition:
+      border-color var(--transition-fast) var(--ease-out),
+      color var(--transition-fast) var(--ease-out);
+  }
+
+  li a:hover {
+    color: var(--accent);
+  }
+
+  /* --------------------------------------------------------------------------
+     4.7 Blockquotes
+     -------------------------------------------------------------------------- */
+
+  blockquote {
+    display: block;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.5em;
+    border-left: 4px solid var(--accent);
+    line-height: 1.7;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.8 Code Blocks
+     -------------------------------------------------------------------------- */
+
+  pre {
+    color: var(--foreground);
+    background: var(--muted);
+    text-shadow: 0 1px var(--card);
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    tab-size: 4;
+    hyphens: none;
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.9 Figures & Images
+     -------------------------------------------------------------------------- */
+
+  figure {
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    max-width: 100%;
+  }
+
+  figure img {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    text-align: center;
+    padding: 6px 0 0;
+    color: var(--color-secondary);
+    line-height: 1.7;
+  }
+
+  /* Fix border color for captions that contain links */
+  figcaption a {
+    opacity: 1;
+    border-color: var(--color-border);
+  }
+
+  /* --------------------------------------------------------------------------
+     4.10 Layout - Article
+     -------------------------------------------------------------------------- */
+
+  article {
+    width: 100%;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.11 Layout - Sections
+     -------------------------------------------------------------------------- */
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 3.5rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Hero-specific spacing for profile photo */
+  .header .profile-photo {
+    margin-bottom: 1.25rem;
+  }
+
+  /* Hero-specific spacing for section label after profile */
+  .header .section-label {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Hero-specific spacing for main heading */
+  .header .section-heading {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Hero-specific spacing for subtitle */
+  .header .section-subtitle {
+    margin-bottom: 0;
+  }
+
+  .section {
+    @apply pb-8 mb-8;
+  }
+
+  /* Add breathing room between hero and first body paragraph */
+  .header + .section > p:first-child {
+    margin-top: 0.5rem;
+  }
+
+  .section:last-child {
+    @apply border-b-0;
+  }
+
+  /* Homepage sections - consistent vertical spacing */
+  .homepage-section {
+    @apply mt-12;
+  }
+
+  .homepage-section:first-child {
+    @apply mt-0;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.12 Layout - Columns
+     -------------------------------------------------------------------------- */
+
+  .column {
+    @apply flex gap-5 text-sm;
+  }
+
+  .column div {
+    @apply flex-1 flex justify-start flex-col;
+  }
+
+  .prose .column p {
+    @apply !mb-0;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.13 Components - Post Cards
+     -------------------------------------------------------------------------- */
+
+  .post {
+    @apply my-6;
+  }
+
+  .post-meta {
+    @apply flex items-center gap-4;
+  }
+
+  .post-meta p {
+    @apply m-0 bg-transparent;
+  }
+
+  .post-date {
+    @apply text-foreground;
+  }
+
+  .post-reading-time {
+    @apply text-muted-foreground;
+  }
+
+  .post-title {
+    @apply mt-1 mb-2;
+  }
+
+  .posts {
+    margin: 0 auto;
+  }
+
+  .next-post {
+    @apply bg-secondary/80 text-secondary-foreground p-6 rounded-lg border border-accent/20;
+    transition:
+      background-color var(--transition-normal) var(--ease-out),
+      border-color var(--transition-normal) var(--ease-out);
+  }
+
+  .next-post:hover {
+    @apply bg-secondary border-accent/40;
+  }
+
+  .next-post h4,
+  .next-post p {
+    @apply bg-transparent;
+  }
+
+  .current-post {
+    @apply relative pl-4 opacity-90;
+  }
+
+  .current-post::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .current-post h4 {
+    @apply text-accent font-semibold;
+  }
+
+  .future-post {
+    @apply opacity-60;
+  }
+
+  .past-post {
+    @apply opacity-50;
+  }
+
+  .past-post h4 a {
+    @apply text-muted-foreground;
+  }
+
+  /* Photo Cards */
+  .photo-card {
+    @apply mb-4;
+  }
+
+  .photo-card-date {
+    @apply mt-2 mb-0 bg-transparent text-muted-foreground text-sm;
+  }
+
+  .photo-card-title {
+    @apply mt-1 mb-0;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.14 Components - Buttons
+     -------------------------------------------------------------------------- */
+
+  .next-button {
+    @apply inline-block px-4 py-2 mb-2 font-semibold rounded-lg bg-primary text-primary-foreground cursor-pointer border-none;
+    transition: background-color var(--transition-normal) var(--ease-out);
+  }
+
+  .next-button:hover {
+    background-color: color-mix(in srgb, var(--primary) 85%, black);
+  }
+
+  /* Bold accent CTA button - warm copper for emphasis */
+  .cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    color: var(--accent-bold-foreground);
+    background: var(--accent-bold);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--transition-normal) var(--ease-out);
+  }
+
+  .cta-button:hover {
+    background: var(--accent-bold-hover);
+  }
+
+  .cta-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(193, 127, 89, 0.4);
+  }
+
+  /* --------------------------------------------------------------------------
+     4.15 Components - Profile
+     Note: Profile photo now uses Next.js Image component for accessibility
+     and optimization. Container styles are applied via Tailwind utilities.
+     -------------------------------------------------------------------------- */
+
+  /* --------------------------------------------------------------------------
+     4.16 Utilities - Dividers
+     -------------------------------------------------------------------------- */
+
+  .divider {
+    @apply w-16 h-px border-t border-border mt-2 mb-6;
+  }
+
+  .center-divider {
+    @apply w-16 h-px border-t border-border my-10 mx-auto;
+  }
+
+  /* --------------------------------------------------------------------------
+     4.17 Responsive - Mobile
+     -------------------------------------------------------------------------- */
+
+  @media only screen and (max-width: 600px) {
+    article {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+  }
+
+  @media screen and (max-width: 630px) {
+    .column {
+      flex-direction: column;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     4.18 Accessibility - Reduced Motion
+     Note: !important is intentional here to ensure motion preferences are
+     respected regardless of specificity. This is a valid accessibility pattern.
+     -------------------------------------------------------------------------- */
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. SECTION WRAPPERS
+   ========================================================================== */
+
+@layer components {
+  .section-wrapper {
+    /* Break out of parent container for full-bleed */
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 4rem 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-wrapper-inner {
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Alternating section backgrounds - semi-transparent to show particles */
+  .section-wrapper--warm {
+    background-color: rgba(245, 240, 232, 0.85);
+  }
+
+  /* Cool grey */
+  .section-wrapper--cool {
+    background-color: rgba(235, 238, 242, 0.85);
+  }
+
+  /* Muted grey */
+  .section-wrapper--muted {
+    background-color: rgba(229, 232, 236, 0.85);
+  }
+
+  /* Accent teal-grey */
+  .section-wrapper--accent {
+    background-color: rgba(232, 239, 242, 0.85);
+  }
+
+  /* Section label - small caps accent text above headings */
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: clamp(0.7rem, 0.65rem + 0.15vw, 0.8rem); /* Fluid: 11-13px */
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    background: transparent;
+  }
+
+  /* Large section heading - elegant serif italic */
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-3xl); /* Fluid: 30-40px */
+    font-weight: 400;
+    font-style: italic;
+    line-height: var(--line-height-tight);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--muted-foreground);
+    background: transparent;
+  }
+
+  /* Section heading size variants */
+  .section-heading--hero {
+    font-size: var(--font-size-4xl); /* Fluid: 36-48px */
+  }
+
+  .section-heading--subsection {
+    font-size: var(--font-size-xl); /* Fluid: 20-24px */
+  }
+
+  /* Section subtitle */
+  .section-subtitle {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base); /* Fluid: 16-18px */
+    color: var(--muted-foreground);
+    margin-bottom: 1.5rem;
+    background: transparent;
+  }
+
+  /* Section subtitle width constraint for hero */
+  .section-subtitle--constrained {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Section label with tighter bottom margin */
+  .section-label--tight {
+    margin-bottom: 0.25rem;
+  }
+
+  /* Section divider line */
+  .section-rule {
+    width: 100%;
+    height: 1px;
+    border: none;
+    border-top: 1px solid rgba(209, 213, 219, 0.5);
+    margin: 1.5rem 0;
+  }
+
+  /* Work Cards - Career timeline items */
+  .work-card {
+    position: relative;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(209, 213, 219, 0.4);
+    border-radius: 8px;
+    transition:
+      background-color var(--transition-normal) var(--ease-out),
+      border-color var(--transition-normal) var(--ease-out);
+  }
+
+  .work-card:hover {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(116, 156, 168, 0.4);
+  }
+
+  .work-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .work-card-date {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm); /* Fluid: 14-15px */
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .work-card-role {
+    font-family: var(--font-sans);
+    font-size: clamp(0.625rem, 0.6rem + 0.1vw, 0.7rem); /* Fluid: 10-11px */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted-foreground);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .work-card-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-xl); /* Fluid: 20-24px */
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    background: transparent;
+  }
+
+  .work-card-title a {
+    border-bottom-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    transition:
+      border-color var(--transition-fast) var(--ease-out),
+      color var(--transition-fast) var(--ease-out);
+  }
+
+  .work-card-title a:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .work-card-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+    margin: 0;
+    background: transparent;
+  }
+
+  /* CTA button inside work card - reduce prominence */
+  .work-card .cta-button {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+}

@@ -1,5 +1,5 @@
 import { Post } from '@/lib/notion';
-import { generateJsonLd, generatePostMetadata, generatePostStaticParams } from '@/lib/page-utils';
+import { generateJsonLd } from '@/lib/page-utils';
 
 const mockPosts: Post[] = [
   {
@@ -26,37 +26,7 @@ const mockPosts: Post[] = [
   },
 ];
 
-const getMockPosts = () => mockPosts;
-
 describe('page-utils', () => {
-  describe('generatePostMetadata', () => {
-    it('should generate correct metadata for a writing post', async () => {
-      const metadata = await generatePostMetadata(getMockPosts, 'writing', 'test-post-1');
-      expect(metadata.title).toBe('Test Post 1');
-      expect(metadata.description).toBe('This is a test post.');
-      expect(metadata.alternates?.canonical).toBe('https://www.zamiang.com/writing/test-post-1');
-    });
-
-    it('should generate correct metadata for a photos post', async () => {
-      const metadata = await generatePostMetadata(getMockPosts, 'photos', 'test-post-1');
-      expect(metadata.title).toBe('Test Post 1');
-      expect(metadata.description).toBe('This is a test post.');
-      expect(metadata.alternates?.canonical).toBe('https://www.zamiang.com/photos/test-post-1');
-    });
-
-    it('should handle post not found', async () => {
-      const metadata = await generatePostMetadata(getMockPosts, 'writing', 'not-found');
-      expect(metadata.title).toBe('Post Not Found');
-    });
-  });
-
-  describe('generatePostStaticParams', () => {
-    it('should generate correct static params', () => {
-      const params = generatePostStaticParams(getMockPosts);
-      expect(params).toEqual([{ slug: 'test-post-1' }, { slug: 'test-post-2' }]);
-    });
-  });
-
   describe('generateJsonLd', () => {
     it('should generate correct JSON-LD for a writing post', () => {
       const jsonLd = generateJsonLd(mockPosts[0], 'writing');

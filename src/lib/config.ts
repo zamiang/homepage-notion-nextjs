@@ -30,7 +30,7 @@ export const config = {
    * Site configuration
    */
   site: {
-    url: getEnv('NEXT_PUBLIC_BASE_URL', 'https://www.zamiang.com'),
+    url: getEnv('SITE_URL', 'https://www.zamiang.com'),
     title: 'Brennan Moore - Blog',
     description: 'Writing and photos by Brennan Moore',
     author: 'Brennan Moore',
@@ -38,21 +38,12 @@ export const config = {
 
   /**
    * Notion API configuration
-   * Note: These are only required when running the cache script or fetching from Notion
-   * During static builds, we use cached data, so these can be optional
+   * Required for Astro content collections to load data from Notion
    */
   notion: {
     token: process.env.NOTION_TOKEN || '',
     dataSourceId: process.env.NOTION_DATA_SOURCE_ID || '',
     photosDataSourceId: process.env.NOTION_PHOTOS_DATA_SOURCE_ID || '',
-  },
-
-  /**
-   * Cache configuration
-   */
-  cache: {
-    postsFileName: 'posts-cache.json',
-    photosFileName: 'photos-cache.json',
   },
 
   /**
