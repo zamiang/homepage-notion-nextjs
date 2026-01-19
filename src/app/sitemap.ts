@@ -22,6 +22,23 @@ function getPostPriority(post: Post): number {
 }
 
 /**
+ * Determines change frequency based on post age.
+ * - Posts < 6 months: 'weekly' (may still receive updates)
+ * - Posts 6-12 months: 'monthly' (occasional updates)
+ * - Posts > 1 year: 'never' (content is stable)
+ */
+function getChangeFrequency(post: Post): 'weekly' | 'monthly' | 'never' {
+  const now = new Date();
+  const postDate = new Date(post.date);
+  const ageInMonths =
+    (now.getFullYear() - postDate.getFullYear()) * 12 + (now.getMonth() - postDate.getMonth());
+
+  if (ageInMonths < 6) return 'weekly';
+  if (ageInMonths < 12) return 'monthly';
+  return 'never';
+}
+
+/**
  * Generates image URLs for sitemap entries.
  * Returns array with cover image if available, empty array otherwise.
  */
@@ -38,7 +55,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const postUrls = posts.map((post: Post) => ({
     url: `${siteUrl}/writing/${post.slug}`,
     lastModified: new Date(post.dateModified || post.date),
-    changeFrequency: 'weekly' as const,
+    changeFrequency: getChangeFrequency(post),
     priority: getPostPriority(post),
     images: getImageUrls(post, siteUrl),
   }));
@@ -47,7 +64,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const photoUrls = photos.map((post: Post) => ({
     url: `${siteUrl}/photos/${post.slug}`,
     lastModified: new Date(post.dateModified || post.date),
-    changeFrequency: 'weekly' as const,
+    changeFrequency: getChangeFrequency(post),
     priority: 0.7, // Photos have consistent priority
     images: getImageUrls(post, siteUrl),
   }));

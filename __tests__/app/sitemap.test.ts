@@ -113,19 +113,19 @@ describe('Sitemap Generation', () => {
     const postUrls = result.filter((entry) => entry.url.includes('/writing/'));
     expect(postUrls).toHaveLength(2);
 
-    // First post is old (>6 months), section "All" -> priority 0.6
+    // First post is old (>12 months), section "All" -> priority 0.6, changeFrequency 'never'
     expect(postUrls[0]).toMatchObject({
       url: 'https://www.zamiang.com/writing/test-post-1',
       lastModified: new Date('2023-06-15'),
-      changeFrequency: 'weekly',
+      changeFrequency: 'never',
       priority: 0.6,
     });
 
-    // Second post is VBC section -> priority 0.9 (VBC takes precedence)
+    // Second post is VBC section -> priority 0.9 (VBC takes precedence), changeFrequency 'never' (old)
     expect(postUrls[1]).toMatchObject({
       url: 'https://www.zamiang.com/writing/test-post-2',
       lastModified: new Date('2023-06-10'),
-      changeFrequency: 'weekly',
+      changeFrequency: 'never',
       priority: 0.9,
     });
   });
@@ -144,10 +144,11 @@ describe('Sitemap Generation', () => {
     const photoUrls = result.filter((entry) => entry.url.includes('/photos/'));
     expect(photoUrls).toHaveLength(1);
 
+    // Old photo (>12 months) -> changeFrequency 'never'
     expect(photoUrls[0]).toMatchObject({
       url: 'https://www.zamiang.com/photos/photo-1',
       lastModified: new Date('2023-05-20'),
-      changeFrequency: 'weekly',
+      changeFrequency: 'never',
       priority: 0.7,
     });
   });
@@ -181,29 +182,79 @@ describe('Sitemap Generation', () => {
     });
   });
 
-  it('should use correct change frequencies', () => {
+  it('should use correct change frequencies based on post age', () => {
+    // Create posts with different ages to test changeFrequency logic
+    const now = new Date();
+
+    const threeMonthsAgo = new Date(now);
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+    const nineMonthsAgo = new Date(now);
+    nineMonthsAgo.setMonth(nineMonthsAgo.getMonth() - 9);
+
+    const eighteenMonthsAgo = new Date(now);
+    eighteenMonthsAgo.setMonth(eighteenMonthsAgo.getMonth() - 18);
+
+    const postsWithDifferentAges: Post[] = [
+      {
+        id: '1',
+        title: 'Recent Post',
+        slug: 'recent-post',
+        coverImage: 'cover.jpg',
+        date: threeMonthsAgo.toISOString(),
+        excerpt: 'Recent',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+      {
+        id: '2',
+        title: 'Medium Age Post',
+        slug: 'medium-post',
+        coverImage: 'cover.jpg',
+        date: nineMonthsAgo.toISOString(),
+        excerpt: 'Medium',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+      {
+        id: '3',
+        title: 'Old Post',
+        slug: 'old-post',
+        coverImage: 'cover.jpg',
+        date: eighteenMonthsAgo.toISOString(),
+        excerpt: 'Old',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+    ];
+
     const existsSyncMock = fs.existsSync as Mock;
     const readFileSyncMock = fs.readFileSync as Mock;
 
     existsSyncMock.mockReturnValue(true);
     readFileSyncMock
-      .mockReturnValueOnce(JSON.stringify(mockPosts))
-      .mockReturnValueOnce(JSON.stringify(mockPhotos));
+      .mockReturnValueOnce(JSON.stringify(postsWithDifferentAges))
+      .mockReturnValueOnce(JSON.stringify([]));
 
     const result = sitemap();
 
     const homepage = result.find((entry) => entry.url === 'https://www.zamiang.com');
     expect(homepage?.changeFrequency).toBe('daily');
 
-    const posts = result.filter((entry) => entry.url.includes('/writing/'));
-    posts.forEach((post) => {
-      expect(post.changeFrequency).toBe('weekly');
-    });
+    // Recent post (< 6 months) -> weekly
+    const recentPost = result.find((entry) => entry.url.includes('recent-post'));
+    expect(recentPost?.changeFrequency).toBe('weekly');
 
-    const photos = result.filter((entry) => entry.url.includes('/photos/'));
-    photos.forEach((photo) => {
-      expect(photo.changeFrequency).toBe('weekly');
-    });
+    // Medium age post (6-12 months) -> monthly
+    const mediumPost = result.find((entry) => entry.url.includes('medium-post'));
+    expect(mediumPost?.changeFrequency).toBe('monthly');
+
+    // Old post (> 12 months) -> never
+    const oldPost = result.find((entry) => entry.url.includes('old-post'));
+    expect(oldPost?.changeFrequency).toBe('never');
   });
 
   it('should use fallback URL when NEXT_PUBLIC_BASE_URL is not set', () => {

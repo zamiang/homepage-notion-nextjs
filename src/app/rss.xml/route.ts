@@ -1,8 +1,26 @@
 import { config } from '@/lib/config';
 import { PostWithType, getAllItemsSortedByDate } from '@/lib/notion';
+import { existsSync, statSync } from 'fs';
+import { join } from 'path';
 
 // Force static generation at build time
 export const dynamic = 'force-static';
+
+/**
+ * Gets the file size in bytes for an image in the public/images directory.
+ * Returns 0 if the file doesn't exist or can't be read.
+ */
+function getImageFileSize(filename: string): number {
+  try {
+    const imagePath = join(process.cwd(), 'public', 'images', filename);
+    if (existsSync(imagePath)) {
+      return statSync(imagePath).size;
+    }
+  } catch {
+    // File not found or unreadable - return 0 as fallback
+  }
+  return 0;
+}
 
 const title = 'Articles by Brennan Moore';
 const description =
@@ -39,6 +57,7 @@ const MIME_TYPES: Record<string, string> = {
 
 /**
  * Generates enclosure tag for cover image if available.
+ * File size is read from disk at build time for RSS 2.0 spec compliance.
  */
 function getEnclosureTag(item: PostWithType): string {
   if (!item.coverImage) return '';
@@ -46,8 +65,9 @@ function getEnclosureTag(item: PostWithType): string {
   const imageUrl = `${siteUrl}/images/${item.coverImage}`;
   const ext = item.coverImage.split('.').pop()?.toLowerCase();
   const mimeType = MIME_TYPES[ext || ''] || 'image/jpeg';
+  const fileSize = getImageFileSize(item.coverImage);
 
-  return `<enclosure url="${imageUrl}" type="${mimeType}" length="0"/>`;
+  return `<enclosure url="${imageUrl}" type="${mimeType}" length="${fileSize}"/>`;
 }
 
 const getRssXml = () => {
