@@ -38,37 +38,39 @@ This document outlines a phased migration from Next.js 16 to Astro 6 for the bre
 
 ### Tech Stack Inventory
 
-| Component | Current | Astro Equivalent |
-|-----------|---------|------------------|
-| Framework | Next.js 16.1.3 | Astro 6.x |
-| React | 19.2.3 | `@astrojs/react` (keep React for islands) |
-| TypeScript | 5.9.3 | Native support |
-| Tailwind CSS | 4.1.18 | `@astrojs/tailwind` |
-| Notion Client | 5.7.0 | Custom loader or community loader |
-| Testing | Vitest 4.0.17 | Vitest (same) |
-| Image Optimization | Next.js Image | `@astrojs/image` or `astro:assets` |
+| Component          | Current        | Astro Equivalent                          |
+| ------------------ | -------------- | ----------------------------------------- |
+| Framework          | Next.js 16.1.3 | Astro 6.x                                 |
+| React              | 19.2.3         | `@astrojs/react` (keep React for islands) |
+| TypeScript         | 5.9.3          | Native support                            |
+| Tailwind CSS       | 4.1.18         | `@astrojs/tailwind`                       |
+| Notion Client      | 5.7.0          | Custom loader or community loader         |
+| Testing            | Vitest 4.0.17  | Vitest (same)                             |
+| Image Optimization | Next.js Image  | `@astrojs/image` or `astro:assets`        |
 
 ### Pages Inventory (8 routes)
 
-| Route | Type | Complexity |
-|-------|------|------------|
-| `/` | Static | Medium (hero, recent work, particle animation) |
-| `/writing/[slug]` | Dynamic | High (MDX rendering, TOC, JSON-LD) |
-| `/photos/[slug]` | Dynamic | Medium (image gallery, JSON-LD) |
-| `/rss.xml` | API Route | Low |
-| `/feed.json` | API Route | Low |
-| `/sitemap.xml` | Generated | Low (built-in in Astro) |
-| `/robots.txt` | Generated | Low (built-in in Astro) |
+| Route             | Type      | Complexity                                     |
+| ----------------- | --------- | ---------------------------------------------- |
+| `/`               | Static    | Medium (hero, recent work, particle animation) |
+| `/writing/[slug]` | Dynamic   | High (MDX rendering, TOC, JSON-LD)             |
+| `/photos/[slug]`  | Dynamic   | Medium (image gallery, JSON-LD)                |
+| `/rss.xml`        | API Route | Low                                            |
+| `/feed.json`      | API Route | Low                                            |
+| `/sitemap.xml`    | Generated | Low (built-in in Astro)                        |
+| `/robots.txt`     | Generated | Low (built-in in Astro)                        |
 
 ### Components Inventory (17 components)
 
 **Layout Components** (convert to `.astro`):
+
 - `layout.tsx` — Main layout wrapper
 - `header.tsx` — Site header/navigation
 - `footer.tsx` — Site footer
 - `post-layout.tsx` — Blog post layout
 
 **Content Components** (convert to `.astro`):
+
 - `post-card.tsx` — Blog post preview card
 - `photo-card.tsx` — Photo preview card
 - `series-post-card.tsx` — VBC series card
@@ -78,10 +80,12 @@ This document outlines a phased migration from Next.js 16 to Astro 6 for the bre
 - `mdx-component.tsx` — MDX renderer
 
 **Interactive Components** (keep as React islands):
+
 - `floating-particles.tsx` — Canvas animation (client-side only)
 - `particles/particle-canvas.tsx` — Canvas rendering
 
 **UI Components** (convert to `.astro` or keep React):
+
 - `ui/button.tsx` — Button component
 - `ui/label.tsx` — Form label
 - `ui/table.tsx` — Data table
@@ -89,15 +93,15 @@ This document outlines a phased migration from Next.js 16 to Astro 6 for the bre
 
 ### Dependencies to Replace
 
-| Current | Astro Replacement | Notes |
-|---------|-------------------|-------|
-| `next` | `astro` | Core framework |
-| `next/image` | `astro:assets` | Built-in image optimization |
-| `next/link` | Native `<a>` tags | Astro handles prefetching |
-| `@vercel/analytics` | `@astrojs/vercel` adapter | Or custom script |
-| `@vercel/speed-insights` | Same (works in Astro) | |
-| `next-secure-headers` | Astro middleware or config | CSP in Astro 6 |
-| `sitemap` package | `@astrojs/sitemap` | Built-in |
+| Current                  | Astro Replacement          | Notes                       |
+| ------------------------ | -------------------------- | --------------------------- |
+| `next`                   | `astro`                    | Core framework              |
+| `next/image`             | `astro:assets`             | Built-in image optimization |
+| `next/link`              | Native `<a>` tags          | Astro handles prefetching   |
+| `@vercel/analytics`      | `@astrojs/vercel` adapter  | Or custom script            |
+| `@vercel/speed-insights` | Same (works in Astro)      |                             |
+| `next-secure-headers`    | Astro middleware or config | CSP in Astro 6              |
+| `sitemap` package        | `@astrojs/sitemap`         | Built-in                    |
 
 ### Dependencies to Keep
 
@@ -158,6 +162,7 @@ brennanmoore-astro/
 ```typescript
 // src/content/config.ts
 import { defineCollection, z } from 'astro:content';
+
 import { notionLoader } from '../lib/notion-loader';
 
 const posts = defineCollection({
@@ -210,6 +215,7 @@ export const collections = { posts, vbcPosts, photos };
 **Goal**: Set up Astro project alongside Next.js without disrupting current site.
 
 **Tasks**:
+
 - [ ] Create new branch: `migration/astro-6`
 - [ ] Initialize Astro 6 project in a subdirectory or separate repo
 - [ ] Install core dependencies: `astro`, `@astrojs/react`, `@astrojs/tailwind`
@@ -226,6 +232,7 @@ export const collections = { posts, vbcPosts, photos };
 **Goal**: Create custom Notion loader that replicates current caching behavior.
 
 **Tasks**:
+
 - [ ] Create `src/lib/notion-loader.ts` implementing Astro's Loader interface
 - [ ] Port image downloading logic from `src/lib/download-image.ts`
 - [ ] Port `NotionToMarkdown` custom transformers (images, columns)
@@ -234,6 +241,7 @@ export const collections = { posts, vbcPosts, photos };
 - [ ] Verify all posts and photos load correctly
 
 **Key Code to Port**:
+
 ```typescript
 // Current: src/lib/notion.ts lines 121-232
 // - getPostFromNotion() function
@@ -251,6 +259,7 @@ export const collections = { posts, vbcPosts, photos };
 **Goal**: Convert non-interactive components to Astro components.
 
 **Tasks**:
+
 - [ ] Create `BaseLayout.astro` from `layout.tsx`
 - [ ] Convert `Header.tsx` → `Header.astro`
 - [ ] Convert `Footer.tsx` → `Footer.astro`
@@ -262,6 +271,7 @@ export const collections = { posts, vbcPosts, photos };
 - [ ] Port `TableOfContents.tsx` (may need client directive for scroll spy)
 
 **Conversion Pattern**:
+
 ```astro
 ---
 // Header.astro
@@ -288,6 +298,7 @@ const { currentPath } = Astro.props;
 **Goal**: Migrate all page routes to Astro pages.
 
 **Tasks**:
+
 - [ ] Create `src/pages/index.astro` (homepage)
 - [ ] Create `src/pages/writing/[slug].astro` (blog posts)
 - [ ] Create `src/pages/photos/[slug].astro` (photos)
@@ -296,6 +307,7 @@ const { currentPath } = Astro.props;
 - [ ] Add redirects for legacy URLs (`/post/...` → `/writing/...`)
 
 **Dynamic Route Pattern**:
+
 ```astro
 ---
 // src/pages/writing/[slug].astro
@@ -327,6 +339,7 @@ const { post } = Astro.props;
 **Goal**: Set up React islands for client-side interactivity.
 
 **Tasks**:
+
 - [ ] Move `floating-particles.tsx` to `src/components/islands/`
 - [ ] Move `particles/particle-canvas.tsx` to islands directory
 - [ ] Add `client:visible` directive to particle component
@@ -334,6 +347,7 @@ const { post } = Astro.props;
 - [ ] Test particle animation renders and animates correctly
 
 **Island Usage**:
+
 ```astro
 ---
 // In BaseLayout.astro
@@ -352,6 +366,7 @@ import FloatingParticles from '../components/islands/FloatingParticles';
 **Goal**: Migrate RSS and JSON Feed endpoints.
 
 **Tasks**:
+
 - [ ] Create `src/pages/rss.xml.ts` endpoint
 - [ ] Create `src/pages/feed.json.ts` endpoint
 - [ ] Configure `@astrojs/sitemap` integration
@@ -359,10 +374,12 @@ import FloatingParticles from '../components/islands/FloatingParticles';
 - [ ] Verify feed auto-discovery links in HTML head
 
 **Endpoint Pattern**:
+
 ```typescript
 // src/pages/rss.xml.ts
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+
 import { config } from '../lib/config';
 
 export async function GET(context) {
@@ -390,6 +407,7 @@ export async function GET(context) {
 **Goal**: Replicate Next.js configuration in Astro.
 
 **Tasks**:
+
 - [ ] Configure CSP headers (Astro 6 native support)
 - [ ] Set up redirects in `astro.config.mjs`
 - [ ] Configure image optimization settings
@@ -398,23 +416,20 @@ export async function GET(context) {
 - [ ] Set up environment variables
 
 **Astro Config**:
+
 ```javascript
 // astro.config.mjs
-import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://brennanmoore.com',
   output: 'static',
   adapter: vercel(),
-  integrations: [
-    react(),
-    tailwind(),
-    sitemap(),
-  ],
+  integrations: [react(), tailwind(), sitemap()],
   redirects: {
     '/post/debugging-a-live-saturn-v': '/writing/debugging-a-live-saturn-v',
   },
@@ -434,6 +449,7 @@ export default defineConfig({
 **Goal**: Adapt test suite for Astro.
 
 **Tasks**:
+
 - [ ] Update Vitest config for Astro
 - [ ] Adapt component tests for Astro components
 - [ ] Keep React island tests mostly unchanged
@@ -443,17 +459,17 @@ export default defineConfig({
 
 **Tests to Adapt**:
 
-| Test File | Adaptation Needed |
-|-----------|-------------------|
-| `lib/notion.test.ts` | Minimal (loader logic) |
-| `lib/config.test.ts` | None |
-| `lib/errors.test.ts` | None |
-| `lib/page-utils.test.ts` | Update for Astro context |
-| `lib/toc.test.ts` | None |
-| `components/*.test.tsx` | Update for Astro components |
-| `app/rss.test.ts` | Update for Astro endpoint |
-| `app/feed.test.ts` | Update for Astro endpoint |
-| `app/sitemap.test.ts` | Update for @astrojs/sitemap |
+| Test File                | Adaptation Needed           |
+| ------------------------ | --------------------------- |
+| `lib/notion.test.ts`     | Minimal (loader logic)      |
+| `lib/config.test.ts`     | None                        |
+| `lib/errors.test.ts`     | None                        |
+| `lib/page-utils.test.ts` | Update for Astro context    |
+| `lib/toc.test.ts`        | None                        |
+| `components/*.test.tsx`  | Update for Astro components |
+| `app/rss.test.ts`        | Update for Astro endpoint   |
+| `app/feed.test.ts`       | Update for Astro endpoint   |
+| `app/sitemap.test.ts`    | Update for @astrojs/sitemap |
 
 **Verification**: All 292 tests pass (or equivalent coverage).
 
@@ -464,6 +480,7 @@ export default defineConfig({
 **Goal**: Cut over from Next.js to Astro.
 
 **Tasks**:
+
 - [ ] Run full build: `astro build`
 - [ ] Compare page outputs between Next.js and Astro
 - [ ] Run Lighthouse audits on both versions
@@ -481,43 +498,43 @@ export default defineConfig({
 
 ### Source Files → Astro Equivalents
 
-| Next.js File | Astro Equivalent | Action |
-|--------------|------------------|--------|
-| `src/app/layout.tsx` | `src/layouts/BaseLayout.astro` | Rewrite |
-| `src/app/page.tsx` | `src/pages/index.astro` | Rewrite |
-| `src/app/writing/[slug]/page.tsx` | `src/pages/writing/[slug].astro` | Rewrite |
-| `src/app/photos/[slug]/page.tsx` | `src/pages/photos/[slug].astro` | Rewrite |
-| `src/app/rss.xml/route.ts` | `src/pages/rss.xml.ts` | Rewrite |
-| `src/app/feed.json/route.ts` | `src/pages/feed.json.ts` | Rewrite |
-| `src/app/sitemap.ts` | `@astrojs/sitemap` config | Replace |
-| `src/app/robots.ts` | `public/robots.txt` or config | Replace |
-| `src/components/header.tsx` | `src/components/Header.astro` | Convert |
-| `src/components/footer.tsx` | `src/components/Footer.astro` | Convert |
-| `src/components/layout.tsx` | `src/layouts/BaseLayout.astro` | Merge |
-| `src/components/post-layout.tsx` | `src/layouts/PostLayout.astro` | Convert |
-| `src/components/post-card.tsx` | `src/components/PostCard.astro` | Convert |
-| `src/components/photo-card.tsx` | `src/components/PhotoCard.astro` | Convert |
-| `src/components/series-post-card.tsx` | `src/components/SeriesPostCard.astro` | Convert |
-| `src/components/vbc-footer.tsx` | `src/components/VBCFooter.astro` | Convert |
-| `src/components/posts-footer.tsx` | `src/components/PostsFooter.astro` | Convert |
-| `src/components/table-of-contents.tsx` | `src/components/TableOfContents.astro` | Convert (may need island) |
-| `src/components/mdx-component.tsx` | `src/components/ContentRenderer.astro` | Rewrite |
-| `src/components/floating-particles.tsx` | `src/components/islands/FloatingParticles.tsx` | Move (keep React) |
-| `src/components/particles/*` | `src/components/islands/particles/*` | Move (keep React) |
-| `src/components/ui/*` | `src/components/ui/*` | Keep React or convert |
-| `src/lib/notion.ts` | `src/lib/notion-loader.ts` | Rewrite as Loader |
-| `src/lib/config.ts` | `src/lib/config.ts` | Copy |
-| `src/lib/errors.ts` | `src/lib/errors.ts` | Copy |
-| `src/lib/utils.ts` | `src/lib/utils.ts` | Copy |
-| `src/lib/page-utils.ts` | `src/lib/page-utils.ts` | Adapt |
-| `src/lib/toc.ts` | `src/lib/toc.ts` | Copy |
-| `src/lib/download-image.ts` | `src/lib/download-image.ts` | Copy |
-| `src/hooks/use-mobile.ts` | `src/hooks/use-mobile.ts` | Copy (for islands) |
-| `scripts/cache-posts.ts` | Remove (Content Collections handles) | Delete |
-| `posts-cache.json` | Remove | Delete |
-| `photos-cache.json` | Remove | Delete |
-| `next.config.ts` | `astro.config.mjs` | Rewrite |
-| `tailwind.config.ts` | `tailwind.config.mjs` | Minor updates |
+| Next.js File                            | Astro Equivalent                               | Action                    |
+| --------------------------------------- | ---------------------------------------------- | ------------------------- |
+| `src/app/layout.tsx`                    | `src/layouts/BaseLayout.astro`                 | Rewrite                   |
+| `src/app/page.tsx`                      | `src/pages/index.astro`                        | Rewrite                   |
+| `src/app/writing/[slug]/page.tsx`       | `src/pages/writing/[slug].astro`               | Rewrite                   |
+| `src/app/photos/[slug]/page.tsx`        | `src/pages/photos/[slug].astro`                | Rewrite                   |
+| `src/app/rss.xml/route.ts`              | `src/pages/rss.xml.ts`                         | Rewrite                   |
+| `src/app/feed.json/route.ts`            | `src/pages/feed.json.ts`                       | Rewrite                   |
+| `src/app/sitemap.ts`                    | `@astrojs/sitemap` config                      | Replace                   |
+| `src/app/robots.ts`                     | `public/robots.txt` or config                  | Replace                   |
+| `src/components/header.tsx`             | `src/components/Header.astro`                  | Convert                   |
+| `src/components/footer.tsx`             | `src/components/Footer.astro`                  | Convert                   |
+| `src/components/layout.tsx`             | `src/layouts/BaseLayout.astro`                 | Merge                     |
+| `src/components/post-layout.tsx`        | `src/layouts/PostLayout.astro`                 | Convert                   |
+| `src/components/post-card.tsx`          | `src/components/PostCard.astro`                | Convert                   |
+| `src/components/photo-card.tsx`         | `src/components/PhotoCard.astro`               | Convert                   |
+| `src/components/series-post-card.tsx`   | `src/components/SeriesPostCard.astro`          | Convert                   |
+| `src/components/vbc-footer.tsx`         | `src/components/VBCFooter.astro`               | Convert                   |
+| `src/components/posts-footer.tsx`       | `src/components/PostsFooter.astro`             | Convert                   |
+| `src/components/table-of-contents.tsx`  | `src/components/TableOfContents.astro`         | Convert (may need island) |
+| `src/components/mdx-component.tsx`      | `src/components/ContentRenderer.astro`         | Rewrite                   |
+| `src/components/floating-particles.tsx` | `src/components/islands/FloatingParticles.tsx` | Move (keep React)         |
+| `src/components/particles/*`            | `src/components/islands/particles/*`           | Move (keep React)         |
+| `src/components/ui/*`                   | `src/components/ui/*`                          | Keep React or convert     |
+| `src/lib/notion.ts`                     | `src/lib/notion-loader.ts`                     | Rewrite as Loader         |
+| `src/lib/config.ts`                     | `src/lib/config.ts`                            | Copy                      |
+| `src/lib/errors.ts`                     | `src/lib/errors.ts`                            | Copy                      |
+| `src/lib/utils.ts`                      | `src/lib/utils.ts`                             | Copy                      |
+| `src/lib/page-utils.ts`                 | `src/lib/page-utils.ts`                        | Adapt                     |
+| `src/lib/toc.ts`                        | `src/lib/toc.ts`                               | Copy                      |
+| `src/lib/download-image.ts`             | `src/lib/download-image.ts`                    | Copy                      |
+| `src/hooks/use-mobile.ts`               | `src/hooks/use-mobile.ts`                      | Copy (for islands)        |
+| `scripts/cache-posts.ts`                | Remove (Content Collections handles)           | Delete                    |
+| `posts-cache.json`                      | Remove                                         | Delete                    |
+| `photos-cache.json`                     | Remove                                         | Delete                    |
+| `next.config.ts`                        | `astro.config.mjs`                             | Rewrite                   |
+| `tailwind.config.ts`                    | `tailwind.config.mjs`                          | Minor updates             |
 
 ---
 
@@ -528,15 +545,17 @@ export default defineConfig({
 Build a custom Astro Content Loader that wraps your existing Notion logic.
 
 **Pros**:
+
 - Full control over image downloading
 - Preserves custom transformers (columns, images)
 - No external dependencies beyond `@notionhq/client`
 
 **Implementation**:
+
 ```typescript
 // src/lib/notion-loader.ts
-import type { Loader } from 'astro/loaders';
 import { Client } from '@notionhq/client';
+import type { Loader } from 'astro/loaders';
 import { NotionToMarkdown } from 'notion-to-md';
 
 interface NotionLoaderOptions {
@@ -581,10 +600,12 @@ export function notionLoader(options: NotionLoaderOptions): Loader {
 Use `@notwoods/notion-astro-loader` or `@duocrafters/notion-database-astro` with custom post-processing.
 
 **Pros**:
+
 - Less code to maintain
 - Community-supported
 
 **Cons**:
+
 - May not handle image downloading correctly
 - Less control over markdown transformation
 
@@ -594,10 +615,10 @@ Use `@notwoods/notion-astro-loader` or `@duocrafters/notion-database-astro` with
 
 ### Components Requiring Client-Side JS
 
-| Component | Directive | Reason |
-|-----------|-----------|--------|
-| `FloatingParticles` | `client:visible` | Canvas animation |
-| `TableOfContents` | `client:idle` | Scroll spy (if implemented) |
+| Component           | Directive        | Reason                      |
+| ------------------- | ---------------- | --------------------------- |
+| `FloatingParticles` | `client:visible` | Canvas animation            |
+| `TableOfContents`   | `client:idle`    | Scroll spy (if implemented) |
 
 ### Island Architecture
 
@@ -626,13 +647,13 @@ import FloatingParticles from '../components/islands/FloatingParticles';
 
 ### Client Directives Reference
 
-| Directive | Behavior | Use Case |
-|-----------|----------|----------|
-| `client:load` | Hydrate on page load | Critical interactivity |
-| `client:idle` | Hydrate when browser idle | Non-critical interactivity |
-| `client:visible` | Hydrate when in viewport | Below-fold interactivity |
-| `client:media` | Hydrate on media query match | Responsive interactivity |
-| `client:only` | Skip SSR, client-only | No SSR needed |
+| Directive        | Behavior                     | Use Case                   |
+| ---------------- | ---------------------------- | -------------------------- |
+| `client:load`    | Hydrate on page load         | Critical interactivity     |
+| `client:idle`    | Hydrate when browser idle    | Non-critical interactivity |
+| `client:visible` | Hydrate when in viewport     | Below-fold interactivity   |
+| `client:media`   | Hydrate on media query match | Responsive interactivity   |
+| `client:only`    | Skip SSR, client-only        | No SSR needed              |
 
 ---
 
@@ -662,6 +683,7 @@ export default getViteConfig({
 ### Test Categories
 
 **Unit Tests (keep as-is)**:
+
 - `lib/config.test.ts`
 - `lib/errors.test.ts`
 - `lib/toc.test.ts`
@@ -669,14 +691,17 @@ export default getViteConfig({
 - `hooks/use-mobile.test.ts`
 
 **Integration Tests (adapt)**:
+
 - `lib/notion.test.ts` → Test loader functions
 - `lib/page-utils.test.ts` → Update context handling
 
 **Component Tests (rewrite)**:
+
 - Astro components use `@astrojs/test-utils`
 - React islands keep `@testing-library/react`
 
 **Endpoint Tests (rewrite)**:
+
 - Test Astro endpoint functions directly
 
 ---
@@ -701,6 +726,7 @@ export default defineConfig({
 ### Environment Variables
 
 Same as current setup:
+
 ```
 NOTION_TOKEN=secret_xxx
 NOTION_DATA_SOURCE_ID=xxx
@@ -742,14 +768,14 @@ SITE_URL=https://brennanmoore.com
 
 ## Decision Log
 
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Content loader | Custom (Option A) | Full control over image downloading |
-| Static vs Server | Static (`output: 'static'`) | Current site is fully static |
-| React islands | Keep minimal | Only particles need client JS |
-| UI components | Convert to Astro | Simpler, no hydration needed |
-| Testing framework | Keep Vitest | Already configured, works with Astro |
-| Deployment | Vercel + adapter | Current host, seamless transition |
+| Decision          | Choice                      | Rationale                            |
+| ----------------- | --------------------------- | ------------------------------------ |
+| Content loader    | Custom (Option A)           | Full control over image downloading  |
+| Static vs Server  | Static (`output: 'static'`) | Current site is fully static         |
+| React islands     | Keep minimal                | Only particles need client JS        |
+| UI components     | Convert to Astro            | Simpler, no hydration needed         |
+| Testing framework | Keep Vitest                 | Already configured, works with Astro |
+| Deployment        | Vercel + adapter            | Current host, seamless transition    |
 
 ---
 

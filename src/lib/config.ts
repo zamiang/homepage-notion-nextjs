@@ -72,4 +72,3 @@ export function validateNotionConfig() {
   requireEnv('NOTION_DATA_SOURCE_ID');
   requireEnv('NOTION_PHOTOS_DATA_SOURCE_ID');
 }
-
