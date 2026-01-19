@@ -4,7 +4,6 @@
  * Main landing page with hero, work history, writing, VBC series, and photography
  */
 
-import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
 import PhotoCard from '../components/PhotoCard.astro';
@@ -18,20 +17,18 @@ const VBC_TITLE = 'Why Value-Based Care is Harder Than Rocket Science';
 const VBC_DESCRIPTION =
   'This series argues that U.S. healthcare is "harder than rocket science" due to its "consolidated fragmentation," where powerful, siloed players hinder effective, affordable patient care.';
 
-// Load content from collections
-let posts: CollectionEntry<'posts'>[] = [];
-let vbcPosts: CollectionEntry<'vbcPosts'>[] = [];
-let photos: CollectionEntry<'photos'>[] = [];
+// Load content from collections - fail the build if content is unavailable
+const posts = await getCollection('posts');
+const vbcPosts = (await getCollection('vbcPosts')).sort((a, b) =>
+  a.data.title > b.data.title ? 1 : -1,
+);
+const photos = await getCollection('photos');
 
-try {
-  posts = await getCollection('posts');
-  vbcPosts = (await getCollection('vbcPosts')).sort((a, b) =>
-    a.data.title > b.data.title ? 1 : -1,
+// Fail the build if no content is available (indicates Notion API issue)
+if (posts.length === 0 && vbcPosts.length === 0 && photos.length === 0) {
+  throw new Error(
+    'Build failed: No content loaded from Notion. Check NOTION_TOKEN and data source IDs.',
   );
-  photos = await getCollection('photos');
-} catch (error) {
-  console.warn('Could not load content collections:', error);
-  // Continue with empty arrays - this allows the page to render without Notion
 }
 
 const siteUrl = config.site.url;

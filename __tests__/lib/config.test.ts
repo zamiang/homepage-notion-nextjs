@@ -13,14 +13,14 @@ describe('config', () => {
   });
 
   describe('site configuration', () => {
-    it('should use default base URL when NEXT_PUBLIC_BASE_URL is not set', async () => {
-      delete process.env.NEXT_PUBLIC_BASE_URL;
+    it('should use default base URL when SITE_URL is not set', async () => {
+      delete process.env.SITE_URL;
       const { config } = await import('@/lib/config');
       expect(config.site.url).toBe('https://www.zamiang.com');
     });
 
-    it('should use environment variable when NEXT_PUBLIC_BASE_URL is set', async () => {
-      process.env.NEXT_PUBLIC_BASE_URL = 'https://example.com';
+    it('should use environment variable when SITE_URL is set', async () => {
+      process.env.SITE_URL = 'https://example.com';
       const { config } = await import('@/lib/config');
       expect(config.site.url).toBe('https://example.com');
     });
@@ -49,14 +49,6 @@ describe('config', () => {
       expect(config.notion.token).toBe('test-token');
       expect(config.notion.dataSourceId).toBe('test-db-id');
       expect(config.notion.photosDataSourceId).toBe('test-photos-id');
-    });
-  });
-
-  describe('cache configuration', () => {
-    it('should have correct cache file names', async () => {
-      const { config } = await import('@/lib/config');
-      expect(config.cache.postsFileName).toBe('posts-cache.json');
-      expect(config.cache.photosFileName).toBe('photos-cache.json');
     });
   });
 
