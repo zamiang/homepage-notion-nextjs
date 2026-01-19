@@ -4,8 +4,7 @@ A high-performance [Astro 5](https://astro.build/) blog written in [TypeScript](
 
 **Live Site:** [https://brennanmoore.com](https://brennanmoore.com)
 
-[![Tests](https://img.shields.io/badge/tests-306%20passing-brightgreen)]()
-[![Coverage](https://img.shields.io/badge/coverage-76.9%25-green)]()
+[![Tests](https://img.shields.io/badge/tests-132%20passing-brightgreen)]()
 [![Astro](https://img.shields.io/badge/Astro-5.16-purple)]()
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)]()
 
@@ -29,7 +28,7 @@ A high-performance [Astro 5](https://astro.build/) blog written in [TypeScript](
 - **Social Metadata**: OpenGraph and Twitter Card support
 
 ### Developer Experience
-- **76% Test Coverage**: 306 comprehensive tests with Vitest and React Testing Library
+- **132 Tests**: Comprehensive tests with Vitest and React Testing Library
 - **Type Safety**: Strict TypeScript with full type coverage
 - **Security**: Content Security Policy (CSP) and secure headers via `_headers`
 - **Code Quality**: ESLint with Astro plugin, Prettier with Astro support
@@ -183,7 +182,7 @@ Security headers are configured in `public/_headers`:
 
 ## Testing
 
-The project has **76.9% test coverage** with **306 comprehensive tests** using [Vitest](https://vitest.dev/) and React Testing Library.
+The project has **132 tests** using [Vitest](https://vitest.dev/) and React Testing Library.
 
 ### Run Tests
 
@@ -191,17 +190,15 @@ The project has **76.9% test coverage** with **306 comprehensive tests** using [
 npm test                 # Run all tests
 npm run test:watch       # Watch mode for development
 npm run test:ui          # Open Vitest UI
-npm run test:coverage    # Generate coverage report
 ```
 
 ### Test Coverage
 
-| Category | Coverage | Tests |
-|----------|----------|-------|
-| **Components** | High | React islands and UI components |
-| **Utilities** | High | config, errors, toc, utils |
-| **API Routes** | Complete | RSS, JSON Feed |
-| **Hooks** | Complete | use-mobile, use-particles |
+| Category | Tests |
+|----------|-------|
+| **UI Components** | Table component tests |
+| **Utilities** | config, errors, toc, notion, download-image, page-utils |
+| **Hooks** | use-mobile |
 
 See [CLAUDE.md](CLAUDE.md) for testing patterns and conventions.
 

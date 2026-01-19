@@ -74,18 +74,18 @@
 
 ### Project Statistics
 
-- **Tests**: 292 tests (2 skipped), 76.9% coverage
-- **Build Time**: ~1.7s (production, with Turbopack)
-- **Pages**: 38 static pages (19 photos, 13 posts, 6 utility)
-- **Node Version**: 24.x (minimum 20.9.0 for Next.js 16)
+- **Tests**: 132 tests (2 skipped)
+- **Build Time**: ~21s (production static build)
+- **Pages**: 34 static pages
+- **Node Version**: 24.x
 
 ### Architecture
 
-- **Type**: Static site with ISR (Incremental Static Regeneration)
-- **CMS**: Notion as headless CMS
-- **Caching**: Posts cached locally in JSON files (`posts-cache.json`, `photos-cache.json`)
+- **Type**: Static site generation with Astro
+- **CMS**: Notion as headless CMS via Content Collections
+- **Deployment**: Cloudflare Pages
 - **Sections**: "All" (general posts) and "VBC" (Value-Based Care series)
-- **Images**: Local optimization with Next.js Image component (WebP/AVIF, quality 85)
+- **Images**: Local images in public/images/
 
 ---
 
@@ -233,21 +233,21 @@ npm run lint             # ESLint
 - ✅ Node.js 24.x support confirmed
 
 **Key Metrics**:
-- Tests: 292 passing (76.9% coverage, +71 tests since October)
+- Tests: 132 passing
 - All dependencies current
-- 0 security vulnerabilities
+- 4 low severity vulnerabilities (acceptable)
+
+**January 2026 - Astro Migration**:
+- ✅ Migrated from Next.js to Astro 5
+- ✅ Deployed to Cloudflare Pages (was Vercel)
+- ✅ Content Collections with custom Notion loader
+- ✅ React islands for interactive components
 
 ---
 
 ## Troubleshooting & Known Issues
 
 ### Common Issues
-
-**Image Quality Warnings (Next.js 16)**
-```
-Image with src "..." is using quality "85" which is not configured in images.qualities
-```
-**Solution**: Add `qualities: [75, 85]` to `images` config in `next.config.ts`
 
 **Notion API Errors**
 - Ensure using `dataSources.query()` not `databases.query()` (v5+ API)

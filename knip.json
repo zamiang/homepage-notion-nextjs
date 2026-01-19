@@ -1,31 +1,37 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
   "entry": [
-    "src/app/**/*.{ts,tsx}",
+    "src/pages/**/*.{ts,astro}",
+    "src/layouts/**/*.astro",
+    "src/components/**/*.astro",
     "scripts/*.ts"
   ],
   "project": [
-    "src/**/*.{ts,tsx}",
+    "src/**/*.{ts,tsx,astro}",
     "scripts/**/*.ts"
   ],
   "ignore": [
     "**/__tests__/**",
     "**/*.test.{ts,tsx}",
-    "**/*.spec.{ts,tsx}"
+    "**/*.spec.{ts,tsx}",
+    "src/components/consts.ts",
+    "src/components/ui/badge.tsx"
   ],
   "ignoreDependencies": [
     "tailwindcss",
-    "@tailwindcss/typography"
+    "@tailwindcss/typography",
+    "class-variance-authority"
   ],
-  "next": {
+  "ignoreExportsUsedInFile": {
+    "interface": true,
+    "type": true
+  },
+  "astro": {
     "entry": [
-      "src/app/**/page.tsx",
-      "src/app/**/layout.tsx",
-      "src/app/**/route.ts",
-      "src/app/**/loading.tsx",
-      "src/app/**/error.tsx",
-      "src/app/**/not-found.tsx",
-      "next.config.{js,ts,mjs}"
+      "astro.config.{js,ts,mjs}",
+      "src/pages/**/*.astro",
+      "src/layouts/**/*.astro",
+      "src/content/config.ts"
     ]
   },
   "vitest": {

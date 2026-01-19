@@ -17,11 +17,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
       "@/*": [
         "./src/*"
@@ -32,11 +27,8 @@
     ]
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules",
@@ -50,8 +42,5 @@
     "src/pages/**/*.astro",
     "src/layouts/**/*.astro",
     "src/components/**/*.astro"
-  ],
-  "moduleNameMapper": {
-    "^@/components/(.*)$": "<rootDir>/components/$1"
-  }
+  ]
 }

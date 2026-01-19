@@ -253,14 +253,3 @@ async function processNotionPage(
     return null;
   }
 }
-
-/**
- * Helper to get word count from content
- */
-export function getWordCount(content: string): number {
-  const cleanText = content
-    .replace(/[^\w\s]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  return cleanText.length === 0 ? 0 : cleanText.split(' ').length;
-}
