@@ -7,10 +7,10 @@
  */
 
 interface ImportMetaEnv {
-  readonly NOTION_TOKEN: string;
-  readonly NOTION_DATA_SOURCE_ID: string;
-  readonly NOTION_PHOTOS_DATA_SOURCE_ID: string;
-  readonly SITE_URL: string;
+  readonly NOTION_TOKEN?: string;
+  readonly NOTION_DATA_SOURCE_ID?: string;
+  readonly NOTION_PHOTOS_DATA_SOURCE_ID?: string;
+  readonly SITE_URL?: string;
 }
 
 interface ImportMeta {
