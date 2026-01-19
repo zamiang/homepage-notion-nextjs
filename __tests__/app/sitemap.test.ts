@@ -99,7 +99,7 @@ describe('Sitemap Generation', () => {
     });
   });
 
-  it('should include all posts in the sitemap', () => {
+  it('should include all posts in the sitemap with appropriate priorities', () => {
     const existsSyncMock = fs.existsSync as Mock;
     const readFileSyncMock = fs.readFileSync as Mock;
 
@@ -113,22 +113,24 @@ describe('Sitemap Generation', () => {
     const postUrls = result.filter((entry) => entry.url.includes('/writing/'));
     expect(postUrls).toHaveLength(2);
 
+    // First post is old (>6 months), section "All" -> priority 0.6
     expect(postUrls[0]).toMatchObject({
       url: 'https://www.zamiang.com/writing/test-post-1',
       lastModified: new Date('2023-06-15'),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.6,
     });
 
+    // Second post is VBC section -> priority 0.9 (VBC takes precedence)
     expect(postUrls[1]).toMatchObject({
       url: 'https://www.zamiang.com/writing/test-post-2',
       lastModified: new Date('2023-06-10'),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.9,
     });
   });
 
-  it('should include all photos in the sitemap', () => {
+  it('should include all photos in the sitemap with priority 0.7', () => {
     const existsSyncMock = fs.existsSync as Mock;
     const readFileSyncMock = fs.readFileSync as Mock;
 
@@ -146,7 +148,7 @@ describe('Sitemap Generation', () => {
       url: 'https://www.zamiang.com/photos/photo-1',
       lastModified: new Date('2023-05-20'),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.7,
     });
   });
 
@@ -164,14 +166,18 @@ describe('Sitemap Generation', () => {
     const homepage = result.find((entry) => entry.url === 'https://www.zamiang.com');
     expect(homepage?.priority).toBe(1);
 
-    const posts = result.filter((entry) => entry.url.includes('/writing/'));
-    posts.forEach((post) => {
-      expect(post.priority).toBe(0.8);
-    });
+    // VBC post should have priority 0.9
+    const vbcPost = result.find((entry) => entry.url.includes('test-post-2'));
+    expect(vbcPost?.priority).toBe(0.9);
 
+    // Old "All" section post should have priority 0.6
+    const oldPost = result.find((entry) => entry.url.includes('test-post-1'));
+    expect(oldPost?.priority).toBe(0.6);
+
+    // Photos should have priority 0.7
     const photos = result.filter((entry) => entry.url.includes('/photos/'));
     photos.forEach((photo) => {
-      expect(photo.priority).toBe(0.8);
+      expect(photo.priority).toBe(0.7);
     });
   });
 
@@ -351,5 +357,166 @@ describe('Sitemap Generation', () => {
 
     const post = result.find((entry) => entry.url.includes('test-post-1'));
     expect(post?.lastModified).toEqual(new Date('2023-06-15'));
+  });
+
+  it('should include images array for posts with cover images', () => {
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(mockPosts))
+      .mockReturnValueOnce(JSON.stringify(mockPhotos));
+
+    const result = sitemap();
+
+    const post1 = result.find((entry) => entry.url.includes('test-post-1'));
+    expect(post1?.images).toEqual(['https://www.zamiang.com/images/cover1.jpg']);
+
+    const post2 = result.find((entry) => entry.url.includes('test-post-2'));
+    expect(post2?.images).toEqual(['https://www.zamiang.com/images/cover2.jpg']);
+  });
+
+  it('should include images array for photos', () => {
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(mockPosts))
+      .mockReturnValueOnce(JSON.stringify(mockPhotos));
+
+    const result = sitemap();
+
+    const photo = result.find((entry) => entry.url.includes('photo-1'));
+    expect(photo?.images).toEqual(['https://www.zamiang.com/images/photo1.jpg']);
+  });
+
+  it('should return empty images array for posts without cover image', () => {
+    const postsWithoutCover: Post[] = [
+      {
+        id: '1',
+        title: 'Post Without Cover',
+        slug: 'no-cover',
+        coverImage: '',
+        date: '2023-06-15',
+        excerpt: 'Excerpt',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(postsWithoutCover))
+      .mockReturnValueOnce(JSON.stringify([]));
+
+    const result = sitemap();
+
+    const post = result.find((entry) => entry.url.includes('no-cover'));
+    expect(post?.images).toEqual([]);
+  });
+
+  it('should give recent posts (< 6 months old) priority 0.8', () => {
+    // Create a post that is 3 months old (recent)
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+    const recentPosts: Post[] = [
+      {
+        id: '1',
+        title: 'Recent Post',
+        slug: 'recent-post',
+        coverImage: 'cover.jpg',
+        date: threeMonthsAgo.toISOString(),
+        excerpt: 'Recent excerpt',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(recentPosts))
+      .mockReturnValueOnce(JSON.stringify([]));
+
+    const result = sitemap();
+
+    const recentPost = result.find((entry) => entry.url.includes('recent-post'));
+    expect(recentPost?.priority).toBe(0.8);
+  });
+
+  it('should give old posts (>= 6 months old) priority 0.6', () => {
+    // Create a post that is 8 months old
+    const eightMonthsAgo = new Date();
+    eightMonthsAgo.setMonth(eightMonthsAgo.getMonth() - 8);
+
+    const oldPosts: Post[] = [
+      {
+        id: '1',
+        title: 'Old Post',
+        slug: 'old-post',
+        coverImage: 'cover.jpg',
+        date: eightMonthsAgo.toISOString(),
+        excerpt: 'Old excerpt',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(oldPosts))
+      .mockReturnValueOnce(JSON.stringify([]));
+
+    const result = sitemap();
+
+    const oldPost = result.find((entry) => entry.url.includes('old-post'));
+    expect(oldPost?.priority).toBe(0.6);
+  });
+
+  it('should give VBC posts priority 0.9 regardless of age', () => {
+    // Create an old VBC post
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+    const vbcPosts: Post[] = [
+      {
+        id: '1',
+        title: 'Old VBC Post',
+        slug: 'old-vbc-post',
+        coverImage: 'cover.jpg',
+        date: oneYearAgo.toISOString(),
+        excerpt: 'VBC excerpt',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'VBC',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify(vbcPosts))
+      .mockReturnValueOnce(JSON.stringify([]));
+
+    const result = sitemap();
+
+    const vbcPost = result.find((entry) => entry.url.includes('old-vbc-post'));
+    expect(vbcPost?.priority).toBe(0.9);
   });
 });

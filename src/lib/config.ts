@@ -72,8 +72,3 @@ export function validateNotionConfig() {
   requireEnv('NOTION_DATA_SOURCE_ID');
   requireEnv('NOTION_PHOTOS_DATA_SOURCE_ID');
 }
-
-/**
- * Type-safe config access
- */
-export type Config = typeof config;

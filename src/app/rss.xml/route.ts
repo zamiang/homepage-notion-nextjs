@@ -1,5 +1,5 @@
 import { config } from '@/lib/config';
-import { getAllItemsSortedByDate } from '@/lib/notion';
+import { PostWithType, getAllItemsSortedByDate } from '@/lib/notion';
 
 // Force static generation at build time
 export const dynamic = 'force-static';
@@ -8,6 +8,47 @@ const title = 'Articles by Brennan Moore';
 const description =
   "I see engineering as a creative craft. Whether my canvas is healthcare, art, or e-commerce, I build beauty by transforming complex problems into elegant solutions. I work best with a small crew, digging in with the business to find the one lever that can move a mountain. For me, success isn't just shipping a quality product—it's fostering an energized team and watching the business grow";
 const siteUrl = config.site.url;
+
+/**
+ * Generates category tags for an item based on section and type.
+ */
+function getCategoryTags(item: PostWithType): string {
+  const categories: string[] = [];
+
+  // Add section as category (e.g., "All", "VBC")
+  if (item.section) {
+    const sectionLabel = item.section === 'VBC' ? 'Value-Based Care' : item.section;
+    categories.push(`<category><![CDATA[${sectionLabel}]]></category>`);
+  }
+
+  // Add type as category (e.g., "writing", "photo")
+  const typeLabel = item.type === 'photo' ? 'Photography' : 'Writing';
+  categories.push(`<category><![CDATA[${typeLabel}]]></category>`);
+
+  return categories.join('\n            ');
+}
+
+const MIME_TYPES: Record<string, string> = {
+  png: 'image/png',
+  gif: 'image/gif',
+  webp: 'image/webp',
+  avif: 'image/avif',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+};
+
+/**
+ * Generates enclosure tag for cover image if available.
+ */
+function getEnclosureTag(item: PostWithType): string {
+  if (!item.coverImage) return '';
+
+  const imageUrl = `${siteUrl}/images/${item.coverImage}`;
+  const ext = item.coverImage.split('.').pop()?.toLowerCase();
+  const mimeType = MIME_TYPES[ext || ''] || 'image/jpeg';
+
+  return `<enclosure url="${imageUrl}" type="${mimeType}" length="0"/>`;
+}
 
 const getRssXml = () => {
   const allItems = getAllItemsSortedByDate();
@@ -25,19 +66,25 @@ const getRssXml = () => {
     }
 
     const date = new Date(item.date).toUTCString();
-    const title = item.title;
-    const excerpt = item.excerpt;
+    const itemTitle = item.title;
+    const excerpt = item.excerpt || '';
+    const content = item.content || '';
+    const author = item.author || 'Brennan Moore';
+    const categoryTags = getCategoryTags(item);
+    const enclosureTag = getEnclosureTag(item);
 
     rssItemsXml += `
           <item>
-            <title><![CDATA[${title}]]></title>
+            <title><![CDATA[${itemTitle}]]></title>
             <link>${postHref}</link>
             <pubDate>${date}</pubDate>
             <guid isPermaLink="false">${postHref}</guid>
-            <description>
-            <![CDATA[${excerpt}]]>
-            </description>
-        </item>`;
+            <dc:creator><![CDATA[${author}]]></dc:creator>
+            ${categoryTags}
+            <description><![CDATA[${excerpt}]]></description>
+            <content:encoded><![CDATA[${content}]]></content:encoded>
+            ${enclosureTag}
+          </item>`;
   });
 
   return `<?xml version="1.0" ?>
