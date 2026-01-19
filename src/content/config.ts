@@ -3,7 +3,6 @@
  *
  * Defines the schema for posts, VBC posts, and photos loaded from Notion.
  */
-
 import { defineCollection, z } from 'astro:content';
 
 import { notionLoader } from '../lib/notion-loader';
@@ -51,7 +50,9 @@ const vbcPosts = defineCollection({
 const photos = defineCollection({
   loader: notionLoader({
     dataSourceId:
-      import.meta.env.NOTION_PHOTOS_DATA_SOURCE_ID || process.env.NOTION_PHOTOS_DATA_SOURCE_ID || '',
+      import.meta.env.NOTION_PHOTOS_DATA_SOURCE_ID ||
+      process.env.NOTION_PHOTOS_DATA_SOURCE_ID ||
+      '',
   }),
   schema: postSchema,
 });

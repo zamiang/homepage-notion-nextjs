@@ -2,8 +2,7 @@
  * ContentRenderer Component (React Island)
  * Renders markdown content with syntax highlighting
  */
-
-import React, { isValidElement, ReactNode } from 'react';
+import React, { ReactNode, isValidElement } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
@@ -59,13 +58,7 @@ const components = {
   img: ({ src, alt }: { src?: string; alt?: string }) => {
     return (
       // eslint-disable-next-line @next/next/no-img-element -- React island in Astro, not Next.js
-      <img
-        src={src}
-        alt={alt || ''}
-        className="h-auto w-full"
-        loading="lazy"
-        decoding="async"
-      />
+      <img src={src} alt={alt || ''} className="h-auto w-full" loading="lazy" decoding="async" />
     );
   },
   h1: ({ children }: { children?: React.ReactNode }) => {
@@ -104,9 +97,7 @@ const components = {
   tr: ({ children }: { children?: React.ReactNode }) => (
     <tr className="border-b border-border">{children}</tr>
   ),
-  td: ({ children }: { children?: React.ReactNode }) => (
-    <td className="p-2 text-sm">{children}</td>
-  ),
+  td: ({ children }: { children?: React.ReactNode }) => <td className="p-2 text-sm">{children}</td>,
   th: ({ children }: { children?: React.ReactNode }) => (
     <th className="p-2 text-sm font-semibold text-left">{children}</th>
   ),
@@ -115,7 +106,11 @@ const components = {
 export default function ContentRenderer({ content }: ContentRendererProps) {
   return (
     <div className="prose prose-slate max-w-none mb-12 prose-headings:font-serif prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80">
-      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+      <ReactMarkdown
+        components={components}
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+      >
         {content}
       </ReactMarkdown>
     </div>

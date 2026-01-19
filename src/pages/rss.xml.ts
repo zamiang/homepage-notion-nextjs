@@ -2,7 +2,6 @@
  * RSS Feed endpoint
  * Generates an RSS 2.0 feed for all posts and photos
  */
-
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';

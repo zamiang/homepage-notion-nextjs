@@ -23,19 +23,20 @@ This document outlines a phased migration from Next.js 16 to Astro 6 for the bre
 
 ## Migration Status
 
-| Phase | Description | Status |
-|-------|-------------|--------|
-| Phase 0 | Preparation | ✅ Complete |
-| Phase 1 | Notion Content Loader | ✅ Complete |
-| Phase 2 | Static Components | ✅ Complete |
-| Phase 3 | Page Routes | ✅ Complete |
-| Phase 4 | Interactive Islands | ✅ Complete |
-| Phase 5 | API Endpoints (RSS/JSON) | ✅ Complete |
-| Phase 6 | Configuration & Security | ✅ Complete |
-| Phase 7 | Testing Migration | ✅ Complete (306 tests passing) |
-| Phase 8 | Final Deployment | 🔄 Ready for deployment |
+| Phase   | Description              | Status                          |
+| ------- | ------------------------ | ------------------------------- |
+| Phase 0 | Preparation              | ✅ Complete                     |
+| Phase 1 | Notion Content Loader    | ✅ Complete                     |
+| Phase 2 | Static Components        | ✅ Complete                     |
+| Phase 3 | Page Routes              | ✅ Complete                     |
+| Phase 4 | Interactive Islands      | ✅ Complete                     |
+| Phase 5 | API Endpoints (RSS/JSON) | ✅ Complete                     |
+| Phase 6 | Configuration & Security | ✅ Complete                     |
+| Phase 7 | Testing Migration        | ✅ Complete (306 tests passing) |
+| Phase 8 | Final Deployment         | 🔄 Ready for deployment         |
 
 **Build Output**: 34 pages in 18.13s
+
 - 20 photo pages
 - 13 writing pages
 - 1 index page
@@ -524,6 +525,7 @@ export default defineConfig({
 **Current Status**: Ready for preview deployment. Both frameworks coexist in the repo.
 
 **To Deploy Astro**:
+
 ```bash
 # Build Astro
 npm run astro:build

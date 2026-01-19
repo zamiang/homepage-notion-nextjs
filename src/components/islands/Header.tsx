@@ -2,7 +2,6 @@
  * Header Component (React Island)
  * Uses React state for mobile menu toggle
  */
-
 import { useState } from 'react';
 
 interface NavLink {
@@ -26,7 +25,7 @@ export default function Header() {
       <nav aria-label="Main navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
-{/* eslint-disable-next-line @next/next/no-html-link-for-pages -- React island in Astro, not Next.js */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- React island in Astro, not Next.js */}
             <a href="/" className="flex items-center text-md text-foreground border-none text-sm">
               Brennan Moore
             </a>

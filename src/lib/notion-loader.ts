@@ -4,7 +4,6 @@
  * This loader fetches content from Notion databases and converts it to markdown,
  * handling image downloads and custom block transformations.
  */
-
 import { Client } from '@notionhq/client';
 import { ImageBlockObjectResponse } from '@notionhq/client';
 import { PageObjectResponse } from '@notionhq/client/';

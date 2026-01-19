@@ -2,7 +2,6 @@
  * JSON Feed 1.1 endpoint
  * Spec: https://jsonfeed.org/version/1.1
  */
-
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
 
@@ -12,7 +11,10 @@ import { config } from '../lib/config';
  * Calculate word count from content
  */
 function getWordCount(content: string): number {
-  const cleanText = content.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  const cleanText = content
+    .replace(/[^\w\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   return cleanText.length === 0 ? 0 : cleanText.split(' ').length;
 }
 
@@ -62,7 +64,8 @@ export async function GET(context: APIContext) {
     language: 'en',
     items: allItems.map((item) => {
       const { data, type } = item;
-      const itemUrl = type === 'photo' ? `${siteUrl}/photos/${data.slug}` : `${siteUrl}/writing/${data.slug}`;
+      const itemUrl =
+        type === 'photo' ? `${siteUrl}/photos/${data.slug}` : `${siteUrl}/writing/${data.slug}`;
       const imageUrl =
         type === 'photo'
           ? `${siteUrl}/images/photos/${data.coverImage}`
