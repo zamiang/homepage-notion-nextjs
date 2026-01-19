@@ -1,8 +1,7 @@
-import { existsSync, statSync } from 'fs';
-import { join } from 'path';
-
 import { config } from '@/lib/config';
 import { PostWithType, getAllItemsSortedByDate } from '@/lib/notion';
+import { existsSync, statSync } from 'fs';
+import { join } from 'path';
 
 // Force static generation at build time
 export const dynamic = 'force-static';
