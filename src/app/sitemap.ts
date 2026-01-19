@@ -2,6 +2,9 @@ import { config } from '@/lib/config';
 import { Post, getPhotosFromCache, getPostsFromCache } from '@/lib/notion';
 import { MetadataRoute } from 'next';
 
+// Force static generation at build time for consistent priority calculations
+export const dynamic = 'force-static';
+
 /**
  * Determines the priority for a post based on section and recency.
  * - VBC series posts: 0.9 (flagship content)

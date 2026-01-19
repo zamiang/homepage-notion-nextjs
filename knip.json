@@ -1,0 +1,43 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": [
+    "src/app/**/*.{ts,tsx}",
+    "scripts/*.ts"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx}",
+    "scripts/**/*.ts"
+  ],
+  "ignore": [
+    "**/__tests__/**",
+    "**/*.test.{ts,tsx}",
+    "**/*.spec.{ts,tsx}"
+  ],
+  "ignoreDependencies": [
+    "tailwindcss",
+    "@tailwindcss/typography"
+  ],
+  "next": {
+    "entry": [
+      "src/app/**/page.tsx",
+      "src/app/**/layout.tsx",
+      "src/app/**/route.ts",
+      "src/app/**/loading.tsx",
+      "src/app/**/error.tsx",
+      "src/app/**/not-found.tsx",
+      "next.config.{js,ts,mjs}"
+    ]
+  },
+  "vitest": {
+    "entry": [
+      "vitest.config.{js,ts}",
+      "__tests__/**/*.{test,spec}.{ts,tsx}"
+    ]
+  },
+  "eslint": {
+    "entry": ["eslint.config.{js,mjs}"]
+  },
+  "postcss": {
+    "entry": ["postcss.config.{js,mjs}"]
+  }
+}

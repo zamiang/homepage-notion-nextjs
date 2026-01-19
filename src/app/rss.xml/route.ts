@@ -28,6 +28,15 @@ function getCategoryTags(item: PostWithType): string {
   return categories.join('\n            ');
 }
 
+const MIME_TYPES: Record<string, string> = {
+  png: 'image/png',
+  gif: 'image/gif',
+  webp: 'image/webp',
+  avif: 'image/avif',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+};
+
 /**
  * Generates enclosure tag for cover image if available.
  */
@@ -35,16 +44,8 @@ function getEnclosureTag(item: PostWithType): string {
   if (!item.coverImage) return '';
 
   const imageUrl = `${siteUrl}/images/${item.coverImage}`;
-  // Determine MIME type based on extension
   const ext = item.coverImage.split('.').pop()?.toLowerCase();
-  const mimeType =
-    ext === 'png'
-      ? 'image/png'
-      : ext === 'gif'
-        ? 'image/gif'
-        : ext === 'webp'
-          ? 'image/webp'
-          : 'image/jpeg';
+  const mimeType = MIME_TYPES[ext || ''] || 'image/jpeg';
 
   return `<enclosure url="${imageUrl}" type="${mimeType}" length="0"/>`;
 }

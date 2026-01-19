@@ -1,5 +1,5 @@
 // Animation constants
-export const PARTICLE_COUNT = 20; // Reduced from 40 for better performance
+const PARTICLE_COUNT = 20; // Reduced from 40 for better performance
 export const SCROLL_VELOCITY_DECAY = 0.95; // Slower decay for smoother feel
 export const PARTICLE_VELOCITY_DECAY = 0.92; // Slower decay
 export const MIN_INERTIA_FACTOR = 0.15; // Reduced inertia response
@@ -9,21 +9,21 @@ export const MAX_SCROLL_FACTOR = 0.04;
 export const INERTIA_MULTIPLIER = 0.05; // Reduced multiplier
 
 // Particle size and movement ranges
-export const MIN_PARTICLE_SIZE = 2;
+const MIN_PARTICLE_SIZE = 2;
 export const MAX_PARTICLE_SIZE = 6;
-export const MIN_OPACITY = 0.25;
-export const MAX_OPACITY = 0.55;
-export const MIN_SPEED_X = 0.002;
-export const MAX_SPEED_X = 0.006;
-export const MIN_SPEED_Y = 0.0015;
-export const MAX_SPEED_Y = 0.005;
-export const MIN_RADIUS_X = 20;
-export const MAX_RADIUS_X = 60;
-export const MIN_RADIUS_Y = 15;
-export const MAX_RADIUS_Y = 45;
+const MIN_OPACITY = 0.25;
+const MAX_OPACITY = 0.55;
+const MIN_SPEED_X = 0.002;
+const MAX_SPEED_X = 0.006;
+const MIN_SPEED_Y = 0.0015;
+const MAX_SPEED_Y = 0.005;
+const MIN_RADIUS_X = 20;
+const MAX_RADIUS_X = 60;
+const MIN_RADIUS_Y = 15;
+const MAX_RADIUS_Y = 45;
 
 // Types
-export interface ParticleColor {
+interface ParticleColor {
   light: string;
   dark: string;
 }
@@ -60,7 +60,7 @@ export interface Particle {
  *
  * Dark mode colors are prepared for future theme support but currently unused.
  */
-export const LIGHT_MODE_COLORS = [
+const LIGHT_MODE_COLORS = [
   // Blues (core palette)
   '#3a4555', // Deep slate
   '#4b5673', // Slate blue
@@ -81,7 +81,7 @@ export const LIGHT_MODE_COLORS = [
   '#8490a8', // Pale blue
 ];
 
-export const DARK_MODE_COLORS = [
+const DARK_MODE_COLORS = [
   // Oranges (core accent)
   '#ff8f00', // Deep orange
   '#ffa726', // Orange
@@ -103,7 +103,7 @@ export const DARK_MODE_COLORS = [
 ];
 
 // Get a random color pair from both palettes
-export function getRandomColor(): ParticleColor {
+function getRandomColor(): ParticleColor {
   const lightIndex = Math.floor(Math.random() * LIGHT_MODE_COLORS.length);
   const darkIndex = Math.floor(Math.random() * DARK_MODE_COLORS.length);
 
@@ -114,7 +114,7 @@ export function getRandomColor(): ParticleColor {
 }
 
 // Create a single particle with given dimensions
-export function createParticle(
+function createParticle(
   id: number,
   viewportWidth: number,
   viewportHeight: number,
