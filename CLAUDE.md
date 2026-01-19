@@ -64,12 +64,12 @@
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Next.js | 16.1.1 | Turbopack default, async route params |
-| React | 19.2.3 | Using automatic JSX runtime |
+| Astro | 5.16.11 | Static site generation with islands architecture |
+| React | 19.2.3 | Island components only (Header, FloatingParticles) |
 | TypeScript | 5.9.3 | Strict mode enabled |
-| Notion Client | 5.6.0 | Uses dataSources API (not databases) |
-| Tailwind CSS | 4.1.18 | v4 with Lightning CSS |
-| Vitest | 4.0.16 | Test runner with Istanbul coverage |
+| Notion Client | 5.7.0 | Uses dataSources API via custom Content Loader |
+| Tailwind CSS | 4.1.18 | v4 with Vite plugin |
+| Vitest | 4.0.17 | Test runner with Istanbul coverage |
 | ESLint | 9.39.2 | Flat config format (eslint.config.mjs) |
 
 ### Project Statistics
@@ -115,55 +115,45 @@ await notion.databases.query({
 });
 ```
 
-#### Async Route Params (Next.js 16+)
+#### Astro Content Collections
 ```typescript
-// ✅ Correct (Next.js 16 requires Promise)
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
+// src/content/config.ts - Define content collections with custom loaders
+import { defineCollection, z } from 'astro:content';
+import { notionLoader } from '../lib/notion-loader';
 
-export default async function Page({ params }: PageProps) {
-  const { slug } = await params;
-  // ...
-}
+const posts = defineCollection({
+  loader: notionLoader({
+    dataSourceId: getNotionEnvVar('NOTION_DATA_SOURCE_ID'),
+    filter: { property: 'Section', select: { equals: 'All' } },
+  }),
+  schema: z.object({ /* ... */ }),
+});
 ```
 
-#### Image Configuration
-```typescript
-// Required in next.config.ts for custom quality values
-images: {
-  qualities: [75, 85],  // Must list all quality values used
-  formats: ['image/webp', 'image/avif'],
-  // ...
-}
+#### Astro Islands (React Components)
+```astro
+---
+// Use React islands for interactive components
+import Header from '../components/islands/Header';
+---
+
+<!-- client:idle - hydrate when browser is idle (recommended for most) -->
+<Header client:idle />
+
+<!-- client:visible - hydrate when visible in viewport -->
+<FloatingParticles client:visible />
 ```
 
-#### ESLint Configuration (v9 Flat Config)
-```javascript
-// eslint.config.mjs - ESLint v9 uses flat config format
-import nextPlugin from 'eslint-config-next';
-
-const eslintConfig = [
-  {
-    ignores: ['.next/**', 'node_modules/**', 'coverage/**'],
-  },
-  ...nextPlugin,
-  {
-    rules: {
-      '@typescript-eslint/no-require-imports': 'off',
-    },
-  },
-  {
-    files: ['**/__tests__/**/*.ts', '**/__tests__/**/*.tsx'],
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-    },
-  },
-];
-
-export default eslintConfig;
+#### TypeScript Configuration
 ```
-**Note**: ESLint v9 requires flat config format. Legacy `.eslintrc.json` files are no longer supported.
+tsconfig.json excludes Astro-specific files that use virtual modules:
+- src/content/config.ts (uses astro:content)
+- src/lib/notion-loader.ts (uses import.meta.env)
+- src/pages/*.ts API routes
+
+Use `npm run check` (astro check) to type-check these files.
+Use `npm run typecheck` (tsc) for non-Astro TypeScript files.
+```
 
 ### Testing Patterns
 
@@ -177,21 +167,23 @@ export default eslintConfig;
 
 | Purpose | Location | Example |
 |---------|----------|---------|
-| Components | `src/components/` | `post-card.tsx` |
-| API Routes | `src/app/*/route.ts` | `feed.json/route.ts` |
-| Utilities | `src/lib/` | `notion.ts`, `config.ts` |
+| Astro Components | `src/components/` | `Footer.astro`, `PostCard.astro` |
+| React Islands | `src/components/islands/` | `Header.tsx`, `FloatingParticles.tsx` |
+| Pages | `src/pages/` | `index.astro`, `writing/[slug].astro` |
+| API Routes | `src/pages/` | `rss.xml.ts`, `feed.json.ts` |
+| Layouts | `src/layouts/` | `BaseLayout.astro`, `PostLayout.astro` |
+| Content Config | `src/content/` | `config.ts` |
+| Utilities | `src/lib/` | `notion-loader.ts`, `config.ts` |
 | Tests | `__tests__/` | `__tests__/lib/notion.test.ts` |
-| Scripts | `scripts/` | `cache-posts.ts` |
-| Documentation | `docs/` | `*.md` files |
-| Config | Root directory | `eslint.config.mjs`, `next.config.ts` |
+| Config | Root directory | `eslint.config.mjs`, `astro.config.mjs` |
 
 ### Commands Reference
 
 ```bash
 # Development
-npm run dev              # Start dev server (Turbopack HMR)
-npm run build            # Production build
-npm run cache:posts      # Fetch & cache posts from Notion
+npm run dev              # Start Astro dev server
+npm run build            # Production static build
+npm run preview          # Preview production build locally
 
 # Testing
 npm test                 # Run all tests
@@ -200,7 +192,8 @@ npm run test:coverage    # Coverage report
 npm run test:ui          # Vitest UI
 
 # Quality Checks
-npm run typecheck        # TypeScript validation
+npm run check            # Astro type check (includes virtual modules)
+npm run typecheck        # TypeScript validation (non-Astro files)
 npm run lint             # ESLint
 ```
 
@@ -571,8 +564,8 @@ Successfully migrated from @notion/client v4.0.2 to v5.1.0 without breaking func
 
 ```bash
 NOTION_TOKEN=secret_xxx                    # Notion API integration token
-NOTION_POSTS_DATABASE_ID=xxx               # Posts database/datasource ID
-NOTION_PHOTOS_DATABASE_ID=xxx              # Photos database/datasource ID
+NOTION_DATA_SOURCE_ID=xxx                  # Posts data source ID (Notion database)
+NOTION_PHOTOS_DATA_SOURCE_ID=xxx           # Photos data source ID (Notion database)
 SITE_URL=https://brennanmoore.com          # Site URL for absolute links
 ```
 
@@ -581,19 +574,26 @@ SITE_URL=https://brennanmoore.com          # Site URL for absolute links
 ```
 homepage-notion-nextjs/
 ├── src/
-│   ├── app/                    # Next.js 16 App Router
-│   │   ├── (routes)/          # Page routes
-│   │   ├── feed.json/         # JSON Feed route
-│   │   ├── rss.xml/           # RSS feed route
-│   │   └── sitemap.xml/       # Dynamic sitemap
-│   ├── components/            # React components
-│   ├── lib/                   # Utilities (notion, config, errors)
+│   ├── pages/                 # Astro pages and API routes
+│   │   ├── index.astro       # Homepage
+│   │   ├── writing/[slug].astro  # Blog post pages
+│   │   ├── photos/[slug].astro   # Photo pages
+│   │   ├── rss.xml.ts        # RSS feed endpoint
+│   │   └── feed.json.ts      # JSON feed endpoint
+│   ├── layouts/               # Astro layouts
+│   │   ├── BaseLayout.astro  # Base page layout
+│   │   └── PostLayout.astro  # Blog post layout
+│   ├── components/            # Astro and React components
+│   │   ├── *.astro           # Static Astro components
+│   │   └── islands/          # React islands (interactive)
+│   ├── content/               # Astro content collections
+│   │   └── config.ts         # Collection definitions
+│   ├── lib/                   # Utilities
+│   │   ├── notion-loader.ts  # Custom Notion content loader
+│   │   └── config.ts         # Site configuration
 │   └── styles/                # Tailwind CSS
 ├── __tests__/                 # Vitest tests
-├── scripts/                   # Build scripts (cache-posts.ts)
 ├── docs/                      # Project documentation
-├── posts-cache.json          # Cached posts from Notion
-├── photos-cache.json         # Cached photos from Notion
 └── public/images/            # Optimized images
 ```
 
