@@ -39,7 +39,17 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".astro",
+    ".vercel",
+    "dist",
+    "src/content/config.ts",
+    "src/lib/notion-loader.ts",
+    "src/pages/feed.json.ts",
+    "src/pages/rss.xml.ts",
+    "src/pages/**/*.astro",
+    "src/layouts/**/*.astro",
+    "src/components/**/*.astro"
   ],
   "moduleNameMapper": {
     "^@/components/(.*)$": "<rootDir>/components/$1"

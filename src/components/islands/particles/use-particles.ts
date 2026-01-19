@@ -1,6 +1,3 @@
-'use client';
-
-import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
@@ -23,7 +20,6 @@ export interface UseParticlesResult {
 }
 
 export function useParticles(): UseParticlesResult {
-  const pathname = usePathname();
   const [particles, setParticles] = useState<Particle[]>(initializeParticles);
   const particlesRef = useRef<Particle[]>(particles);
   const circlesRef = useRef<SVGCircleElement[]>([]);
@@ -40,16 +36,25 @@ export function useParticles(): UseParticlesResult {
     particlesRef.current = particles;
   }, [particles]);
 
-  // Reset scroll position and velocity when route changes
+  // Reset scroll position and velocity when route changes (Astro navigation)
   useEffect(() => {
-    scrollYRef.current = 0;
-    scrollVelocityRef.current = 0;
+    const resetParticles = () => {
+      scrollYRef.current = 0;
+      scrollVelocityRef.current = 0;
+      particlesRef.current.forEach((particle) => {
+        particle.velocityY = 0;
+      });
+    };
 
-    // Reset particle velocities to prevent jolting
-    particlesRef.current.forEach((particle) => {
-      particle.velocityY = 0;
-    });
-  }, [pathname]);
+    // Listen for Astro's view transitions or popstate
+    document.addEventListener('astro:after-swap', resetParticles);
+    window.addEventListener('popstate', resetParticles);
+
+    return () => {
+      document.removeEventListener('astro:after-swap', resetParticles);
+      window.removeEventListener('popstate', resetParticles);
+    };
+  }, []);
 
   // Redistribute particles on resize
   const handleResize = useCallback(() => {

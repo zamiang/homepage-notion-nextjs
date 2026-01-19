@@ -1,127 +1,127 @@
-# Notion Blog with Next.js
+# Notion Blog with Astro
 
-A high-performance [Next.js 16](https://nextjs.org/) blog written in [TypeScript](https://www.typescriptlang.org/) that uses [Notion's Public API](https://developers.notion.com) as a headless CMS. Features Turbopack builds, 75% test coverage, optimized images with WebP/AVIF support, and comprehensive SEO with sitemap, RSS, JSON Feed and Schema.org structured data.
+A high-performance [Astro 5](https://astro.build/) blog written in [TypeScript](https://www.typescriptlang.org/) that uses [Notion's Public API](https://developers.notion.com) as a headless CMS. Features static site generation, React islands for interactivity, optimized images, and comprehensive SEO with sitemap, RSS, JSON Feed and Schema.org structured data.
 
-**Live Site:** [https://www.zamiang.com](https://www.zamiang.com)
+**Live Site:** [https://brennanmoore.com](https://brennanmoore.com)
 
-[![Tests](https://img.shields.io/badge/tests-221%20passing-brightgreen)]()
-[![Coverage](https://img.shields.io/badge/coverage-75.79%25-green)]()
-[![Next.js](https://img.shields.io/badge/Next.js-16.0-black)]()
+[![Tests](https://img.shields.io/badge/tests-306%20passing-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/coverage-76.9%25-green)]()
+[![Astro](https://img.shields.io/badge/Astro-5.16-purple)]()
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)]()
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 ### Performance & Build
-- **⚡ Turbopack Builds**: 1.7s production builds with Next.js 16's default Turbopack compiler
-- **📊 Static Generation**: 38 pages pre-rendered at build time for instant loading
-- **🖼️ Image Optimization**: WebP/AVIF support with responsive sizing (40-60% bandwidth reduction)
-- **💯 Perfect Scores**: Consistently scores 100 on Vercel's performance dashboard
+- **Static Site Generation**: 34 pages pre-rendered at build time for instant loading
+- **Islands Architecture**: React components only where needed (particles, mobile menu)
+- **Zero JS by Default**: Content pages ship no JavaScript except for interactive islands
+- **Cloudflare Pages**: Deployed to Cloudflare's edge network for global performance
 
 ### SEO & Discovery
-- **🔍 Multi-Format Feeds**:
+- **Multi-Format Feeds**:
   - RSS 2.0 feed (`/rss.xml`) for traditional feed readers
   - JSON Feed 1.1 (`/feed.json`) with full content and word counts
   - Auto-discovery links in HTML for easy subscription
-- **📋 Schema.org JSON-LD**: Rich structured data with Person, Blog, BlogPosting, and Photograph types
-- **🗺️ Dynamic Sitemap**: Auto-generated with priority and change frequency
-- **📱 Social Metadata**: OpenGraph and Twitter Card support
+- **Schema.org JSON-LD**: Rich structured data with Person, Blog, BlogPosting, and Photograph types
+- **Dynamic Sitemap**: Auto-generated with `@astrojs/sitemap`
+- **Social Metadata**: OpenGraph and Twitter Card support
 
 ### Developer Experience
-- **✅ 75% Test Coverage**: 221 comprehensive tests with Vitest and React Testing Library
-- **🎯 Type Safety**: Strict TypeScript with full type coverage
-- **🔒 Security**: Content Security Policy (CSP) and secure headers, 0 vulnerabilities
-- **📚 Well-Documented**: Comprehensive docs in `/docs` and inline comments
-- **🎨 Code Quality**: ESLint 9 (flat config), Prettier, and automated formatting
+- **76% Test Coverage**: 306 comprehensive tests with Vitest and React Testing Library
+- **Type Safety**: Strict TypeScript with full type coverage
+- **Security**: Content Security Policy (CSP) and secure headers via `_headers`
+- **Code Quality**: ESLint with Astro plugin, Prettier with Astro support
 
 ### Content Management
-- **📝 Notion as CMS**: Easy content management through Notion's intuitive interface
-- **💾 Smart Caching**: Local JSON caching for fast builds and offline development
-- **📸 Dual Content Types**: Separate sections for blog posts and photo galleries
-- **🏷️ Series Support**: VBC (Value-Based Care) series with navigation
+- **Notion as CMS**: Easy content management through Notion's intuitive interface
+- **Content Collections**: Astro's content layer with custom Notion loader
+- **Dual Content Types**: Separate collections for blog posts and photo galleries
+- **Series Support**: VBC (Value-Based Care) series with navigation
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology | Version | Purpose |
 |----------|-----------|---------|---------|
-| **Framework** | [Next.js](https://nextjs.org/) | 16.0.0 | App Router with Turbopack |
+| **Framework** | [Astro](https://astro.build/) | 5.16.11 | Static site generation with islands |
+| **UI** | [React](https://react.dev/) | 19.2.3 | Interactive island components |
 | **Language** | [TypeScript](https://www.typescriptlang.org/) | 5.9.3 | Type-safe development |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | 4.1.14 | Utility-first CSS (v4 with Lightning CSS) |
-| **CMS** | [Notion API](https://developers.notion.com) | 5.3.0 | Content management |
-| **Testing** | [Vitest](https://vitest.dev/) | 4.0.2 | Fast unit testing |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | 4.1.18 | Utility-first CSS (v4 with Vite plugin) |
+| **CMS** | [Notion API](https://developers.notion.com) | 5.7.0 | Content management |
+| **Testing** | [Vitest](https://vitest.dev/) | 4.0.17 | Fast unit testing |
 | **Testing** | [React Testing Library](https://testing-library.com/react) | Latest | Component testing |
-| **Code Quality** | [ESLint](https://eslint.org/) | 9.38.0 | Code linting |
-| **Deployment** | [Vercel](https://vercel.com/) | N/A | Edge deployment |
+| **Code Quality** | [ESLint](https://eslint.org/) | 9.39.2 | Code linting with Astro plugin |
+| **Deployment** | [Cloudflare Pages](https://pages.cloudflare.com/) | N/A | Edge deployment |
 
-**Runtime**: Node.js 22.x (minimum 20.9.0 for Next.js 16)
+**Runtime**: Node.js 24.x
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-homepage-notion-nextjs/
+brennanmoore-astro-blog/
 ├── src/
-│   ├── app/                      # Next.js 16 App Router
-│   │   ├── writing/[slug]/      # Blog post pages
-│   │   ├── photos/[slug]/       # Photo gallery pages
-│   │   ├── feed.json/           # JSON Feed 1.1 route
-│   │   ├── rss.xml/             # RSS 2.0 feed route
-│   │   ├── sitemap.xml/         # Dynamic sitemap
-│   │   └── robots.txt/          # Robots.txt route
-│   ├── components/              # React components
-│   │   ├── post-card.tsx        # Blog post card
-│   │   ├── photo-card.tsx       # Photo gallery card
-│   │   ├── post-layout.tsx      # Shared post layout
-│   │   └── mdx-component.tsx    # MDX content renderer
-│   ├── lib/                     # Utilities & integrations
-│   │   ├── notion.ts            # Notion API client (v5.x)
-│   │   ├── config.ts            # Environment config
-│   │   ├── errors.ts            # Error handling utilities
-│   │   └── page-utils.ts        # SEO and metadata helpers
-│   └── hooks/                   # Custom React hooks
-├── __tests__/                   # Vitest tests (221 tests)
-│   ├── app/                     # Route tests
-│   ├── components/              # Component tests
-│   └── lib/                     # Utility tests
-├── scripts/
-│   └── cache-posts.ts           # Notion content caching
-├── docs/                        # Project documentation
-├── posts-cache.json             # Cached blog posts
-├── photos-cache.json            # Cached photos
-├── public/images/               # Optimized images
-├── eslint.config.mjs            # ESLint v9 flat config
-├── next.config.ts               # Next.js 16 configuration
+│   ├── pages/                    # Astro pages
+│   │   ├── index.astro          # Homepage
+│   │   ├── writing/[slug].astro # Blog post pages
+│   │   ├── photos/[slug].astro  # Photo gallery pages
+│   │   ├── feed.json.ts         # JSON Feed 1.1 endpoint
+│   │   └── rss.xml.ts           # RSS 2.0 feed endpoint
+│   ├── layouts/                  # Astro layouts
+│   │   ├── BaseLayout.astro     # HTML shell with head/body
+│   │   └── PostLayout.astro     # Blog post layout
+│   ├── components/               # UI components
+│   │   ├── *.astro              # Static Astro components
+│   │   ├── islands/             # React island components
+│   │   │   ├── FloatingParticles.tsx
+│   │   │   ├── Header.tsx
+│   │   │   └── ContentRenderer.tsx
+│   │   └── ui/                  # Shared UI components
+│   ├── content/                  # Content Collections
+│   │   └── config.ts            # Collection schemas & Notion loader
+│   ├── lib/                      # Utilities
+│   │   ├── notion-loader.ts     # Custom Notion content loader
+│   │   ├── config.ts            # Site configuration
+│   │   └── utils.ts             # Shared utilities
+│   ├── hooks/                    # React hooks (for islands)
+│   └── styles/
+│       └── globals.css          # Global styles & Tailwind
+├── __tests__/                    # Vitest tests (306 tests)
+├── public/
+│   ├── images/                  # Static images
+│   ├── _headers                 # Cloudflare security headers
+│   └── _redirects               # Cloudflare redirects
+├── astro.config.mjs             # Astro configuration
+├── eslint.config.mjs            # ESLint flat config with Astro
 ├── CLAUDE.md                    # AI context & patterns
 └── README.md                    # This file
 ```
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Set Up Notion API Credentials
 
 Follow the [Notion API Getting Started Guide](https://developers.notion.com/docs/getting-started) to create an integration and obtain:
 
 - `NOTION_TOKEN`: Your Notion integration token (starts with `secret_`)
-- `NOTION_POSTS_DATABASE_ID`: Database ID for blog posts (data source ID)
-- `NOTION_PHOTOS_DATABASE_ID`: Database ID for photo gallery (data source ID)
+- `NOTION_DATA_SOURCE_ID`: Data source ID for blog posts
+- `NOTION_PHOTOS_DATA_SOURCE_ID`: Data source ID for photo gallery
 - `SITE_URL`: Your site URL for absolute links (e.g., `https://brennanmoore.com`)
-
-**Important**: Use Notion **data source IDs** (v5.x API), not database IDs.
 
 ### 2. Configure Environment Variables
 
-Create a `.env.local` file in the project root:
+Create a `.env` file in the project root:
 
 ```env
 NOTION_TOKEN=secret_your-notion-integration-token
-NOTION_POSTS_DATABASE_ID=abc123def456
-NOTION_PHOTOS_DATABASE_ID=xyz789abc123
+NOTION_DATA_SOURCE_ID=abc123def456
+NOTION_PHOTOS_DATA_SOURCE_ID=xyz789abc123
 SITE_URL=https://brennanmoore.com
 ```
 
@@ -131,55 +131,59 @@ SITE_URL=https://brennanmoore.com
 npm install
 ```
 
-**System Requirements**: Node.js 20.9.0 or higher
+**System Requirements**: Node.js 24.x
 
-### 4. Cache Content from Notion
-
-Before running the dev server, cache your Notion content:
-
-```bash
-npm run cache:posts
-```
-
-This creates `posts-cache.json` and `photos-cache.json` for faster builds.
-
-### 5. Start Development Server
+### 4. Start Development Server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view your blog.
+Open [http://localhost:4321](http://localhost:4321) to view your blog.
 
 **Dev Features**:
-- ⚡ Turbopack for instant HMR (Hot Module Replacement)
-- 🔄 Fast refresh on file changes
-- 🛠️ TypeScript type checking in real-time
+- Hot Module Replacement with Vite
+- Content syncs from Notion on startup
+- TypeScript type checking
 
-### 6. Build for Production
+### 5. Build for Production
 
 ```bash
-npm run build   # Build with Turbopack (1.7s)
-npm start       # Start production server
+npm run build    # Build static site
+npm run preview  # Preview production build locally
 ```
 
-**Build Output**: 38 static pages generated at build time for optimal performance.
+**Build Output**: 34 static pages generated in the `dist/` directory.
 
 ---
 
-## 📦 Deployment
+## Deployment (Cloudflare Pages)
 
-This project is optimized for deployment on [Vercel](https://vercel.com/):
+This project is configured for deployment on [Cloudflare Pages](https://pages.cloudflare.com/):
 
-1. Push your code to a Git repository.
-2. Deploy using the [Vercel CLI](https://vercel.com/docs/cli) or [Vercel Dashboard](https://vercel.com/dashboard).
-3. Ensure environment variables are set in the Vercel dashboard under "Settings > Environment Variables".
+1. Push your code to a Git repository (GitHub, GitLab, etc.)
+2. Log into the Cloudflare dashboard and go to **Workers & Pages**
+3. Click **Create** > **Pages** > Connect your repository
+4. Configure build settings:
+   - **Framework preset**: Astro
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+5. Add environment variables in the Cloudflare dashboard
+6. Deploy!
+
+### Security Headers
+
+Security headers are configured in `public/_headers`:
+- Content Security Policy (CSP)
+- Strict Transport Security (HSTS)
+- X-Frame-Options, X-Content-Type-Options
+- Cache headers for images and feeds
 
 ---
 
-## 🧪 Testing
+## Testing
 
-The project has **75.79% test coverage** with **221 comprehensive tests** using [Vitest](https://vitest.dev/) and React Testing Library.
+The project has **76.9% test coverage** with **306 comprehensive tests** using [Vitest](https://vitest.dev/) and React Testing Library.
 
 ### Run Tests
 
@@ -194,92 +198,83 @@ npm run test:coverage    # Generate coverage report
 
 | Category | Coverage | Tests |
 |----------|----------|-------|
-| **Components** | High | 66 tests (PostCard, PhotoCard, VBCFooter, etc.) |
-| **Utilities** | High | 48 tests (config, errors, page-utils) |
-| **API Routes** | Complete | 42 tests (RSS, JSON Feed, sitemap) |
-| **Hooks** | Complete | 7 tests (use-mobile) |
-| **Integration** | Good | 58 tests (pages, layouts) |
-
-**Key Test Features**:
-- Type-safe mocking with `vi.mocked()`
-- Timezone-safe date assertions
-- Behavioral testing (not implementation details)
-- Snapshot testing for UI consistency
+| **Components** | High | React islands and UI components |
+| **Utilities** | High | config, errors, toc, utils |
+| **API Routes** | Complete | RSS, JSON Feed |
+| **Hooks** | Complete | use-mobile, use-particles |
 
 See [CLAUDE.md](CLAUDE.md) for testing patterns and conventions.
 
 ---
 
-## 📌 Customization
+## Customization
 
 ### Design & Styling
-- **Colors & Typography**: Edit `tailwind.config.ts` for theme customization
-- **Layout**: Modify components in `src/components/` for structural changes
-- **Images**: Configure quality and formats in `next.config.ts` under `images`
+- **Colors & Typography**: Edit CSS custom properties in `src/styles/globals.css`
+- **Layout**: Modify Astro components in `src/layouts/` and `src/components/`
 
 ### Content
 - **Notion Databases**: Update your Notion pages to add posts or photos
-- **Sections**: Modify `src/lib/notion.ts` to add new content sections
-- **Metadata**: Edit `src/lib/page-utils.ts` for SEO and Schema.org customization
+- **Collections**: Modify `src/content/config.ts` for collection schemas
+- **Loader**: Customize `src/lib/notion-loader.ts` for content processing
 
 ### SEO & Feeds
-- **Sitemap**: Configure priorities in `src/app/sitemap.xml/route.ts`
-- **RSS Feed**: Customize feed details in `src/app/rss.xml/route.ts`
-- **JSON Feed**: Modify `src/app/feed.json/route.ts` for feed customization
-
-### Performance
-- **Image Quality**: Adjust `qualities` array in `next.config.ts` (default: `[75, 85]`)
-- **Cache TTL**: Modify `minimumCacheTTL` in `next.config.ts` (default: 30 days)
-- **Caching Strategy**: Update `scripts/cache-posts.ts` for different caching behavior
+- **Sitemap**: Configured via `@astrojs/sitemap` in `astro.config.mjs`
+- **RSS Feed**: Customize `src/pages/rss.xml.ts`
+- **JSON Feed**: Modify `src/pages/feed.json.ts`
 
 ---
 
-## 📚 Documentation
+## Scripts
 
-Comprehensive documentation is available in the `/docs` directory:
-
-- **[CLAUDE.md](CLAUDE.md)**: AI context, patterns, and conventions (start here!)
-- **[Code Quality Audit](docs/CODE_QUALITY_AUDIT_2025-10-23.md)**: Test coverage and quality metrics
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run check` | Run Astro type checking |
+| `npm test` | Run tests |
+| `npm run test:coverage` | Run tests with coverage |
+| `npm run lint` | Run ESLint |
+| `npm run format` | Format with Prettier |
+| `npm run typecheck` | TypeScript type checking |
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
-**Image Quality Warnings**
-```
-Image with src "..." is using quality "85" which is not configured
-```
-**Solution**: Add `qualities: [75, 85]` to `images` config in `next.config.ts`
-
-**Notion API Errors**
-- Ensure using Notion API v5.x with `dataSources.query()` not `databases.query()`
-- Verify `data_source_id` (not `database_id`) in environment variables
-- Check integration has access to your Notion pages
+**Content Not Loading**
+- Ensure Notion integration has access to your databases
+- Check that environment variables are set correctly
+- Run `npm run build` to sync content from Notion
 
 **Build Failures**
-- Run `npm run cache:posts` before building
-- Ensure Node.js version is 20.9.0 or higher
-- Clear `.next` cache: `rm -rf .next && npm run build`
+- Ensure Node.js version is 24.x
+- Clear Astro cache: `rm -rf .astro dist && npm run build`
+
+**Hydration Issues**
+- Check for mismatches between server and client rendering
+- Ensure React islands use `client:` directives correctly
 
 See [CLAUDE.md](CLAUDE.md#troubleshooting--known-issues) for more troubleshooting tips.
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- Built with [Next.js 16](https://nextjs.org/) by Vercel
-- Based on [Notion Blog](https://github.com/thegesturs/notion-blogs) by [thegesturs](https://github.com/thegesturs)
+- Built with [Astro](https://astro.build/)
 - Powered by [Notion's Public API](https://developers.notion.com)
+- Deployed on [Cloudflare Pages](https://pages.cloudflare.com/)
 - Testing with [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/)
 
 ---
 
-**Made with ❤️ using Next.js and Notion**
+**Made with Astro and Notion**
