@@ -1,6 +1,6 @@
+import cloudflare from '@astrojs/cloudflare';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
@@ -8,10 +8,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://brennanmoore.com',
   output: 'static',
-  adapter: vercel({
-    webAnalytics: { enabled: true },
-    speedInsights: { enabled: true },
-  }),
+  adapter: cloudflare(),
 
   integrations: [
     react(),

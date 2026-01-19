@@ -58,6 +58,7 @@ const components = {
   },
   img: ({ src, alt }: { src?: string; alt?: string }) => {
     return (
+      // eslint-disable-next-line @next/next/no-img-element -- React island in Astro, not Next.js
       <img
         src={src}
         alt={alt || ''}
