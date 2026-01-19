@@ -7,6 +7,20 @@ import { defineCollection, z } from 'astro:content';
 
 import { notionLoader } from '../lib/notion-loader';
 
+/**
+ * Gets a Notion environment variable with validation warning
+ */
+function getNotionEnvVar(name: string): string {
+  const value = import.meta.env[name] || process.env[name];
+  if (!value) {
+    console.warn(
+      `[content] Missing ${name} environment variable. Content will not be loaded from Notion.`,
+    );
+    return '';
+  }
+  return value;
+}
+
 // Schema shared by all content types
 const postSchema = z.object({
   id: z.string(),
@@ -25,7 +39,7 @@ const postSchema = z.object({
 // All section posts (general blog posts)
 const posts = defineCollection({
   loader: notionLoader({
-    dataSourceId: import.meta.env.NOTION_DATA_SOURCE_ID || process.env.NOTION_DATA_SOURCE_ID || '',
+    dataSourceId: getNotionEnvVar('NOTION_DATA_SOURCE_ID'),
     filter: {
       property: 'Section',
       select: { equals: 'All' },
@@ -37,7 +51,7 @@ const posts = defineCollection({
 // VBC (Value-Based Care) series posts
 const vbcPosts = defineCollection({
   loader: notionLoader({
-    dataSourceId: import.meta.env.NOTION_DATA_SOURCE_ID || process.env.NOTION_DATA_SOURCE_ID || '',
+    dataSourceId: getNotionEnvVar('NOTION_DATA_SOURCE_ID'),
     filter: {
       property: 'Section',
       select: { equals: 'VBC' },
@@ -49,10 +63,7 @@ const vbcPosts = defineCollection({
 // Photo posts
 const photos = defineCollection({
   loader: notionLoader({
-    dataSourceId:
-      import.meta.env.NOTION_PHOTOS_DATA_SOURCE_ID ||
-      process.env.NOTION_PHOTOS_DATA_SOURCE_ID ||
-      '',
+    dataSourceId: getNotionEnvVar('NOTION_PHOTOS_DATA_SOURCE_ID'),
   }),
   schema: postSchema,
 });

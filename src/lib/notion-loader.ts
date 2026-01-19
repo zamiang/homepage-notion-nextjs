@@ -95,18 +95,20 @@ export function notionLoader(options: NotionLoaderOptions): Loader {
 
       try {
         // Build the filter
-        const queryFilter: Record<string, unknown> = {
-          and: [
-            {
-              property: 'Status',
-              status: { equals: 'Published' },
-            },
-          ],
-        };
+        const filterConditions: Array<{
+          property: string;
+          status?: { equals: string };
+          select?: { equals: string };
+        }> = [
+          {
+            property: 'Status',
+            status: { equals: 'Published' },
+          },
+        ];
 
         // Add section filter if specified
         if (options.filter?.property && options.filter?.select) {
-          (queryFilter.and as Array<Record<string, unknown>>).push({
+          filterConditions.push({
             property: options.filter.property,
             select: options.filter.select,
           });
@@ -115,7 +117,9 @@ export function notionLoader(options: NotionLoaderOptions): Loader {
         // Fetch published posts from Notion
         const response = await notion.dataSources.query({
           data_source_id: options.dataSourceId,
-          filter: queryFilter,
+          filter: { and: filterConditions } as Parameters<
+            typeof notion.dataSources.query
+          >[0]['filter'],
           sorts: [
             {
               property: 'Published Date',
@@ -136,7 +140,7 @@ export function notionLoader(options: NotionLoaderOptions): Loader {
               // Parse and validate data against schema
               const data = await parseData({
                 id: post.slug,
-                data: post,
+                data: post as unknown as Record<string, unknown>,
               });
 
               store.set({

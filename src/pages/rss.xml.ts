@@ -30,8 +30,8 @@ function getImageFileSize(filename: string, isPhoto: boolean): number {
     if (existsSync(imagePath)) {
       return statSync(imagePath).size;
     }
-  } catch {
-    // File not found or unreadable
+  } catch (error) {
+    console.warn(`[rss] Failed to get file size for ${filename}, using 0:`, error);
   }
   return 0;
 }

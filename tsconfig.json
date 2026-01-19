@@ -33,14 +33,10 @@
   "exclude": [
     "node_modules",
     ".astro",
-    ".vercel",
     "dist",
     "src/content/config.ts",
     "src/lib/notion-loader.ts",
     "src/pages/feed.json.ts",
-    "src/pages/rss.xml.ts",
-    "src/pages/**/*.astro",
-    "src/layouts/**/*.astro",
-    "src/components/**/*.astro"
+    "src/pages/rss.xml.ts"
   ]
 }
