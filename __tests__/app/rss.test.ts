@@ -282,4 +282,190 @@ describe('RSS Feed Route', () => {
     expect(xml).toContain('<title><![CDATA[Test Post 1]]></title>');
     expect(xml).toContain('<title><![CDATA[Test Post 2]]></title>');
   });
+
+  it('should include dc:creator with author name', async () => {
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockReturnValue(JSON.stringify(mockPosts));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    expect(xml).toContain('<dc:creator><![CDATA[Brennan Moore]]></dc:creator>');
+  });
+
+  it('should include content:encoded with full content', async () => {
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockReturnValue(JSON.stringify(mockPosts));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    expect(xml).toContain('<content:encoded><![CDATA[Content of test post 1]]></content:encoded>');
+    expect(xml).toContain('<content:encoded><![CDATA[Content of test post 2]]></content:encoded>');
+    expect(xml).toContain('<content:encoded><![CDATA[Content of VBC post]]></content:encoded>');
+  });
+
+  it('should include category tags for section and type', async () => {
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockReturnValue(JSON.stringify(mockPosts));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    // Section categories
+    expect(xml).toContain('<category><![CDATA[All]]></category>');
+    expect(xml).toContain('<category><![CDATA[Value-Based Care]]></category>');
+
+    // Type categories
+    expect(xml).toContain('<category><![CDATA[Writing]]></category>');
+  });
+
+  it('should include enclosure for posts with cover images', async () => {
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockReturnValue(JSON.stringify(mockPosts));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    expect(xml).toContain('<enclosure url="https://www.zamiang.com/images/cover1.jpg" type="image/jpeg" length="0"/>');
+    expect(xml).toContain('<enclosure url="https://www.zamiang.com/images/cover2.jpg" type="image/jpeg" length="0"/>');
+  });
+
+  it('should use correct MIME type for different image extensions', async () => {
+    const postsWithDifferentImages: Post[] = [
+      {
+        id: '1',
+        title: 'PNG Image Post',
+        slug: 'png-post',
+        coverImage: 'cover.png',
+        date: '2023-06-15',
+        excerpt: 'PNG excerpt',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+      {
+        id: '2',
+        title: 'WebP Image Post',
+        slug: 'webp-post',
+        coverImage: 'cover.webp',
+        date: '2023-06-14',
+        excerpt: 'WebP excerpt',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockReturnValue(JSON.stringify(postsWithDifferentImages));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    expect(xml).toContain('type="image/png"');
+    expect(xml).toContain('type="image/webp"');
+  });
+
+  it('should not include enclosure for posts without cover image', async () => {
+    const postsWithoutCover: Post[] = [
+      {
+        id: '1',
+        title: 'No Cover Post',
+        slug: 'no-cover',
+        coverImage: '',
+        date: '2023-06-15',
+        excerpt: 'No cover excerpt',
+        content: 'Content',
+        author: 'Brennan Moore',
+        section: 'All',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockReturnValue(JSON.stringify(postsWithoutCover));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    // Should have item but no enclosure
+    expect(xml).toContain('<item>');
+    expect(xml).not.toContain('<enclosure');
+  });
+
+  it('should include Photography category for photo items', async () => {
+    const mockPhotos: Post[] = [
+      {
+        id: '1',
+        title: 'Test Photo',
+        slug: 'test-photo',
+        coverImage: 'photo.jpg',
+        date: '2023-06-15',
+        excerpt: 'Photo excerpt',
+        content: 'Photo content',
+        author: 'Brennan Moore',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    // Mock returns photos on both calls (posts and photos cache)
+    readFileSyncMock
+      .mockReturnValueOnce(JSON.stringify([]))
+      .mockReturnValueOnce(JSON.stringify(mockPhotos));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    expect(xml).toContain('<category><![CDATA[Photography]]></category>');
+    expect(xml).toContain('https://www.zamiang.com/photos/test-photo');
+  });
+
+  it('should handle posts with default author when author is missing', async () => {
+    const postsWithoutAuthor: Post[] = [
+      {
+        id: '1',
+        title: 'No Author Post',
+        slug: 'no-author',
+        coverImage: 'cover.jpg',
+        date: '2023-06-15',
+        excerpt: 'Excerpt',
+        content: 'Content',
+        author: '', // Empty author
+        section: 'All',
+      },
+    ];
+
+    const existsSyncMock = fs.existsSync as Mock;
+    const readFileSyncMock = fs.readFileSync as Mock;
+
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockReturnValue(JSON.stringify(postsWithoutAuthor));
+
+    const response = await GET();
+    const xml = await response.text();
+
+    // Should default to "Brennan Moore"
+    expect(xml).toContain('<dc:creator><![CDATA[Brennan Moore]]></dc:creator>');
+  });
 });
