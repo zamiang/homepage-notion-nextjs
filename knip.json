@@ -3,17 +3,13 @@
   "entry": [
     "src/pages/**/*.{ts,astro}",
     "src/layouts/**/*.astro",
-    "src/components/**/*.astro",
-    "scripts/*.ts"
+    "src/components/**/*.astro"
   ],
   "project": [
     "src/**/*.{ts,tsx,astro}",
-    "scripts/**/*.ts"
+    "__tests__/**/*.{ts,tsx}"
   ],
   "ignore": [
-    "**/__tests__/**",
-    "**/*.test.{ts,tsx}",
-    "**/*.spec.{ts,tsx}",
     "src/components/consts.ts",
     "src/components/ui/badge.tsx"
   ],
