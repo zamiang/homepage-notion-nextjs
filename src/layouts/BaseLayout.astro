@@ -113,9 +113,11 @@ const canonical = canonicalUrl || Astro.url.href;
         Skip to main content
       </a>
 
-      {/* Header (React island - has mobile menu state)
+      {
+        /* Header (React island - has mobile menu state)
           Using client:idle for better initial load performance.
-          Mobile menu toggle will be interactive after browser idle. */}
+          Mobile menu toggle will be interactive after browser idle. */
+      }
       <Header client:idle />
 
       {/* Main content */}

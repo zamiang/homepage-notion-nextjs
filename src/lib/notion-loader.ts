@@ -117,7 +117,9 @@ export function notionLoader(options: NotionLoaderOptions): Loader {
         // Fetch published posts from Notion
         const response = await notion.dataSources.query({
           data_source_id: options.dataSourceId,
-          filter: { and: filterConditions } as Parameters<typeof notion.dataSources.query>[0]['filter'],
+          filter: { and: filterConditions } as Parameters<
+            typeof notion.dataSources.query
+          >[0]['filter'],
           sorts: [
             {
               property: 'Published Date',
