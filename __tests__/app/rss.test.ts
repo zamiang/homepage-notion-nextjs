@@ -339,8 +339,12 @@ describe('RSS Feed Route', () => {
     const response = await GET();
     const xml = await response.text();
 
-    expect(xml).toContain('<enclosure url="https://www.zamiang.com/images/cover1.jpg" type="image/jpeg" length="0"/>');
-    expect(xml).toContain('<enclosure url="https://www.zamiang.com/images/cover2.jpg" type="image/jpeg" length="0"/>');
+    expect(xml).toContain(
+      '<enclosure url="https://www.zamiang.com/images/cover1.jpg" type="image/jpeg" length="0"/>',
+    );
+    expect(xml).toContain(
+      '<enclosure url="https://www.zamiang.com/images/cover2.jpg" type="image/jpeg" length="0"/>',
+    );
   });
 
   it('should use correct MIME type for different image extensions', async () => {

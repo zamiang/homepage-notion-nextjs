@@ -1,5 +1,5 @@
 import { config } from '@/lib/config';
-import { getAllItemsSortedByDate, PostWithType } from '@/lib/notion';
+import { PostWithType, getAllItemsSortedByDate } from '@/lib/notion';
 
 // Force static generation at build time
 export const dynamic = 'force-static';
@@ -38,7 +38,13 @@ function getEnclosureTag(item: PostWithType): string {
   // Determine MIME type based on extension
   const ext = item.coverImage.split('.').pop()?.toLowerCase();
   const mimeType =
-    ext === 'png' ? 'image/png' : ext === 'gif' ? 'image/gif' : ext === 'webp' ? 'image/webp' : 'image/jpeg';
+    ext === 'png'
+      ? 'image/png'
+      : ext === 'gif'
+        ? 'image/gif'
+        : ext === 'webp'
+          ? 'image/webp'
+          : 'image/jpeg';
 
   return `<enclosure url="${imageUrl}" type="${mimeType}" length="0"/>`;
 }
