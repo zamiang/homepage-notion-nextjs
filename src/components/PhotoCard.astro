@@ -1,0 +1,55 @@
+---
+/**
+ * PhotoCard Component (Astro)
+ * Displays a photo preview with image, date, and title
+ */
+
+import { format } from 'date-fns';
+import { Image } from 'astro:assets';
+
+interface Props {
+  post: {
+    slug: string;
+    title: string;
+    date: string;
+    coverImage: string;
+  };
+  shouldHideText?: boolean;
+  priority?: boolean;
+}
+
+const { post, shouldHideText = false, priority = false } = Astro.props;
+const postDate = new Date(post.date);
+---
+
+<div class="photo-card group">
+  <div class="relative aspect-[1/1] w-full overflow-hidden rounded-sm">
+    <a
+      href={`/photos/${post.slug}`}
+      aria-label={shouldHideText ? post.title : `View photo: ${post.title}`}
+      class="block border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+    >
+      <img
+        src={`/images/photos/${post.coverImage}`}
+        alt={post.title}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
+        class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+      />
+    </a>
+  </div>
+  {
+    !shouldHideText && (
+      <p class="photo-card-date">
+        <time datetime={postDate.toISOString().split('T')[0]}>{format(postDate, 'MMM d, yyyy')}</time>
+      </p>
+    )
+  }
+  {
+    !shouldHideText && (
+      <h3 class="photo-card-title">
+        <a href={`/photos/${post.slug}`}>{post.title}</a>
+      </h3>
+    )
+  }
+</div>

@@ -1,0 +1,166 @@
+---
+/**
+ * PostLayout - Layout for individual blog posts
+ * Includes header, TOC, content, and footer sections
+ */
+
+import { format } from 'date-fns';
+
+import ContentRenderer from '../components/islands/ContentRenderer';
+import type { TocItem } from '../components/TableOfContents.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { config } from '../lib/config';
+import { extractHeadings } from '../lib/toc';
+import { calculateReadingTime } from '../lib/utils';
+import BaseLayout from './BaseLayout.astro';
+
+interface PostData {
+  id: string;
+  title: string;
+  slug: string;
+  coverImage: string;
+  date: string;
+  dateModified?: string;
+  excerpt?: string;
+  content: string;
+  author: string;
+  section?: string;
+  showToc?: boolean;
+}
+
+interface Props {
+  post: PostData;
+  type?: 'writing' | 'photos';
+}
+
+const { post, type = 'writing' } = Astro.props;
+
+const postDate = new Date(post.date);
+const siteUrl = config.site.url;
+
+// Calculate reading time
+const wordCount = post.content
+  .replace(/[^\w\s]/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim()
+  .split(' ').length;
+const readingTime = calculateReadingTime(wordCount);
+
+// Extract TOC items if enabled
+const tocItems: TocItem[] = post.showToc ? extractHeadings(post.content) : [];
+const showToc = post.showToc && tocItems.length >= 3;
+
+// Generate JSON-LD
+const imageUrl =
+  type === 'photos' ? `${siteUrl}/images/photos/${post.coverImage}` : `${siteUrl}/images/${post.coverImage}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': type === 'photos' ? 'Photograph' : 'BlogPosting',
+  headline: post.title,
+  description: post.excerpt,
+  image: {
+    '@type': 'ImageObject',
+    url: imageUrl,
+    caption: post.title,
+  },
+  datePublished: postDate.toISOString(),
+  dateModified: post.dateModified ? new Date(post.dateModified).toISOString() : postDate.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: post.author,
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Brennan Moore',
+    url: siteUrl,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/favicon.png`,
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${siteUrl}/${type}/${post.slug}`,
+  },
+  ...(type === 'writing' ? { wordCount } : {}),
+  ...(post.section === 'VBC' ? { articleSection: 'Value-Based Care' } : {}),
+  ...(post.section ? { keywords: [post.section] } : {}),
+};
+
+// VBC constants
+const VBC_TITLE = 'Why Value-Based Care is Harder Than Rocket Science';
+---
+
+<BaseLayout
+  title={post.title}
+  description={post.excerpt}
+  image={type === 'photos' ? `/images/photos/${post.coverImage}` : `/images/${post.coverImage}`}
+  article={true}
+  canonicalUrl={`${siteUrl}/${type}/${post.slug}`}
+>
+  <Fragment slot="json-ld">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <article class="max-w-2xl mx-auto">
+    <header class="mb-8">
+      {/* VBC Badge */}
+      {
+        post.section === 'VBC' && (
+          <div class="mb-4">
+            <a
+              href="/#vbc"
+              class="inline-block text-xs font-semibold uppercase tracking-wider text-accent bg-accent/15 px-3 py-1 rounded hover:bg-accent/25 transition-colors duration-150 !border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              {VBC_TITLE}
+            </a>
+          </div>
+        )
+      }
+
+      {/* Date and reading time */}
+      <div class="section-label flex items-center gap-2 mb-3">
+        <time datetime={postDate.toISOString().split('T')[0]}>
+          {format(postDate, 'MMMM d, yyyy')}
+        </time>
+        {
+          type === 'writing' && (
+            <>
+              <span class="text-border" aria-hidden="true">
+                ·
+              </span>
+              <span>{readingTime}</span>
+            </>
+          )
+        }
+      </div>
+
+      {/* Title */}
+      <h1
+        class="font-serif font-normal italic leading-tight mb-4 text-foreground"
+        style="font-size: var(--font-size-4xl)"
+      >
+        {post.title}
+      </h1>
+
+      {/* Excerpt */}
+      {post.excerpt && <p class="section-subtitle" style="font-size: var(--font-size-lg)">{post.excerpt}</p>}
+
+      <div class="section-rule mt-6" aria-hidden="true"></div>
+    </header>
+
+    {/* Table of Contents */}
+    {showToc && <TableOfContents items={tocItems} />}
+
+    {/* Content - React island for markdown rendering */}
+    <ContentRenderer content={post.content} client:load />
+
+    {/* Footer slot for VBCFooter and PostsFooter */}
+    <slot name="footer" />
+  </article>
+
+  {/* Additional footer content outside the article */}
+  <slot />
+</BaseLayout>

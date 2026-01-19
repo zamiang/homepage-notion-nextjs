@@ -4,12 +4,16 @@
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true next build",
+    "astro:build": "astro build",
+    "astro:check": "astro check",
+    "astro:dev": "astro dev",
+    "astro:preview": "astro preview",
     "audit-dependencies": "npm audit --audit-level=high --production",
     "build": "next build",
     "cache:posts": "tsx scripts/cache-posts.ts",
     "dev": "next dev",
-    "format": "prettier --write \"{src,__tests__,scripts,.claude,docs}/**/*.{ts,tsx,js,css,md}\"",
-    "format:check": "prettier --list-different \"{src,__tests__,scripts,docs}/**/*.{ts,tsx,js,css,md}\"",
+    "format": "prettier --write \"{src,__tests__,scripts,.claude,docs}/**/*.{ts,tsx,js,css,md,astro}\"",
+    "format:check": "prettier --list-different \"{src,__tests__,scripts,docs}/**/*.{ts,tsx,js,css,md,astro}\"",
     "knip": "knip",
     "knip:fix": "knip --fix",
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
@@ -23,9 +27,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@astrojs/react": "4.4.2",
+    "@astrojs/rss": "4.0.15",
+    "@astrojs/sitemap": "3.7.0",
+    "@astrojs/vercel": "9.0.4",
     "@notionhq/client": "5.7.0",
+    "@tailwindcss/vite": "4.1.18",
     "@vercel/analytics": "1.6.1",
     "@vercel/speed-insights": "1.3.1",
+    "astro": "5.16.11",
     "axios": "1.13.2",
     "babel-plugin-react-compiler": "1.0.0",
     "class-variance-authority": "0.7.1",
@@ -43,6 +53,7 @@
     "tailwindcss": "4.1.18"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.6",
     "@tailwindcss/postcss": "4.1.18",
     "@tailwindcss/typography": "0.5.19",
     "@testing-library/dom": "10.4.1",

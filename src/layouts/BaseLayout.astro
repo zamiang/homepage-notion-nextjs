@@ -1,0 +1,134 @@
+---
+/**
+ * Base Layout for all pages
+ * Includes global styles, meta tags, header, footer, and floating particles
+ */
+
+import Footer from '../components/Footer.astro';
+import FloatingParticles from '../components/islands/FloatingParticles';
+import Header from '../components/islands/Header';
+import { config } from '../lib/config';
+
+import '../styles/globals.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+  canonicalUrl?: string;
+}
+
+const {
+  title = config.site.title,
+  description = config.site.description,
+  image = '/about.jpg',
+  article = false,
+  canonicalUrl,
+} = Astro.props;
+
+const siteUrl = config.site.url;
+const fullTitle = title === config.site.title ? title : `${title} | Brennan Moore`;
+const imageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+const canonical = canonicalUrl || Astro.url.href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Primary Meta Tags */}
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content={config.site.author} />
+
+    {/* Canonical URL */}
+    <link rel="canonical" href={canonical} />
+
+    {/* Open Graph / Facebook */}
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:site_name" content="Brennan Moore" />
+    <meta property="og:locale" content="en_US" />
+
+    {/* Twitter */}
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={imageUrl} />
+
+    {/* Favicon */}
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    {/* Theme Color */}
+    <meta name="theme-color" content="#F0F2F5" />
+
+    {/* Feed Discovery */}
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Brennan Moore - RSS Feed"
+      href={`${siteUrl}/rss.xml`}
+    />
+    <link
+      rel="alternate"
+      type="application/feed+json"
+      title="Brennan Moore - JSON Feed"
+      href={`${siteUrl}/feed.json`}
+    />
+
+    {/* Preconnect to Google Fonts */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    {/* Additional head content via slot */}
+    <slot name="head" />
+  </head>
+  <body class="font-serif bg-background text-foreground">
+    {/* Floating particles background (React island - only desktop) */}
+    <FloatingParticles client:visible />
+
+    <div class="relative min-h-screen">
+      {/* Skip link for keyboard navigation */}
+      <a
+        href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+      >
+        Skip to main content
+      </a>
+
+      {/* Header (React island - has mobile menu state) */}
+      <Header client:load />
+
+      {/* Main content */}
+      <main
+        id="main-content"
+        class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-0"
+        tabindex="-1"
+      >
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+
+    {/* JSON-LD structured data slot */}
+    <slot name="json-ld" />
+  </body>
+</html>
