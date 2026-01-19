@@ -52,7 +52,9 @@ const showToc = post.showToc && tocItems.length >= 3;
 
 // Generate JSON-LD
 const imageUrl =
-  type === 'photos' ? `${siteUrl}/images/photos/${post.coverImage}` : `${siteUrl}/images/${post.coverImage}`;
+  type === 'photos'
+    ? `${siteUrl}/images/photos/${post.coverImage}`
+    : `${siteUrl}/images/${post.coverImage}`;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -65,7 +67,9 @@ const jsonLd = {
     caption: post.title,
   },
   datePublished: postDate.toISOString(),
-  dateModified: post.dateModified ? new Date(post.dateModified).toISOString() : postDate.toISOString(),
+  dateModified: post.dateModified
+    ? new Date(post.dateModified).toISOString()
+    : postDate.toISOString(),
   author: {
     '@type': 'Person',
     name: post.author,
@@ -146,7 +150,13 @@ const VBC_TITLE = 'Why Value-Based Care is Harder Than Rocket Science';
       </h1>
 
       {/* Excerpt */}
-      {post.excerpt && <p class="section-subtitle" style="font-size: var(--font-size-lg)">{post.excerpt}</p>}
+      {
+        post.excerpt && (
+          <p class="section-subtitle" style="font-size: var(--font-size-lg)">
+            {post.excerpt}
+          </p>
+        )
+      }
 
       <div class="section-rule mt-6" aria-hidden="true"></div>
     </header>

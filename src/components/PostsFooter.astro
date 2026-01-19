@@ -34,13 +34,18 @@ const filteredPhotos = photos.filter((p) => p.data.slug !== currentSlug).slice(0
   {/* Recommended Writing - Warm background */}
   {
     filteredPosts.length > 0 && (
-      <section class="section-wrapper section-wrapper--warm" aria-labelledby="recommended-writing-heading">
+      <section
+        class="section-wrapper section-wrapper--warm"
+        aria-labelledby="recommended-writing-heading"
+      >
         <div class="section-wrapper-inner">
           <p class="section-label">More to Read</p>
           <h2 id="recommended-writing-heading" class="section-heading">
             Recommended Writing
           </h2>
-          <p class="section-subtitle">Essays on engineering leadership, startups, and building teams.</p>
+          <p class="section-subtitle">
+            Essays on engineering leadership, startups, and building teams.
+          </p>
           <div class="section-rule" aria-hidden="true" />
           {filteredPosts.map((post) => (
             <PostCard post={post.data} />
@@ -53,7 +58,10 @@ const filteredPhotos = photos.filter((p) => p.data.slug !== currentSlug).slice(0
   {/* Recommended Photos - Muted background */}
   {
     filteredPhotos.length > 0 && (
-      <section class="section-wrapper section-wrapper--muted" aria-labelledby="recommended-photos-heading">
+      <section
+        class="section-wrapper section-wrapper--muted"
+        aria-labelledby="recommended-photos-heading"
+      >
         <div class="section-wrapper-inner">
           <p class="section-label">Visual Stories</p>
           <h2 id="recommended-photos-heading" class="section-heading">

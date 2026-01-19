@@ -674,20 +674,20 @@ Use `@notwoods/notion-astro-loader` or `@duocrafters/notion-database-astro` with
 import FloatingParticles from '../components/islands/FloatingParticles';
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>...</head>
-<body>
-  <!-- Zero JS for this content -->
-  <Header />
-  <main>
-    <slot />
-  </main>
-  <Footer />
+  <head></head>...
+  <body>
+    <!-- Zero JS for this content -->
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
 
-  <!-- Island: Only loads JS for this component -->
-  <FloatingParticles client:visible />
-</body>
+    <!-- Island: Only loads JS for this component -->
+    <FloatingParticles client:visible />
+  </body>
 </html>
 ```
 

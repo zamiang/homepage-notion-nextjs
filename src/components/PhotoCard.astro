@@ -41,7 +41,9 @@ const postDate = new Date(post.date);
   {
     !shouldHideText && (
       <p class="photo-card-date">
-        <time datetime={postDate.toISOString().split('T')[0]}>{format(postDate, 'MMM d, yyyy')}</time>
+        <time datetime={postDate.toISOString().split('T')[0]}>
+          {format(postDate, 'MMM d, yyyy')}
+        </time>
       </p>
     )
   }

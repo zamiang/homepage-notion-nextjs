@@ -17,7 +17,12 @@ interface Props {
 
 const { post, isPast = false, isCurrent = false, isNext = false } = Astro.props;
 
-const classNames = ['post', isPast && 'past-post', isCurrent && 'current-post', isNext && 'next-post']
+const classNames = [
+  'post',
+  isPast && 'past-post',
+  isCurrent && 'current-post',
+  isNext && 'next-post',
+]
   .filter(Boolean)
   .join(' ');
 ---
