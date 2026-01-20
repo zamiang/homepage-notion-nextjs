@@ -137,12 +137,20 @@ const posts = defineCollection({
 import Header from '../components/islands/Header';
 ---
 
-<!-- client:idle - hydrate when browser is idle (recommended for most) -->
-<Header client:idle />
+<!-- client:load - hydrate immediately (for critical interactive elements) -->
+<!-- Header uses client:load for iOS Safari touch event compatibility -->
+<Header client:load />
 
-<!-- client:visible - hydrate when visible in viewport -->
+<!-- client:visible - hydrate when visible in viewport (for non-critical UI) -->
 <FloatingParticles client:visible />
+
+<!-- client:idle - hydrate when browser is idle (recommended for most) -->
+<!-- Use for components that aren't immediately needed -->
 ```
+
+**iOS Safari Compatibility Note**: The Header component requires `client:load` and explicit
+`cursor-pointer` styling because iOS Safari has quirks with touch events on elements that
+don't appear "clickable" and with delayed hydration.
 
 #### TypeScript Configuration
 ```
@@ -205,6 +213,19 @@ npm run lint             # ESLint
 >
 > **Archive Policy**: Move entries older than 3 months to the "Archive" section at the bottom.
 
+### January 2026 Work Summary
+
+**iOS Safari Mobile Menu Fix**:
+- ✅ Fixed mobile menu button not responding to taps on iOS Safari
+- ✅ Added `cursor-pointer` class for iOS Safari touch event compatibility
+- ✅ Changed Header hydration from `client:idle` to `client:load` for immediate interactivity
+- ✅ Added comprehensive Header component tests (21 new tests)
+- ✅ Updated documentation with iOS Safari compatibility notes
+
+**Key Metrics**:
+- Tests: 153 passing (up from 132)
+- New test file: `__tests__/components/islands/header.test.tsx`
+
 ### December 2025 Work Summary
 
 **Visual Theme Overhaul** (PR #872):
@@ -225,10 +246,9 @@ npm run lint             # ESLint
 - ✅ Updated all dependencies to latest versions
 - ✅ Node.js 24.x support confirmed
 
-**Key Metrics**:
+**Key Metrics (December)**:
 - Tests: 132 passing
 - All dependencies current
-- 4 low severity vulnerabilities (acceptable)
 
 **January 2026 - Astro Migration**:
 - ✅ Migrated from Next.js to Astro 5
