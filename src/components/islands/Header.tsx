@@ -63,7 +63,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="md:hidden flex items-center justify-center w-11 h-11 -mr-2.5 text-foreground hover:text-accent transition-colors duration-150 border-none bg-transparent touch-manipulation"
+            className="md:hidden flex items-center justify-center w-11 h-11 -mr-2.5 text-foreground hover:text-accent transition-colors duration-150 border-none bg-transparent touch-manipulation cursor-pointer"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
