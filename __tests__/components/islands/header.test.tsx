@@ -119,7 +119,9 @@ describe('Header', () => {
       fireEvent.click(closeButton);
 
       expect(screen.getByRole('button', { name: 'Open menu' })).toBeInTheDocument();
-      expect(screen.queryByRole('navigation', { name: 'Mobile navigation' })).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('navigation', { name: 'Mobile navigation' }),
+      ).not.toBeInTheDocument();
     });
 
     it('should close menu when navigation link is clicked', () => {
@@ -138,7 +140,9 @@ describe('Header', () => {
 
       // Menu should close
       expect(screen.getByRole('button', { name: 'Open menu' })).toBeInTheDocument();
-      expect(screen.queryByRole('navigation', { name: 'Mobile navigation' })).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('navigation', { name: 'Mobile navigation' }),
+      ).not.toBeInTheDocument();
     });
   });
 
