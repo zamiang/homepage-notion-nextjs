@@ -37,7 +37,7 @@ describe('Header', () => {
     it('should render external link with proper attributes', () => {
       render(<Header />);
       const resumeLinks = screen.getAllByRole('link', { name: /Resume/ });
-      // There are two resume links (desktop and potentially mobile), check the first
+      // There are two resume links (desktop and mobile), check the first
       const resumeLink = resumeLinks[0];
       expect(resumeLink).toHaveAttribute('href', '/resume.pdf');
       expect(resumeLink).toHaveAttribute('target', '_blank');
@@ -45,104 +45,77 @@ describe('Header', () => {
     });
   });
 
-  describe('mobile menu button', () => {
-    it('should render mobile menu button', () => {
+  describe('mobile menu toggle', () => {
+    it('should render mobile menu checkbox', () => {
       render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-      expect(button).toBeInTheDocument();
+      const checkbox = screen.getByRole('checkbox', { name: 'Toggle menu' });
+      expect(checkbox).toBeInTheDocument();
     });
 
-    it('should have correct initial aria attributes', () => {
+    it('should toggle checkbox when clicked', () => {
       render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-      expect(button).toHaveAttribute('aria-expanded', 'false');
-      expect(button).toHaveAttribute('aria-controls', 'mobile-menu');
+      const checkbox = screen.getByRole('checkbox', { name: 'Toggle menu' }) as HTMLInputElement;
+
+      expect(checkbox.checked).toBe(false);
+
+      fireEvent.click(checkbox);
+      expect(checkbox.checked).toBe(true);
+
+      fireEvent.click(checkbox);
+      expect(checkbox.checked).toBe(false);
     });
 
-    it('should have touch-manipulation class for better tap responsiveness', () => {
+    it('should have minimum touch target size (44x44px)', () => {
       render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-      expect(button).toHaveClass('touch-manipulation');
-    });
-
-    it('should have cursor-pointer for iOS Safari compatibility', () => {
-      render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-      expect(button).toHaveClass('cursor-pointer');
-    });
-
-    it('should meet minimum touch target size (44x44px)', () => {
-      render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-      // w-11 = 44px, h-11 = 44px in Tailwind
-      expect(button).toHaveClass('w-11');
-      expect(button).toHaveClass('h-11');
+      const checkbox = screen.getByRole('checkbox', { name: 'Toggle menu' });
+      // CSS class sets width/height to 44px
+      expect(checkbox).toHaveClass('mobile-menu-toggle');
     });
   });
 
-  describe('mobile menu toggle', () => {
-    it('should open menu when button is clicked', () => {
-      render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-
-      fireEvent.click(button);
-
-      // Button should now show close state
-      expect(screen.getByRole('button', { name: 'Close menu' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Close menu' })).toHaveAttribute(
-        'aria-expanded',
-        'true',
-      );
-    });
-
-    it('should show mobile navigation when menu is open', () => {
-      render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-
-      fireEvent.click(button);
-
-      const mobileNav = screen.getByRole('navigation', { name: 'Mobile navigation' });
+  describe('mobile menu content', () => {
+    it('should have mobile navigation in DOM', () => {
+      const { container } = render(<Header />);
+      // Mobile menu is in DOM but hidden via CSS (display: none), query by class
+      const mobileNav = container.querySelector('.mobile-menu');
       expect(mobileNav).toBeInTheDocument();
-      expect(mobileNav).toHaveAttribute('id', 'mobile-menu');
+      expect(mobileNav).toHaveAttribute('aria-label', 'Mobile navigation');
     });
 
-    it('should close menu when button is clicked again', () => {
-      render(<Header />);
-      const openButton = screen.getByRole('button', { name: 'Open menu' });
-
-      // Open menu
-      fireEvent.click(openButton);
-      expect(screen.getByRole('button', { name: 'Close menu' })).toBeInTheDocument();
-
-      // Close menu
-      const closeButton = screen.getByRole('button', { name: 'Close menu' });
-      fireEvent.click(closeButton);
-
-      expect(screen.getByRole('button', { name: 'Open menu' })).toBeInTheDocument();
-      expect(
-        screen.queryByRole('navigation', { name: 'Mobile navigation' }),
-      ).not.toBeInTheDocument();
+    it('should render all navigation links in mobile menu', () => {
+      const { container } = render(<Header />);
+      const mobileNav = container.querySelector('.mobile-menu');
+      expect(mobileNav?.querySelector('a[href="/#work"]')).toBeInTheDocument();
+      expect(mobileNav?.querySelector('a[href="/#writing"]')).toBeInTheDocument();
+      expect(mobileNav?.querySelector('a[href="/#photography"]')).toBeInTheDocument();
+      expect(mobileNav?.querySelector('a[href="/resume.pdf"]')).toBeInTheDocument();
     });
 
-    it('should close menu when navigation link is clicked', () => {
-      render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
+    it('should have external link attributes on resume in mobile menu', () => {
+      const { container } = render(<Header />);
+      const mobileNav = container.querySelector('.mobile-menu');
+      const resumeLink = mobileNav?.querySelector('a[href="/resume.pdf"]');
+      expect(resumeLink).toHaveAttribute('target', '_blank');
+      expect(resumeLink).toHaveAttribute('rel', 'noopener');
+    });
+
+    it('should uncheck checkbox when navigation link is clicked', () => {
+      const { container } = render(<Header />);
+      const checkbox = screen.getByRole('checkbox', { name: 'Toggle menu' }) as HTMLInputElement;
 
       // Open menu
-      fireEvent.click(button);
+      fireEvent.click(checkbox);
+      expect(checkbox.checked).toBe(true);
 
       // Click a link in the mobile menu
-      const mobileNav = screen.getByRole('navigation', { name: 'Mobile navigation' });
-      const workLink = mobileNav.querySelector('a[href="/#work"]');
+      const mobileNav = container.querySelector('.mobile-menu');
+      const workLink = mobileNav?.querySelector('a[href="/#work"]');
       expect(workLink).toBeInTheDocument();
 
       fireEvent.click(workLink!);
 
-      // Menu should close
-      expect(screen.getByRole('button', { name: 'Open menu' })).toBeInTheDocument();
-      expect(
-        screen.queryByRole('navigation', { name: 'Mobile navigation' }),
-      ).not.toBeInTheDocument();
+      // Menu should close (checkbox unchecked)
+      expect(checkbox.checked).toBe(false);
     });
   });
 
@@ -153,57 +126,37 @@ describe('Header', () => {
       expect(nav).toHaveAttribute('aria-label', 'Main navigation');
     });
 
-    it('should have proper aria-label on mobile navigation when open', () => {
-      render(<Header />);
-      fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
-
-      const mobileNav = screen.getByRole('navigation', { name: 'Mobile navigation' });
+    it('should have proper aria-label on mobile navigation', () => {
+      const { container } = render(<Header />);
+      // Mobile nav is hidden by default (display: none), so query by class
+      const mobileNav = container.querySelector('.mobile-menu');
       expect(mobileNav).toHaveAttribute('aria-label', 'Mobile navigation');
     });
 
-    it('should have sr-only text in menu button', () => {
-      const { container } = render(<Header />);
-      const srOnlyText = container.querySelector('.sr-only');
-      expect(srOnlyText).toBeInTheDocument();
-      expect(srOnlyText).toHaveTextContent('Open menu');
-    });
-
-    it('should update sr-only text when menu is open', () => {
-      const { container } = render(<Header />);
-      fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
-
-      const srOnlyText = container.querySelector('.sr-only');
-      expect(srOnlyText).toHaveTextContent('Close menu');
-    });
-
-    it('should have aria-hidden on decorative icons', () => {
+    it('should have aria-label on toggle checkbox', () => {
       render(<Header />);
-      const button = screen.getByRole('button', { name: 'Open menu' });
-      const icon = button.querySelector('svg');
-      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      const checkbox = screen.getByRole('checkbox', { name: 'Toggle menu' });
+      expect(checkbox).toHaveAttribute('aria-label', 'Toggle menu');
+    });
+
+    it('should have aria-hidden on decorative menu button', () => {
+      const { container } = render(<Header />);
+      const menuButton = container.querySelector('.menu-button');
+      expect(menuButton).toHaveAttribute('aria-hidden', 'true');
     });
   });
 
-  describe('mobile menu content', () => {
-    it('should render all navigation links in mobile menu', () => {
-      render(<Header />);
-      fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
-
-      const mobileNav = screen.getByRole('navigation', { name: 'Mobile navigation' });
-      expect(mobileNav.querySelector('a[href="/#work"]')).toBeInTheDocument();
-      expect(mobileNav.querySelector('a[href="/#writing"]')).toBeInTheDocument();
-      expect(mobileNav.querySelector('a[href="/#photography"]')).toBeInTheDocument();
-      expect(mobileNav.querySelector('a[href="/resume.pdf"]')).toBeInTheDocument();
+  describe('visual button icons', () => {
+    it('should have hamburger icon in menu button', () => {
+      const { container } = render(<Header />);
+      const openIcon = container.querySelector('.icon-open');
+      expect(openIcon).toBeInTheDocument();
     });
 
-    it('should have external link attributes on resume in mobile menu', () => {
-      render(<Header />);
-      fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
-
-      const mobileNav = screen.getByRole('navigation', { name: 'Mobile navigation' });
-      const resumeLink = mobileNav.querySelector('a[href="/resume.pdf"]');
-      expect(resumeLink).toHaveAttribute('target', '_blank');
-      expect(resumeLink).toHaveAttribute('rel', 'noopener');
+    it('should have close icon in menu button', () => {
+      const { container } = render(<Header />);
+      const closeIcon = container.querySelector('.icon-close');
+      expect(closeIcon).toBeInTheDocument();
     });
   });
 });
