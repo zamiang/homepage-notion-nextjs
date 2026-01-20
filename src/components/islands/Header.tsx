@@ -23,9 +23,9 @@ export default function Header() {
   return (
     <header className="relative z-10">
       <nav aria-label="Main navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <a href="/" className="flex items-center text-md text-foreground border-none text-sm">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <a href="/" className="text-foreground border-none text-sm">
               Brennan Moore
             </a>
           </div>
@@ -63,7 +63,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="md:hidden flex items-center justify-center w-10 h-10 text-foreground hover:text-accent transition-colors duration-150 border-none bg-transparent"
+            className="md:hidden flex items-center justify-center w-11 h-11 -mr-2.5 text-foreground hover:text-accent transition-colors duration-150 border-none bg-transparent touch-manipulation"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
