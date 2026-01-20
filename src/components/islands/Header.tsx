@@ -1,14 +1,16 @@
 /**
  * Header Component (React Island)
- * Uses React state for mobile menu toggle
  *
- * iOS Safari Compatibility Notes:
- * - Uses onTouchEnd in addition to onClick for reliable touch handling
- * - Empty onTouchStart handler "wakes up" iOS Safari's event system
- * - cursor-pointer and touch-manipulation CSS for proper touch behavior
- * - client:load hydration directive for immediate interactivity
+ * iOS Safari Compatibility:
+ * This component uses a checkbox-based CSS toggle pattern for the mobile menu
+ * instead of React state. This ensures the menu works even if JavaScript
+ * fails to load or hydrate on iOS Safari, which has known issues with
+ * React hydration and touch events.
+ *
+ * The checkbox is visually hidden but accessible, and its :checked state
+ * controls the menu visibility via CSS sibling selectors.
  */
-import { useCallback, useState } from 'react';
+import { useRef } from 'react';
 
 interface NavLink {
   href: string;
@@ -24,17 +26,62 @@ const navLinks: NavLink[] = [
 ];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const checkboxRef = useRef<HTMLInputElement>(null);
 
-  // Use callback to ensure stable reference and prevent iOS Safari issues
-  const toggleMenu = useCallback(() => {
-    setMobileMenuOpen((prev) => !prev);
-  }, []);
+  const closeMenu = () => {
+    if (checkboxRef.current) {
+      checkboxRef.current.checked = false;
+    }
+  };
 
   return (
     <header className="relative z-50">
+      <style>{`
+        /* Hide checkbox visually but keep it accessible */
+        .mobile-menu-toggle {
+          position: absolute;
+          opacity: 0;
+          width: 44px;
+          height: 44px;
+          cursor: pointer;
+          z-index: 100;
+          margin: 0;
+          right: 0.375rem;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        /* Show hamburger icon by default, hide X */
+        .mobile-menu-toggle ~ .menu-button .icon-close { display: none; }
+        .mobile-menu-toggle ~ .menu-button .icon-open { display: block; }
+
+        /* When checked: show X, hide hamburger */
+        .mobile-menu-toggle:checked ~ .menu-button .icon-close { display: block; }
+        .mobile-menu-toggle:checked ~ .menu-button .icon-open { display: none; }
+
+        /* Hide menu by default */
+        .mobile-menu { display: none; }
+
+        /* Show menu when checkbox is checked */
+        .mobile-menu-toggle:checked ~ .mobile-menu { display: block; }
+
+        /* Focus ring for accessibility */
+        .mobile-menu-toggle:focus-visible ~ .menu-button {
+          outline: 2px solid var(--color-accent);
+          outline-offset: 2px;
+          border-radius: 4px;
+        }
+
+        @media (min-width: 768px) {
+          .mobile-menu-toggle,
+          .menu-button,
+          .mobile-menu {
+            display: none !important;
+          }
+        }
+      `}</style>
       <nav aria-label="Main navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-16 relative">
           <div className="flex items-center">
             <a href="/" className="text-foreground border-none text-sm">
               Brennan Moore
@@ -71,75 +118,49 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Mobile menu button
-              iOS Safari requires multiple event handlers for reliable touch:
-              - onTouchStart (empty) "wakes up" the event system
-              - onTouchEnd handles the actual interaction
-              - onClick provides fallback for non-touch and accessibility
-              - role="button" explicitly declares clickable for iOS
-              - Inline styles ensure properties apply even before CSS loads */}
-          <button
-            type="button"
-            role="button"
-            tabIndex={0}
-            className="md:hidden flex items-center justify-center w-11 h-11 -mr-2.5 text-foreground hover:text-accent transition-colors duration-150 border-none bg-transparent touch-manipulation cursor-pointer select-none"
-            style={{
-              WebkitTapHighlightColor: 'transparent',
-              WebkitAppearance: 'none',
-              WebkitUserSelect: 'none',
-            }}
-            onClick={toggleMenu}
-            onTouchStart={() => {
-              /* Empty handler required for iOS Safari - "wakes up" touch events */
-            }}
-            onTouchEnd={(e) => {
-              // Prevent ghost click on iOS Safari
-              e.preventDefault();
-              toggleMenu();
-            }}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-menu"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            <span className="sr-only">{mobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
-            {mobileMenuOpen ? (
-              // X icon
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              // Hamburger icon
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
+          {/* Mobile menu - CSS-only toggle using checkbox hack
+              This works without JavaScript, making it immune to iOS Safari hydration issues */}
+          <input
+            ref={checkboxRef}
+            type="checkbox"
+            id="mobile-menu-toggle"
+            className="mobile-menu-toggle md:hidden"
+            aria-label="Toggle menu"
+          />
 
-        {/* Mobile menu - no role="menu" needed, semantic nav is sufficient */}
-        {mobileMenuOpen && (
+          {/* Visual button (not interactive - the checkbox above handles clicks) */}
+          <div
+            className="menu-button md:hidden flex items-center justify-center w-11 h-11 -mr-2.5 text-foreground pointer-events-none"
+            aria-hidden="true"
+          >
+            <svg
+              className="icon-open w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+            <svg
+              className="icon-close w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+
+          {/* Mobile menu dropdown */}
           <nav
-            id="mobile-menu"
+            className="mobile-menu absolute top-full left-0 right-0 bg-background py-4 border-t border-border/50 -mx-4 px-4 sm:-mx-6 sm:px-6"
             aria-label="Mobile navigation"
-            className="md:hidden py-4 border-t border-border/50"
           >
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -147,7 +168,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   className="text-foreground text-base py-2 border-none hover:text-accent transition-colors duration-150 inline-flex items-center gap-1"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMenu}
                   {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                 >
                   {link.label}
@@ -171,7 +192,7 @@ export default function Header() {
               ))}
             </div>
           </nav>
-        )}
+        </div>
       </nav>
     </header>
   );
