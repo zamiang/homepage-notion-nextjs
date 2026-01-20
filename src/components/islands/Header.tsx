@@ -1,8 +1,14 @@
 /**
  * Header Component (React Island)
  * Uses React state for mobile menu toggle
+ *
+ * iOS Safari Compatibility Notes:
+ * - Uses onTouchEnd in addition to onClick for reliable touch handling
+ * - Empty onTouchStart handler "wakes up" iOS Safari's event system
+ * - cursor-pointer and touch-manipulation CSS for proper touch behavior
+ * - client:load hydration directive for immediate interactivity
  */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 interface NavLink {
   href: string;
@@ -20,8 +26,13 @@ const navLinks: NavLink[] = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Use callback to ensure stable reference and prevent iOS Safari issues
+  const toggleMenu = useCallback(() => {
+    setMobileMenuOpen((prev) => !prev);
+  }, []);
+
   return (
-    <header className="relative z-10">
+    <header className="relative z-50">
       <nav aria-label="Main navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -60,11 +71,32 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button
+              iOS Safari requires multiple event handlers for reliable touch:
+              - onTouchStart (empty) "wakes up" the event system
+              - onTouchEnd handles the actual interaction
+              - onClick provides fallback for non-touch and accessibility
+              - role="button" explicitly declares clickable for iOS
+              - Inline styles ensure properties apply even before CSS loads */}
           <button
             type="button"
-            className="md:hidden flex items-center justify-center w-11 h-11 -mr-2.5 text-foreground hover:text-accent transition-colors duration-150 border-none bg-transparent touch-manipulation cursor-pointer"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            role="button"
+            tabIndex={0}
+            className="md:hidden flex items-center justify-center w-11 h-11 -mr-2.5 text-foreground hover:text-accent transition-colors duration-150 border-none bg-transparent touch-manipulation cursor-pointer select-none"
+            style={{
+              WebkitTapHighlightColor: 'transparent',
+              WebkitAppearance: 'none',
+              WebkitUserSelect: 'none',
+            }}
+            onClick={toggleMenu}
+            onTouchStart={() => {
+              /* Empty handler required for iOS Safari - "wakes up" touch events */
+            }}
+            onTouchEnd={(e) => {
+              // Prevent ghost click on iOS Safari
+              e.preventDefault();
+              toggleMenu();
+            }}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
