@@ -49,7 +49,7 @@ const components = {
         {String(children).replace(/\n$/, '')}
       </SyntaxHighlighter>
     ) : (
-      <span className="font-mono text-xs px-1.5 py-0.5 bg-muted rounded">{children}</span>
+      <code className="font-mono text-[0.875em] px-1.5 py-0.5 bg-muted/80 text-foreground/90 rounded">{children}</code>
     );
   },
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
@@ -104,7 +104,7 @@ const components = {
 
 export default function ContentRenderer({ content }: ContentRendererProps) {
   return (
-    <div className="prose prose-slate max-w-none mb-12 prose-headings:font-serif prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80">
+    <div className="prose prose-slate max-w-none mb-12 prose-headings:font-serif prose-headings:font-medium prose-headings:text-foreground prose-p:text-foreground/90 prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80 prose-strong:text-foreground prose-strong:font-semibold prose-blockquote:border-accent prose-blockquote:text-muted-foreground">
       <ReactMarkdown
         components={components}
         remarkPlugins={[remarkGfm]}
