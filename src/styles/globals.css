@@ -326,14 +326,15 @@
   a {
     color: inherit;
     text-decoration: none;
-    border-bottom: 1px solid var(--accent);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
     transition:
       color var(--transition-fast) var(--ease-out),
-      border-color var(--transition-fast) var(--ease-out);
+      border-color var(--transition-normal) var(--ease-out);
   }
 
   a:hover {
     color: var(--accent);
+    border-bottom-color: var(--accent);
   }
 
   a:focus-visible {
@@ -671,7 +672,7 @@
 
   .cta-button:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(193, 127, 89, 0.4);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-bold) 40%, transparent);
   }
 
   /* --------------------------------------------------------------------------
@@ -770,23 +771,23 @@
     font-family: var(--font-sans);
     font-size: clamp(0.7rem, 0.65rem + 0.15vw, 0.8rem); /* Fluid: 11-13px */
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em; /* Tightened from 0.2em for better readability */
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 0.5rem;
     background: transparent;
   }
 
-  /* Large section heading - elegant serif italic */
+  /* Large section heading - refined serif */
   .section-heading {
     font-family: var(--font-serif);
     font-size: var(--font-size-3xl); /* Fluid: 30-40px */
-    font-weight: 400;
-    font-style: italic;
+    font-weight: 500;
+    font-style: normal;
     line-height: var(--line-height-tight);
     margin-top: 0;
     margin-bottom: 0.5rem;
-    color: var(--muted-foreground);
+    color: var(--foreground);
     background: transparent;
   }
 
@@ -864,20 +865,24 @@
 
   .work-card-role {
     font-family: var(--font-sans);
-    font-size: clamp(0.625rem, 0.6rem + 0.1vw, 0.7rem); /* Fluid: 10-11px */
+    font-size: clamp(
+      0.6875rem,
+      0.65rem + 0.1vw,
+      0.75rem
+    ); /* Fluid: 11-12px - improved readability */
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em; /* Tightened for better legibility at small sizes */
     color: var(--muted-foreground);
     background: color-mix(in srgb, var(--accent) 15%, transparent);
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.625rem;
     border-radius: 4px;
   }
 
   .work-card-title {
     font-family: var(--font-serif);
     font-size: var(--font-size-xl); /* Fluid: 20-24px */
-    font-weight: 600;
+    font-weight: 500;
     margin: 0 0 0.5rem 0;
     background: transparent;
   }
