@@ -47,5 +47,9 @@ const classNames = [
       {post.title}
     </a>
   </h4>
-  {!isPast && !isCurrent && post.excerpt && <p class="truncated-text text-foreground/70">{post.excerpt}</p>}
+  {
+    !isPast && !isCurrent && post.excerpt && (
+      <p class="truncated-text text-foreground/70">{post.excerpt}</p>
+    )
+  }
 </div>
