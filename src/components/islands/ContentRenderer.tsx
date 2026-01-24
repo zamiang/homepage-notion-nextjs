@@ -49,7 +49,9 @@ const components = {
         {String(children).replace(/\n$/, '')}
       </SyntaxHighlighter>
     ) : (
-      <code className="font-mono text-[0.875em] px-1.5 py-0.5 bg-muted/80 text-foreground/90 rounded">{children}</code>
+      <code className="font-mono text-[0.875em] px-1.5 py-0.5 bg-muted/80 text-foreground/90 rounded">
+        {children}
+      </code>
     );
   },
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {

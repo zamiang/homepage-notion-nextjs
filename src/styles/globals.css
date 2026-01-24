@@ -865,7 +865,11 @@
 
   .work-card-role {
     font-family: var(--font-sans);
-    font-size: clamp(0.6875rem, 0.65rem + 0.1vw, 0.75rem); /* Fluid: 11-12px - improved readability */
+    font-size: clamp(
+      0.6875rem,
+      0.65rem + 0.1vw,
+      0.75rem
+    ); /* Fluid: 11-12px - improved readability */
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em; /* Tightened for better legibility at small sizes */
@@ -878,7 +882,7 @@
   .work-card-title {
     font-family: var(--font-serif);
     font-size: var(--font-size-xl); /* Fluid: 20-24px */
-    font-weight: 600;
+    font-weight: 500;
     margin: 0 0 0.5rem 0;
     background: transparent;
   }
